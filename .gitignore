@@ -18,7 +18,17 @@ lib/
 lib64/
 parts/
 sdist/
-var/
+var
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+.env
+/
 wheels/
 share/python-wheels/
 *.egg-info/
