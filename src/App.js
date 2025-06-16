@@ -4,6 +4,7 @@ import Home from './pages/Home';
 // Lazy‑load other pages (placeholders for now)
 const Marketplace = React.lazy(() => import('./pages/Marketplace'));
 const Product = React.lazy(() => import('./pages/Product'));
+import Header from './components/Header';
 import * as Sentry from '@sentry/react';
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
@@ -40,7 +41,9 @@ const SubscribeForm = () => {
     }
   };
 
-  return (
+  ret
+      <Header />
+urn (
     <form onSubmit={handleSubmit} style={{ marginTop: '1rem' }}>
       <input
         type="email"
