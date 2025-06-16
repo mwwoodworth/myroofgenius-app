@@ -1,7 +1,13 @@
 import os, json, stripe
+from supabase import create_client
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
+
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+
+supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
 async def handler(request):
     payload = await request.body()
@@ -16,7 +22,16 @@ async def handler(request):
 
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
-        # TODO: handle order fulfillment, DB, email, etc.
-        print("Payment succeeded:", session.get("id"))
+        try:
+            supabase.table("orders").insert({
+                "user_id": session.get("metadata", {}).get("user_id"),
+                "product_id": session.get("metadata", {}).get("product_id"),
+                "stripe_session_id": session["id"],
+                "amount": session.get("amount_total", 0) / 100,
+                "status": "paid"
+            }).execute()
+        except Exception as e:
+            # Log but still acknowledge to Stripe
+            print("Supabase insert error:", e)
 
     return {"statusCode": 200, "body": json.dumps({"status": "ok"})}
