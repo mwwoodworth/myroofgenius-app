@@ -5,9 +5,11 @@ import Home from './pages/Home';
 const Marketplace = React.lazy(() => import('./pages/Marketplace'));
 const Product = React.lazy(() => import('./pages/Product'));
 import Header from './components/Header';
+import Footer from './components/Footer';
 import * as Sentry from '@sentry/react';
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+  
 });
 
 const Blog = React.lazy(() => import('./pages/Blog'));
@@ -98,7 +100,8 @@ pp() {
           <Route path="/cancel" element={<Cancel />} />
         </Routes>
       </React.Suspense>
-    </Router>
+        </Router>
+    <Footer />
   );
 }
 
