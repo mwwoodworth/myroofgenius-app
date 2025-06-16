@@ -4,6 +4,11 @@ import Home from './pages/Home';
 // Lazy‑load other pages (placeholders for now)
 const Marketplace = React.lazy(() => import('./pages/Marketplace'));
 const Product = React.lazy(() => import('./pages/Product'));
+import * as Sentry from '@sentry/react';
+Sentry.init({
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+});
+
 const Blog = React.lazy(() => import('./pages/Blog'));
 const Account = React.lazy(() => import('./pages/Account'));
 const Success = React.lazy(() => import('./pages/Success'));
