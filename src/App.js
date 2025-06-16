@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+impor, useEffectt React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 // Lazy‑load other pages (placeholders for now)
@@ -55,7 +55,21 @@ const SubscribeForm = () => {
   );
 };
 
-function App() {
+function 
+  A
+    useEffect(() => {
+    if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){window.dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID);
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`;
+      document.head.appendChild(script);
+    }
+  }, []);
+pp() {
   return (
     <Router>
       <nav style={{ padding: '1rem', background: '#f5f5f5' }}>
