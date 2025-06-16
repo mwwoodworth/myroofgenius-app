@@ -6,9 +6,13 @@ const Marketplace = React.lazy(() => import('./pages/Marketplace'));
 const Product = React.lazy(() => import('./pages/Product'));
 const Blog = React.lazy(() => import('./pages/Blog'));
 const Account = React.lazy(() => import('./pages/Account'));
+const Success = React.lazy(() => import('./pages/Success'));
+const Cancel = React.lazy(() => import('./pages/Cancel'));
+
 
 const SubscribeForm = () => {
   const [email, setEmail] = useState('');
+  
   const [status, setStatus] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -68,6 +72,8 @@ function App() {
           <Route path="/product/:id" element={<Product />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/account" element={<Account />} />
+                  <Route path="/success" element={<Success />} />
+          <Route path="/cancel" element={<Cancel />} />
         </Routes>
       </React.Suspense>
     </Router>
