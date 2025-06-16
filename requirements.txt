@@ -1,2 +1,3 @@
 stripe
 httpx
+supabase-py
