@@ -51,7 +51,7 @@ for spec_path in spec_files:
         {"role": "system", "content": "You are an expert full‑stack developer."},
         {"role": "user", "content": f"Generate production‑ready code for the following spec:\n\n{spec_content}"}
     ]
-   response = client.chat.completions.create(model="gpt-4o", messages=messages)
+    response = client.chat.completions.create(model="gpt-4o", messages=messages)
 ai_output = response.choices[0].message["content"]
     ai_output = response.choices[0].message["content"]
 
