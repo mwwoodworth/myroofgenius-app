@@ -1,53 +1,42 @@
-name: Codex Generate & Full Test
+name: Codex Generate (Python)
 
 on:
-  pull_request:
-    branches: [main]
-    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    paths:
+      - 'specs/*.md'
   workflow_dispatch:
 
 env:
   PYTHON_VERSION: "3.11"
-  NODE_VERSION: "18"
-  CODEX_API_KEY: ${{ secrets.CODEX_API_KEY }}
   OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
 jobs:
   codex:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Install Codex CLI
-        run: npm install -g @openai/codex-cli
-
-      - name: Run Codex Codegen
-        run: codex generate --all --ci
-
-      - name: JS/TS Tests
+      - name: Install dependencies
         run: |
-          npm ci
-          npm run test --if-present
+          python -m pip install --upgrade pip
+          pip install openai PyGithub
 
-      - name: Python Tests
-        working-directory: api
-        run: |
-          python -m pip install -r requirements.txt
-          pytest -q
+      - name: Run Codex Dev Agent
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/run_codex_codegen.py
 
-      - name: Comment Results
+      - name: Upload failure log
+        if: failure()
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          header: codex-report
+          header: codex-error
           message: |
-            ✅ **Codex generation finished** – see logs for details.
+            ❌ Codex codegen failed. See logs for details.
