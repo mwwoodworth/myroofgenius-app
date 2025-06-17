@@ -1,0 +1,53 @@
+name: Codex Generate & Full Test
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: "3.11"
+  NODE_VERSION: "18"
+  CODEX_API_KEY: ${{ secrets.CODEX_API_KEY }}
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+jobs:
+  codex:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Codex CLI
+        run: npm install -g @openai/codex-cli
+
+      - name: Run Codex Codegen
+        run: codex generate --all --ci
+
+      - name: JS/TS Tests
+        run: |
+          npm ci
+          npm run test --if-present
+
+      - name: Python Tests
+        working-directory: api
+        run: |
+          python -m pip install -r requirements.txt
+          pytest -q
+
+      - name: Comment Results
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: codex-report
+          message: |
+            ✅ **Codex generation finished** – see logs for details.
