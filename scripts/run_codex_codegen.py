@@ -6,10 +6,11 @@ Scans /specs/*.md, generates code, and opens a PR.
 import os, glob, re, textwrap, datetime, sys
 from pathlib import Path
 
-import openai
+impfrom openai import OpenAI
+client = OpenAI()
 from github import Github
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+#.api_key = os.getenv("OPENAI_API_KEY")
 
 token = os.getenv("GITHUB_TOKEN")
 if not token:
@@ -50,7 +51,8 @@ for spec_path in spec_files:
         {"role": "system", "content": "You are an expert full‑stack developer."},
         {"role": "user", "content": f"Generate production‑ready code for the following spec:\n\n{spec_content}"}
     ]
-    response = openai.ChatCompletion.create(model="gpt-4o", messages=messages)
+   response = client.chat.completions.create(model="gpt-4o", messages=messages)
+ai_output = response.choices[0].message["content"]
     ai_output = response.choices[0].message["content"]
 
     # Extract code blocks (first line = file path)
