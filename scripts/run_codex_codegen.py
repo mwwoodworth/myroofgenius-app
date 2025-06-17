@@ -6,7 +6,7 @@ Scans /specs/*.md, generates code, and opens a PR.
 import os, glob, re, textwrap, datetime, sys
 from pathlib import Path
 
-impfrom openai import OpenAI
+from openai import OpenAI
 client = OpenAI()
 from github import Github
 
