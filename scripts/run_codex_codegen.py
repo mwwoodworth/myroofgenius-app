@@ -10,7 +10,9 @@ import textwrap
 import datetime
 import sys
 from pathlib import Path
-
+import time
+import time
+from github.GithubException import GithubException
 from openai import OpenAI
 from github import Github
 
@@ -31,8 +33,20 @@ if not repo_name:
     print("Missing GITHUB_REPOSITORY")
     sys.exit(1)
 
+
 g = Github(token)
-repo = g.get_repo(repo_name)
+
+def get_repo_with_retry(client, name, retries=5):
+    for attempt in range(retries):
+        try:
+            return client.get_repo(name)
+        except Exception as e:
+            print(f"Attempt {attempt+1} failed: {e}")
+            time.sleep(2 ** attempt)
+    print("Unable to connect to GitHub after retries.")
+    sys.exit(1)
+
+repo = get_repo_with_retry(g, repo_name)
 
 def slugify(text: str) -> str:
     return re.sub(r"[^a-zA-Z0-9-]+", "-", text.lower())[:50].strip("-")
