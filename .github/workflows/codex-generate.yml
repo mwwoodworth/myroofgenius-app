@@ -1,45 +1,30 @@
-name: Codex Generate (Python)
+name: Codegen & PyTest
 
 on:
-  pull_request:
-    branches: [main]
-    types: [opened, synchronize, reopened]
   push:
+    branches: [main]
+  pull_request:
     branches: [main]
 
 env:
   PYTHON_VERSION: "3.11"
   OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-  NODE_VERSION: "18"
-  CODEX_API_KEY: ${{ secrets.CODEX_API_KEY }}
 
 jobs:
-  codex:
+  codegen:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install openai PyGithub codex-cli
-
-      - name: Run Codex Dev Agent
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python scripts/run_codex_codegen.py
-
-      - name: Upload failure log
-        if: failure()
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          header: codex-error
-          message: |
-            ❌ Codex codegen failed. See logs for details.
+          pip install -r requirements.txt
+      - name: Run codegen (test)
+        run: |
+          mkdir -p generated
+          python scripts/codegen.py --prompt "Write a Python function to compute Fibonacci numbers recursively." --out generated/fib.py
+      - name: Run tests
+        run: pytest -q
