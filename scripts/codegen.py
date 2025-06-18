@@ -8,7 +8,7 @@ import argparse
 import os
 import openai
 
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+client = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Codegen using OpenAI GPT-4o")
@@ -29,7 +29,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    resp = openai.ChatCompletion.create(
+    resp = client.chat.completions.create(
         model=args.model,
         messages=[
             {
