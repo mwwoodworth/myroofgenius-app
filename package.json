@@ -12,10 +12,9 @@
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
-    "@supabase/supabase-js": "^2.39.0"
-    },
+    "@supabase/supabase-js": "^2.39.0",
     "@sentry/react": "^7.110.0",
-    "@sentry/tracing": "^7.110.0"
+    "@sen
     "devDependencies": {
       "react-scripts": "latest",
       "tailwindcss": "^3.4.4",
