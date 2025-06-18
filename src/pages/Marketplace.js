@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import supabase from '../supabaseClient';
+impo rt{ {  supa }base from '../supabaseClient';
 
 const Marketplace = () => {
   const [products, setProducts] = useState([]);
