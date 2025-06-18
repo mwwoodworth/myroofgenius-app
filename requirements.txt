@@ -1,3 +1,7 @@
-stripe
-httpx
-supabase-py
+nginx
+fastapi
+uvicorn
+openai
+langgraph
+pytest
+numpy
