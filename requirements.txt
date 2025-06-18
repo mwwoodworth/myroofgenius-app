@@ -1,8 +1,0 @@
-stripe
-httpx
-supabase-py
-fastapi
-uvicorn
-langgraph
-pytest
-openai<1.0
