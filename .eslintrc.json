@@ -22,5 +22,8 @@
       "version": "detect"
     }
   },
-  "rules": {}
+  "rules": {},
+  "globals": {
+    "process": "readonly"
+  }
 }
