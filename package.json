@@ -2,26 +2,27 @@
     "name": "myroofgenius-app",
     "version": "0.1.0",
     "private": true,
-    "scripts": {
-      "start": "react-scripts start",
-      "build": "react-scripts build",
-      "test": "react-scripts test",
-      "eject": "react-scripts eject"
-    },
-    "dependencies": {
-      "react": "^18.2.0",
-      "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.0",
-            "lucide-react": "^0.517.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^14.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.517.0",
     "@supabase/supabase-js": "^2.39.0",
     "@sentry/react": "^7.110.0",
     "@sentry/tracing": "^7.110.0"
   },
-    "devDependencies": {
-      "react-scripts": "latest",
-      "tailwindcss": "^3.4.4",
-      "postcss": "^8.4.30",
-      "autoprefixer": "^10.4.17"
-    }
+  "devDependencies": {
+    "tailwindcss": "^3.4.4",
+    "postcss": "^8.4.30",
+    "autoprefixer": "^10.4.17",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.2.0"
   }
+}
   
