@@ -11,7 +11,6 @@ import datetime
 import sys
 from pathlib import Path
 import time
-import time
 from github.GithubException import GithubException
 from openai import OpenAI
 from github import Github
