@@ -1,14 +1,8 @@
-nginx
 fastapi
-uvicorn
-openai
+httpx
 langgraph
+openai<1.0
 pytest
 stripe
-httpx
 supabase-py
-fastapi
 uvicorn
-langgraph
-pytest
-openai<1.0
