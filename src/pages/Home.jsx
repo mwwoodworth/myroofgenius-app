@@ -9,7 +9,7 @@ export default function Home() {
       </section>
 
       <section className="max-w-5xl mx-auto px-4 py-12 space-y-8">
-        <p>MyRoofGenius builds protective intelligence systems for commercial roofing professionals who can't afford to get it wrong. Our AI-native platform combines decades of field experience with real-time analysis to give you clarity and confidence.</p>
+        <p>MyRoofGenius builds protective intelligence systems for commercial roofing professionals who can&apos;t afford to get it wrong. Our AI-native platform combines decades of field experience with real-time analysis to give you clarity and confidence.</p>
 
         <div className="grid md:grid-cols-2 gap-6">
           <div className="border rounded p-6 bg-white">
