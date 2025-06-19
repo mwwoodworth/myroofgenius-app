@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { CopilotPopup, CopilotChat } from '@copilotkit/react-ui';
 
 export default function Layout({ children }) {
   return (
@@ -8,6 +9,9 @@ export default function Layout({ children }) {
       <Navbar />
       <main className="flex-grow">{children}</main>
       <Footer />
+      <CopilotPopup>
+        <CopilotChat />
+      </CopilotPopup>
     </div>
   );
 }
