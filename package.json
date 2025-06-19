@@ -6,6 +6,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md}'",
     "eject": "react-scripts eject"
   },
   "dependencies": {
@@ -19,7 +21,10 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.5",
     "postcss": "^8.5.6",
+    "prettier": "^3.5.3",
     "react-scripts": "latest",
     "tailwindcss": "^3.4.17"
   },

@@ -21,6 +21,14 @@ Public SaaS React + FastAPI system for MyRoofGenius.
    ```bash
    npm test
    ```
+5. Lint the code:
+   ```bash
+   npm run lint
+   ```
+6. Format the codebase:
+   ```bash
+   npm run format
+   ```
 
 ### Backend (FastAPI)
 The backend lives in `backend/main.py`.
