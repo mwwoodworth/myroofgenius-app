@@ -1,2 +1,2 @@
 # myroofgenius-app
-Public SaaS React + FastAPI system for MyRoofGenius.
+Public SaaS Next.js + FastAPI system for MyRoofGenius.
