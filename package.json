@@ -1,27 +1,44 @@
 {
-    "name": "myroofgenius-app",
-    "version": "0.1.0",
-    "private": true,
-    "scripts": {
-      "start": "react-scripts start",
-      "build": "react-scripts build",
-      "test": "react-scripts test",
-      "eject": "react-scripts eject"
-    },
-    "dependencies": {
-      "react": "^18.2.0",
-      "react-dom": "^18.2.0",
+  "name": "myroofgenius-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --watchAll=false --coverage",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
-            "lucide-react": "^0.517.0",
+    "lucide-react": "^0.517.0",
     "@supabase/supabase-js": "^2.39.0",
     "@sentry/react": "^7.110.0",
     "@sentry/tracing": "^7.110.0"
   },
-    "devDependencies": {
-      "react-scripts": "latest",
-      "tailwindcss": "^3.4.4",
-      "postcss": "^8.4.30",
-      "autoprefixer": "^10.4.17"
-    }
+  "devDependencies": {
+    "react-scripts": "latest",
+    "tailwindcss": "^3.4.4",
+    "postcss": "^8.4.30",
+    "autoprefixer": "^10.4.17",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@axe-core/react": "^4.10.2",
+    "jest-axe": "^7.0.1"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    },
+    "collectCoverageFrom": [
+      "src/__tests__/**/*.{js,jsx}",
+      "src/components/Navbar.jsx"
+    ]
   }
-  
+}
