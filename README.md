@@ -3,23 +3,23 @@ Public SaaS React + FastAPI system for MyRoofGenius.
 
 ## Local Development
 
-### Frontend (Next.js)
+### Frontend (Create React App)
 1. Install dependencies:
    ```bash
    npm install
    ```
-2. Start the dev server:
+2. Start the development server (react-scripts):
    ```bash
-   npm run dev
+   npm start
    ```
    The app will be available at `http://localhost:3000`.
-3. For a production build run:
+3. Create a production build:
    ```bash
    npm run build
    ```
-4. Start the compiled app:
+4. Run tests:
    ```bash
-   npm start
+   npm test
    ```
 
 ### Backend (FastAPI)
