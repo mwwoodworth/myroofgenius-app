@@ -42,7 +42,7 @@ def test_checkout_session_completed_creates_order(monkeypatch):
     supabase_mock.table.return_value.insert.return_value.execute = MagicMock()
     monkeypatch.setattr(main, "supabase", supabase_mock)
 
-    response = client.post("/api/webhook", data=b"{}", headers={"stripe-signature": "test"})
+    response = client.post("/api/webhook", content=b"{}", headers={"stripe-signature": "test"})
     assert response.status_code == 200
     supabase_mock.table.assert_called_with("orders")
     supabase_mock.table.return_value.insert.assert_called_once()
