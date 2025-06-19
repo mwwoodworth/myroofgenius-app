@@ -15,7 +15,8 @@
             "lucide-react": "^0.517.0",
     "@supabase/supabase-js": "^2.39.0",
     "@sentry/react": "^7.110.0",
-    "@sentry/tracing": "^7.110.0"
+    "@sentry/tracing": "^7.110.0",
+    "framer-motion": "^10.18.0"
   },
     "devDependencies": {
       "react-scripts": "latest",
