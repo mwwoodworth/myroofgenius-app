@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
+import { Button } from '../components/ui/button';
 
 const Account = () => {
   const [user, setUser] = useState(null);
@@ -34,7 +35,7 @@ const Account = () => {
     return (
       <div style={{ padding: '2rem' }}>
         <h1>Your Account</h1>
-        <button onClick={handleLogin}>Sign in with GitHub</button>
+        <Button onClick={handleLogin}>Sign in with GitHub</Button>
       </div>
     );
 

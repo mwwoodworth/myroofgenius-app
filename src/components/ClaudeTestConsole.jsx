@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button } from './ui/button';
 
 const roles = [
   'contractor',
@@ -52,7 +53,7 @@ export default function ClaudeTestConsole() {
           ))}
         </select>
       </div>
-      <button onClick={sendPrompt}>Send to Claude</button>
+      <Button onClick={sendPrompt}>Send to Claude</Button>
       <pre style={{ marginTop: 20, background: '#f4f4f4', padding: 10 }}>
         {response}
       </pre>

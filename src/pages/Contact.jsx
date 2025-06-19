@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button } from '../components/ui/button';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -43,7 +44,7 @@ export default function Contact() {
           onChange={handleChange}
           required
         ></textarea>
-        <button type="submit" className="bg-[#2366d1] hover:bg-[#1e59b8] text-white py-2 px-4 rounded w-full">Send</button>
+        <Button type="submit" className="w-full">Send</Button>
       </form>
     </div>
   );

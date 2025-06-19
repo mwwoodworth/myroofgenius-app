@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Button } from '../components/ui/button';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
@@ -41,7 +42,7 @@ const Product = () => {
       <h1>{product.name}</h1>
       <p>{product.description}</p>
       <p>${product.price}</p>
-      <button onClick={handleBuy}>Buy Now</button>
+      <Button onClick={handleBuy}>Buy Now</Button>
     </div>
   );
 };
