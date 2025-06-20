@@ -1,5 +1,4 @@
 {
-  "pythonRequirementsFile": "backend/backend/requirements.txt",
-  "buildCommand": "npm run build",
+  "buildCommand": "bash scripts/vercel_build.sh",
   "outputDirectory": "build"
 }

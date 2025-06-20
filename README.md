@@ -38,3 +38,8 @@ pip install -r backend/backend/requirements.txt
 uvicorn backend.main:app --reload
 ```
 This will launch the API at `http://localhost:8000`.
+
+### Vercel Build
+Vercel runs `scripts/vercel_build.sh` which installs backend dependencies before
+building the React app. This keeps the FastAPI backend functional in serverless
+deployments.
