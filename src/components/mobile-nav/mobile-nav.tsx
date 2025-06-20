@@ -12,7 +12,7 @@ import {
   useUpdateEffect,
 } from '@chakra-ui/react'
 import { Link } from '@saas-ui/react'
-import useRouteChanged from 'hooks/use-route-changed'
+import useRouteChanged from '../../hooks/use-route-changed'
 import { usePathname } from 'next/navigation'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { RemoveScroll } from 'react-remove-scroll'
