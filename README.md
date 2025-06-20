@@ -3,6 +3,10 @@ Public SaaS React + FastAPI system for MyRoofGenius.
 
 ## Local Development
 
+### Environment Variables
+Copy `.env.example` to `.env` and provide values for the required secrets. Each
+variable is described in [docs/vercel-env.md](docs/vercel-env.md).
+
 ### Frontend (Create React App)
 1. Install dependencies:
    ```bash
