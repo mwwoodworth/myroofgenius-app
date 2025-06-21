@@ -24,3 +24,19 @@ pip install -r python-backend/requirements.txt
 uvicorn main:app --app-dir python-backend --reload
 ```
 The backend dependencies include `stripe` for payments and `httpx` for outbound HTTP calls.
+
+### Running Tests
+
+Frontend tests use Jest via `react-scripts`:
+```bash
+npm test
+```
+
+Backend tests are written with `pytest`:
+```bash
+pip install -r requirements.txt
+pip install -r backend/backend/requirements.txt
+pytest
+```
+
+Continuous integration runs these commands using `.github/workflows/ci.yml` whenever you push or open a pull request.
