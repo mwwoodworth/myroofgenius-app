@@ -9,8 +9,8 @@ Public SaaS React + FastAPI system for MyRoofGenius.
 
 ## Architecture (Codex-Ready)
 
-- **Frontend:** Next.js 14 App Router (`/src/app`) with Tailwind, Framer Motion, and @vercel/ai.
-- **Design System:** RoofOS components in `/src/components` and `/src/theme`.
+- **Frontend:** Next.js 14 App Router (`/app`) with Tailwind, Framer Motion, and @vercel/ai.
+- **Design System:** RoofOS components in `/components` and `/theme`.
 - **Backend:** FastAPI service in `/python-backend`.
 - **CI:** Node (lint/test/build) & Python workflows in `.github/workflows`.
 - **Env:** `.env.example` lists Supabase, Stripe, Sentry, and OpenAI keys.
