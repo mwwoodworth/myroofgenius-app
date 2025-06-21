@@ -23,3 +23,4 @@ Run it locally with Uvicorn:
 pip install -r python-backend/requirements.txt
 uvicorn main:app --app-dir python-backend --reload
 ```
+The backend dependencies include `stripe` for payments and `httpx` for outbound HTTP calls.
