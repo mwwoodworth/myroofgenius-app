@@ -15,3 +15,11 @@ Public SaaS React + FastAPI system for MyRoofGenius.
 - **CI:** Node (lint/test/build) & Python workflows in `.github/workflows`.
 - **Env:** `.env.example` lists Supabase, Stripe, Sentry, and OpenAI keys.
 
+
+### Backend (FastAPI)
+The backend lives in `python-backend/main.py`.
+Run it locally with Uvicorn:
+```bash
+pip install -r python-backend/requirements.txt
+uvicorn main:app --app-dir python-backend --reload
+```
