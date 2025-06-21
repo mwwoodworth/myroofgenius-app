@@ -5,5 +5,5 @@
       "#data/*": ["data/*"]
     }
   },
-  "include": ["src", "data"]
+  "include": ["app", "src", "data"]
 }
