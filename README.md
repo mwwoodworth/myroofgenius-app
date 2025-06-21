@@ -34,8 +34,7 @@ npm test
 
 Backend tests are written with `pytest`:
 ```bash
-pip install -r requirements.txt
-pip install -r backend/backend/requirements.txt
+pip install -r python-backend/requirements.txt
 pytest
 ```
 
