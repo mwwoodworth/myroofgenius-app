@@ -27,6 +27,7 @@
     "jest": "^29.7.0",
     "@testing-library/react": "^14.1.2",
     "@testing-library/jest-dom": "^6.1.4",
-    "jest-environment-jsdom": "^29.7.0"
+    "jest-environment-jsdom": "^29.7.0",
+    "@tsconfig/next": "^2.0.3"
   }
 }
