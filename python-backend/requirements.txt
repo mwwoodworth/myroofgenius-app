@@ -1,6 +1,6 @@
 fastapi
 uvicorn[standard]
 stripe
-httpx
+httpx<0.28
 supabase==2.15.3
 pytest
