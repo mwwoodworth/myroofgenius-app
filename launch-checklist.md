@@ -2,9 +2,9 @@
 
 | Item | Status | Founder Action |
 |------|--------|----------------|
-| Tailwind & PostCSS setup | Ready | — |
-| Base UI scaffolding | Ready | — |
-| Demo content placeholders | Ready | — |
+| Tailwind & PostCSS setup | Done | — |
+| Base UI scaffolding | Done | — |
+| Production content finalized | Done | — |
 | Production API keys (Make.com, Claude) | Done | — |
-| Final copy for landing page | Ready | — |
-| Deployment env vars (Vercel) | In Progress | Add remaining keys per [docs/vercel-env.md](docs/vercel-env.md) |
+| Final copy for landing page | Done | Founder-approved |
+| Deployment env vars (Vercel) | Done | All keys configured |
