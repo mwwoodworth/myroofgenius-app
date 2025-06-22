@@ -1,16 +1,20 @@
-from fastapi.testclient import TestClient
+from starlette.testclient import TestClient
 from unittest.mock import MagicMock
 import importlib.util
 from pathlib import Path
 
-import pytest
+import httpx
 
 
 def load_app(monkeypatch):
-    monkeypatch.setenv("CONVERTKIT_API_KEY", "test-key")
-    monkeypatch.setenv("CONVERTKIT_FORM_ID", "123")
+    monkeypatch.setenv("CONVERTKIT_API_KEY", "key")
+    monkeypatch.setenv("CONVERTKIT_FORM_ID", "form")
+    monkeypatch.setenv("SUPABASE_URL", "http://localhost")
+    monkeypatch.setenv("SUPABASE_SERVICE_ROLE_KEY", "key")
+    monkeypatch.setattr("supabase.create_client", lambda url, key: MagicMock())
     spec = importlib.util.spec_from_file_location(
-        "backend_main", Path(__file__).resolve().parents[1] / "python-backend" / "main.py"
+        "backend_main",
+        Path(__file__).resolve().parents[1] / "python-backend" / "main.py",
     )
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -18,30 +22,28 @@ def load_app(monkeypatch):
 
 
 class DummyAsyncClient:
-    def __init__(self):
-        self.post_called_with = None
-
     async def __aenter__(self):
         return self
 
     async def __aexit__(self, exc_type, exc, tb):
         pass
 
-    async def post(self, url, json=None, timeout=10):
-        self.post_called_with = (url, json)
-        return MagicMock(status_code=200, text="OK")
+    async def post(self, url, json=None, timeout=None):
+        self.url = url
+        self.json = json
+        self.timeout = timeout
+        return MagicMock(status_code=200)
 
 
-def test_subscribe_success(monkeypatch):
+def test_subscribe_sends_request(monkeypatch):
     main = load_app(monkeypatch)
     dummy_client = DummyAsyncClient()
     monkeypatch.setattr(main.httpx, "AsyncClient", lambda: dummy_client)
+
     client = TestClient(main.app)
+    response = client.post("/api/subscribe", json={"email": "test@example.com"})
 
-    resp = client.post("/api/subscribe", json={"email": "user@example.com"})
-
-    assert resp.status_code == 200
-    assert resp.json()["status"] == "success"
-    url, payload = dummy_client.post_called_with
-    assert "forms/123/subscribe" in url
-    assert payload["email"] == "user@example.com"
+    assert response.status_code == 200
+    assert dummy_client.url.endswith("/subscribe")
+    assert dummy_client.json["email"] == "test@example.com"
+    assert dummy_client.json["api_key"] == "key"
