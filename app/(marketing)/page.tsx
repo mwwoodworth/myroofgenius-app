@@ -262,33 +262,20 @@ const HighlightsSection = () => {
         “MyRoofGenius streamlined our estimating workflow and uncovered issues
         we would have missed. It saved us weeks of rework.”
       </HighlightsTestimonialItem>
-      <HighlightsItem
-        colSpan={[1, null, 2]}
-        title="Start your next idea two steps ahead"
-      >
+      <HighlightsItem colSpan={[1, null, 2]} title="Built for roofing professionals">
         <Text color="muted" fontSize="lg">
-          We took care of all your basic frontend needs, so you can start
-          building functionality that makes your product unique.
+          MyRoofGenius includes the essentials for confident planning and execution.
         </Text>
         <Wrap mt="8">
           {[
-            'authentication',
-            'navigation',
-            'crud',
-            'settings',
-            'multi-tenancy',
-            'layouts',
-            'billing',
-            'a11y testing',
-            'server-side rendering',
-            'documentation',
-            'onboarding',
-            'storybooks',
-            'theming',
-            'upselling',
-            'unit testing',
-            'feature flags',
-            'responsiveness',
+            'AI damage detection',
+            'Code compliance',
+            'Precise estimates',
+            'Material planning',
+            'Risk forecasting',
+            'Team collaboration',
+            'Automated reports',
+            'Weather insights',
           ].map((value) => (
             <Tag
               key={value}
@@ -317,15 +304,14 @@ const FeaturesSection = () => {
           textAlign="left"
           as="p"
         >
-          Not your standard
-          <Br /> dashboard template.
+          Tools that keep every project on track
         </Heading>
       }
       description={
         <>
-          MyRoofGenius delivers powerful analytics and planning tools.
+          MyRoofGenius combines field expertise with real-time analysis.
           <Br />
-          Use it to validate specifications and generate accurate estimates.
+          Catch specification issues early and budget with confidence.
         </>
       }
       align="left"
@@ -333,71 +319,45 @@ const FeaturesSection = () => {
       iconSize={4}
       features={[
         {
-          title: '#components.',
-          icon: FiBox,
-          description:
-            'All premium components are available on a private NPM registery, no more copy pasting and always up-to-date.',
-          variant: 'inline',
-        },
-        {
-          title: 'Starterkits.',
-          icon: FiLock,
-          description:
-            'Example apps in Next.JS, Electron. Including authentication, billing, example pages, everything you need to get started FAST.',
-          variant: 'inline',
-        },
-        {
-          title: 'Documentation.',
+          title: 'AI damage detection',
           icon: FiSearch,
           description:
-            'Extensively documented, including storybooks, best practices, use-cases and examples.',
+            'Analyze roof photos and drone scans to identify trouble spots automatically.',
           variant: 'inline',
         },
         {
-          title: 'Onboarding.',
-          icon: FiUserPlus,
+          title: 'Specification checks',
+          icon: FiCheck,
           description:
-            'Add user onboarding flows, like tours, hints and inline documentation without breaking a sweat.',
+            'Verify materials and codes before proposals go out the door.',
           variant: 'inline',
         },
         {
-          title: 'Feature flags.',
-          icon: FiFlag,
-          description:
-            "Implement feature toggles for your billing plans with easy to use hooks. Connect Flagsmith, or other remote config services once you're ready.",
-          variant: 'inline',
-        },
-        {
-          title: 'Upselling.',
+          title: 'Precise cost planning',
           icon: FiTrendingUp,
           description:
-            '#components and hooks for upgrade flows designed to make upgrading inside your app frictionless.',
+            'Generate accurate material and labor estimates in seconds.',
           variant: 'inline',
         },
         {
-          title: 'Themes.',
-          icon: FiToggleLeft,
+          title: 'Collaborative workspace',
+          icon: FiUserPlus,
           description:
-            'Includes multiple themes with darkmode support, always have the perfect starting point for your next project.',
+            'Share roof data and updates with your entire crew in one place.',
           variant: 'inline',
         },
         {
-          title: 'Generators.',
+          title: 'Automated reporting',
           icon: FiTerminal,
           description:
-            'Extend your design system while maintaininig code quality and consistency with built-in generators.',
+            'Create professional client reports with a single click.',
           variant: 'inline',
         },
         {
-          title: 'Monorepo.',
-          icon: FiCode,
-          description: (
-            <>
-              All code is available as packages in a high-performance{' '}
-              <Link href="https://turborepo.com">Turborepo</Link>, you have full
-              control to modify and adjust it to your workflow.
-            </>
-          ),
+          title: 'Project history',
+          icon: FiThumbsUp,
+          description:
+            'Track inspections and maintenance records over the life of a roof.',
           variant: 'inline',
         },
       ]}
