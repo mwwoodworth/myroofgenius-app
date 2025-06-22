@@ -27,7 +27,7 @@ The backend dependencies include `stripe` for payments and `httpx` for outbound 
 
 ### Running Tests
 
-Frontend tests use Jest via `react-scripts`:
+Frontend tests use Jest:
 ```bash
 npm test
 ```
@@ -38,4 +38,4 @@ pip install -r python-backend/requirements.txt
 pytest
 ```
 
-Continuous integration runs these commands using `.github/workflows/ci.yml` whenever you push or open a pull request.
+Continuous integration runs these commands using the Node and Python workflows under `.github/workflows` whenever you push or open a pull request.
