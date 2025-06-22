@@ -60,8 +60,8 @@ import pricing from '#data/pricing'
 import testimonials from '#data/testimonials'
 
 export const meta: Metadata = {
-  title: 'Saas UI Landingspage',
-  description: 'Free SaaS landingspage starter kit',
+  title: 'MyRoofGenius',
+  description: 'Intelligent systems that protect every commercial roofing decision.',
 }
 
 const Home: NextPage = () => {
@@ -100,9 +100,8 @@ const HeroSection: React.FC = () => {
             }
             description={
               <FallInPlace delay={0.4} fontWeight="medium">
-                Saas UI is a <Em>React component library</Em>
-                <Br /> that doesn&apos;t get in your way and helps you <Br />{' '}
-                build intuitive SaaS products with speed.
+                MyRoofGenius is an <Em>AI‑powered platform</Em>
+                <Br /> that safeguards every commercial roofing decision.
               </FallInPlace>
             }
           >
@@ -117,7 +116,7 @@ const HeroSection: React.FC = () => {
                 </ButtonLink>
                 <ButtonLink
                   size="lg"
-                  href="https://demo.saas-ui.dev"
+                  href="#benefits"
                   variant="outline"
                   rightIcon={
                     <Icon
@@ -132,7 +131,7 @@ const HeroSection: React.FC = () => {
                     />
                   }
                 >
-                  View demo
+                  Learn more
                 </ButtonLink>
               </ButtonGroup>
             </FallInPlace>
@@ -152,7 +151,7 @@ const HeroSection: React.FC = () => {
                   src="/static/screenshots/list.png"
                   width={1200}
                   height={762}
-                  alt="Screenshot of a ListPage in Saas UI Pro"
+                  alt="Screenshot of a project estimate in MyRoofGenius"
                   quality="75"
                   priority
                 />
@@ -208,17 +207,15 @@ const HeroSection: React.FC = () => {
 }
 
 const HighlightsSection = () => {
-  const { value, onCopy, hasCopied } = useClipboard('yarn add @saas-ui/react')
+  const { value, onCopy, hasCopied } = useClipboard('myroofgenius.com/signup')
 
   return (
     <Highlights>
       <HighlightsItem colSpan={[1, null, 2]} title="Core components">
         <VStack alignItems="flex-start" spacing="8">
           <Text color="muted" fontSize="xl">
-            Get started for free with <Em>30+ open source components</Em>.
-            Including authentication screens with Clerk, Supabase and Magic.
-            Fully functional forms with React Hook Form. Data tables with React
-            Table.
+            Explore AI‑powered tools that keep projects on track and under budget.
+            Analyze materials, verify codes, and generate accurate estimates effortlessly.
           </Text>
 
           <Flex
@@ -234,15 +231,15 @@ const HighlightsSection = () => {
           >
             <Box>
               <Text color="yellow.400" display="inline">
-                yarn add
+                https://
               </Text>{' '}
               <Text color="cyan.300" display="inline">
-                @saas-ui/react
+                myroofgenius.com/signup
               </Text>
             </Box>
             <IconButton
               icon={hasCopied ? <FiCheck /> : <FiCopy />}
-              aria-label="Copy install command"
+              aria-label="Copy link"
               onClick={onCopy}
               variant="ghost"
               ms="4"
@@ -255,8 +252,8 @@ const HighlightsSection = () => {
       <HighlightsItem title="Solid foundations">
         <Text color="muted" fontSize="lg">
           We don&apos;t like to re-invent the wheel, neither should you. We
-          selected the most productive and established tools in the scene and
-          build Saas UI on top of it.
+          selected the most reliable industry data available and
+          built MyRoofGenius on top of it.
         </Text>
       </HighlightsItem>
       <HighlightsTestimonialItem
@@ -265,9 +262,8 @@ const HighlightsSection = () => {
         avatar="/static/images/avatar.jpg"
         gradient={['pink.200', 'purple.500']}
       >
-        “Saas UI helped us set up a beautiful modern UI in no time. It saved us
-        hundreds of hours in development time and allowed us to focus on
-        business logic for our specific use-case from the start.”
+        “MyRoofGenius streamlined our estimating workflow and uncovered issues
+        we would have missed. It saved us weeks of rework.”
       </HighlightsTestimonialItem>
       <HighlightsItem
         colSpan={[1, null, 2]}
@@ -330,10 +326,9 @@ const FeaturesSection = () => {
       }
       description={
         <>
-          Saas UI Pro includes everything you need to build modern frontends.
+          MyRoofGenius delivers powerful analytics and planning tools.
           <Br />
-          Use it as a template for your next product or foundation for your
-          design system.
+          Use it to validate specifications and generate accurate estimates.
         </>
       }
       align="left"
