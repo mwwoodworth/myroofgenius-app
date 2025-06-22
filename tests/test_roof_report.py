@@ -25,4 +25,20 @@ def test_roof_report_endpoint(monkeypatch):
     client = TestClient(main.app)
     resp = client.get("/api/roof/report")
     assert resp.status_code == 200
-    assert resp.json() == {"report": "All clear"}
+    data = resp.json()
+    assert data["status"] == "ok"
+    assert data["damageScore"] == 0.0
+    assert "lastInspection" in data
+
+
+def test_roof_report_failure(monkeypatch):
+    main = load_app(monkeypatch)
+    roof = main.roof
+
+    async def boom():
+        raise RuntimeError("fail")
+
+    monkeypatch.setattr(roof, "_build_report", boom)
+    client = TestClient(main.app)
+    resp = client.get("/api/roof/report")
+    assert resp.status_code == 500
