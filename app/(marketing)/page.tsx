@@ -94,8 +94,8 @@ const HeroSection: React.FC = () => {
             px="0"
             title={
               <FallInPlace>
-                Build beautiful
-                <Br /> software faster
+                Build resilient
+                <Br /> roofs with AI‑driven insights
               </FallInPlace>
             }
             description={
@@ -169,33 +169,30 @@ const HeroSection: React.FC = () => {
         pt="20"
         features={[
           {
-            title: 'Accessible',
-            icon: FiSmile,
-            description: 'All components strictly follow WAI-ARIA standards.',
+            title: 'AI damage detection',
+            icon: FiSearch,
+            description: 'Automatically identify roof issues from photos and drone scans.',
             iconPosition: 'left',
             delay: 0.6,
           },
           {
-            title: 'Themable',
-            icon: FiSliders,
-            description:
-              'Fully customize all components to your brand with theme support and style props.',
+            title: 'Code compliance',
+            icon: FiCheck,
+            description: 'Verify local building codes before finalizing a proposal.',
             iconPosition: 'left',
             delay: 0.8,
           },
           {
-            title: 'Composable',
-            icon: FiGrid,
-            description:
-              'Compose components to fit your needs and mix them together to create new ones.',
+            title: 'Precise estimates',
+            icon: FiTrendingUp,
+            description: 'Generate accurate material and labor costs in seconds.',
             iconPosition: 'left',
             delay: 1,
           },
           {
-            title: 'Productive',
-            icon: FiThumbsUp,
-            description:
-              'Designed to reduce boilerplate and fully typed, build your product at speed.',
+            title: 'Team collaboration',
+            icon: FiUserPlus,
+            description: 'Share roof plans and updates with your entire crew in one dashboard.',
             iconPosition: 'left',
             delay: 1.1,
           },
