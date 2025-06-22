@@ -46,3 +46,15 @@ Continuous integration runs these commands using the Node and Python workflows u
 2. Add the variables from `.env.example` as Vercel environment variables. Each is explained in [docs/vercel-env.md](docs/vercel-env.md).
 3. Deploying the `main` branch will build the Next.js frontend and the Python backend. The `vercel.json` file rewrites any request matching `/api/*` to the appropriate backend function.
 4. Subsequent pushes to `main` automatically trigger new Vercel deployments.
+
+## Docker
+
+Build the container:
+```bash
+docker build -t myroofgenius-app .
+```
+Run it locally:
+```bash
+docker run -p 3000:3000 -p 8000:8000 myroofgenius-app
+```
+The Next.js frontend will be available at `http://localhost:3000` while the FastAPI backend listens on `http://localhost:8000`.
