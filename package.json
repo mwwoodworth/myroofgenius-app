@@ -17,7 +17,7 @@
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.40",
     "framer-motion": "^11.0.0",
-    "@vercel/ai": "^0.17.0",
+    "ai": "^4.3.16",
     "@supabase/supabase-js": "^2.30.0"
   },
   "devDependencies": {
