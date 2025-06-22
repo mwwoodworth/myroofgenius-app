@@ -5,6 +5,18 @@ import stripe
 import httpx
 import importlib.util
 from pathlib import Path
+import sys
+import types
+try:
+    from supabase import create_client
+except ModuleNotFoundError:  # Allow tests without package
+    supabase_module = types.ModuleType("supabase")
+    sys.modules["supabase"] = supabase_module
+
+    def create_client(*_, **__):
+        raise RuntimeError("Supabase package not installed")
+
+    supabase_module.create_client = create_client
 
 app = FastAPI()
 
@@ -26,6 +38,10 @@ app.add_middleware(
 # Initialize Stripe
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 stripe_webhook_secret = os.getenv("STRIPE_WEBHOOK_SECRET")
+
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+supabase_client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
 CONVERTKIT_API_KEY = os.getenv("CONVERTKIT_API_KEY")
 CONVERTKIT_FORM_ID = os.getenv("CONVERTKIT_FORM_ID", "64392d9bef")
@@ -75,7 +91,17 @@ async def stripe_webhook(request: Request):
 
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
-        # TODO: handle order fulfillment, store in DB
+        try:
+            supabase_client.table("orders").insert({
+                "user_id": session.get("metadata", {}).get("user_id"),
+                "product_id": session.get("metadata", {}).get("product_id"),
+                "stripe_session_id": session["id"],
+                "amount": session.get("amount_total", 0) / 100,
+                "status": "paid",
+            }).execute()
+        except Exception as e:
+            # Log but still acknowledge to Stripe to avoid retries
+            print("Supabase insert error:", e)
         print("Payment succeeded for session", session["id"])
 
     return {"status": "ok"}
