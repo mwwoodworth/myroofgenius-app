@@ -32,4 +32,4 @@
 | Auth issues | Confirm Supabase URL & anon key env vars |
 
 ---
-Last updated: {{DATE}}
+Last updated: 2025-06-22
