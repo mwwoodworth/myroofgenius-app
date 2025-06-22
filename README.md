@@ -43,6 +43,6 @@ Continuous integration runs these commands using the Node and Python workflows u
 ## Deployment
 
 1. Create a project on **Vercel** and link this repository.
-2. Add the environment variables listed in [docs/vercel-env.md](docs/vercel-env.md) to the project settings.
+2. Add the variables from `.env.example` as Vercel environment variables. Each is explained in [docs/vercel-env.md](docs/vercel-env.md).
 3. Deploying the `main` branch will build the Next.js frontend and the Python backend. The `vercel.json` file rewrites any request matching `/api/*` to the appropriate backend function.
 4. Subsequent pushes to `main` automatically trigger new Vercel deployments.
