@@ -19,7 +19,6 @@ export const Em: React.FC<HTMLChakraProps<'em'>> = ({ children, ...props }) => {
   )
 }
 
-// @todo make this configurable
 export const Br: React.FC<HTMLChakraProps<'span'>> = (props) => {
   return (
     <chakra.span {...props}>
