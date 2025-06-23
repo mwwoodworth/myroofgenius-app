@@ -1,8 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-    eslint: {
-    // Allow production builds to succeed even if there are lint errors.
+  eslint: {
     ignoreDuringBuilds: true,
-  }
+  },
+  images: {
+    domains: ['cdn.jsdelivr.net', 'images.unsplash.com'],
+  },
+};
+
 module.exports = nextConfig;
