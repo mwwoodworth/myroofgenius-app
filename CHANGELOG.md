@@ -7,6 +7,7 @@ This file summarizes major features and updates in the project.
 - **FastAPI** backend providing `/api` endpoints.
 - **Supabase** integration for auth and data storage.
 - **Stripe** payments with webhook handling.
+- **ConvertKit** integration for marketing email sign-ups.
 - **CI workflows** for Node and Python tests.
 
 ## Recent Updates
