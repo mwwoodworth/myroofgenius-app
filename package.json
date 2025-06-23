@@ -17,6 +17,9 @@
     "postcss": "^8.4.40",
     "framer-motion": "^11.0.0",
     "ai": "^4.3.16",
+    "react-router-dom": "^7.6.2",
+    "@saas-ui/react": "^2.11.4",
+    "@saas-ui/auth": "^3.6.6",
     "@supabase/supabase-js": "^2.30.0"
   },
   "devDependencies": {
