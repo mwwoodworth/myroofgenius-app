@@ -1,9 +1,16 @@
 name: CI – Web
 
 on:
+  ppush:
+    branches:
+      - main
+      - develop
+      - feature/**
   pull_request:
-  push:
-    branches: [codex-ready]
+    branches:
+      - main
+      - develop
+      - feature/**
 
 jobs:
   build:
