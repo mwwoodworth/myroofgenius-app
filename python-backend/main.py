@@ -9,7 +9,8 @@ from pathlib import Path
 import sys
 import types
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO,
+                    format="%(levelname)s:%(name)s:%(message)s")
 logger = logging.getLogger(__name__)
 try:
     from supabase import create_client

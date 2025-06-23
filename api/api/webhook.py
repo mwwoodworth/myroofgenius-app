@@ -4,7 +4,8 @@ import stripe
 import logging
 from supabase import create_client
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO,
+                    format="%(levelname)s:%(name)s:%(message)s")
 logger = logging.getLogger(__name__)
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
@@ -28,6 +29,8 @@ async def handler(request):
 
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
+        logger.info("Processing checkout.session.completed for session %s",
+                    session["id"])
         try:
             supabase.table("orders").insert({
                 "user_id": session.get("metadata", {}).get("user_id"),
