@@ -62,5 +62,5 @@ the Python requirements and launches Uvicorn with the built assets included.
 
 ### Deprecated Bootstrap Script
 The helper script `scripts/bootstrap_codex.sh` previously bootstrapped the
-Codex CLI. The CLI has been removed, so this script is obsolete and kept only
-for reference.
+Codex CLI. The CLI has been removed, so this script does nothing and is kept
+only for historical reference. Feel free to delete it locally.
