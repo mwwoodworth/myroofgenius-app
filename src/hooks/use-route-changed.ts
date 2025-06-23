@@ -1,12 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
-/**
- * Stub implementation of useRouteChanged.
- * Replace with actual logic when ready.
- */
+// Runs a callback when the route changes
 export default function useRouteChanged(callback: () => void) {
+  const router = useRouter();
+
   useEffect(() => {
-    // No-op: call the callback immediately for now
-    callback?.();
-  }, [callback]);
+    const handleRouteChange = () => callback();
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router, callback]);
 }
