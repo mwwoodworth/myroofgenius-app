@@ -13,6 +13,11 @@ def load_app(monkeypatch):
     monkeypatch.setenv("SUPABASE_URL", "http://localhost")
     monkeypatch.setenv("SUPABASE_SERVICE_ROLE_KEY", "key")
     monkeypatch.setattr("supabase.create_client", lambda url, key: MagicMock())
+    root = Path(__file__).resolve().parents[1]
+    if str(root) not in sys.path:
+        sys.path.insert(0, str(root))
+    import stripe_stub
+    sys.modules["stripe"] = stripe_stub
     path = Path(__file__).resolve().parents[1] / "python_backend" / "main.py"
     package = ModuleType("python_backend")
     package.__path__ = [str(path.parent)]
