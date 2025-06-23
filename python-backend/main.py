@@ -1,4 +1,5 @@
 import os
+import logging
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import stripe
@@ -7,6 +8,9 @@ import importlib.util
 from pathlib import Path
 import sys
 import types
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 try:
     from supabase import create_client
 except ModuleNotFoundError:  # Allow tests without package
@@ -101,7 +105,7 @@ async def stripe_webhook(request: Request):
             }).execute()
         except Exception as e:
             # Log but still acknowledge to Stripe to avoid retries
-            print("Supabase insert error:", e)
-        print("Payment succeeded for session", session["id"])
+            logger.error("Supabase insert error: %s", e)
+        logger.info("Payment succeeded for session %s", session["id"])
 
     return {"status": "ok"}
