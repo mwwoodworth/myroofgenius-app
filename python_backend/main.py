@@ -4,8 +4,7 @@ from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import stripe
 import httpx
-import importlib.util
-from pathlib import Path
+from .routes import roof
 import sys
 import types
 
@@ -24,12 +23,7 @@ except ModuleNotFoundError:  # Allow tests without package
 
 app = FastAPI()
 
-# Dynamically load roof routes to avoid package import issues
-spec = importlib.util.spec_from_file_location(
-    "roof", Path(__file__).resolve().parent / "routes" / "roof.py"
-)
-roof = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(roof)
+# Include roof routes
 app.include_router(roof.router)
 
 app.add_middleware(
