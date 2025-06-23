@@ -57,3 +57,8 @@ docker run -p 8000:8000 myroofgenius-app
 ```
 
 The image starts Uvicorn for the FastAPI backend and includes the compiled Next.js frontend.
+
+### Deprecated Bootstrap Script
+The helper script `scripts/bootstrap_codex.sh` previously bootstrapped the
+Codex CLI. The CLI has been removed, so this script is obsolete and kept only
+for reference.
