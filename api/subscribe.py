@@ -1,7 +1,20 @@
-import os, json
+import os
+import json
 import httpx
+import logging
 
-CONVERTKIT_API_KEY = os.getenv("CONVERTKIT_API_KEY")
+logger = logging.getLogger(__name__)
+
+
+def _required_env(var_name: str) -> str:
+    value = os.getenv(var_name)
+    if not value:
+        logger.error("Missing required environment variable: %s", var_name)
+        raise RuntimeError(f"{var_name} environment variable is required")
+    return value
+
+
+CONVERTKIT_API_KEY = _required_env("CONVERTKIT_API_KEY")
 CONVERTKIT_FORM_ID = os.getenv("CONVERTKIT_FORM_ID", "64392d9bef")
 
 

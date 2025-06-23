@@ -7,8 +7,20 @@ and writes the result to stdout or a file.
 import argparse
 import os
 import openai
+import logging
 
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+logger = logging.getLogger(__name__)
+
+
+def _required_env(var_name: str) -> str:
+    value = os.environ.get(var_name)
+    if not value:
+        logger.error("Missing required environment variable: %s", var_name)
+        raise RuntimeError(f"{var_name} environment variable is required")
+    return value
+
+
+openai.api_key = _required_env("OPENAI_API_KEY")
 
 
 def main() -> None:

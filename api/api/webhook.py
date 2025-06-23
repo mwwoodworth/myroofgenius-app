@@ -7,11 +7,19 @@ from supabase import create_client
 logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message)s")
 logger = logging.getLogger(__name__)
 
-stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
-WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
 
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+def _required_env(var_name: str) -> str:
+    value = os.getenv(var_name)
+    if not value:
+        logger.error("Missing required environment variable: %s", var_name)
+        raise RuntimeError(f"{var_name} environment variable is required")
+    return value
+
+stripe.api_key = _required_env("STRIPE_SECRET_KEY")
+WEBHOOK_SECRET = _required_env("STRIPE_WEBHOOK_SECRET")
+
+SUPABASE_URL = _required_env("SUPABASE_URL")
+SUPABASE_SERVICE_ROLE_KEY = _required_env("SUPABASE_SERVICE_ROLE_KEY")
 
 supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 

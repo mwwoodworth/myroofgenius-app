@@ -1,6 +1,20 @@
-import os, json, stripe
+import os
+import json
+import stripe
+import logging
 
-stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+logger = logging.getLogger(__name__)
+
+
+def _required_env(var_name: str) -> str:
+    value = os.getenv(var_name)
+    if not value:
+        logger.error("Missing required environment variable: %s", var_name)
+        raise RuntimeError(f"{var_name} environment variable is required")
+    return value
+
+
+stripe.api_key = _required_env("STRIPE_SECRET_KEY")
 
 
 async def handler(request):
