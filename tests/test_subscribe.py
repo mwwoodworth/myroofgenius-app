@@ -8,6 +8,8 @@ import httpx
 
 
 def load_app(monkeypatch):
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk")
+    monkeypatch.setenv("STRIPE_WEBHOOK_SECRET", "wh")
     monkeypatch.setenv("CONVERTKIT_API_KEY", "key")
     monkeypatch.setenv("CONVERTKIT_FORM_ID", "form")
     monkeypatch.setenv("SUPABASE_URL", "http://localhost")

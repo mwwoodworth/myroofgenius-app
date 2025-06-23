@@ -11,6 +11,9 @@ def load_app(monkeypatch):
         sys.path.insert(0, str(root))
     import stripe_stub
     sys.modules["stripe"] = stripe_stub
+    monkeypatch.setenv("STRIPE_SECRET_KEY", "sk")
+    monkeypatch.setenv("STRIPE_WEBHOOK_SECRET", "wh")
+    monkeypatch.setenv("CONVERTKIT_API_KEY", "ck")
     monkeypatch.setenv("SUPABASE_URL", "http://localhost")
     monkeypatch.setenv("SUPABASE_SERVICE_ROLE_KEY", "key")
     monkeypatch.setattr("supabase.create_client", lambda url, key: MagicMock())

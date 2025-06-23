@@ -10,6 +10,15 @@ import types
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message)s")
 logger = logging.getLogger(__name__)
+
+
+def _required_env(var_name: str) -> str:
+    """Return environment variable or raise a RuntimeError if missing."""
+    value = os.getenv(var_name)
+    if not value:
+        logger.error("Missing required environment variable: %s", var_name)
+        raise RuntimeError(f"{var_name} environment variable is required")
+    return value
 try:
     from supabase import create_client
 except ModuleNotFoundError:  # Allow tests without package
@@ -33,15 +42,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize Stripe
-stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
-stripe_webhook_secret = os.getenv("STRIPE_WEBHOOK_SECRET")
 
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+# Initialize Stripe
+stripe.api_key = _required_env("STRIPE_SECRET_KEY")
+stripe_webhook_secret = _required_env("STRIPE_WEBHOOK_SECRET")
+
+SUPABASE_URL = _required_env("SUPABASE_URL")
+SUPABASE_SERVICE_ROLE_KEY = _required_env("SUPABASE_SERVICE_ROLE_KEY")
 supabase_client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
-CONVERTKIT_API_KEY = os.getenv("CONVERTKIT_API_KEY")
+CONVERTKIT_API_KEY = _required_env("CONVERTKIT_API_KEY")
 CONVERTKIT_FORM_ID = os.getenv("CONVERTKIT_FORM_ID", "64392d9bef")
 
 
