@@ -11,7 +11,7 @@ Public SaaS React + FastAPI system for MyRoofGenius.
 
 - **Frontend:** Next.js 14 App Router (`/app`) with Tailwind, Framer Motion, and @vercel/ai.
 - **Design System:** RoofOS components in `/components` and `/theme`.
-- **Backend:** FastAPI service in `/python-backend`.
+ - **Backend:** FastAPI service in `/python_backend`.
 - **CI:** Node (lint/test/build) & Python workflows in `.github/workflows`.
 - **Env:** `.env.example` lists Supabase, Stripe, Sentry, and OpenAI keys.
 - **Command Palette:** Press `Cmd+K` anywhere in the app to open quick actions.
@@ -24,11 +24,11 @@ dashboard. The palette is powered by [cmdk](https://github.com/pacocoursey/cmdk)
 
 
 ### Backend (FastAPI)
-The backend lives in `python-backend/main.py`.
+ The backend lives in `python_backend/main.py`.
 Run it locally with Uvicorn:
 ```bash
-pip install -r python-backend/requirements.txt
-uvicorn main:app --app-dir python-backend --reload
+ pip install -r python_backend/requirements.txt
+ uvicorn main:app --app-dir python_backend --reload
 ```
 The backend dependencies include `stripe` for payments and `httpx` for outbound HTTP calls.
 
@@ -41,7 +41,7 @@ npm test
 
 Backend tests are written with `pytest`:
 ```bash
-pip install -r python-backend/requirements.txt
+ pip install -r python_backend/requirements.txt
 pytest
 ```
 

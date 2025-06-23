@@ -17,6 +17,6 @@ A mini Three.js scene showcases a **3D roof model** using React Three Fiber. It 
 The UI uses **Framer Motion** for smooth transitions. Even the dark mode toggle animates for a polished feel.
 
 ## Onboarding Steps
-1. Clone the repository and install dependencies with `npm install` and `pip install -r python-backend/requirements.txt`.
+1. Clone the repository and install dependencies with `npm install` and `pip install -r python_backend/requirements.txt`.
 2. Copy `.env.example` to `.env` and fill in API keys as described in [docs/vercel-env.md](vercel-env.md).
 3. Run `npm run dev` and `uvicorn backend.main:app --reload` to start the frontend and backend locally.

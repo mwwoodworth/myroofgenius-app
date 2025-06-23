@@ -1,7 +1,8 @@
 from starlette.testclient import TestClient
 from unittest.mock import MagicMock
-import importlib.util
 from pathlib import Path
+from types import ModuleType
+import sys
 
 import httpx
 
@@ -12,12 +13,15 @@ def load_app(monkeypatch):
     monkeypatch.setenv("SUPABASE_URL", "http://localhost")
     monkeypatch.setenv("SUPABASE_SERVICE_ROLE_KEY", "key")
     monkeypatch.setattr("supabase.create_client", lambda url, key: MagicMock())
-    spec = importlib.util.spec_from_file_location(
-        "backend_main",
-        Path(__file__).resolve().parents[1] / "python-backend" / "main.py",
-    )
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    path = Path(__file__).resolve().parents[1] / "python_backend" / "main.py"
+    package = ModuleType("python_backend")
+    package.__path__ = [str(path.parent)]
+    sys.modules["python_backend"] = package
+    module = ModuleType("python_backend.main")
+    module.__package__ = "python_backend"
+    sys.modules["python_backend.main"] = module
+    code = path.read_text()
+    exec(compile(code, str(path), "exec"), module.__dict__)
     return module
 
 

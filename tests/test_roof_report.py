@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
-import importlib.util
 from pathlib import Path
 import sys
+from types import ModuleType
 from unittest.mock import MagicMock
 
 
@@ -12,11 +12,15 @@ def load_app(monkeypatch):
     monkeypatch.setenv("SUPABASE_URL", "http://localhost")
     monkeypatch.setenv("SUPABASE_SERVICE_ROLE_KEY", "key")
     monkeypatch.setattr("supabase.create_client", lambda url, key: MagicMock())
-    spec = importlib.util.spec_from_file_location(
-        "python_backend_main", root / "python-backend" / "main.py"
-    )
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    package = ModuleType("python_backend")
+    package.__path__ = [str(root / "python_backend")]
+    sys.modules["python_backend"] = package
+    module = ModuleType("python_backend.main")
+    module.__package__ = "python_backend"
+    sys.modules["python_backend.main"] = module
+    path = root / "python_backend" / "main.py"
+    code = path.read_text()
+    exec(compile(code, str(path), "exec"), module.__dict__)
     return module
 
 
