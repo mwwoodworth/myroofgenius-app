@@ -39,14 +39,19 @@ Ensure `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are set.
 
 ### Running Tests
 
-Frontend tests use Jest:
+#### Frontend
+
+Install dependencies and run the Jest test suite:
 ```bash
+npm install
 npm test
 ```
 
-Backend tests are written with `pytest`:
+#### Backend
+
+Install the Python requirements and execute the tests with `pytest`:
 ```bash
- pip install -r python_backend/requirements.txt
+pip install -r python_backend/requirements.txt
 pytest
 ```
 
