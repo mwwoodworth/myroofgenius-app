@@ -14,6 +14,13 @@ Public SaaS React + FastAPI system for MyRoofGenius.
 - **Backend:** FastAPI service in `/python-backend`.
 - **CI:** Node (lint/test/build) & Python workflows in `.github/workflows`.
 - **Env:** `.env.example` lists Supabase, Stripe, Sentry, and OpenAI keys.
+- **Command Palette:** Press `Cmd+K` anywhere in the app to open quick actions.
+
+### Command Palette
+
+Press `Cmd+K` (or `Ctrl+K` on Windows) to open a small command window. Use it to
+quickly jump to common pages like creating a new estimate or opening the
+dashboard. The palette is powered by [cmdk](https://github.com/pacocoursey/cmdk).
 
 
 ### Backend (FastAPI)
