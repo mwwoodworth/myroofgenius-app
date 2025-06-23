@@ -57,7 +57,12 @@ import { Em } from '#components/typography'
 import faq from '#data/faq'
 import pricing from '#data/pricing'
 import testimonials from '#data/testimonials'
-import { RoofDemo } from '#components/roof-demo'
+import dynamic from 'next/dynamic'
+
+const RoofDemo = dynamic(
+  () => import('#components/roof-demo').then((m) => m.RoofDemo),
+  { ssr: false },
+)
 
 export const meta: Metadata = {
   title: 'MyRoofGenius',
