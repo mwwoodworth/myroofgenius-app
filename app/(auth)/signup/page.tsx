@@ -1,7 +1,6 @@
 import { Box, Center, Stack, Text } from '@chakra-ui/react'
 import { Auth } from '@saas-ui/auth'
 import { Link } from '@saas-ui/react'
-import { NextPage } from 'next'
 import NextLink from 'next/link'
 import { FaGithub, FaGoogle } from 'react-icons/fa'
 
@@ -23,7 +22,7 @@ const providers = {
   },
 }
 
-const Login: NextPage = () => {
+export default function Page() {
   return (
     <Section height="100vh" innerWidth="container.xl">
       <BackgroundGradient
@@ -96,4 +95,3 @@ const Login: NextPage = () => {
   )
 }
 
-export default Login
