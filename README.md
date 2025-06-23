@@ -7,7 +7,7 @@ Public SaaS React + FastAPI system for MyRoofGenius.
 - Completed end‑to‑end integration tests (Stripe, Make.com, ClickUp, Google Drive).
 - Updated Dockerfile for optimized production build.
 
-## Architecture (Codex-Ready)
+## Architecture
 
 - **Frontend:** Next.js 14 App Router (`/app`) with Tailwind, Framer Motion, and @vercel/ai.
 - **Design System:** RoofOS components in `/components` and `/theme`.
@@ -75,10 +75,6 @@ The container uses a multi-stage build. The first stage installs Node
 dependencies and compiles the Next.js frontend, while the final stage installs
 the Python requirements and launches Uvicorn with the built assets included.
 
-### Deprecated Bootstrap Script
-The helper script `scripts/bootstrap_codex.sh` previously bootstrapped the
-Codex CLI. The CLI has been removed, so this script does nothing and is kept
-only for historical reference. Feel free to delete it locally.
 
 ## Additional Documentation
 - [Changelog](CHANGELOG.md)

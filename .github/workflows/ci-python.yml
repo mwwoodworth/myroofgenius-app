@@ -2,9 +2,9 @@ name: CI Python
 
 on:
   push:
-    branches: [main, codex-ready]
+    branches: [main]
   pull_request:
-    branches: [main, codex-ready]
+    branches: [main]
 
 jobs:
   test:
