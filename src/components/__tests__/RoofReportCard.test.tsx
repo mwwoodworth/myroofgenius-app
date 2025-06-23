@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import RoofReportCard from '../RoofReportCard';
 
 beforeEach(() => {
@@ -25,9 +25,11 @@ test('fetches report and refreshes', async () => {
   expect(screen.getByText(/Loading/i)).toBeInTheDocument()
 
   await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(1))
-  expect(screen.getByTestId('report')).toHaveTextContent('OK')
+  expect(await screen.findByTestId('report')).toHaveTextContent('OK')
 
-  jest.advanceTimersByTime(30000)
-  expect(screen.getByText(/Refreshing/i)).toBeInTheDocument()
+  act(() => {
+    jest.advanceTimersByTime(30000)
+  })
+  expect(await screen.findByText(/Refreshing/i)).toBeInTheDocument()
   await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(2))
 });

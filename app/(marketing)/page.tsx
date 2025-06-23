@@ -18,7 +18,6 @@ import {
 } from '@chakra-ui/react'
 import { Br, Link } from '@saas-ui/react'
 import type { Metadata, NextPage } from 'next'
-import Image from 'next/image'
 import {
   FiArrowRight,
   FiBox,
@@ -58,6 +57,7 @@ import { Em } from '#components/typography'
 import faq from '#data/faq'
 import pricing from '#data/pricing'
 import testimonials from '#data/testimonials'
+import { RoofDemo } from '#components/roof-demo'
 
 export const meta: Metadata = {
   title: 'MyRoofGenius',
@@ -147,14 +147,7 @@ const HeroSection: React.FC = () => {
           >
             <FallInPlace delay={1}>
               <Box overflow="hidden" height="100%">
-                <Image
-                  src="/static/screenshots/list.png"
-                  width={1200}
-                  height={762}
-                  alt="Screenshot of a project estimate in MyRoofGenius"
-                  quality="75"
-                  priority
-                />
+                <RoofDemo />
               </Box>
             </FallInPlace>
           </Box>
