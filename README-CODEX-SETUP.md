@@ -28,7 +28,8 @@ codex generate
 
 > **Note**
 > The helper script `scripts/bootstrap_codex.sh` used for Codex CLI setup is
-> obsolete and kept only for reference. Run `codex generate` directly instead.
+> obsolete and now performs no actions. It remains for reference only. Run
+> `codex generate` directly instead.
 
 ## 5. Cross‑Repo Dependency
 Relies on **brainops‑langgraph‑orchestrator** API; deploy orchestrator first.
