@@ -1,9 +1,9 @@
 # Stage 1: build Next.js frontend
 FROM node:20-alpine AS frontend
 WORKDIR /app
-COPY package.json ./
+COPY package.json package-lock.json* ./
 # install dependencies
-RUN npm install
+RUN npm ci
 # copy source
 COPY . .
 RUN npm run build
