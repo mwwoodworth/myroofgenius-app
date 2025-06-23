@@ -71,3 +71,7 @@ the Python requirements and launches Uvicorn with the built assets included.
 The helper script `scripts/bootstrap_codex.sh` previously bootstrapped the
 Codex CLI. The CLI has been removed, so this script does nothing and is kept
 only for historical reference. Feel free to delete it locally.
+
+## Additional Documentation
+- [Changelog](CHANGELOG.md)
+- [Wow Features](docs/wow-features.md)

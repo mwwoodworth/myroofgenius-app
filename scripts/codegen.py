@@ -10,6 +10,7 @@ import openai
 
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Codegen using OpenAI GPT-4o")
     parser.add_argument(
@@ -47,6 +48,7 @@ def main() -> None:
             f.write(code + "\n")
     else:
         print(code)
+
 
 if __name__ == "__main__":
     main()
