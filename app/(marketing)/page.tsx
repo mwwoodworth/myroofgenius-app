@@ -17,7 +17,7 @@ import {
   useClipboard,
 } from '@chakra-ui/react'
 import { Br, Link } from '@saas-ui/react'
-import type { Metadata, NextPage } from 'next'
+import type { Metadata } from 'next'
 import {
   FiArrowRight,
   FiBox,
@@ -69,7 +69,7 @@ export const meta: Metadata = {
   description: 'Intelligent systems that protect every commercial roofing decision.',
 }
 
-const Home: NextPage = () => {
+export default function Page() {
   return (
     <Box>
       <HeroSection />
@@ -408,4 +408,3 @@ const FaqSection = () => {
   return <Faq {...faq} />
 }
 
-export default Home
