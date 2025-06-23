@@ -32,6 +32,11 @@ Run it locally with Uvicorn:
 ```
 The backend dependencies include `stripe` for payments and `httpx` for outbound HTTP calls.
 
+#### Roof Report API
+
+`GET /api/roof/report` returns the latest roof condition metrics from Supabase.
+Ensure `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are set.
+
 ### Running Tests
 
 Frontend tests use Jest:

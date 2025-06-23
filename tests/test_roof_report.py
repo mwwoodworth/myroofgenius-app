@@ -3,6 +3,7 @@ from pathlib import Path
 import sys
 from types import ModuleType
 from unittest.mock import MagicMock
+from datetime import datetime
 
 
 def load_app(monkeypatch):
@@ -20,6 +21,7 @@ def load_app(monkeypatch):
     package = ModuleType("python_backend")
     package.__path__ = [str(root / "python_backend")]
     sys.modules["python_backend"] = package
+    sys.modules.pop("python_backend.routes.roof", None)
     module = ModuleType("python_backend.main")
     module.__package__ = "python_backend"
     sys.modules["python_backend.main"] = module
@@ -31,6 +33,14 @@ def load_app(monkeypatch):
 
 def test_roof_report_endpoint(monkeypatch):
     main = load_app(monkeypatch)
+    async def fake_report():
+        return main.roof.RoofReport(
+            status="ok",
+            lastInspection=datetime(2024, 1, 1),
+            damageScore=0.0,
+        )
+    monkeypatch.setattr(main.roof, "_build_report", fake_report)
+
     client = TestClient(main.app)
     resp = client.get("/api/roof/report")
     assert resp.status_code == 200
@@ -42,12 +52,10 @@ def test_roof_report_endpoint(monkeypatch):
 
 def test_roof_report_failure(monkeypatch):
     main = load_app(monkeypatch)
-    roof = main.roof
-
     async def boom():
         raise RuntimeError("fail")
 
-    monkeypatch.setattr(roof, "_build_report", boom)
+    monkeypatch.setattr(main.roof, "_build_report", boom)
     client = TestClient(main.app)
     resp = client.get("/api/roof/report")
     assert resp.status_code == 500
