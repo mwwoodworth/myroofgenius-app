@@ -1,5 +1,11 @@
-import os, json, stripe
+import os
+import json
+import stripe
+import logging
 from supabase import create_client
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
@@ -32,6 +38,6 @@ async def handler(request):
             }).execute()
         except Exception as e:
             # Log but still acknowledge to Stripe
-            print("Supabase insert error:", e)
+            logger.error("Supabase insert error: %s", e)
 
     return {"statusCode": 200, "body": json.dumps({"status": "ok"})}
