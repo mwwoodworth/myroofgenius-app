@@ -1,14 +1,16 @@
 name: Codex Generate (Python)
 
-on:
-  pull_request:
-    branches: [main]
-    types: [opened, synchronize, reopened]
+on:  pull_request:
+    branches:
+      - main
+      - develop
+      - feature/**
+   
   push:
-    branches: [main]
-
-env:
-  PYTHON_VERSION: "3.11"
+    branches:
+      - main
+      - develop
+      - f**eature/*
   OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
   NODE_VERSION: "18"
   CODEX_API_KEY: ${{ secrets.CODEX_API_KEY }}
