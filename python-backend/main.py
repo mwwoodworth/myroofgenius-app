@@ -9,8 +9,7 @@ from pathlib import Path
 import sys
 import types
 
-logging.basicConfig(level=logging.INFO,
-                    format="%(levelname)s:%(name)s:%(message)s")
+logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message)s")
 logger = logging.getLogger(__name__)
 try:
     from supabase import create_client
@@ -51,6 +50,7 @@ supabase_client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 CONVERTKIT_API_KEY = os.getenv("CONVERTKIT_API_KEY")
 CONVERTKIT_FORM_ID = os.getenv("CONVERTKIT_FORM_ID", "64392d9bef")
 
+
 @app.post("/api/subscribe")
 async def subscribe(request: Request):
     data = await request.json()
@@ -61,11 +61,12 @@ async def subscribe(request: Request):
         resp = await client.post(
             f"https://api.convertkit.com/v3/forms/{CONVERTKIT_FORM_ID}/subscribe",
             json={"api_key": CONVERTKIT_API_KEY, "email": email},
-            timeout=10
+            timeout=10,
         )
     if resp.status_code not in (200, 201):
         raise HTTPException(status_code=resp.status_code, detail=resp.text)
     return {"status": "success"}
+
 
 @app.post("/api/checkout")
 async def checkout(request: Request):
@@ -73,7 +74,9 @@ async def checkout(request: Request):
     price_id = data.get("price_id")
     if not price_id:
         raise HTTPException(status_code=400, detail="price_id required")
-    domain = data.get("domain", os.getenv("CHECKOUT_DOMAIN", "https://myroofgenius.com"))
+    domain = data.get(
+        "domain", os.getenv("CHECKOUT_DOMAIN", "https://myroofgenius.com")
+    )
     session = stripe.checkout.Session.create(
         mode="payment",
         line_items=[{"price": price_id, "quantity": 1}],
@@ -82,6 +85,7 @@ async def checkout(request: Request):
         automatic_tax={"enabled": True},
     )
     return {"id": session.id, "url": session.url}
+
 
 @app.post("/api/webhook")
 async def stripe_webhook(request: Request):
@@ -97,13 +101,15 @@ async def stripe_webhook(request: Request):
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
         try:
-            supabase_client.table("orders").insert({
-                "user_id": session.get("metadata", {}).get("user_id"),
-                "product_id": session.get("metadata", {}).get("product_id"),
-                "stripe_session_id": session["id"],
-                "amount": session.get("amount_total", 0) / 100,
-                "status": "paid",
-            }).execute()
+            supabase_client.table("orders").insert(
+                {
+                    "user_id": session.get("metadata", {}).get("user_id"),
+                    "product_id": session.get("metadata", {}).get("product_id"),
+                    "stripe_session_id": session["id"],
+                    "amount": session.get("amount_total", 0) / 100,
+                    "status": "paid",
+                }
+            ).execute()
         except Exception as e:
             # Log but still acknowledge to Stripe to avoid retries
             logger.error("Supabase insert error: %s", e)

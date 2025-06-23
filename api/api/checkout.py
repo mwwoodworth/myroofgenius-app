@@ -2,6 +2,7 @@ import os, json, stripe
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
+
 async def handler(request):
     try:
         body = await request.json()
@@ -15,7 +16,9 @@ async def handler(request):
     if not price_id:
         return {"statusCode": 400, "body": json.dumps({"error": "price_id required"})}
 
-    domain = body.get("domain", os.getenv("CHECKOUT_DOMAIN", "https://myroofgenius.com"))
+    domain = body.get(
+        "domain", os.getenv("CHECKOUT_DOMAIN", "https://myroofgenius.com")
+    )
 
     try:
         session = stripe.checkout.Session.create(
@@ -27,6 +30,9 @@ async def handler(request):
             cancel_url=f"{domain}/cancel",
             automatic_tax={"enabled": True},
         )
-        return {"statusCode": 200, "body": json.dumps({"id": session.id, "url": session.url})}
+        return {
+            "statusCode": 200,
+            "body": json.dumps({"id": session.id, "url": session.url}),
+        }
     except Exception as e:
         return {"statusCode": 500, "body": json.dumps({"error": str(e)})}

@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 router = APIRouter()
 
+
 class RoofReport(BaseModel):
     status: str
     lastInspection: datetime

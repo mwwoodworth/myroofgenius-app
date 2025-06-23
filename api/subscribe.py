@@ -4,6 +4,7 @@ import httpx
 CONVERTKIT_API_KEY = os.getenv("CONVERTKIT_API_KEY")
 CONVERTKIT_FORM_ID = os.getenv("CONVERTKIT_FORM_ID", "64392d9bef")
 
+
 async def handler(request):
     try:
         body = await request.json()
@@ -18,7 +19,7 @@ async def handler(request):
         resp = await client.post(
             f"https://api.convertkit.com/v3/forms/{CONVERTKIT_FORM_ID}/subscribe",
             json={"api_key": CONVERTKIT_API_KEY, "email": email},
-            timeout=10
+            timeout=10,
         )
 
     if resp.status_code not in (200, 201):
