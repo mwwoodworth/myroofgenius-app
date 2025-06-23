@@ -47,6 +47,14 @@ pytest
 
 Continuous integration runs these commands using the Node and Python workflows under `.github/workflows` whenever you push or open a pull request.
 
+### Linting
+
+ESLint is configured for Next.js with TypeScript and Prettier. Run:
+```bash
+npm run lint
+```
+
+
 ## Deployment
 
 1. Create a project on **Vercel** and link this repository.
