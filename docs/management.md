@@ -20,6 +20,12 @@
 * **Stripe Dashboard** → refunds, receipts, payouts.
 * **Supabase `orders`** table stores order records from Stripe webhook.
 
+## Updating Integrations
+- **Stripe** – rotate `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` in your hosting dashboard and local `.env` file.
+- **Make.com** – store your scenario key in `MAKE_API_KEY`.
+- **ClickUp** – set `CLICKUP_API_KEY` for API requests.
+  After updating any key, redeploy your services.
+
 ## Deploying Updates
 1. Commit code to `main` → Vercel auto‑deploy.
 2. For environment variable changes, update Vercel Project Settings → redeploy.
@@ -32,4 +38,4 @@
 | Auth issues | Confirm Supabase URL & anon key env vars |
 
 ---
-Last updated: {{DATE}}
+Last updated: 2025-06-20
