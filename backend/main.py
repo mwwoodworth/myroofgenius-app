@@ -50,12 +50,19 @@ async def subscribe(request: Request):
 async def checkout(request: Request):
     data = await request.json()
     price_id = data.get("price_id")
+    product_id = data.get("product_id")
+    user_id = data.get("user_id")
+
     if not price_id:
         raise HTTPException(status_code=400, detail="price_id required")
+
     domain = data.get("domain", os.getenv("CHECKOUT_DOMAIN", "REPLACE_ME"))
+
     session = stripe.checkout.Session.create(
         mode="payment",
+        client_reference_id=user_id,
         line_items=[{"price": price_id, "quantity": 1}],
+        metadata={"product_id": product_id, "user_id": user_id},
         success_url=f"{domain}/success?session_id={{CHECKOUT_SESSION_ID}}",
         cancel_url=f"{domain}/cancel",
         automatic_tax={"enabled": True},
