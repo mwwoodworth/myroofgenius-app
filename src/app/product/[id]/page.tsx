@@ -23,7 +23,8 @@ export default function Product() {
     if (!product) return
     const user = (await supabase.auth.getUser()).data?.user
 
-    const res = await fetch('/api/checkout', {
+    const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || ''
+    const res = await fetch(`${apiBase}/api/checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
