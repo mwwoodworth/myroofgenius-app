@@ -28,7 +28,9 @@ supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 logger = logging.getLogger(__name__)
 
 CONVERTKIT_API_KEY = os.getenv("CONVERTKIT_API_KEY")
-CONVERTKIT_FORM_ID = os.getenv("CONVERTKIT_FORM_ID", "64392d9bef")
+CONVERTKIT_FORM_ID = os.getenv("CONVERTKIT_FORM_ID")
+if not CONVERTKIT_FORM_ID:
+    raise RuntimeError("CONVERTKIT_FORM_ID environment variable is required")
 
 @app.post("/api/subscribe")
 async def subscribe(request: Request):

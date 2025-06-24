@@ -2,7 +2,9 @@ import os, json
 import httpx
 
 CONVERTKIT_API_KEY = os.getenv("CONVERTKIT_API_KEY")
-CONVERTKIT_FORM_ID = os.getenv("CONVERTKIT_FORM_ID", "64392d9bef")
+CONVERTKIT_FORM_ID = os.getenv("CONVERTKIT_FORM_ID")
+if not CONVERTKIT_FORM_ID:
+    raise RuntimeError("CONVERTKIT_FORM_ID environment variable is required")
 
 async def handler(request):
     try:
