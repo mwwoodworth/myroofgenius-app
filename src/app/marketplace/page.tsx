@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { supabase } from '../supabaseClient';
-import content from '../../data/marketplace.json';
+'use client'
+import { useEffect, useState } from 'react'
+import { supabase } from '../../supabaseClient'
+import content from '../../../data/marketplace.json'
 
-const Marketplace = () => {
-  const [products, setProducts] = useState([]);
+export default function Marketplace() {
+  const [products, setProducts] = useState<any[]>([])
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await supabase.from('products').select('*');
-      setProducts(data || []);
-    };
-    fetchProducts();
-  }, []);
+      const { data } = await supabase.from('products').select('*')
+      setProducts(data || [])
+    }
+    fetchProducts()
+  }, [])
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-16">
@@ -32,7 +33,5 @@ const Marketplace = () => {
         ))}
       </div>
     </div>
-  );
-};
-
-export default Marketplace;
+  )
+}
