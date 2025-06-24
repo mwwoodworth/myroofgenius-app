@@ -15,7 +15,7 @@ async def handler(request):
     if not price_id:
         return {"statusCode": 400, "body": json.dumps({"error": "price_id required"})}
 
-    domain = body.get("domain", os.getenv("CHECKOUT_DOMAIN", "https://myroofgenius.com"))
+    domain = body.get("domain", os.getenv("CHECKOUT_DOMAIN", "REPLACE_ME"))
 
     try:
         session = stripe.checkout.Session.create(

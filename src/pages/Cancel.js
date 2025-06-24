@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import content from '../../data/cancel.json';
 
 const Cancel = () => (
   <div style={{ padding: '2rem' }}>
-    <h1>Payment canceled</h1>
-    <p>Your payment was canceled or failed. You can try again anytime.</p>
-    <Link to="/marketplace">Back to Marketplace</Link>
+    <h1>{content.title}</h1>
+    <p>{content.text}</p>
+    <Link to="/marketplace">{content.linkText}</Link>
   </div>
 );
 

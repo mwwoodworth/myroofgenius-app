@@ -52,7 +52,7 @@ async def checkout(request: Request):
     price_id = data.get("price_id")
     if not price_id:
         raise HTTPException(status_code=400, detail="price_id required")
-    domain = data.get("domain", os.getenv("CHECKOUT_DOMAIN", "https://myroofgenius.com"))
+    domain = data.get("domain", os.getenv("CHECKOUT_DOMAIN", "REPLACE_ME"))
     session = stripe.checkout.Session.create(
         mode="payment",
         line_items=[{"price": price_id, "quantity": 1}],
