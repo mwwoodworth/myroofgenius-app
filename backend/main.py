@@ -1,12 +1,14 @@
 import os
 import logging
 from fastapi import FastAPI, Request, HTTPException
+from api.routes.roof import router as roof_router
 from fastapi.middleware.cors import CORSMiddleware
 import stripe
 import httpx
 from supabase import create_client
 
 app = FastAPI()
+app.include_router(roof_router)
 
 app.add_middleware(
     CORSMiddleware,
