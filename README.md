@@ -17,7 +17,7 @@ Vercel or Render when deploying.
 
 #### Render
 1. Create a **Web Service** for the FastAPI backend:
-   - Build Command: `pip install -r backend/backend/requirements.txt`
+   - Build Command: `pip install -r backend/requirements.txt`
    - Start Command: `uvicorn backend.main:app --host 0.0.0.0 --port 8000`
 2. Create a **Static Site** for the Next.js frontend:
    - Build Command: `npm install && npm run build`
