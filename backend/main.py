@@ -1,8 +1,10 @@
 import os
+import logging
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import stripe
 import httpx
+from supabase import create_client
 
 app = FastAPI()
 
@@ -16,6 +18,12 @@ app.add_middleware(
 # Initialize Stripe
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 stripe_webhook_secret = os.getenv("STRIPE_WEBHOOK_SECRET")
+
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+
+logger = logging.getLogger(__name__)
 
 CONVERTKIT_API_KEY = os.getenv("CONVERTKIT_API_KEY")
 CONVERTKIT_FORM_ID = os.getenv("CONVERTKIT_FORM_ID", "64392d9bef")
@@ -65,7 +73,16 @@ async def stripe_webhook(request: Request):
 
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
-        # TODO: handle order fulfillment, store in DB
-        print("Payment succeeded for session", session["id"])
+        try:
+            supabase.table("orders").insert({
+                "user_id": session.get("metadata", {}).get("user_id"),
+                "product_id": session.get("metadata", {}).get("product_id"),
+                "stripe_session_id": session["id"],
+                "amount": session.get("amount_total", 0) / 100,
+                "status": "paid",
+            }).execute()
+            logger.info("Order recorded for session %s", session["id"])
+        except Exception as e:
+            logger.error("Failed to record order: %s", e)
 
     return {"status": "ok"}
