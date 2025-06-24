@@ -1,35 +1,45 @@
-import { ColorModeScript, theme } from '@chakra-ui/react'
+import './globals.css'
+import { Inter } from 'next/font/google'
+import Link from 'next/link'
 
-import { Provider } from './provider'
+const inter = Inter({ subsets: ['latin'] })
 
-export default function Layout(props: { children: React.ReactNode }) {
-  const colorMode = theme.config.initialColorMode
+export const metadata = {
+  title: 'MyRoofGenius - Smart Roofing Solutions',
+  description: 'AI-powered roofing tools and marketplace',
+}
 
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en" data-theme={colorMode} style={{ colorScheme: colorMode }}>
-      <head>
-        <link
-          rel="apple-touch-icon"
-          sizes="76x76"
-          href="/static/favicons/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/static/favicons/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/static/favicons/favicon-16x16.png"
-        />
-        <link rel="manifest" href="/static/favicons/manifest.json" />
-      </head>
-      <body className={`chakra-ui-${colorMode}`}>
-        <ColorModeScript initialColorMode={colorMode} />
-        <Provider>{props.children}</Provider>
+    <html lang="en">
+      <body className={inter.className}>
+        <nav className="bg-white shadow-sm">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex justify-between h-16">
+              <div className="flex items-center">
+                <Link href="/" className="text-xl font-bold">
+                  MyRoofGenius
+                </Link>
+              </div>
+              <div className="flex items-center space-x-4">
+                <Link href="/marketplace" className="hover:text-blue-600">
+                  Marketplace
+                </Link>
+                <Link href="/dashboard" className="hover:text-blue-600">
+                  Dashboard
+                </Link>
+                <Link href="/account" className="hover:text-blue-600">
+                  Account
+                </Link>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <main>{children}</main>
       </body>
     </html>
   )
