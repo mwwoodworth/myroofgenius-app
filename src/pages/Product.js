@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import content from '../../data/product.json';
 
 const Product = () => {
   const { id } = useParams();
@@ -33,15 +34,15 @@ const Product = () => {
     if (data.url) window.location.href = data.url;
   };
 
-  if (loading) return <p style={{ padding: '2rem' }}>Loading…</p>;
-  if (!product) return <p style={{ padding: '2rem' }}>Product not found.</p>;
+  if (loading) return <p style={{ padding: '2rem' }}>{content.loading}</p>;
+  if (!product) return <p style={{ padding: '2rem' }}>{content.notFound}</p>;
 
   return (
     <div style={{ padding: '2rem' }}>
       <h1>{product.name}</h1>
       <p>{product.description}</p>
       <p>${product.price}</p>
-      <button onClick={handleBuy}>Buy Now</button>
+      <button onClick={handleBuy}>{content.buyButton}</button>
     </div>
   );
 };

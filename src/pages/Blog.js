@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
+import content from '../../data/blog.json';
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
@@ -17,9 +18,9 @@ const Blog = () => {
 
   return (
     <div style={{ padding: '2rem' }}>
-      <h1>Blog</h1>
+      <h1>{content.title}</h1>
       {posts.length === 0 ? (
-        <p>No posts yet.</p>
+        <p>{content.noPosts}</p>
       ) : (
         posts.map((p) => (
           <article key={p.id} style={{ marginBottom: '2rem' }}>

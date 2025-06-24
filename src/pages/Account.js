@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
+import content from '../../data/account.json';
 
 const Account = () => {
   const [user, setUser] = useState(null);
@@ -33,16 +34,16 @@ const Account = () => {
   if (!user)
     return (
       <div style={{ padding: '2rem' }}>
-        <h1>Your Account</h1>
-        <button onClick={handleLogin}>Sign in with GitHub</button>
+        <h1>{content.title}</h1>
+        <button onClick={handleLogin}>{content.signIn}</button>
       </div>
     );
 
   return (
     <div style={{ padding: '2rem' }}>
-      <h1>Your Orders</h1>
+      <h1>{content.ordersHeadline}</h1>
       {orders.length === 0 ? (
-        <p>No orders yet.</p>
+        <p>{content.noOrders}</p>
       ) : (
         <ul>
           {orders.map((o) => (

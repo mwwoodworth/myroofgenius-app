@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import supabase from '../supabaseClient';
+import { supabase } from '../supabaseClient';
+import content from '../../data/marketplace.json';
 
 const Marketplace = () => {
   const [products, setProducts] = useState([]);
@@ -14,7 +15,7 @@ const Marketplace = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-16">
-      <h1 className="text-3xl font-bold mb-8 text-[#202940]">Marketplace</h1>
+      <h1 className="text-3xl font-bold mb-8 text-[#202940]">{content.title}</h1>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((p) => (
           <div key={p.id} className="bg-white rounded-lg shadow hover:shadow-lg transition">
@@ -24,7 +25,7 @@ const Marketplace = () => {
               <p className="text-sm text-gray-600 mb-2">{p.description}</p>
               <p className="font-bold text-[#2366d1] mb-4">${p.price}</p>
               <a href={`/product/${p.id}`} className="bg-[#2366d1] hover:bg-[#1e59b8] text-white py-2 px-4 rounded w-full inline-block text-center">
-                View
+                {content.viewButton}
               </a>
             </div>
           </div>
