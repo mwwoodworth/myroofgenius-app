@@ -12,10 +12,11 @@ export default function ClaudeTestConsole() {
   const [prompt, setPrompt] = useState('');
   const [role, setRole] = useState('contractor');
   const [response, setResponse] = useState('');
+  const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
   const sendPrompt = async () => {
     try {
-      const res = await fetch(`/webhooks/claude-task-trigger/${role}`, {
+      const res = await fetch(`${apiBase}/webhooks/claude-task-trigger/${role}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

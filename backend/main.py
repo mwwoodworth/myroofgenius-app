@@ -32,6 +32,11 @@ CONVERTKIT_FORM_ID = os.getenv("CONVERTKIT_FORM_ID")
 if not CONVERTKIT_FORM_ID:
     raise RuntimeError("CONVERTKIT_FORM_ID environment variable is required")
 
+# Webhook forwarding / Claude API configuration
+MAKE_WEBHOOK_URL = os.getenv("MAKE_WEBHOOK_URL")
+CLAUDE_API_KEY = os.getenv("CLAUDE_API_KEY")
+CLAUDE_TRIGGER_TOKEN = os.getenv("CLAUDE_TRIGGER_TOKEN")
+
 @app.post("/api/subscribe")
 async def subscribe(request: Request):
     data = await request.json()
@@ -97,3 +102,34 @@ async def stripe_webhook(request: Request):
             logger.error("Failed to record order: %s", e)
 
     return {"status": "ok"}
+
+
+@app.post("/webhooks/claude-task-trigger/{role}")
+async def claude_task_trigger(role: str, request: Request):
+    token = request.headers.get("x-task-token")
+    if CLAUDE_TRIGGER_TOKEN and token != CLAUDE_TRIGGER_TOKEN:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    payload = await request.json()
+
+    async with httpx.AsyncClient() as client:
+        if MAKE_WEBHOOK_URL:
+            resp = await client.post(MAKE_WEBHOOK_URL, json=payload)
+        else:
+            if not CLAUDE_API_KEY:
+                raise HTTPException(status_code=500, detail="Claude not configured")
+            headers = {
+                "Authorization": f"Bearer {CLAUDE_API_KEY}",
+                "Content-Type": "application/json",
+                "anthropic-version": "2023-06-01",
+            }
+            resp = await client.post(
+                "https://api.anthropic.com/v1/messages",
+                json=payload,
+                headers=headers,
+            )
+
+    if resp.status_code >= 400:
+        raise HTTPException(status_code=resp.status_code, detail=resp.text)
+
+    return resp.json()
