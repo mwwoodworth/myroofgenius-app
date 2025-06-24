@@ -1,6 +1,8 @@
 import { ColorModeScript, theme } from '@chakra-ui/react'
 
 import { Provider } from './provider'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 export default function Layout(props: { children: React.ReactNode }) {
   const colorMode = theme.config.initialColorMode
@@ -29,7 +31,9 @@ export default function Layout(props: { children: React.ReactNode }) {
       </head>
       <body className={`chakra-ui-${colorMode}`}>
         <ColorModeScript initialColorMode={colorMode} />
+        <Header />
         <Provider>{props.children}</Provider>
+        <Footer />
       </body>
     </html>
   )
