@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { supabase } from '../supabaseClient';
-import content from '../../data/blog.json';
+'use client'
+import { useEffect, useState } from 'react'
+import { supabase } from '../../supabaseClient'
+import content from '../../../data/blog.json'
 
-const Blog = () => {
-  const [posts, setPosts] = useState([]);
+export default function Blog() {
+  const [posts, setPosts] = useState<any[]>([])
 
   useEffect(() => {
     const fetchPosts = async () => {
       const { data } = await supabase
         .from('blog_posts')
         .select('*')
-        .order('published_at', { ascending: false });
-      setPosts(data || []);
-    };
-    fetchPosts();
-  }, []);
+        .order('published_at', { ascending: false })
+      setPosts(data || [])
+    }
+    fetchPosts()
+  }, [])
 
   return (
     <div style={{ padding: '2rem' }}>
@@ -30,7 +31,5 @@ const Blog = () => {
         ))
       )}
     </div>
-  );
-};
-
-export default Blog;
+  )
+}
