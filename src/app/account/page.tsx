@@ -1,9 +1,18 @@
 import { createClient } from '@supabase/supabase-js'
 
+// Add dynamic export to prevent static generation
+export const dynamic = 'force-dynamic'
+
 async function getOrders() {
+  // Handle missing env vars gracefully
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    console.warn('Supabase environment variables not configured')
+    return []
+  }
+
   const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   )
   
   // For now, return empty array - add auth later
