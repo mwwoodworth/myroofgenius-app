@@ -42,6 +42,15 @@ export default async function Account() {
           <h2 className="text-xl font-semibold mb-4">Account Settings</h2>
           <p className="text-gray-600">Authentication coming soon...</p>
         </div>
+
+        <div className="mt-8 text-center">
+          <a
+            href="/marketplace"
+            className="text-blue-600 hover:underline font-semibold"
+          >
+            Continue Shopping
+          </a>
+        </div>
       </div>
     </div>
   )
