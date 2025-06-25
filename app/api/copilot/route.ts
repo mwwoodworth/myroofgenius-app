@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPrompt } from '../../../prompts'
+import { fetchPrompt as fetchPromptFromService } from '../../../prompts/service'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
 /**
@@ -19,19 +20,9 @@ function createAdminClient(): SupabaseClient | null {
  * Falls back to the static prompt list used in tests.
  */
 
-async function fetchPrompt(name: string) {
-  const baseUrl = process.env.API_BASE_URL
-  if (!baseUrl) return getPrompt(name)
-  try {
-    const res = await fetch(`${baseUrl}/api/prompt/${name}`)
-    if (res.ok) {
-      const data = await res.json()
-      return data.prompt as string
-    }
-  } catch (e) {
-    console.error('prompt fetch failed', e)
-  }
-  return getPrompt(name)
+async function fetchPrompt(name: string, version?: number) {
+  const prompt = await fetchPromptFromService(name, version)
+  return prompt || getPrompt(name)
 }
 
 /**

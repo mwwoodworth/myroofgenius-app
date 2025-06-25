@@ -1,4 +1,4 @@
-const prompts: Record<string, string> = {
+export const prompts: Record<string, string> = {
   copilot_intro: 'Hello from MyRoofGenius Copilot.'
 }
 

@@ -4,7 +4,13 @@ from fastapi.middleware.cors import CORSMiddleware
 import stripe
 import httpx
 import sentry_sdk
-from .prompts import get_prompt as fetch_prompt
+from .prompt_service import (
+    fetch_prompt,
+    list_prompts,
+    create_prompt,
+    update_prompt,
+    delete_prompt,
+)
 
 sentry_sdk.init(dsn=os.getenv("SENTRY_DSN"))
 
@@ -75,8 +81,44 @@ async def stripe_webhook(request: Request):
     return {"status": "ok"}
 
 
+@app.get("/api/prompts")
+async def list_prompts_endpoint():
+    """List all available prompts."""
+    return {"prompts": list_prompts()}
+
+
+@app.post("/api/prompts")
+async def create_prompt_endpoint(data: dict):
+    name = data.get("name")
+    version = data.get("version")
+    content = data.get("content")
+    if not all([name, version, content]):
+        raise HTTPException(status_code=400, detail="name, version, content required")
+    return create_prompt(name, int(version), content)
+
+
+@app.get("/api/prompts/{name}")
+async def get_prompt_endpoint(name: str, version: int | None = None):
+    return {"prompt": fetch_prompt(name, version)}
+
+
+@app.put("/api/prompts/{name}/{version}")
+async def update_prompt_endpoint(name: str, version: int, data: dict):
+    content = data.get("content")
+    if not content:
+        raise HTTPException(status_code=400, detail="content required")
+    return update_prompt(name, version, content)
+
+
+@app.delete("/api/prompts/{name}/{version}")
+async def delete_prompt_endpoint(name: str, version: int):
+    delete_prompt(name, version)
+    return {"status": "deleted"}
+
+
+# Legacy endpoint
 @app.get("/api/prompt/{name}")
-async def get_prompt_endpoint(name: str):
+async def legacy_get_prompt(name: str):
     return {"prompt": fetch_prompt(name)}
 
 
