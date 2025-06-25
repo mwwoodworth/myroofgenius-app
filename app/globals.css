@@ -5,3 +5,4 @@
 body {
   @apply bg-bg text-text-primary font-inter;
 }
+@import "./styles/futuristic.css";

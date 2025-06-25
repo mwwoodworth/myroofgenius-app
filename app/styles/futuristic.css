@@ -1,0 +1,14 @@
+.dropzone {
+  border: 2px dashed rgba(255,255,255,0.3);
+  padding: 2rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.dropzone.active {
+  background: rgba(255,255,255,0.1);
+}
+.estimator-glass {
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+}
