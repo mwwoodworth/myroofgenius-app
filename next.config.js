@@ -7,7 +7,21 @@ const nextConfig = {
   },
   images: {
     domains: ['cdn.jsdelivr.net', 'images.unsplash.com'],
-  },
+ 
+   async redirects() {
+    return [
+      {
+        source: '/tools',
+        destination: '/estimator',
+        permanent: false,
+      },
+      {
+        source: '/marketplace',
+        destination: '/',
+        permanent: false,
+      },
+    ];
+  }, },
 };
 const { withSentryConfig } = require('@sentry/nextjs');
 
