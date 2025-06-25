@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getPrompt } from '../../../prompts'
-import { fetchPrompt as fetchPromptFromService } from '../../../prompts/service'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { chat } from '../../../lib/llm'
 
-/**
- * Helper to create a Supabase client using the service role key so the
- * endpoint can store and read chat history. If the env vars are missing the
- * function returns null and the API operates in a stateless mode.
- */
 function createAdminClient(): SupabaseClient | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -15,102 +9,96 @@ function createAdminClient(): SupabaseClient | null {
   return createClient(url, key)
 }
 
-/**
- * Fetch a prompt template from the backend FastAPI service when available.
- * Falls back to the static prompt list used in tests.
- */
-
-async function fetchPrompt(name: string, version?: number) {
-  const prompt = await fetchPromptFromService(name, version)
-  return prompt || getPrompt(name)
-}
-
-/**
- * Generate a response based on the user message. This demo implementation
- * simply echoes the input and checks for a few hard‑coded commands that
- * retrieve data from Supabase. In a real implementation this would call an
- * LLM with the full chat history.
- */
-async function generateAnswer(
-  message: string,
-  supabase: SupabaseClient | null
-): Promise<string> {
-  const base = await fetchPrompt('copilot_intro')
-
-  if (supabase) {
-    if (/last\s+5\s+orders/i.test(message)) {
-      const { data } = await supabase
-        .from('orders')
-        .select('id, amount, created_at')
-        .order('created_at', { ascending: false })
-        .limit(5)
-      if (data?.length) {
-        const list = data
-          .map((o) => `${o.id} - $${o.amount} on ${new Date(o.created_at).toLocaleDateString()}`)
-          .join('\n')
-        return `${base}\nHere are your last 5 orders:\n${list}`
-      }
-    }
-
-    if (/best.*selling.*template/i.test(message)) {
-      const { data } = await supabase
-        .from('products')
-        .select('name')
-        .order('sales', { ascending: false })
-        .limit(1)
-        .single()
-      if (data) {
-        return `${base}\nYour best-selling template is ${data.name}.`
-      }
-    }
-  }
-
-  return `${base} You said: ${message}`
+async function fetchPromptTemplate(role: string): Promise<string> {
+  let promptName = 'copilot_intro'
+  if (role === 'field') promptName = 'copilot_field'
+  else if (role === 'pm') promptName = 'copilot_pm'
+  const { fetchPrompt } = await import('../../../prompts/service')
+  const prompt = await fetchPrompt(promptName)
+  return prompt || 'You are a helpful roofing assistant.'
 }
 
 export async function POST(req: NextRequest) {
-  const { message, sessionId } = await req.json()
+  const { message, session_id, user_role } = await req.json()
+  if (!message) {
+    return NextResponse.json({ error: 'Message is required' }, { status: 400 })
+  }
 
   const supabase = createAdminClient()
-  const userId = 'demo-user'
-  const sid = sessionId || crypto.randomUUID()
+  const sessionId = session_id || crypto.randomUUID()
+  let userId: string | null = null
+  const authHeader = req.headers.get('authorization') || req.headers.get('Authorization')
+  if (authHeader) {
+    const token = authHeader.replace('Bearer ', '')
+    try {
+      const [, payloadBase64] = token.split('.')
+      const payload = JSON.parse(Buffer.from(payloadBase64, 'base64').toString('utf-8'))
+      userId = payload.sub || null
+    } catch {
+      userId = null
+    }
+  }
 
   if (supabase) {
     await supabase.from('copilot_messages').insert({
-      session_id: sid,
+      session_id: sessionId,
       user_id: userId,
       role: 'user',
-      content: message,
+      content: message
     })
   }
 
-  const answer = await generateAnswer(message, supabase)
+  const systemPrompt = await fetchPromptTemplate(user_role)
+  const messages: Array<{ role: string; content: string }> = []
+  if (systemPrompt) messages.push({ role: 'system', content: systemPrompt })
+  if (supabase) {
+    const { data: history } = await supabase
+      .from('copilot_messages')
+      .select('role, content')
+      .eq('session_id', sessionId)
+      .order('created_at', { ascending: true })
+      .limit(20)
+    if (history && history.length > 0) {
+      for (const msg of history) {
+        messages.push({ role: msg.role as 'user' | 'assistant', content: msg.content })
+      }
+    } else {
+      messages.push({ role: 'user', content: message })
+    }
+  } else {
+    messages.push({ role: 'user', content: message })
+  }
+
+  let assistantResponse: string
+  try {
+    assistantResponse = await chat(messages)
+  } catch (error) {
+    console.error('Copilot AI Error:', error)
+    assistantResponse = "I'm sorry, I couldn't find an answer. Please try again."
+  }
 
   if (supabase) {
     await supabase.from('copilot_messages').insert({
-      session_id: sid,
+      session_id: sessionId,
       user_id: userId,
       role: 'assistant',
-      content: answer,
+      content: assistantResponse
     })
   }
 
   const encoder = new TextEncoder()
   const stream = new ReadableStream({
     async start(controller) {
-      for (const token of answer.split(' ')) {
-        controller.enqueue(encoder.encode(token + ' '))
-        await new Promise((r) => setTimeout(r, 50))
+      const words = assistantResponse.split(' ')
+      for (const word of words) {
+        controller.enqueue(encoder.encode(word + ' '))
+        await new Promise(res => setTimeout(res, 30))
       }
       controller.close()
-    },
+    }
   })
-
   return new Response(stream, {
-    headers: {
-      'Content-Type': 'text/plain; charset=utf-8',
-      'X-Session-Id': sid,
-    },
+    headers: { 'Content-Type': 'text/plain; charset=utf-8', 'X-Session-Id': sessionId }
   })
 }
 
@@ -118,7 +106,9 @@ export async function GET(req: NextRequest) {
   const supabase = createAdminClient()
   const { searchParams } = new URL(req.url)
   const sid = searchParams.get('sessionId')
-  if (!supabase || !sid) return NextResponse.json({ history: [] })
+  if (!supabase || !sid) {
+    return NextResponse.json({ history: [] })
+  }
   const { data } = await supabase
     .from('copilot_messages')
     .select('role, content, created_at')
