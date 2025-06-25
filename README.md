@@ -6,3 +6,8 @@ Public SaaS React + FastAPI system for MyRoofGenius.
 - Added `SUPABASE_SERVICE_ROLE_KEY` to environment configuration.
 - Completed end‑to‑end integration tests (Stripe, Make.com, ClickUp, Google Drive).
 - Updated Dockerfile for optimized production build.
+
+## 26 Jun 2025 Updates
+
+- Added universal `/api/copilot` endpoint and basic Copilot UI integration.
+- Introduced feature flags `AI_COPILOT_ENABLED`, `AR_MODE_ENABLED`, and `MAINTENANCE_MODE`.
