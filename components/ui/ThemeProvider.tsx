@@ -8,7 +8,13 @@ const ThemeContext = createContext<ThemeCtx>({ theme: 'dark', toggle: () => {} }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('dark')
+
+  if (typeof window === 'undefined') {
+    return <>{children}</>
+  }
+
   useEffect(() => {
+    if (typeof document === 'undefined') return
     if (theme === 'dark') {
       document.documentElement.classList.remove('light')
     } else {
