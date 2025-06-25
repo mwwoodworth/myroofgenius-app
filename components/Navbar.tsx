@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
+import { ThemeToggle } from './ui'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -23,7 +24,8 @@ export default function Navbar() {
             </a>
           ))}
         </div>
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-4">
+          <ThemeToggle />
           <button className="rounded-xl px-5 py-2 bg-accent text-white font-bold shadow-md hover:scale-105 transition">
             Start Free Trial
           </button>
@@ -50,6 +52,9 @@ export default function Navbar() {
                 {label}
               </a>
             ))}
+            <div className="p-4">
+              <ThemeToggle />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
