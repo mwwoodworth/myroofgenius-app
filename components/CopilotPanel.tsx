@@ -1,6 +1,7 @@
 'use client'
 import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
+import { useRole } from './ui'
 
 type Msg = {
   role: 'user' | 'assistant'
@@ -16,7 +17,7 @@ export default function CopilotPanel({ open, onClose }: { open: boolean; onClose
   // SpeechRecognition types are not universally available so we fall back to `any`
   const recognizer = useRef<any>(null)
 
-  const userRole = 'field' // TODO: replace with real auth role
+  const { role: userRole, setRole } = useRole()
 
   useEffect(() => {
     if (open) {
@@ -116,6 +117,14 @@ export default function CopilotPanel({ open, onClose }: { open: boolean; onClose
     >
       <button className="absolute top-4 right-4 text-accent font-bold" onClick={onClose}>✕</button>
       <h3 className="text-2xl font-bold mb-4">AI Copilot</h3>
+      <select
+        className="mb-4 w-full rounded-md bg-bg-card border border-gray-700 p-2 text-sm"
+        value={userRole}
+        onChange={(e) => setRole(e.target.value as any)}
+      >
+        <option value="field">Field</option>
+        <option value="pm">Project Manager</option>
+      </select>
       <div className="flex gap-2 mb-4">
         {quickActions[userRole].map((a) => (
           <button
@@ -127,11 +136,16 @@ export default function CopilotPanel({ open, onClose }: { open: boolean; onClose
           </button>
         ))}
       </div>
-      <div className="overflow-y-auto h-[60%] mb-4 pr-2">
+      <div className="overflow-y-auto h-[60%] mb-4 pr-2 space-y-2">
         {messages.map((m, i) => (
-          <p key={i} className={m.role === 'user' ? 'text-right text-blue-200' : 'text-green-200'}>
+          <motion.p
+            key={i}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={m.role === 'user' ? 'text-right text-blue-200' : 'text-green-200'}
+          >
             {m.content}
-          </p>
+          </motion.p>
         ))}
       </div>
       <div className="flex gap-2 items-center">
