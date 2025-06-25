@@ -5,3 +5,9 @@ coverage/
 *.pack
 .env.local
 .env*
+
+# Ignore binary assets
+*.pdf
+*.png
+*.xlsx
+*.docx
