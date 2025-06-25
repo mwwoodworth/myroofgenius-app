@@ -7,14 +7,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: 'var(--bg)',
-        'background-elevated': 'var(--bg-elevated)',
-        foreground: 'var(--fg)',
-        'foreground-secondary': 'var(--fg-secondary)',
-        accent: 'var(--accent)',
+        bg: {
+          DEFAULT: '#121212',
+          card: '#1C1C1E',
+        },
+        accent: '#5E5CE6',
+        text: {
+          primary: '#F2F2F7',
+          secondary: '#8E8E93',
+        },
       },
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+        inter: ['Inter', 'sans-serif'],
       },
     },
   },

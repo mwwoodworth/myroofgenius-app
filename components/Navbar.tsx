@@ -1,58 +1,58 @@
 'use client'
-import Link from 'next/link'
-import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
-import ThemeToggle from './ui/ThemeToggle'
-import Button from './ui/Button'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const links = [
+    { href: '/', label: 'Home' },
+    { href: '/tools', label: 'Tools' },
     { href: '/marketplace', label: 'Marketplace' },
-    { href: '/dashboard', label: 'Dashboard' },
-    { href: '/account', label: 'Account' },
+    { href: '/blog', label: 'Blog' },
   ]
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur bg-background/80 border-b">
-      <nav className="max-w-7xl mx-auto flex h-14 items-center justify-between px-4">
-        <Link href="/" className="font-bold">MyRoofGenius</Link>
-        <div className="hidden lg:flex space-x-6">
+    <>
+      <motion.nav className="fixed top-0 w-full flex items-center justify-between px-8 py-4 bg-[rgba(35,35,35,0.75)] backdrop-blur-xl border-b border-[rgba(255,255,255,0.07)] z-50">
+        <div className="text-accent text-2xl font-bold">MyRoofGenius</div>
+        <div className="hidden md:flex gap-6">
           {links.map(({ href, label }) => (
-            <motion.div key={href} whileHover={{ y: -2 }}>
-              <Link href={href} className="hover:text-accent">
-                {label}
-              </Link>
-            </motion.div>
+            <a key={href} href={href} className="hover:text-accent transition">
+              {label}
+            </a>
           ))}
         </div>
-        <div className="flex items-center space-x-4">
-          <Link href="/marketplace" className="hidden lg:block">
-            <Button size="sm">Explore</Button>
-          </Link>
-          <ThemeToggle />
-          <button className="lg:hidden p-2" onClick={() => setOpen(!open)}>
-            {open ? <X size={20} /> : <Menu size={20} />}
+        <div className="hidden md:block">
+          <button className="rounded-xl px-5 py-2 bg-accent text-white font-bold shadow-md hover:scale-105 transition">
+            Start Free Trial
           </button>
         </div>
-      </nav>
+        <button className="md:hidden" onClick={() => setOpen(!open)}>
+          {open ? <X /> : <Menu />}
+        </button>
+      </motion.nav>
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="lg:hidden bg-background border-b px-4"
+            className="md:hidden bg-[rgba(35,35,35,0.9)] backdrop-blur-xl border-b border-[rgba(255,255,255,0.07)] fixed top-16 w-full z-40 overflow-hidden"
           >
             {links.map(({ href, label }) => (
-              <Link key={href} href={href} className="block py-2" onClick={() => setOpen(false)}>
+              <a
+                key={href}
+                href={href}
+                className="block px-8 py-4 border-b border-[rgba(255,255,255,0.07)] hover:text-accent"
+                onClick={() => setOpen(false)}
+              >
                 {label}
-              </Link>
+              </a>
             ))}
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   )
 }

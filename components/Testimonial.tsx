@@ -10,10 +10,10 @@ interface TestimonialProps {
 export default function Testimonial({ quote, author, title }: TestimonialProps) {
   return (
     <Card className="text-center space-y-4">
-      <p className="text-foreground-secondary text-sm">"{quote}"</p>
+      <p className="text-text-secondary text-sm">"{quote}"</p>
       <div>
-        <p className="font-semibold text-foreground">{author}</p>
-        {title && <p className="text-xs text-foreground-secondary">{title}</p>}
+        <p className="font-semibold text-text-primary">{author}</p>
+        {title && <p className="text-xs text-text-secondary">{title}</p>}
       </div>
     </Card>
   )

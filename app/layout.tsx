@@ -2,7 +2,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '../components/ui/ThemeProvider'
 import Navbar from '../components/Navbar'
-import CopilotPanel from '../components/CopilotPanel'
+import CopilotWrapper from '../components/layout/CopilotWrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,13 +19,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
-        <ThemeProvider>
-          <Navbar />
-          <main className="bg-background text-foreground min-h-screen">
+        <div className="bg-bg min-h-screen text-text-primary font-inter">
+          <ThemeProvider>
+            <Navbar />
             {children}
-          </main>
-          <CopilotPanel />
-        </ThemeProvider>
+            <CopilotWrapper />
+          </ThemeProvider>
+        </div>
       </body>
     </html>
   )
