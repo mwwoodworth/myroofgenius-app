@@ -1,5 +1,25 @@
 {
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" }
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "functions": {
+    "app/api/ai/analyze-roof/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/download/[token]/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/copilot/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/order/[session_id]/route.ts": {
+      "maxDuration": 10
+    }
+  },
+  "crons": [
+    { "path": "/api/cron/cleanup-expired-downloads", "schedule": "0 2 * * *" },
+    { "path": "/api/cron/send-subscription-reminders", "schedule": "0 9 * * *" }
   ]
 }

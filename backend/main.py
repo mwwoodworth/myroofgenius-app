@@ -12,6 +12,7 @@ from .prompt_service import (
     update_prompt,
     delete_prompt,
 )
+from .services.fulfillment import FulfillmentService
 
 sentry_sdk.init(dsn=os.getenv("SENTRY_DSN"))
 
@@ -72,7 +73,7 @@ async def checkout(request: Request):
     price_id = data.get("price_id")
     if not price_id:
         raise HTTPException(status_code=400, detail="price_id required")
-    domain = data.get("domain", os.getenv("CHECKOUT_DOMAIN", "https://myroofgenius.com"))
+    domain = data.get("domain", os.getenv("NEXT_PUBLIC_SITE_URL", "https://myroofgenius.com"))
     session = stripe.checkout.Session.create(
         mode="payment",
         line_items=[{"price": price_id, "quantity": 1}],
@@ -87,16 +88,46 @@ async def stripe_webhook(request: Request):
     payload = await request.body()
     sig_header = request.headers.get("stripe-signature")
     try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, stripe_webhook_secret
-        )
+        event = stripe.Webhook.construct_event(payload, sig_header, stripe_webhook_secret)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
-        # TODO: handle order fulfillment, store in DB
-        print("Payment succeeded for session", session["id"])
+        try:
+            fulfillment = FulfillmentService()
+            order_res = fulfillment.supabase.table("orders").select("*").eq("stripe_session_id", session["id"]).execute()
+            if order_res.data:
+                order = order_res.data[0]
+                if order.get("status") != "completed":
+                    await fulfillment.fulfill_order(session["id"])
+            else:
+                new_order = {
+                    "stripe_session_id": session["id"],
+                    "product_id": None,
+                    "user_id": None,
+                    "customer_email": session.get("customer_details", {}).get("email"),
+                    "amount": (session.get("amount_total", 0) or 0) / 100.0,
+                    "status": "pending"
+                }
+                try:
+                    line_items = stripe.checkout.Session.list_line_items(session["id"], limit=1)
+                    if line_items.data:
+                        price = line_items.data[0].price.id
+                        prod_res = fulfillment.supabase.table("products").select("id").eq("price_id", price).execute()
+                        if prod_res.data:
+                            new_order["product_id"] = prod_res.data[0]["id"]
+                except Exception as e:
+                    print("Failed to retrieve line item for session", session["id"], ":", e)
+                order_insert = fulfillment.supabase.table("orders").insert(new_order).execute()
+                if not order_insert.error:
+                    await fulfillment.fulfill_order(session["id"])
+        except Exception as e:
+            print("Error in fulfillment:", e)
+
+    elif event["type"] in ("customer.subscription.created", "customer.subscription.updated"):
+        sub = event["data"]["object"]
+        print(f"Subscription event ({event['type']}) for customer {sub.get('customer')}")
 
     return {"status": "ok"}
 
