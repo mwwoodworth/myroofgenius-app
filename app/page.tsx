@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import Button from '../components/ui/Button'
 
 export default function Home() {
   const [email, setEmail] = useState('')
@@ -53,17 +54,13 @@ export default function Home() {
                 AI-powered estimation tools, battle-tested templates, and industry expertise that help commercial roofing contractors win more profitable projects.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link 
-                  href="/marketplace"
-                  className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition text-center"
-                >
-                  Browse Tools & Templates
+                <Link href="/marketplace">
+                  <Button className="w-full sm:w-auto">Explore the Toolkit</Button>
                 </Link>
-                <Link 
-                  href="/resources/cash-flow-forecast"
-                  className="bg-white text-gray-900 px-8 py-3 rounded-lg border border-gray-300 hover:bg-gray-50 transition text-center"
-                >
-                  Free Cash Flow Tool
+                <Link href="/resources/cash-flow-forecast">
+                  <Button variant="secondary" className="w-full sm:w-auto">
+                    Try Cash Flow Forecaster
+                  </Button>
                 </Link>
               </div>
               <div className="mt-8 flex items-center gap-4 text-sm text-gray-600">
@@ -275,6 +272,13 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      {/* Mobile Sticky CTA */}
+      <div className="lg:hidden fixed bottom-0 inset-x-0 p-4 bg-background border-t flex items-center justify-between">
+        <span className="font-medium">Ready to upgrade?</span>
+        <Link href="/marketplace">
+          <Button size="sm">Explore</Button>
+        </Link>
+      </div>
     </main>
   )
 }
