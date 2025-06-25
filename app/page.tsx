@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import Button from '../components/ui/Button'
+import Testimonial from '../components/Testimonial'
 
 export default function Home() {
   const [email, setEmail] = useState('')
@@ -193,6 +194,21 @@ export default function Home() {
               <p className="text-gray-600">Customer satisfaction rate</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-16 bg-background">
+        <div className="max-w-4xl mx-auto px-4 grid md:grid-cols-3 gap-6">
+          <Testimonial
+            quote="MyRoofGenius helped us uncover hidden costs and win larger contracts."
+            author="Alex R." title="Denver Contractor" />
+          <Testimonial
+            quote="The templates saved our team countless hours each week."
+            author="Jasmine T." title="Operations Manager" />
+          <Testimonial
+            quote="Best investment we've made for our roofing business." 
+            author="Mike B." title="Founder, Summit Roofing" />
         </div>
       </section>
 
