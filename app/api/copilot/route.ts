@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
-import { chat } from '../../../lib/llm'
+import { chat, ChatMessage } from '../../lib/llm'
 
 function createAdminClient(): SupabaseClient | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
   }
 
   const systemPrompt = await fetchPromptTemplate(user_role)
-  const messages: Array<{ role: string; content: string }> = []
+  const messages: ChatMessage[] = []
   if (systemPrompt) messages.push({ role: 'system', content: systemPrompt })
   if (supabase) {
     const { data: history } = await supabase

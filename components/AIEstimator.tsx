@@ -133,8 +133,8 @@ export default function AIEstimator() {
       setStep('results')
       
       // Track successful analysis
-      if (window.gtag) {
-        window.gtag('event', 'roof_analysis_complete', {
+      if ((window as any).gtag) {
+        (window as any).gtag('event', 'roof_analysis_complete', {
           material: data.material,
           condition: data.condition,
           square_feet: data.square_feet

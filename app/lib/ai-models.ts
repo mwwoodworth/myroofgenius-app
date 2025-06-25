@@ -1,5 +1,4 @@
 export async function analyzeRoofImage(file: File) {
-  // Placeholder that would call custom vision model
   const formData = new FormData()
   formData.append('file', file)
   const res = await fetch('/api/ai/analyze-roof', { method: 'POST', body: formData })
@@ -8,6 +7,12 @@ export async function analyzeRoofImage(file: File) {
 }
 
 export async function chatWithAssistant(message: string) {
-  // Placeholder for GPT-4 integration
-  return `AI says: ${message}`
+  const res = await fetch('/api/copilot', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message }),
+  })
+  if (!res.ok) throw new Error('chat failed')
+  const data = await res.json()
+  return data.reply as string
 }

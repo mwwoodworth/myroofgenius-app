@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import AIEstimator from '@/components/AIEstimator'
+import AIEstimator from '../../components/AIEstimator'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
