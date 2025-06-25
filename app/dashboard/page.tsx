@@ -1,58 +1,154 @@
 import { createClient } from '@supabase/supabase-js'
-import DashboardAR from "../../components/DashboardAR"
-import { HotActions, ARModeToggle } from "../../components/ui"
+import { redirect } from 'next/navigation'
+import Link from 'next/link'
+import { 
+  DollarSign, 
+  Package, 
+  Users, 
+  TrendingUp, 
+  Download,
+  FileText,
+  Calendar,
+  Bell,
+  BarChart3,
+  PieChart
+} from 'lucide-react'
 
-// Add dynamic export to prevent static generation
 export const dynamic = 'force-dynamic'
 
 async function getDashboardData() {
-  // Handle missing env vars gracefully
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.warn('Supabase environment variables not configured')
-    return {
-      orders: 0,
-      products: 0,
-      revenue: 0,
-      recentOrders: [],
-      recentActivity: []
-    }
-  }
-
   const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
   )
   
-  // Get orders data
-  const { data: orders, count: ordersCount } = await supabase
+  // Check authentication
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    redirect('/login')
+  }
+  
+  // Get user profile
+  const { data: profile } = await supabase
+    .from('user_profiles')
+    .select('*')
+    .eq('user_id', user.id)
+    .single()
+  
+  // Get orders with product details
+  const { data: orders } = await supabase
     .from('orders')
-    .select('*', { count: 'exact' })
+    .select(`
+      *,
+      products (
+        name,
+        price,
+        category
+      )
+    `)
+    .eq('user_id', user.id)
     .order('created_at', { ascending: false })
     .limit(10)
   
-  // Get products count  
-  const { count: productsCount } = await supabase
-    .from('products')
-    .select('*', { count: 'exact', head: true })
+  // Get download history
+  const { data: downloads } = await supabase
+    .from('downloads')
+    .select(`
+      *,
+      product_files (
+        file_name,
+        product_id
+      )
+    `)
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(10)
   
-  // Calculate revenue
-  const revenue = orders?.reduce((sum, order) => sum + (order.amount || 0), 0) || 0
+  // Get AI analyses
+  const { data: analyses } = await supabase
+    .from('roof_analyses')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(5)
   
-  // Get recent activity (mock data for now)
-  const recentActivity = [
-    { type: 'order', message: 'New order: Estimation Toolkit Pro', time: '2 hours ago', icon: '💰' },
-    { type: 'signup', message: 'New user signup from Denver, CO', time: '4 hours ago', icon: '👤' },
-    { type: 'download', message: 'Cash Flow Template downloaded', time: '5 hours ago', icon: '📥' },
-    { type: 'review', message: '5-star review on Quote-to-Close Kit', time: '1 day ago', icon: '⭐' },
-  ]
-    
+  // Get support tickets
+  const { data: tickets } = await supabase
+    .from('support_tickets')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(5)
+  
+  // Calculate analytics
+  const totalSpent = orders?.reduce((sum, order) => sum + (order.amount || 0), 0) || 0
+  const totalDownloads = downloads?.length || 0
+  const activeTickets = tickets?.filter(t => t.status !== 'closed').length || 0
+  
+  // Get monthly spending for chart
+  const monthlySpending = calculateMonthlySpending(orders || [])
+  
+  // Get category breakdown
+  const categoryBreakdown = calculateCategoryBreakdown(orders || [])
+  
   return {
-    orders: ordersCount || 0,
-    products: productsCount || 0,
-    revenue,
-    recentOrders: orders || [],
-    recentActivity
+    user,
+    profile,
+    orders: orders || [],
+    downloads: downloads || [],
+    analyses: analyses || [],
+    tickets: tickets || [],
+    stats: {
+      totalSpent,
+      totalOrders: orders?.length || 0,
+      totalDownloads,
+      activeTickets,
+      averageOrderValue: orders?.length ? totalSpent / orders.length : 0
+    },
+    charts: {
+      monthlySpending,
+      categoryBreakdown
+    }
   }
+}
+
+function calculateMonthlySpending(orders: any[]) {
+  const months = {}
+  const now = new Date()
+  
+  // Initialize last 6 months
+  for (let i = 5; i >= 0; i--) {
+    const date = new Date(now.getFullYear(), now.getMonth() - i, 1)
+    const key = date.toISOString().slice(0, 7)
+    months[key] = 0
+  }
+  
+  // Sum spending by month
+  orders.forEach(order => {
+    const month = order.created_at.slice(0, 7)
+    if (months[month] !== undefined) {
+      months[month] += order.amount
+    }
+  })
+  
+  return Object.entries(months).map(([month, amount]) => ({
+    month,
+    amount
+  }))
+}
+
+function calculateCategoryBreakdown(orders: any[]) {
+  const categories = {}
+  
+  orders.forEach(order => {
+    const category = order.products?.category || 'Other'
+    categories[category] = (categories[category] || 0) + order.amount
+  })
+  
+  return Object.entries(categories).map(([category, amount]) => ({
+    category,
+    amount
+  }))
 }
 
 export default async function Dashboard() {
@@ -60,67 +156,92 @@ export default async function Dashboard() {
   
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600 mt-2">Welcome back! Here's your business overview.</p>
-          <div className="flex items-center gap-3">
-            <HotActions />
-            <ARModeToggle />
+      {/* Header */}
+      <div className="bg-white shadow">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+              <p className="text-gray-600 mt-1">
+                Welcome back, {data.profile?.company_name || data.user.email}
+              </p>
+            </div>
+            <div className="flex gap-4">
+              <Link
+                href="/estimator"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              >
+                New Estimate
+              </Link>
+              <button className="p-2 text-gray-600 hover:text-gray-900">
+                <Bell className="w-6 h-6" />
+              </button>
+            </div>
           </div>
-          <DashboardAR />
         </div>
-        
-        {/* Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow">
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+          <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Total Revenue</p>
-                <p className="text-3xl font-bold mt-2">${data.revenue.toFixed(2)}</p>
-                <p className="text-sm text-green-600 mt-1">+12.5% from last month</p>
+                <p className="text-sm font-medium text-gray-600">Total Spent</p>
+                <p className="text-2xl font-bold mt-1">
+                  ${data.stats.totalSpent.toFixed(2)}
+                </p>
               </div>
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <span className="text-2xl">💰</span>
+                <DollarSign className="w-6 h-6 text-green-600" />
               </div>
             </div>
           </div>
           
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Total Orders</p>
-                <p className="text-3xl font-bold mt-2">{data.orders}</p>
-                <p className="text-sm text-green-600 mt-1">+18% from last month</p>
+                <p className="text-2xl font-bold mt-1">{data.stats.totalOrders}</p>
               </div>
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <span className="text-2xl">📦</span>
+                <Package className="w-6 h-6 text-blue-600" />
               </div>
             </div>
           </div>
           
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Active Products</p>
-                <p className="text-3xl font-bold mt-2">{data.products}</p>
-                <p className="text-sm text-gray-600 mt-1">In marketplace</p>
+                <p className="text-sm font-medium text-gray-600">Downloads</p>
+                <p className="text-2xl font-bold mt-1">{data.stats.totalDownloads}</p>
               </div>
               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                <span className="text-2xl">🛍️</span>
+                <Download className="w-6 h-6 text-purple-600" />
               </div>
             </div>
           </div>
           
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Conversion Rate</p>
-                <p className="text-3xl font-bold mt-2">3.2%</p>
-                <p className="text-sm text-green-600 mt-1">+0.5% from last month</p>
+                <p className="text-sm font-medium text-gray-600">AI Analyses</p>
+                <p className="text-2xl font-bold mt-1">{data.analyses.length}</p>
               </div>
               <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                <span className="text-2xl">📈</span>
+                <FileText className="w-6 h-6 text-orange-600" />
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Active Tickets</p>
+                <p className="text-2xl font-bold mt-1">{data.stats.activeTickets}</p>
+              </div>
+              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                <Users className="w-6 h-6 text-red-600" />
               </div>
             </div>
           </div>
@@ -131,24 +252,46 @@ export default async function Dashboard() {
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow">
               <div className="p-6 border-b">
-                <h2 className="text-xl font-semibold">Recent Orders</h2>
+                <div className="flex justify-between items-center">
+                  <h2 className="text-xl font-semibold">Recent Orders</h2>
+                  <Link
+                    href="/orders"
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    View all
+                  </Link>
+                </div>
               </div>
               <div className="p-6">
-                {data.recentOrders.length === 0 ? (
-                  <p className="text-gray-600">No orders yet. Share your marketplace link to start selling!</p>
+                {data.orders.length === 0 ? (
+                  <p className="text-gray-600 text-center py-8">
+                    No orders yet. 
+                    <Link href="/marketplace" className="text-blue-600 hover:underline ml-1">
+                      Browse marketplace
+                    </Link>
+                  </p>
                 ) : (
                   <div className="space-y-4">
-                    {data.recentOrders.map((order) => (
-                      <div key={order.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    {data.orders.map((order) => (
+                      <div
+                        key={order.id}
+                        className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                      >
                         <div>
-                          <p className="font-medium">Order #{order.id.slice(0, 8)}</p>
+                          <p className="font-medium">{order.products?.name}</p>
                           <p className="text-sm text-gray-600">
-                            {new Date(order.created_at).toLocaleDateString()}
+                            Order #{order.id.slice(0, 8)} • {new Date(order.created_at).toLocaleDateString()}
                           </p>
                         </div>
                         <div className="text-right">
                           <p className="font-semibold">${order.amount.toFixed(2)}</p>
-                          <span className="text-sm text-green-600 bg-green-100 px-2 py-1 rounded">
+                          <span className={`
+                            text-sm px-2 py-1 rounded
+                            ${order.status === 'completed' 
+                              ? 'bg-green-100 text-green-800' 
+                              : 'bg-yellow-100 text-yellow-800'
+                            }
+                          `}>
                             {order.status}
                           </span>
                         </div>
@@ -158,47 +301,168 @@ export default async function Dashboard() {
                 )}
               </div>
             </div>
-          </div>
 
-          {/* Recent Activity */}
-          <div>
-            <div className="bg-white rounded-lg shadow">
+            {/* Monthly Spending Chart */}
+            <div className="bg-white rounded-lg shadow mt-8">
               <div className="p-6 border-b">
-                <h2 className="text-xl font-semibold">Recent Activity</h2>
+                <h2 className="text-xl font-semibold flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5" />
+                  Monthly Spending
+                </h2>
               </div>
               <div className="p-6">
-                <div className="space-y-4">
-                  {data.recentActivity.map((activity, idx) => (
-                    <div key={idx} className="flex gap-3">
-                      <span className="text-2xl">{activity.icon}</span>
-                      <div className="flex-1">
-                        <p className="text-sm">{activity.message}</p>
-                        <p className="text-xs text-gray-500 mt-1">{activity.time}</p>
+                <div className="h-64">
+                  {/* In production, use a proper charting library like recharts */}
+                  <div className="flex items-end justify-between h-full">
+                    {data.charts.monthlySpending.map((month, idx) => (
+                      <div key={idx} className="flex-1 flex flex-col items-center">
+                        <div
+                          className="w-full max-w-12 bg-blue-500 rounded-t"
+                          style={{
+                            height: `${(month.amount / Math.max(...data.charts.monthlySpending.map(m => m.amount)) * 100) || 10}%`
+                          }}
+                        />
+                        <p className="text-xs text-gray-600 mt-2">
+                          {new Date(month.month).toLocaleDateString('en', { month: 'short' })}
+                        </p>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        
-        {/* AI Assistant Panel */}
-        <div className="mt-8 bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-4">AI Business Assistant</h2>
-          <div className="bg-gray-50 p-6 rounded-lg border-2 border-dashed border-gray-300">
-            <div className="text-center">
-              <span className="text-4xl">🤖</span>
-              <h3 className="text-lg font-semibold mt-4 mb-2">Coming Soon: Your AI Copilot</h3>
-              <p className="text-gray-600 mb-4">
-                Get instant answers about your business metrics, customer insights, and growth opportunities.
-              </p>
-              <button className="bg-gray-200 text-gray-600 px-4 py-2 rounded-lg cursor-not-allowed" disabled>
-                Activate AI Assistant (Coming Q3 2025)
-              </button>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Recent Downloads */}
+            <div className="bg-white rounded-lg shadow">
+              <div className="p-6 border-b">
+                <h2 className="text-xl font-semibold">Recent Downloads</h2>
+              </div>
+              <div className="p-6">
+                {data.downloads.length === 0 ? (
+                  <p className="text-gray-600 text-sm">No downloads yet</p>
+                ) : (
+                  <div className="space-y-3">
+                    {data.downloads.slice(0, 5).map((download) => (
+                      <div key={download.id} className="flex items-center gap-3">
+                        <Download className="w-4 h-4 text-gray-400" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium truncate">
+                            {download.product_files?.file_name}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {new Date(download.created_at).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Recent AI Analyses */}
+            <div className="bg-white rounded-lg shadow">
+              <div className="p-6 border-b">
+                <h2 className="text-xl font-semibold">Recent Analyses</h2>
+              </div>
+              <div className="p-6">
+                {data.analyses.length === 0 ? (
+                  <p className="text-gray-600 text-sm">
+                    No analyses yet.
+                    <Link href="/estimator" className="text-blue-600 hover:underline ml-1">
+                      Try AI estimator
+                    </Link>
+                  </p>
+                ) : (
+                  <div className="space-y-3">
+                    {data.analyses.map((analysis) => (
+                      <div key={analysis.id} className="flex items-start gap-3">
+                        <FileText className="w-4 h-4 text-gray-400 mt-0.5" />
+                        <div className="flex-1">
+                          <p className="text-sm font-medium">
+                            {analysis.analysis_type} Analysis
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {new Date(analysis.created_at).toLocaleDateString()}
+                          </p>
+                          <p className="text-xs text-gray-600 mt-1">
+                            Confidence: {(analysis.confidence_score * 100).toFixed(0)}%
+                          </p>
+                        </div>
+                        <Link
+                          href={`/analysis/${analysis.id}`}
+                          className="text-xs text-blue-600 hover:underline"
+                        >
+                          View
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Support Tickets */}
+            <div className="bg-white rounded-lg shadow">
+              <div className="p-6 border-b">
+                <h2 className="text-xl font-semibold">Support Tickets</h2>
+              </div>
+              <div className="p-6">
+                {data.tickets.length === 0 ? (
+                  <p className="text-gray-600 text-sm">No support tickets</p>
+                ) : (
+                  <div className="space-y-3">
+                    {data.tickets.map((ticket) => (
+                      <div key={ticket.id} className="flex items-start gap-3">
+                        <div className={`
+                          w-2 h-2 rounded-full mt-1.5
+                          ${ticket.status === 'open' ? 'bg-red-500' :
+                            ticket.status === 'in_progress' ? 'bg-yellow-500' :
+                            'bg-green-500'}
+                        `} />
+                        <div className="flex-1">
+                          <p className="text-sm font-medium line-clamp-1">
+                            {ticket.subject}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {ticket.status} • {new Date(ticket.created_at).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <Link
+                          href={`/support/${ticket.id}`}
+                          className="text-xs text-blue-600 hover:underline"
+                        >
+                          View
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Subscription Banner */}
+        {data.profile?.subscription_tier === 'free' && (
+          <div className="mt-8 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-8 text-white">
+            <div className="max-w-3xl">
+              <h3 className="text-2xl font-bold mb-2">Upgrade to Pro</h3>
+              <p className="text-blue-100 mb-4">
+                Get unlimited AI analyses, priority support, and exclusive templates
+              </p>
+              <Link
+                href="/pricing"
+                className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-gray-100 font-semibold"
+              >
+                View Plans
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
