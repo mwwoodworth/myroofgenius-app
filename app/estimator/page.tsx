@@ -1,6 +1,6 @@
-import dynamic from 'next/dynamic'
+import dynamicImport from 'next/dynamic'
 
-const Estimator = dynamic(() => import('../components/AIEstimator'), { ssr: false })
+const Estimator = dynamicImport(() => import('../../components/AIEstimator'), { ssr: false })
 
 export const dynamic = 'force-dynamic'
 

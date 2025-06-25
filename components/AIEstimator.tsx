@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import Button from './ui/Button'
-import '@/app/styles/futuristic.css'
+import '../app/styles/futuristic.css'
 
 interface AnalysisResult {
   squareFeet: number
