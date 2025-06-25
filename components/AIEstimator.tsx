@@ -349,28 +349,38 @@ export default function AIEstimator() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-sm text-gray-600">Square Footage</p>
-                <p className="text-2xl font-bold">{result.square_feet.toLocaleString()}</p>
-                <p className="text-xs text-gray-500">
-                  {(result.confidence_scores.area_measurement * 100).toFixed(0)}% confidence
+                <p className="text-2xl font-bold">
+                  {result.square_feet?.toLocaleString()}
                 </p>
+                {typeof result.confidence_scores?.area_measurement === 'number' && (
+                  <p className="text-xs text-gray-500">
+                    {(result.confidence_scores.area_measurement * 100).toFixed(0)}% confidence
+                  </p>
+                )}
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-sm text-gray-600">Material</p>
-                <p className="text-lg font-bold capitalize">{result.material}</p>
-                <p className="text-xs text-gray-500">
-                  {(result.confidence_scores.material_identification * 100).toFixed(0)}% confidence
+                <p className="text-lg font-bold capitalize">
+                  {result.material || 'Unknown'}
                 </p>
+                {typeof result.confidence_scores?.material_identification === 'number' && (
+                  <p className="text-xs text-gray-500">
+                    {(result.confidence_scores.material_identification * 100).toFixed(0)}% confidence
+                  </p>
+                )}
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-sm text-gray-600">Condition</p>
-                <p className="text-lg font-bold capitalize">{result.condition}</p>
+                <p className="text-lg font-bold capitalize">
+                  {result.condition || 'unknown'}
+                </p>
                 <div className={`mt-1 h-2 rounded-full bg-gray-200`}>
                   <div
                     className={`h-full rounded-full ${
                       result.condition === 'excellent' ? 'bg-green-500' :
-                      result.condition === 'good' ? 'bg-blue-500' :
-                      result.condition === 'fair' ? 'bg-yellow-500' :
-                      'bg-red-500'
+                        result.condition === 'good' ? 'bg-blue-500' :
+                        result.condition === 'fair' ? 'bg-yellow-500' :
+                        'bg-red-500'
                     }`}
                     style={{
                       width: `${
@@ -383,9 +393,17 @@ export default function AIEstimator() {
                   />
                 </div>
               </div>
+              {result.pitch && (
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="text-sm text-gray-600">Pitch</p>
+                  <p className="text-lg font-bold capitalize">{result.pitch}</p>
+                </div>
+              )}
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-sm text-gray-600">Remaining Life</p>
-                <p className="text-2xl font-bold">{result.estimated_remaining_life}</p>
+                <p className="text-2xl font-bold">
+                  {result.estimated_remaining_life?.toLocaleString()}
+                </p>
                 <p className="text-xs text-gray-500">years estimated</p>
               </div>
             </div>
@@ -419,9 +437,14 @@ export default function AIEstimator() {
             </div>
 
             {/* Damage Areas */}
-            {result.damage_areas.length > 0 && (
+            {Array.isArray(result.damage_areas) && result.damage_areas.length > 0 && (
               <div className="border rounded-lg p-6">
-                <h3 className="font-semibold mb-4">Identified Issues</h3>
+                <h3 className="font-semibold mb-2">Identified Issues</h3>
+                {typeof result.confidence_scores?.damage_assessment === 'number' && (
+                  <p className="text-xs text-gray-500 mb-4">
+                    {(result.confidence_scores.damage_assessment * 100).toFixed(0)}% confidence
+                  </p>
+                )}
                 <div className="space-y-3">
                   {result.damage_areas.map((damage, idx) => (
                     <div key={idx} className="flex items-start gap-3">
@@ -434,8 +457,8 @@ export default function AIEstimator() {
                       <div className="flex-1">
                         <p className="font-medium">{damage.type}</p>
                         <p className="text-sm text-gray-600">
-                          {damage.location} • {damage.severity} severity • 
-                          ~{damage.area_sqft} sq ft affected
+                          {damage.location} • {damage.severity} severity •
+                          ~{damage.area_sqft.toLocaleString()} sq ft affected
                         </p>
                       </div>
                     </div>
