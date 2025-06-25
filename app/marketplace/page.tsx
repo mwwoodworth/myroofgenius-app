@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { HotActions } from '../../components/ui'
+import { salesEnabled } from '../lib/features'
 
 // Add dynamic export to prevent static generation
 export const dynamic = 'force-dynamic'
@@ -37,11 +38,22 @@ const categories = [
 ]
 
 export default function Marketplace() {
+  const disabled = !salesEnabled
   const [products, setProducts] = useState<any[]>([])
 
   useEffect(() => {
-    fetchProducts().then(setProducts)
-  }, [])
+    if (!disabled) {
+      fetchProducts().then(setProducts)
+    }
+  }, [disabled])
+
+  if (disabled) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-8">
+        <p>Marketplace is currently disabled.</p>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-bg text-text-primary">

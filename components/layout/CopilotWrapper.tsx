@@ -1,9 +1,11 @@
 'use client'
 import { useState } from 'react'
 import CopilotPanel from '../CopilotPanel'
+import { aiCopilotEnabled } from '../../app/lib/features'
 
 export default function CopilotWrapper() {
   const [open, setOpen] = useState(false)
+  if (!aiCopilotEnabled) return null
   return (
     <>
       <button
