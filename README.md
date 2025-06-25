@@ -13,3 +13,4 @@ Public SaaS React + FastAPI system for MyRoofGenius.
 - Introduced feature flags `AI_COPILOT_ENABLED`, `AR_MODE_ENABLED`, and `MAINTENANCE_MODE`.
 - `/api/copilot` now streams responses, stores chat history in Supabase and
   supports voice input and quick actions.
+- Initial AR scaffolding with 3D canvas and database table `ar_models`.

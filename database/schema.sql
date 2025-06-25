@@ -37,6 +37,15 @@ CREATE TABLE IF NOT EXISTS estimates (
   created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
 );
 
+-- AR models table for storing 3D assets and drone metadata
+CREATE TABLE IF NOT EXISTS ar_models (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id uuid REFERENCES auth.users(id),
+  model_url text,
+  drone_data jsonb,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+);
+
 -- Blog posts table
 CREATE TABLE IF NOT EXISTS blog_posts (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
