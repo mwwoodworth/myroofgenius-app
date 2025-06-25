@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
-import Dashboard3D from "../../components/Dashboard3D"
-import { HotActions } from "../../components/ui"
+import DashboardAR from "../../components/DashboardAR"
+import { HotActions, ARModeToggle } from "../../components/ui"
 
 // Add dynamic export to prevent static generation
 export const dynamic = 'force-dynamic'
@@ -64,8 +64,11 @@ export default async function Dashboard() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           <p className="text-gray-600 mt-2">Welcome back! Here's your business overview.</p>
-          <HotActions />
-          <Dashboard3D />
+          <div className="flex items-center gap-3">
+            <HotActions />
+            <ARModeToggle />
+          </div>
+          <DashboardAR />
         </div>
         
         {/* Metrics Grid */}

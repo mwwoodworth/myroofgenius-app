@@ -2,6 +2,9 @@
 import { useState, useRef } from 'react'
 import { useDropzone } from 'react-dropzone'
 import Button from './ui/Button'
+import ARModeToggle from './ui/ARModeToggle'
+import { useARMode } from './ui/ARModeProvider'
+import EstimatorAR from './EstimatorAR'
 import '../app/styles/futuristic.css'
 
 interface AnalysisResult {
@@ -20,6 +23,7 @@ export default function AIEstimator() {
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState('')
   const imgRef = useRef<HTMLImageElement>(null)
+  const { enabled } = useARMode()
 
   const onDrop = (accepted: File[]) => {
     if (accepted[0]) {
@@ -76,6 +80,10 @@ export default function AIEstimator() {
 
   return (
     <div className="estimator-glass p-6 rounded-xl text-center">
+      <div className="flex justify-end mb-2">
+        <ARModeToggle />
+      </div>
+      {enabled && <EstimatorAR />}
       <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''}`}>
         <input {...getInputProps()} />
         {file ? <p>{file.name}</p> : <p>Drag & drop a roof photo, or click to select</p>}

@@ -1,6 +1,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import { ThemeProvider, RoleProvider, RoleSwitcher } from '../components/ui'
+import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider } from '../components/ui'
 import Navbar from '../components/Navbar'
 import CopilotWrapper from '../components/layout/CopilotWrapper'
 import './lib/sentry'
@@ -23,10 +23,12 @@ export default function RootLayout({
         <div className="bg-bg min-h-screen text-text-primary font-inter">
           <RoleProvider>
             <ThemeProvider>
-              <Navbar />
-              <RoleSwitcher />
-              {children}
-              <CopilotWrapper />
+              <ARModeProvider>
+                <Navbar />
+                <RoleSwitcher />
+                {children}
+                <CopilotWrapper />
+              </ARModeProvider>
             </ThemeProvider>
           </RoleProvider>
         </div>
