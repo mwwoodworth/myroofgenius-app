@@ -7,8 +7,8 @@ const nextConfig = {
   },
   images: {
     domains: ['cdn.jsdelivr.net', 'images.unsplash.com'],
- 
-   async redirects() {
+  },
+  async redirects() {
     return [
       {
         source: '/tools',
@@ -20,8 +20,8 @@ const nextConfig = {
         destination: '/',
         permanent: false,
       },
-    ];
-  }, },
+    ]
+  },
 };
 const { withSentryConfig } = require('@sentry/nextjs');
 
