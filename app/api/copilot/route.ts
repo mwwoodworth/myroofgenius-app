@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
-import { chat, ChatMessage } from '../../lib/llm'
+import { chat, chatStream, ChatMessage } from '../../lib/llm'
 
 function createAdminClient(): SupabaseClient | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -69,32 +69,29 @@ export async function POST(req: NextRequest) {
     messages.push({ role: 'user', content: message })
   }
 
-  let assistantResponse: string
-  try {
-    assistantResponse = await chat(messages)
-  } catch (error) {
-    console.error('Copilot AI Error:', error)
-    assistantResponse = "I'm sorry, I couldn't find an answer. Please try again."
-  }
-
-  if (supabase) {
-    await supabase.from('copilot_messages').insert({
-      session_id: sessionId,
-      user_id: userId,
-      role: 'assistant',
-      content: assistantResponse
-    })
-  }
-
+  let responseText = ''
   const encoder = new TextEncoder()
   const stream = new ReadableStream({
     async start(controller) {
-      const words = assistantResponse.split(' ')
-      for (const word of words) {
-        controller.enqueue(encoder.encode(word + ' '))
-        await new Promise(res => setTimeout(res, 30))
+      try {
+        await chatStream(messages, async (chunk) => {
+          responseText += chunk
+          controller.enqueue(encoder.encode(chunk))
+        })
+        controller.close()
+      } catch (error) {
+        console.error('Copilot AI Error:', error)
+        controller.enqueue(encoder.encode("I'm sorry, I couldn't find an answer. Please try again."))
+        controller.close()
       }
-      controller.close()
+      if (supabase) {
+        await supabase.from('copilot_messages').insert({
+          session_id: sessionId,
+          user_id: userId,
+          role: 'assistant',
+          content: responseText
+        })
+      }
     }
   })
   return new Response(stream, {

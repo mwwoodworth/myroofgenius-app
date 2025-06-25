@@ -39,8 +39,6 @@ export async function POST(request: NextRequest) {
     // Also send to Google Analytics if configured
     if (process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', event_type, event_data)
-    } else {
-      console.log('[analytics]', event_type, event_data)
     }
     
     return NextResponse.json({ success: true })
