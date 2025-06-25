@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import Dashboard3D from "../../components/Dashboard3D"
 
 // Add dynamic export to prevent static generation
 export const dynamic = 'force-dynamic'
@@ -62,6 +63,7 @@ export default async function Dashboard() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           <p className="text-gray-600 mt-2">Welcome back! Here's your business overview.</p>
+        <Dashboard3D />
         </div>
         
         {/* Metrics Grid */}
