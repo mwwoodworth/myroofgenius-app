@@ -1,4 +1,5 @@
 "use client"
+export const dynamic = 'force-dynamic'
 import { motion } from 'framer-motion'
 import FeatureCard from '../components/FeatureCard'
 import Testimonial from '../components/Testimonial'
