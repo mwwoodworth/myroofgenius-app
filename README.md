@@ -1,4 +1,7 @@
 # myroofgenius-app
+
+![CI](https://img.shields.io/github/actions/workflow/status/mwwoodworth/myroofgenius-app/ci.yml?branch=main)&nbsp;![Migrations](https://img.shields.io/github/actions/workflow/status/mwwoodworth/myroofgenius-app/migrate.yml?branch=main)&nbsp;![Deploy](https://img.shields.io/github/actions/workflow/status/mwwoodworth/myroofgenius-app/deploy.yml?branch=main)&nbsp;![Maintenance](https://img.shields.io/github/actions/workflow/status/mwwoodworth/myroofgenius-app/maintenance.yml?branch=main)
+
 Public SaaS React + FastAPI system for MyRoofGenius.
 
 ## 20 Jun 2025 Updates
