@@ -69,3 +69,9 @@ async def stripe_webhook(request: Request):
         print("Payment succeeded for session", session["id"])
 
     return {"status": "ok"}
+
+
+@app.get("/api/prompt/{name}")
+async def get_prompt(name: str):
+    prompts = {"copilot_intro": "Hello from MyRoofGenius Copilot."}
+    return {"prompt": prompts.get(name, "")}
