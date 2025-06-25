@@ -26,6 +26,17 @@ CREATE TABLE IF NOT EXISTS orders (
   created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
 );
 
+-- Estimates table stores roof AI analysis results
+CREATE TABLE IF NOT EXISTS estimates (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  square_feet decimal(10,2) NOT NULL,
+  damage text,
+  confidence decimal(5,4),
+  image_data text,
+  bbox jsonb,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+);
+
 -- Blog posts table
 CREATE TABLE IF NOT EXISTS blog_posts (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
