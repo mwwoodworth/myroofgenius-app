@@ -6,6 +6,8 @@ import CopilotWrapper from '../components/layout/CopilotWrapper'
 import './lib/sentry'
 import { maintenanceMode, aiCopilotEnabled, arModeEnabled } from './lib/features'
 
+export const dynamic = 'force-dynamic'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {

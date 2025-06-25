@@ -1,0 +1,13 @@
+name: SEO & Meta Validation
+
+on: [push]
+
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Validate GA, Meta, OG
+      run: |
+        grep NEXT_PUBLIC_GA_MEASUREMENT_ID .env.example || exit 1
+        grep 'og:image' app/layout.tsx || echo "⚠️ Missing OG tags"
