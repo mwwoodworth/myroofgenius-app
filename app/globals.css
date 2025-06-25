@@ -2,15 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Gemini-inspired dark palette */
+/* Futuristic dark theme colors */
 :root {
-  --bg: #0d1117;
-  --fg: #f8fafc;
-  --accent: #3b82f6;
+  --bg: #121212;
+  --bg-elevated: #1c1c1e;
+  --fg: #f2f2f7;
+  --fg-secondary: #8e8e93;
+  --accent: #5e5ce6;
 }
 
 .light {
   --bg: #ffffff;
+  --bg-elevated: #f8f8f8;
   --fg: #0f172a;
-  --accent: #3b82f6;
+  --fg-secondary: #6b7280;
+  --accent: #5e5ce6;
 }
