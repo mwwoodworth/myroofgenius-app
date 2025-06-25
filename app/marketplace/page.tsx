@@ -1,5 +1,7 @@
+'use client'
 import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 // Add dynamic export to prevent static generation
 export const dynamic = 'force-dynamic'
@@ -35,11 +37,11 @@ const categories = [
 
 export default async function Marketplace() {
   const products = await getProducts()
-  
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-bg text-text-primary">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-12">
+      <section className="bg-accent text-white py-12">
         <div className="max-w-7xl mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Professional Roofing Tools & Templates</h1>
           <p className="text-xl text-blue-100 mb-8">
@@ -60,7 +62,7 @@ export default async function Marketplace() {
       </section>
 
       {/* Categories */}
-      <section className="py-8 bg-white border-b">
+      <section className="py-8 bg-bg-card border-b border-[rgba(255,255,255,0.1)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-wrap gap-4">
             {categories.map((category) => (
@@ -87,51 +89,25 @@ export default async function Marketplace() {
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {products.map((product) => (
-                <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                  <div className="aspect-w-16 aspect-h-9 bg-gray-100">
-                    <img 
-                      src={product.image_url || 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400&h=300&fit=crop'} 
-                      alt={product.name}
-                      className="w-full h-48 object-cover"
-                    />
+                <motion.div
+                  key={product.id}
+                  whileHover={{ scale: 1.04, boxShadow: '0 4px 20px #5E5CE6bb' }}
+                  className="bg-bg-card p-6 rounded-lg shadow"
+                >
+                  <img
+                    src={product.image_url || 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400&h=300&fit=crop'}
+                    alt={product.name}
+                    className="rounded mb-4 w-full h-48 object-cover"
+                  />
+                  <h4 className="font-semibold text-xl">{product.name}</h4>
+                  <p className="text-text-secondary">{product.description}</p>
+                  <div className="flex justify-between items-center mt-4">
+                    <span className="font-bold text-accent">${product.price}</span>
+                    <a href={`/product/${product.id}`} className="btn-accent rounded px-4 py-1">Buy</a>
                   </div>
-                  <div className="p-6">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-xl font-semibold">{product.name}</h3>
-                      <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                        {product.category || 'Tool'}
-                      </span>
-                    </div>
-                    <p className="text-gray-600 mb-4 line-clamp-2">{product.description}</p>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-2xl font-bold">${product.price}</span>
-                        {product.original_price && (
-                          <span className="text-sm text-gray-500 line-through ml-2">
-                            ${product.original_price}
-                          </span>
-                        )}
-                      </div>
-                      <Link 
-                        href={`/product/${product.id}`}
-                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-                      >
-                        View Details
-                      </Link>
-                    </div>
-                    {product.features && (
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {product.features.split(',').slice(0, 3).map((feature, idx) => (
-                          <span key={idx} className="text-xs bg-gray-100 px-2 py-1 rounded">
-                            {feature.trim()}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}

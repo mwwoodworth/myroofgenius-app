@@ -13,7 +13,7 @@ export default function Card({ hover = true, className, ...props }: CardProps) {
   return (
     <motion.div
       {...motionProps}
-      className={clsx('rounded-lg bg-background-elevated p-6', className)}
+      className={clsx('rounded-lg bg-bg-card p-6 min-h-[44px]', className)}
       {...props as any}
     />
   )
