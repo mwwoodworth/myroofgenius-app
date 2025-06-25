@@ -319,7 +319,7 @@ export default async function Dashboard() {
                         <div
                           className="w-full max-w-12 bg-blue-500 rounded-t"
                           style={{
-                            height: `${(month.amount / Math.max(...data.charts.monthlySpending.map(m => m.amount)) * 100) || 10}%`
+                            height: `${((month.amount as number) / Math.max(...data.charts.monthlySpending.map(m => m.amount as number)) * 100) || 10}%`
                           }}
                         />
                         <p className="text-xs text-gray-600 mt-2">

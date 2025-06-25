@@ -110,7 +110,7 @@ export default function Marketplace() {
     // Sort
     switch (sortBy) {
       case 'newest':
-        filtered.sort((a, b) => b.created_at - a.created_at)
+        filtered.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
         break
       case 'price_low':
         filtered.sort((a, b) => a.price - b.price)

@@ -8,6 +8,22 @@ interface AnalysisResult {
   bbox?: [number, number, number, number]
 }
 
+async function fetchSatelliteImage(address: string): Promise<File> {
+  const token = process.env.MAPBOX_TOKEN
+  if (!token) throw new Error('MAPBOX_TOKEN not set')
+  const geoRes = await fetch(
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${token}`,
+  )
+  const geo = await geoRes.json()
+  if (!geo.features?.length) throw new Error('address not found')
+  const [lon, lat] = geo.features[0].center
+  const imgRes = await fetch(
+    `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/${lon},${lat},18/600x600?access_token=${token}`,
+  )
+  const buffer = await imgRes.arrayBuffer()
+  return new File([buffer], 'satellite.jpg', { type: 'image/jpeg' })
+}
+
 async function analyzeWithLLM(file: File): Promise<AnalysisResult> {
   const apiKey = process.env.OPENAI_API_KEY
   if (!apiKey) {
@@ -46,16 +62,25 @@ async function analyzeWithLLM(file: File): Promise<AnalysisResult> {
 }
 
 async function analyze(file: File): Promise<AnalysisResult> {
-  if (process.env.EDGE_AI_MODE === 'true') {
-    // TODO: swap in local TensorRT/Jetson inference
-    return { squareFeet: 1500, damage: 'none', confidence: 0.9 }
+  if (process.env.EDGE_AI_MODE === 'true' && process.env.API_BASE_URL) {
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      const res = await fetch(`${process.env.API_BASE_URL}/api/ai/analyze-roof`, {
+        method: 'POST',
+        body: formData,
+      })
+      if (res.ok) return res.json()
+    } catch (e) {
+      console.error('edge inference failed', e)
+    }
   }
   return analyzeWithLLM(file)
 }
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData()
-  const file = formData.get('file') as File | null
+  let file = formData.get('file') as File | null
   const address = formData.get('address') as string | null
 
   if (!file && !address) {
@@ -66,11 +91,14 @@ export async function POST(request: NextRequest) {
   }
 
   if (address && !file) {
-    // TODO: fetch satellite image based on address
-    return NextResponse.json(
-      { error: 'address lookup not implemented' },
-      { status: 501 }
-    )
+    try {
+      file = await fetchSatelliteImage(address)
+    } catch (e) {
+      return NextResponse.json(
+        { error: 'address lookup failed' },
+        { status: 500 }
+      )
+    }
   }
 
   try {

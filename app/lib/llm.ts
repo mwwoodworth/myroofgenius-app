@@ -1,6 +1,6 @@
 export type LLMProvider = 'openai' | 'claude' | 'gemini'
 
-interface ChatMessage {
+export interface ChatMessage {
   role: 'system' | 'user' | 'assistant'
   content: string | any
 }
@@ -25,15 +25,44 @@ async function callOpenAI(messages: ChatMessage[]): Promise<string> {
 }
 
 async function callClaude(messages: ChatMessage[]): Promise<string> {
-  // TODO: implement real Claude call
-  console.warn('Claude integration not implemented')
-  return callOpenAI(messages)
+  const apiKey = process.env.ANTHROPIC_API_KEY
+  if (!apiKey) {
+    console.warn('Claude API key not set, falling back to OpenAI')
+    return callOpenAI(messages)
+  }
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model: 'claude-3-opus-20240229',
+      max_tokens: 400,
+      messages,
+    }),
+  })
+  const data = await res.json()
+  return data?.content?.[0]?.text || ''
 }
 
 async function callGemini(messages: ChatMessage[]): Promise<string> {
-  // TODO: implement real Gemini call
-  console.warn('Gemini integration not implemented')
-  return callOpenAI(messages)
+  const apiKey = process.env.GEMINI_API_KEY
+  if (!apiKey) {
+    console.warn('Gemini API key not set, falling back to OpenAI')
+    return callOpenAI(messages)
+  }
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ role: 'user', parts: messages.map(m => ({ text: typeof m.content === 'string' ? m.content : JSON.stringify(m.content) })) }] }),
+    },
+  )
+  const data = await res.json()
+  return data?.candidates?.[0]?.content?.parts?.[0]?.text || ''
 }
 
 export async function chat(messages: ChatMessage[], provider?: LLMProvider) {

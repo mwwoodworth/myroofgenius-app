@@ -26,5 +26,21 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
-  return NextResponse.json({ models: [] }) // TODO: fetch from DB
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return NextResponse.json({ error: 'supabase not configured' }, { status: 500 })
+  }
+
+  try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    )
+
+    const { data, error } = await supabase.from('ar_models').select('*')
+    if (error) throw error
+
+    return NextResponse.json({ models: data || [] })
+  } catch (e) {
+    return NextResponse.json({ error: 'fetch failed' }, { status: 500 })
+  }
 }
