@@ -15,10 +15,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (stored) setTheme(stored)
   }, [])
 
-  if (typeof window === 'undefined') {
-    return <>{children}</>
-  }
-
   useEffect(() => {
     if (typeof document === 'undefined') return
     if (theme === 'dark') {

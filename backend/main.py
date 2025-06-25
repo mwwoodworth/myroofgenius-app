@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import stripe
 import httpx
 import sentry_sdk
+from fastapi.responses import JSONResponse
 from .prompt_service import (
     fetch_prompt,
     list_prompts,
@@ -14,6 +15,9 @@ from .prompt_service import (
 
 sentry_sdk.init(dsn=os.getenv("SENTRY_DSN"))
 
+MAINTENANCE_MODE = os.getenv("MAINTENANCE_MODE") == "true"
+MAKE_WEBHOOK_URL = os.getenv("MAKE_WEBHOOK_URL")
+
 app = FastAPI()
 
 app.add_middleware(
@@ -22,6 +26,22 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def maintenance_and_errors(request: Request, call_next):
+    if MAINTENANCE_MODE and request.url.path != "/api/health":
+        return JSONResponse({"detail": "maintenance"}, status_code=503)
+    try:
+        return await call_next(request)
+    except Exception as exc:
+        sentry_sdk.capture_exception(exc)
+        if MAKE_WEBHOOK_URL:
+            try:
+                async with httpx.AsyncClient() as client:
+                    await client.post(MAKE_WEBHOOK_URL, json={"error": str(exc)})
+            except Exception:
+                pass
+        raise
 
 # Initialize Stripe
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")

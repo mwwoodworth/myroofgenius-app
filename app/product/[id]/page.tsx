@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 import { notFound } from 'next/navigation'
 import CheckoutButton from './CheckoutButton'
 import Link from 'next/link'
+import { salesEnabled } from '../../lib/features'
 
 // Add dynamic params export to handle dynamic routes
 export async function generateStaticParams() {
@@ -31,6 +32,13 @@ async function getProduct(id: string) {
 }
 
 export default async function ProductPage({ params }: { params: { id: string } }) {
+  if (!salesEnabled) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-8">
+        <p>Marketplace is currently disabled.</p>
+      </div>
+    )
+  }
   const product = await getProduct(params.id)
   
   if (!product) {

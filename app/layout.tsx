@@ -4,6 +4,7 @@ import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider } from '../co
 import Navbar from '../components/Navbar'
 import CopilotWrapper from '../components/layout/CopilotWrapper'
 import './lib/sentry'
+import { maintenanceMode, aiCopilotEnabled, arModeEnabled } from './lib/features'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,18 +18,38 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  if (maintenanceMode) {
+    return (
+      <html lang="en" className="dark">
+        <body className={inter.className}>
+          <div className="min-h-screen flex items-center justify-center">
+            <p>Site is under maintenance. Please check back soon.</p>
+          </div>
+        </body>
+      </html>
+    )
+  }
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
         <div className="bg-bg min-h-screen text-text-primary font-inter">
           <RoleProvider>
             <ThemeProvider>
-              <ARModeProvider>
-                <Navbar />
-                <RoleSwitcher />
-                {children}
-                <CopilotWrapper />
-              </ARModeProvider>
+              {arModeEnabled ? (
+                <ARModeProvider>
+                  <Navbar />
+                  <RoleSwitcher />
+                  {children}
+                  {aiCopilotEnabled && <CopilotWrapper />}
+                </ARModeProvider>
+              ) : (
+                <>
+                  <Navbar />
+                  <RoleSwitcher />
+                  {children}
+                  {aiCopilotEnabled && <CopilotWrapper />}
+                </>
+              )}
             </ThemeProvider>
           </RoleProvider>
         </div>

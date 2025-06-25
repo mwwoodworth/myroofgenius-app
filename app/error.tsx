@@ -1,4 +1,6 @@
 'use client'
+import { useEffect } from 'react'
+import { sendAlert } from './lib/notify'
 
 export default function Error({
   error,
@@ -7,6 +9,9 @@ export default function Error({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  useEffect(() => {
+    sendAlert(`Next.js error: ${error.message}`)
+  }, [error])
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
