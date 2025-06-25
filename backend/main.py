@@ -3,6 +3,10 @@ from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import stripe
 import httpx
+import sentry_sdk
+from .prompts import get_prompt as fetch_prompt
+
+sentry_sdk.init(dsn=os.getenv("SENTRY_DSN"))
 
 app = FastAPI()
 
@@ -72,6 +76,10 @@ async def stripe_webhook(request: Request):
 
 
 @app.get("/api/prompt/{name}")
-async def get_prompt(name: str):
-    prompts = {"copilot_intro": "Hello from MyRoofGenius Copilot."}
-    return {"prompt": prompts.get(name, "")}
+async def get_prompt_endpoint(name: str):
+    return {"prompt": fetch_prompt(name)}
+
+
+@app.get("/api/health")
+async def health():
+    return {"ok": True}
