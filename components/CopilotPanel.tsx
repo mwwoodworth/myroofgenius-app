@@ -13,7 +13,8 @@ export default function CopilotPanel({ open, onClose }: { open: boolean; onClose
   const [sessionId, setSessionId] = useState<string | null>(null)
   const [messages, setMessages] = useState<Msg[]>([])
   const [recording, setRecording] = useState(false)
-  const recognizer = useRef<SpeechRecognition | null>(null)
+  // SpeechRecognition types are not universally available so we fall back to `any`
+  const recognizer = useRef<any>(null)
 
   const userRole = 'field' // TODO: replace with real auth role
 

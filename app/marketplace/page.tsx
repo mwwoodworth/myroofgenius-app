@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { HotActions } from '../../components/ui'
 
 // Add dynamic export to prevent static generation
 export const dynamic = 'force-dynamic'
@@ -51,7 +52,7 @@ export default function Marketplace() {
           <p className="text-xl text-blue-100 mb-8">
             Save hours on every project with battle-tested resources used by 2,800+ contractors
           </p>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4 mb-6">
             <div className="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-sm">
               ✨ Instant Download
             </div>
@@ -62,6 +63,7 @@ export default function Marketplace() {
               🔄 Lifetime Updates
             </div>
           </div>
+          <HotActions />
         </div>
       </section>
 
