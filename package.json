@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-three/drei": "^9.88.0",
     "@react-three/fiber": "^8.15.0",
+    "@sentry/nextjs": "^7.90.0",
     "@supabase/supabase-js": "^2.50.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.19.1",

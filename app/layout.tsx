@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { ThemeProvider } from '../components/ui/ThemeProvider'
 import Navbar from '../components/Navbar'
 import CopilotWrapper from '../components/layout/CopilotWrapper'
+import './lib/sentry'
 
 const inter = Inter({ subsets: ['latin'] })
 
