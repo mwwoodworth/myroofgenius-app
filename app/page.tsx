@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import { motion } from 'framer-motion'
 import FeatureCard from '../components/FeatureCard'
 import Testimonial from '../components/Testimonial'

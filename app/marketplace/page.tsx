@@ -1,28 +1,28 @@
-'use client'
+"use client"
 import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 // Add dynamic export to prevent static generation
 export const dynamic = 'force-dynamic'
 
-async function getProducts() {
-  // Handle missing env vars gracefully
+async function fetchProducts() {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     console.warn('Supabase environment variables not configured')
     return []
   }
 
   const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )
-  
+
   const { data } = await supabase
     .from('products')
     .select('*')
     .order('created_at', { ascending: false })
-    
+
   return data || []
 }
 
@@ -35,8 +35,12 @@ const categories = [
   { id: 'safety', name: 'Safety Resources', icon: '⚠️' },
 ]
 
-export default async function Marketplace() {
-  const products = await getProducts()
+export default function Marketplace() {
+  const [products, setProducts] = useState<any[]>([])
+
+  useEffect(() => {
+    fetchProducts().then(setProducts)
+  }, [])
 
   return (
     <div className="min-h-screen bg-bg text-text-primary">
