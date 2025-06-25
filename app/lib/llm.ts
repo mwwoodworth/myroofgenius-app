@@ -5,6 +5,53 @@ export interface ChatMessage {
   content: string | any
 }
 
+export async function chatStream(
+  messages: ChatMessage[],
+  onChunk: (content: string) => void,
+  provider?: LLMProvider
+) {
+  const p = provider || (process.env.LLM_PROVIDER as LLMProvider) || 'openai'
+  if (p !== 'openai') {
+    const full = await chat(messages, p)
+    onChunk(full)
+    return
+  }
+  const apiKey = process.env.OPENAI_API_KEY
+  if (!apiKey) throw new Error('OPENAI_API_KEY not set')
+  const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: 'gpt-4o',
+      messages,
+      stream: true,
+    }),
+  })
+  if (!res.ok || !res.body) throw new Error('OpenAI stream failed')
+  const reader = res.body.getReader()
+  const decoder = new TextDecoder()
+  while (true) {
+    const { value, done } = await reader.read()
+    if (done) break
+    const chunk = decoder.decode(value)
+    const lines = chunk.split('\n').filter(l => l.trim().startsWith('data:'))
+    for (const line of lines) {
+      const data = line.replace(/^data:\s*/, '')
+      if (data === '[DONE]') return
+      try {
+        const json = JSON.parse(data)
+        const content = json.choices?.[0]?.delta?.content
+        if (content) onChunk(content)
+      } catch {
+        /* ignore JSON errors */
+      }
+    }
+  }
+}
+
 async function callOpenAI(messages: ChatMessage[]): Promise<string> {
   const apiKey = process.env.OPENAI_API_KEY
   if (!apiKey) throw new Error('OPENAI_API_KEY not set')
