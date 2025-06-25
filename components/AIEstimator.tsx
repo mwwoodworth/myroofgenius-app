@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { Camera, Upload, FileText, Download, AlertCircle, CheckCircle } from 'lucide-react'
+import { Camera, Upload, FileText, Download, AlertCircle, CheckCircle, X } from 'lucide-react'
 import Button from './ui/Button'
 import { motion, AnimatePresence } from 'framer-motion'
 

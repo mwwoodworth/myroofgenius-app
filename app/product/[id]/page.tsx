@@ -161,7 +161,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
             {/* Features */}
             <div className="mb-8">
-              <h3 className="text-xl font-semibold mb-4">What's Included</h3>
+              <h3 className="text-xl font-semibold mb-4">What&apos;s Included</h3>
               <ul className="space-y-2">
                 {features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-2">
@@ -187,7 +187,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                 ))}
               </div>
               <p className="text-gray-600 mb-4">
-                "This tool paid for itself on the first project. Found $8,000 in hidden costs I would have missed."
+                &quot;This tool paid for itself on the first project. Found $8,000 in hidden costs I would have missed.&quot;
               </p>
               <p className="font-semibold">Mike R. - Denver, CO</p>
               <p className="text-sm text-gray-500">Verified Purchase</p>
@@ -199,7 +199,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                 ))}
               </div>
               <p className="text-gray-600 mb-4">
-                "Finally, someone who understands commercial roofing. This is exactly what I've been looking for."
+                &quot;Finally, someone who understands commercial roofing. This is exactly what I&apos;ve been looking for.&quot;
               </p>
               <p className="font-semibold">Sarah T. - Colorado Springs</p>
               <p className="text-sm text-gray-500">Verified Purchase</p>
@@ -213,9 +213,9 @@ export default async function ProductPage({ params }: { params: { id: string } }
           <div className="space-y-6">
             <div>
               <h3 className="font-semibold mb-2">How do I access my purchase?</h3>
-              <p className="text-gray-600">
-                You'll receive an email with download links immediately after purchase. Files are also available in your account dashboard.
-              </p>
+                <p className="text-gray-600">
+                  You&apos;ll receive an email with download links immediately after purchase. Files are also available in your account dashboard.
+                </p>
             </div>
             <div>
               <h3 className="font-semibold mb-2">What if I need help using the tool?</h3>
