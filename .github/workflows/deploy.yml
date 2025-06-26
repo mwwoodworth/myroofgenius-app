@@ -38,8 +38,8 @@ jobs:
             - name: Build application
             run: npm run build
                     env:
-                      supabaseUrl: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-                    supabaseKey: ${{ secrets.NEXT_PUBLIC_SUPABASE_KEY }}
+                    SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+                    SUPABASE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_KEY }}
 
       - name: Deploy to Vercel
             run: |
