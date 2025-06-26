@@ -4,6 +4,22 @@
 
 Public SaaS React + FastAPI system for MyRoofGenius.
 
+## Development
+
+Install dependencies and run the type checker:
+
+```bash
+npm install
+npm run type-check
+```
+
+Run unit and end-to-end tests:
+
+```bash
+npm test
+npm run test:e2e
+```
+
 ## 20 Jun 2025 Updates
 
 - Added `SUPABASE_SERVICE_ROLE_KEY` to environment configuration.
