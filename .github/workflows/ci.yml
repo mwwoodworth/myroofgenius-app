@@ -32,7 +32,7 @@ jobs:
       - name: Run unit tests
         run: npm run test
 
-        - name: Install Playwright browsers
+         name: Install Playwright browsers
       run: npx playwright install --with-deps
   - name: Run e2e tests
         run: npm run test:e2e
