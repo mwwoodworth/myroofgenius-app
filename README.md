@@ -18,3 +18,4 @@ Public SaaS React + FastAPI system for MyRoofGenius.
 - `/api/copilot` now streams responses, stores chat history in Supabase and
   supports voice input and quick actions.
 - Initial AR scaffolding with 3D canvas and database table `ar_models`.
+- Added `REDIS_URL`, `RATE_LIMIT_WINDOW`, and `RATE_LIMIT_MAX_REQUESTS` environment variables for caching and throttling.
