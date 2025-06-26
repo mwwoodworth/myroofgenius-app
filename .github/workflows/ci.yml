@@ -32,11 +32,18 @@ jobs:
       - name: Run unit tests
         run: npm run test
 
-      - name: Run e2e tests
-        run: npm run test:e2e
+
+ 
+   - name: Install Playwright browsers
+    rrun: npx playwright install --with-deps
+ - - name: Run e2e tests
+run:: npm run test:e2e
 
       - name: Build application
-        run: npm run build
+        run: npm run build<=
+            env:
+        s  SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_KEY }}
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -45,6 +52,10 @@ jobs:
           path: .next
 
       - name: Slack failure notification
+
+
+            continue-on-error: true
+
         if: failure()
         uses: 8398a7/action-slack@v3
         with:
@@ -54,7 +65,11 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
       - name: Email failure notification
-        if: failure()
+
+
+
+           continue-on-error: true
+
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}

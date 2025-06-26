@@ -50,13 +50,18 @@ Ensure you have an OpenAI API key with access to GPT‑4. Add `OPENAI_API_KEY` i
 
 Create a project on Vercel and link it to the repository. Add all environment variables from `.env.local` in the Vercel dashboard. Vercel will detect the Next.js app and build it using `vercel.json`.
 
-## 7. Post-Deployment Verification
+## 7. Redis & Rate Limiting
+
+Set `REDIS_URL` to your Redis instance for caching and API throttling. Adjust
+`RATE_LIMIT_WINDOW` (seconds) and `RATE_LIMIT_MAX_REQUESTS` to tune limits.
+
+## 8. Post-Deployment Verification
 
 - Sign up and log in.
 - Purchase a product in Stripe test mode and verify download links and confirmation email.
 - Test the AI estimator and Copilot features.
 - Log in with an admin account to access `/admin` and verify dashboards.
 
-## 8. Monitoring & Maintenance
+## 9. Monitoring & Maintenance
 
 If a Sentry DSN is provided, errors will be sent to Sentry. Scheduled cron jobs handle cleanup and reminder emails automatically.
