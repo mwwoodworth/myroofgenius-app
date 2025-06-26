@@ -29,7 +29,10 @@ jobs:
       - name: Run unit tests
         run: npm run test
 
-      - name: Run e2e tests
+    
+          - name: Install Playwright browsers
+      run: npx playwright install --with-deps
+- name: Run e2e tests
         run: npm run test:e2e
 
       - name: Build application
@@ -48,6 +51,7 @@ jobs:
 
       - name: Slack failure notification
         if: failure()
+              continue-on-error: true
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
@@ -57,6 +61,7 @@ jobs:
 
       - name: Email failure notification
         if: failure()
+              continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
