@@ -37,3 +37,7 @@ npm run test:e2e
   supports voice input and quick actions.
 - Initial AR scaffolding with 3D canvas and database table `ar_models`.
 - Added `REDIS_URL`, `RATE_LIMIT_WINDOW`, and `RATE_LIMIT_MAX_REQUESTS` environment variables for caching and throttling.
+
+## 28 Jun 2025 Updates
+
+- Added AI Tools page with links to Claude-powered dashboards and forms.
