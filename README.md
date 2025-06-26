@@ -1,6 +1,9 @@
 # myroofgenius-app
 
+
+
 ✅ v1.0.0: AI Estimator, Marketplace, Admin, Checkout, Copilot all production-ready
+
 
 ![CI](https://img.shields.io/github/actions/workflow/status/mwwoodworth/myroofgenius-app/ci.yml?branch=main)&nbsp;![Migrations](https://img.shields.io/github/actions/workflow/status/mwwoodworth/myroofgenius-app/migrate.yml?branch=main)&nbsp;![Deploy](https://img.shields.io/github/actions/workflow/status/mwwoodworth/myroofgenius-app/deploy.yml?branch=main)&nbsp;![Maintenance](https://img.shields.io/github/actions/workflow/status/mwwoodworth/myroofgenius-app/maintenance.yml?branch=main)
 
