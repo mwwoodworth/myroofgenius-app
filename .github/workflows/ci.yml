@@ -39,7 +39,9 @@ jobs:
 
       - name: Build application
         run: npm run build
-
+            env:
+        s  upabaseUrl: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          supabaseKey: ${{ secrets.NEXT_PUBLIC_SUPABASE_KEY }}
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
