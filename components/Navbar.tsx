@@ -8,6 +8,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
   const links = [
     { href: '/', label: 'Home' },
+    { href: '/fieldapps', label: 'Field Apps' },
     { href: '/tools', label: 'Tools' },
     { href: '/marketplace', label: 'Marketplace' },
     { href: '/blog', label: 'Blog' },

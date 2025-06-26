@@ -41,3 +41,7 @@ npm run test:e2e
 ## 28 Jun 2025 Updates
 
 - Added AI Tools page with links to Claude-powered dashboards and forms.
+
+## 1 Jul 2025 Updates
+
+- Added Field Apps page exposing smart inspection, proposal, and punchlist utilities.
