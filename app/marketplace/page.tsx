@@ -31,6 +31,7 @@ interface Product {
   description: string
   price: number
   original_price?: number
+  price_id: string
   category: string
   image_url: string
   features: string
@@ -50,7 +51,6 @@ export default function Marketplace() {
   const [loading, setLoading] = useState(true)
   const [showFilters, setShowFilters] = useState(false)
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500])
-  const [cart, setCart] = useState<string[]>([])
 
   useEffect(() => {
     fetchProducts()
@@ -130,14 +130,20 @@ export default function Marketplace() {
     setFilteredProducts(filtered)
   }
 
-  const addToCart = (productId: string) => {
-    setCart([...cart, productId])
-    // Show toast notification
-    showToast('Added to cart!')
-  }
-
-  const showToast = (message: string) => {
-    // Implementation of toast notification
+  const buyNow = async (product: Product) => {
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ price_id: product.price_id, product_id: product.id })
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      }
+    } catch (err) {
+      console.error('Checkout error', err)
+    }
   }
 
   return (
@@ -265,15 +271,6 @@ export default function Marketplace() {
               <p className="text-gray-600">
                 Showing {filteredProducts.length} of {products.length} products
               </p>
-              {cart.length > 0 && (
-                <Link
-                  href="/cart"
-                  className="flex items-center gap-2 text-blue-600 hover:underline"
-                >
-                  <ShoppingCart className="w-5 h-5" />
-                  Cart ({cart.length})
-                </Link>
-              )}
             </div>
 
             {/* Featured Products */}
@@ -344,10 +341,10 @@ export default function Marketplace() {
                                 View Details
                               </Link>
                               <button
-                                onClick={() => addToCart(product.id)}
+                                onClick={() => buyNow(product)}
                                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                               >
-                                Add to Cart
+                                Buy Now
                               </button>
                             </div>
                           </div>
@@ -466,9 +463,9 @@ export default function Marketplace() {
                             <Eye className="w-5 h-5" />
                           </Link>
                           <button
-                            onClick={() => addToCart(product.id)}
+                            onClick={() => buyNow(product)}
                             className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                            title="Add to Cart"
+                            title="Buy Now"
                           >
                             <ShoppingCart className="w-5 h-5" />
                           </button>

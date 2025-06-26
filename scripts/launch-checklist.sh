@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo "🚀 MyRoofGenius Launch Checklist"
+echo "================================"
+
+echo "[ ] No service keys in client code"
+echo "[ ] AI Estimator fully functional"
+echo "[ ] PDF reports generating correctly"
+echo "[ ] Copilot streaming responses"
+echo "[ ] Payments processing successfully"
+echo "[ ] Emails sending with correct templates"
+echo "[ ] All migrations applied"
+echo "[ ] RLS policies enabled"
+echo "[ ] Indices created for performance"
+echo "[ ] OpenAI API connected"
+echo "[ ] Stripe webhooks verified"
+echo "[ ] Resend domain verified"
+echo "[ ] Supabase auth working"
+echo "[ ] Bundle size < 1MB"
+echo "[ ] Lighthouse score > 90"
+echo "[ ] No console errors"
+echo "[ ] All images optimized"
+
+echo "After verifying, tag the release:"
+echo "git tag -a \"v1.0.0-launch\" -m \"Production launch\""
+echo "git push origin v1.0.0-launch"

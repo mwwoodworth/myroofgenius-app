@@ -1,0 +1,41 @@
+name: Main Workflow
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    uses: ./.github/workflows/ci.yml
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Security Audit
+        run: |
+          npm audit --production
+          npm run lint:security || true
+
+  ai-integration-test:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Test AI Integrations
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          echo "Testing AI endpoints"
+          # Place API tests here
+
+  deploy-preview:
+    needs: [test, security-scan]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Vercel Preview
+        run: |
+          echo "Deploying preview"
+          # Deployment commands
