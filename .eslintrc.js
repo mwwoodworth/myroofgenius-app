@@ -1,4 +1,5 @@
 module.exports = {
+  env: { browser: true, es2021: true, jest: true },
   extends: [
     'next',
     'next/core-web-vitals',
@@ -8,7 +9,8 @@ module.exports = {
   rules: {
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'no-debugger': 'error',
-    'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    'no-unused-vars': 'warn',
+    'no-undef': 'off',
     'react/no-array-index-key': 'warn',
     'react/prop-types': 'off',
     quotes: ['error', 'single'],

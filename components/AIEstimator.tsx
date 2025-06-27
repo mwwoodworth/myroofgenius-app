@@ -2,6 +2,7 @@
 import { useState, useRef, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Camera, Upload, FileText, Download, AlertCircle, CheckCircle, X } from 'lucide-react'
+import Image from 'next/image'
 import Button from './ui/Button'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -281,9 +282,11 @@ export default function AIEstimator() {
               >
                 <h3 className="font-semibold mb-3">Selected Image</h3>
                 <div className="relative max-w-md mx-auto">
-                  <img
+                  <Image
                     src={imagePreview}
                     alt="Roof preview"
+                    width={800}
+                    height={600}
                     className="w-full rounded-lg shadow-lg"
                   />
                   <button

@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 
 interface ARModeCtx {
   enabled: boolean
@@ -8,7 +8,7 @@ interface ARModeCtx {
 
 const ARModeContext = createContext<ARModeCtx>({ enabled: false, toggle: () => {} })
 
-export function ARModeProvider({ children }: { children: React.ReactNode }) {
+export function ARModeProvider({ children }: { children: ReactNode }) {
   const [enabled, setEnabled] = useState(false)
 
   useEffect(() => {

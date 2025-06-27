@@ -2,16 +2,13 @@ import { createClient } from '@supabase/supabase-js'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { 
-  DollarSign, 
-  Package, 
-  Users, 
-  TrendingUp, 
+  DollarSign,
+  Package,
+  Users,
   Download,
   FileText,
-  Calendar,
   Bell,
-  BarChart3,
-  PieChart
+  BarChart3
 } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'

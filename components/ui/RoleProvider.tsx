@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 
 type Role = 'pm' | 'exec' | 'field'
 interface RoleCtx {
@@ -9,7 +9,7 @@ interface RoleCtx {
 
 const RoleContext = createContext<RoleCtx>({ role: 'pm', setRole: () => {} })
 
-export function RoleProvider({ children }: { children: React.ReactNode }) {
+export function RoleProvider({ children }: { children: ReactNode }) {
   const [role, setRole] = useState<Role>('pm')
 
   useEffect(() => {
