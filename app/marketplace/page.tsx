@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Search, Filter, ChevronDown, Star, ShoppingCart, Eye } from 'lucide-react'
+import ProductCarousel from '../../components/marketplace/ProductCarousel'
+import ContractorGrid from '../../components/marketplace/ContractorGrid'
+import { Product as RecommendedProduct, Contractor, RecommendationContext } from '../../types/marketplace'
 
 const categories = [
   { id: 'all', name: 'All Products', icon: '🏠' },
@@ -45,6 +48,10 @@ interface Product {
 export default function Marketplace() {
   const [products, setProducts] = useState<Product[]>([])
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
+  const [recommendations, setRecommendations] = useState<{
+    products: RecommendedProduct[]
+    contractors: Contractor[]
+  } | null>(null)
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchTerm, setSearchTerm] = useState('')
   const [sortBy, setSortBy] = useState('popular')
@@ -54,6 +61,7 @@ export default function Marketplace() {
 
   useEffect(() => {
     fetchProducts()
+    fetchRecommendations()
   }, [])
 
   useEffect(() => {
@@ -85,6 +93,22 @@ export default function Marketplace() {
       setProducts(enrichedProducts)
     }
     setLoading(false)
+  }
+
+  async function fetchRecommendations() {
+    try {
+      const res = await fetch('/api/marketplace/recommendations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}) as any
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setRecommendations(data)
+      }
+    } catch (error) {
+      console.error('Failed to fetch recommendations', error)
+    }
   }
 
   function filterAndSortProducts() {
@@ -272,6 +296,12 @@ export default function Marketplace() {
                 Showing {filteredProducts.length} of {products.length} products
               </p>
             </div>
+
+            {recommendations?.products && recommendations.products.length > 0 && (
+              <div className="mb-8">
+                <ProductCarousel products={recommendations.products} />
+              </div>
+            )}
 
             {/* Featured Products */}
             {filteredProducts.filter(p => p.is_featured).length > 0 && (
@@ -483,6 +513,13 @@ export default function Marketplace() {
                 <button className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50">
                   Load More Products
                 </button>
+              </div>
+            )}
+
+            {recommendations?.contractors && recommendations.contractors.length > 0 && (
+              <div className="mt-12">
+                <h2 className="text-2xl font-bold mb-4">Recommended Contractors</h2>
+                <ContractorGrid contractors={recommendations.contractors} />
               </div>
             )}
           </main>
