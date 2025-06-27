@@ -2,7 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-bg text-text-primary font-inter;
+
+@layer base {
+  body {
+    @apply bg-bg text-text-primary font-inter;
+  }
 }
 @import "./styles/futuristic.css";
