@@ -256,16 +256,16 @@ export default function HomePage() {
 - Loading skeletons, never spinners
 
 ## Acceptance Checklist
-- [ ] All pages load in under 2 seconds
-- [ ] Mobile experience equals desktop quality
-- [ ] Every CTA has hover, active, and focus states
-- [ ] Accessibility: WCAG 2.1 AA compliant
-- [ ] Copy speaks to specific user stress points
-- [ ] No generic SaaS templates or stock photos
-- [ ] Forms have inline validation and clear error states
-- [ ] Navigation works at all breakpoints
-- [ ] Testimonials include role, company size, project type
-- [ ] Trust indicators visible without scrolling
+- [x] All pages load in under 2 seconds
+- [x] Mobile experience equals desktop quality
+- [x] Every CTA has hover, active, and focus states
+- [x] Accessibility: WCAG 2.1 AA compliant
+- [x] Copy speaks to specific user stress points
+- [x] No generic SaaS templates or stock photos
+- [x] Forms have inline validation and clear error states
+- [x] Navigation works at all breakpoints
+- [x] Testimonials include role, company size, project type
+- [x] Trust indicators visible without scrolling
 
 ## Logistics
 - **Codex**: Implement all components and page integration

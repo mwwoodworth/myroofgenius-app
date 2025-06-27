@@ -478,16 +478,16 @@ Every product page includes:
 - Who it's built for (role specificity)
 
 ## Acceptance Checklist
-- [ ] Products load instantly (under 1 second)
-- [ ] Checkout completes in under 3 clicks
-- [ ] Download links delivered within 30 seconds
-- [ ] Mobile purchase flow works flawlessly
-- [ ] Preview/samples accessible before purchase
-- [ ] Category filtering updates without page reload
-- [ ] Search finds products by problem, not just name
-- [ ] Trust indicators visible at every step
-- [ ] Refund policy clear and accessible
-- [ ] Cross-sell shows relevant protections only
+- [x] Products load instantly (under 1 second)
+- [x] Checkout completes in under 3 clicks
+- [x] Download links delivered within 30 seconds
+- [x] Mobile purchase flow works flawlessly
+- [x] Preview/samples accessible before purchase
+- [x] Category filtering updates without page reload
+- [x] Search finds products by problem, not just name
+- [x] Trust indicators visible at every step
+- [x] Refund policy clear and accessible
+- [x] Cross-sell shows relevant protections only
 
 ## Logistics
 - **Codex**: Implement all marketplace components and Stripe integration

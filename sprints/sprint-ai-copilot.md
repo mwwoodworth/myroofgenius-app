@@ -526,16 +526,16 @@ export async function POST(req: NextRequest) {
 5. **Field-Ready Formatting**: Outputs designed for mobile/tablet use on job sites
 
 ## Acceptance Checklist
-- [ ] AI responses are specific and actionable, never generic
-- [ ] Response time under 3 seconds for typical analysis
-- [ ] Rate limiting prevents abuse while allowing legitimate use
-- [ ] Mobile interface works perfectly for field use
-- [ ] Protection alerts are ranked by financial impact
-- [ ] System maintains context across user session
-- [ ] Error states are helpful, not technical
-- [ ] Integration with document upload for PDFs
-- [ ] Quick actions actually save time
-- [ ] Usage tracking visible to user
+- [x] AI responses are specific and actionable, never generic
+- [x] Response time under 3 seconds for typical analysis
+- [x] Rate limiting prevents abuse while allowing legitimate use
+- [x] Mobile interface works perfectly for field use
+- [x] Protection alerts are ranked by financial impact
+- [x] System maintains context across user session
+- [x] Error states are helpful, not technical
+- [x] Integration with document upload for PDFs
+- [x] Quick actions actually save time
+- [x] Usage tracking visible to user
 
 ## Logistics
 - **Codex**: Implement all AI integration code and components
