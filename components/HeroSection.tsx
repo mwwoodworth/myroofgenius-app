@@ -58,7 +58,7 @@ export default function HeroSection() {
             transition={{ delay: 0.5 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Link href="/get-started" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-200 group">
+            <Link href="/signup" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-200 group">
               <Zap className="w-5 h-5 group-hover:animate-pulse" />
               Start Your System
             </Link>

@@ -12,3 +12,4 @@ Toggles are managed with environment variables. Set them in `.env` or the host d
 
 Update `.env` and redeploy to toggle features or enter maintenance mode.
 
+Feature flags can be toggled in the Admin Settings page (/admin/settings) and persist in localStorage.

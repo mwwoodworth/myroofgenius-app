@@ -3,6 +3,7 @@ import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface User {
   name: string;
+  role?: string;
 }
 interface AuthContextValue {
   user: User | null;
@@ -18,7 +19,7 @@ const AuthContext = createContext<AuthContextValue>({
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const login = () => setUser({ name: 'Demo User' });
+  const login = () => setUser({ name: 'Demo User', role: 'admin' });
   const logout = () => setUser(null);
   return (
     <AuthContext.Provider value={{ user, login, logout }}>

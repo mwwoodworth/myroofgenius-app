@@ -7,6 +7,6 @@ test.describe("Homepage", () => {
     const headings = await page.locator("h1, h2, h3").allTextContents();
     console.log("HEADINGS ON HOMEPAGE:", headings);
     // Adjust below after checking output:
-    await expect(page.getByRole("heading", { name: "Stop Guessing. Start Winning." })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Your Intelligence Layer for High-Stakes Roofing" })).toBeVisible();
   });
 });

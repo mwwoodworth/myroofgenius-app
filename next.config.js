@@ -18,10 +18,7 @@ const baseConfig = {
     removeConsole: process.env.NODE_ENV === 'production'
   },
   async redirects() {
-    return [
-      { source: '/tools', destination: '/estimator', permanent: false },
-      { source: '/marketplace', destination: '/', permanent: false }
-    ];
+    return [];
   }
 };
 
