@@ -1,7 +1,9 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider } from '../components/ui'
+import { AuthProvider } from '../src/context/AuthContext'
 import Navbar from '../components/Navbar'
+import ErrorBoundary from '../components/ErrorBoundary'
 import CopilotWrapper from '../components/layout/CopilotWrapper'
 import './lib/sentry'
 import { maintenanceMode, aiCopilotEnabled, arModeEnabled } from './lib/features'
@@ -35,25 +37,31 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={inter.className}>
         <div className="bg-bg min-h-screen text-text-primary font-inter">
+          <AuthProvider>
           <RoleProvider>
             <ThemeProvider>
               {arModeEnabled ? (
                 <ARModeProvider>
                   <Navbar />
                   <RoleSwitcher />
-                  {children}
+                  <ErrorBoundary>
+                    {children}
+                  </ErrorBoundary>
                   {aiCopilotEnabled && <CopilotWrapper />}
                 </ARModeProvider>
               ) : (
                 <>
                   <Navbar />
                   <RoleSwitcher />
-                  {children}
+                  <ErrorBoundary>
+                    {children}
+                  </ErrorBoundary>
                   {aiCopilotEnabled && <CopilotWrapper />}
                 </>
               )}
             </ThemeProvider>
           </RoleProvider>
+          </AuthProvider>
         </div>
       </body>
     </html>
