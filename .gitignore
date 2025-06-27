@@ -11,3 +11,4 @@ coverage/
 *.png
 *.xlsx
 *.docx
+\ntsconfig.tsbuildinfo
