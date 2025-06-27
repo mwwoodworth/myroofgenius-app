@@ -15,8 +15,7 @@ const baseConfig = {
   eslint: { ignoreDuringBuilds: true },
   images: { domains: ['cdn.jsdelivr.net', 'images.unsplash.com'] },
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
-    removeDebugger: process.env.NODE_ENV === 'production'
+    removeConsole: process.env.NODE_ENV === 'production'
   },
   async redirects() {
     return [

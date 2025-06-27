@@ -1,8 +1,9 @@
 'use client'
 import { motion } from 'framer-motion'
 import clsx from 'clsx'
+import type { ButtonHTMLAttributes } from 'react'
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary'
   size?: 'sm' | 'md' | 'lg'
 }

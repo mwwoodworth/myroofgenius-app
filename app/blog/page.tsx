@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
+import Image from 'next/image'
 
 // Add dynamic export to prevent static generation
 export const dynamic = 'force-dynamic'
@@ -84,9 +85,11 @@ export default async function Blog() {
           <div className="max-w-7xl mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-8 items-center">
               <div>
-                <img 
+                <Image
                   src={posts[0].image_url}
                   alt={posts[0].title}
+                  width={800}
+                  height={600}
                   className="rounded-lg shadow-lg w-full"
                 />
               </div>
@@ -123,9 +126,11 @@ export default async function Blog() {
             {posts.slice(1).map((post) => (
               <article key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
                 <Link href={`/blog/${post.slug}`}>
-                  <img 
+                  <Image
                     src={post.image_url}
                     alt={post.title}
+                    width={400}
+                    height={192}
                     className="w-full h-48 object-cover"
                   />
                 </Link>

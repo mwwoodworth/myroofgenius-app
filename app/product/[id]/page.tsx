@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { notFound } from 'next/navigation'
 import CheckoutButton from './CheckoutButton'
+import Image from 'next/image'
 import Link from 'next/link'
 import { salesEnabled } from '../../lib/features'
 
@@ -76,9 +77,11 @@ export default async function ProductPage({ params }: { params: { id: string } }
           {/* Product Images */}
           <div>
             <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-4">
-              <img 
-                src={product.image_url || 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&h=600&fit=crop'} 
+              <Image
+                src={product.image_url || 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&h=600&fit=crop'}
                 alt={product.name}
+                width={800}
+                height={600}
                 className="w-full"
               />
             </div>

@@ -1,6 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider } from '../components/ui'
+import type { ReactNode } from 'react'
 import { AuthProvider } from '../src/context/AuthContext'
 import Navbar from '../components/Navbar'
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -20,7 +21,7 @@ export const metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
   if (maintenanceMode) {
     return (

@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 import { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { Users, Package, DollarSign, FileText, Settings as SettingsIcon, BarChart3 } from 'lucide-react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 async function checkAdminAccess() {
@@ -30,6 +31,7 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('overview')
   const router = useRouter()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     verifyAccess()
   }, [])
@@ -161,6 +163,7 @@ function OrdersTab() {
   const [orders, setOrders] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadOrders()
   }, [])
@@ -215,6 +218,7 @@ function ProductsTab() {
   const [products, setProducts] = useState<any[]>([])
   const [showAdd, setShowAdd] = useState(false)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadProducts()
   }, [])
@@ -249,7 +253,7 @@ function ProductsTab() {
               <tr key={product.id}>
                 <td className="px-6 py-3">
                   <div className="flex items-center">
-                    <img src={product.image_url} alt={product.name} className="w-10 h-10 rounded object-cover mr-3" />
+                    <Image src={product.image_url} alt={product.name} width={40} height={40} className="w-10 h-10 rounded object-cover mr-3" />
                     <div>
                       <p className="font-medium">{product.name}</p>
                       <p className="text-xs text-gray-500">{product.description?.slice(0, 50)}...</p>
@@ -343,6 +347,7 @@ function UsersTab() {
   const [users, setUsers] = useState<Array<any>>([])
   const [loading, setLoading] = useState(true)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { loadUsers() }, [])
 
   async function loadUsers() {
@@ -429,6 +434,7 @@ function SettingsTab() {
   const [health, setHealth] = useState<{ status: string, services: any } | null>(null)
   const [loading, setLoading] = useState(true)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     async function fetchHealth() {
       try {

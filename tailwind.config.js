@@ -28,11 +28,11 @@ module.exports = {
       addUtilities({
         '.glass': {
           'backdrop-filter': 'blur(12px)',
-          'background': 'rgba(255,255,255,0.08)',
-          'border': '1px solid rgba(255,255,255,0.15)'
+          background: 'rgba(255,255,255,0.08)',
+          border: '1px solid rgba(255,255,255,0.15)'
         },
         '.glow-btn': {
-          'transition': 'all 0.3s ease',
+          transition: 'all 0.3s ease',
           'box-shadow': '0 0 8px rgba(255,255,255,0.6)'
         },
         '.glow-btn:hover': {
@@ -40,4 +40,5 @@ module.exports = {
         }
       })
     }
-  ]],}
+  ],
+}
