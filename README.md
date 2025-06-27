@@ -1,50 +1,101 @@
-# myroofgenius-app
+# MyRoofGenius
 
+> AI-powered roofing intelligence system that protects margins and prevents costly mistakes.
 
-
-✅ v1.0.0: AI Estimator, Marketplace, Admin, Checkout, Copilot all production-ready
-
-
-![CI](https://img.shields.io/github/actions/workflow/status/mwwoodworth/myroofgenius-app/ci.yml?branch=main)&nbsp;![Migrations](https://img.shields.io/github/actions/workflow/status/mwwoodworth/myroofgenius-app/migrate.yml?branch=main)&nbsp;![Deploy](https://img.shields.io/github/actions/workflow/status/mwwoodworth/myroofgenius-app/deploy.yml?branch=main)&nbsp;![Maintenance](https://img.shields.io/github/actions/workflow/status/mwwoodworth/myroofgenius-app/maintenance.yml?branch=main)
-
-Public SaaS React + FastAPI system for MyRoofGenius.
-
-## Development
-
-Install dependencies and run the type checker:
+## 🚀 Quick Start
 
 ```bash
+# Install dependencies
 npm install
-npm run type-check
-```
 
-Run unit and end-to-end tests:
+# Set up environment variables
+cp .env.example .env.local
+# Edit .env.local with your values
 
-```bash
+# Run development server
+npm start
+
+# Run tests
 npm test
-npm run test:e2e
+
+# Build for production
+npm run build
 ```
 
-## 20 Jun 2025 Updates
+## 📁 Project Structure
 
-- Added `SUPABASE_SERVICE_ROLE_KEY` to environment configuration.
-- Completed end‑to‑end integration tests (Stripe, Make.com, ClickUp, Google Drive).
-- Updated Dockerfile for optimized production build.
+```
+myroofgenius/
+├── app/               # Next.js app directory
+├── components/        # Reusable UI components
+├── features/          # Feature-specific modules
+├── hooks/             # Custom React hooks
+├── services/          # API and external services
+├── utils/             # Helper functions
+├── public/            # Static assets
+├── docs/              # Documentation
+├── scripts/           # Build and maintenance scripts
+└── sprints/           # Sprint documentation
+    └── v1/            # Current sprint docs
+```
 
-## 26 Jun 2025 Updates
+## 🛠️ Technology Stack
 
-- Added universal `/api/copilot` endpoint and basic Copilot UI integration.
-- Introduced feature flags `AI_COPILOT_ENABLED`, `AR_MODE_ENABLED`, and `MAINTENANCE_MODE`.
-  See `docs/feature-flags.md` for toggling instructions.
-- `/api/copilot` now streams responses, stores chat history in Supabase and
-  supports voice input and quick actions.
-- Initial AR scaffolding with 3D canvas and database table `ar_models`.
-- Added `REDIS_URL`, `RATE_LIMIT_WINDOW`, and `RATE_LIMIT_MAX_REQUESTS` environment variables for caching and throttling.
+- **Frontend**: React 18, TypeScript (Next.js)
+- **Styling**: Tailwind CSS
+- **State**: React Context + useReducer
+- **Data**: Supabase (PostgreSQL)
+- **Testing**: Jest, Playwright
+- **Build**: Next.js
 
-## 28 Jun 2025 Updates
+## 🔧 Development Guidelines
 
-- Added AI Tools page with links to Claude-powered dashboards and forms.
+### Code Style
+- Use TypeScript for all new components
+- Follow ESLint configuration
+- Write tests for critical paths
+- Document complex logic
 
-## 1 Jul 2025 Updates
+### Git Workflow
+1. Create feature branch from `main`
+2. Prefix commits: `feat:`, `fix:`, `docs:`, `refactor:`
+3. Open PR with description and screenshots
+4. Require approval before merge
 
-- Added Field Apps page exposing smart inspection, proposal, and punchlist utilities.
+### Testing Strategy
+- Unit tests for utilities and hooks
+- Integration tests for features
+- E2E tests for critical user paths
+- Minimum 80% coverage for new code
+
+## 📊 Performance Targets
+- Initial load: < 3s on 3G
+- Time to interactive: < 5s
+- Lighthouse score: > 90
+- Bundle size: < 300KB gzipped
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+**Build fails with memory error**
+```bash
+NODE_OPTIONS=--max_old_space_size=4096 npm run build
+```
+
+**WebSocket connection issues**
+- Check `.env.local` for correct WS_URL
+- Ensure backend is running
+- Check browser console for errors
+
+**Test suite hanging**
+```bash
+npm run test -- --detectOpenHandles
+```
+
+## 📝 License
+
+Proprietary - MyRoofGenius © 2025
+
+---
+Legacy sprint docs can be archived by running `scripts/archive-preV1.sh`.
