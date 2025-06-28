@@ -8,12 +8,15 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
+    "test:unit": "jest",
     "test:e2e": "start-server-and-test dev http://localhost:3000 \"playwright test\"",
     "seed": "tsx scripts/seed.ts",
     "migrate": "supabase db push",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
-    "analyze": "ANALYZE=true next build"
+    "analyze": "ANALYZE=true next build",
+    "playwright:install": "playwright install --with-deps chromium firefox webkit",
+    "postinstall": "npm run playwright:install"
   },
   "dependencies": {
     "@react-three/fiber": "^8.15.0",

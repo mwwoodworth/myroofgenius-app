@@ -2,81 +2,55 @@ name: CI
 
 on:
   push:
-    branches: [main, develop, feature/**]
+    branches: [main, develop]
   pull_request:
-    branches: [main, develop, feature/**]
+    branches: [main, develop]
+
+env:
+  NODE_VERSION: '18.x'
 
 jobs:
-  build:
+  lint-and-type-check:
+    name: Lint & Type Check
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        # Install Node and enable npm caching
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run type-check
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint source
-        run: npm run lint
-
-      - name: Type check
-        run: npm run type-check
-
-      - name: Run unit tests
-        run: npm run test
-
-
- 
-   - name: Install Playwright browsers
-    rrun: npx playwright install --with-deps
- - - name: Run e2e tests
-run:: npm run test:e2e
-
-      - name: Build application
-        run: npm run build<=
-            env:
-        s  SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          SUPABASE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_KEY }}
-
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          name: next-build
-          path: .next
-
-      - name: Slack failure notification
-
-
-            continue-on-error: true
-
-        if: failure()
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          fields: repo,commit,author,workflow,job
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run test:unit
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          CI: true
 
-      - name: Email failure notification
-
-
-
-           continue-on-error: true
-
-        uses: dawidd6/action-send-mail@v3
+  e2e-tests:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          server_address: ${{ secrets.SMTP_SERVER }}
-          server_port: ${{ secrets.SMTP_PORT }}
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "CI workflow failed"
-          body: "The CI job failed. See GitHub Actions for details."
-          to: ${{ secrets.ALERT_EMAIL }}
-          from: ci@myroofgenius.com
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - run: npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run test:e2e
+        env:
+          CI: true
