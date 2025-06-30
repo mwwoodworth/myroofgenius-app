@@ -1,26 +1,70 @@
 /** @type {import('next').NextConfig} */
-let withBundleAnalyzer = (c) => c;
-try {
-  withBundleAnalyzer = require('@next/bundle-analyzer')({
-    enabled: process.env.ANALYZE === 'true'
-  });
-} catch (e) {
-  console.warn('Bundle analyzer not installed');
-}
-const { withSentryConfig } = require('@sentry/nextjs');
-
-const baseConfig = {
+const nextConfig = {
   reactStrictMode: true,
-  output: 'standalone',
-  eslint: { ignoreDuringBuilds: true },
-  images: { domains: ['cdn.jsdelivr.net', 'images.unsplash.com'] },
-  compiler: {
-    removeConsole: process.env.NODE_ENV === 'production'
+  swcMinify: true,
+  images: {
+    domains: [
+      'localhost',
+      'myroofgenius.com',
+      'images.unsplash.com',
+      'avatars.githubusercontent.com'
+    ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/**',
+      },
+    ],
   },
-  async redirects() {
-    return [];
-  }
+  experimental: {
+    serverActions: true,
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on'
+          },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN'
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block'
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin'
+          }
+        ]
+      }
+    ];
+  },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    return config;
+  },
 };
 
-const config = process.env.SENTRY_DSN ? withSentryConfig(baseConfig, { silent: true }) : baseConfig;
-module.exports = withBundleAnalyzer(config);
+module.exports = nextConfig;
