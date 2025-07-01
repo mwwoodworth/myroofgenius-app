@@ -1,0 +1,48 @@
+name: Audit & Redeploy on Vercel
+
+on:
+  workflow_dispatch:
+    inputs:
+      skipPlaywrightInstall:
+        description: 'Skip Playwright browser install?'
+        required: true
+        default: 'true'
+
+jobs:
+  audit-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies (production only)
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: ${{ github.event.inputs.skipPlaywrightInstall }}
+        run: npm ci --omit=dev
+
+      - name: Run build
+        run: npm run build
+
+      - name: Run tests & lint
+        run: |
+          npm run lint
+          npm test
+
+      - name: Fetch last 100 logs from Vercel
+        run: |
+          npx vercel logs myroofgenius-live --token ${{ secrets.VERCEL_TOKEN }} --limit 100 > vercel-logs.txt
+        # You can upload vercel-logs.txt as an artifact if you want human or Codex review
+
+      - name: Redeploy to production
+        run: |
+          npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm
+
+      - name: Post-deploy check
+        run: |
+          echo "Deployment URL: https://myroofgenius.com"
+          curl -I https://myroofgenius.com | head -n 1
