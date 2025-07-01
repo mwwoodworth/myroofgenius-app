@@ -16,7 +16,7 @@
     "format": "prettier --write .",
     "analyze": "ANALYZE=true next build",
     "playwright:install": "playwright install --with-deps chromium firefox webkit",
-    "postinstall": "npm run playwright:install"
+    "postinstall": "if [ \"$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD\" != \"1\" ]; then npm run playwright:install; fi"
   },
   "dependencies": {
     "@react-three/fiber": "^8.15.0",
