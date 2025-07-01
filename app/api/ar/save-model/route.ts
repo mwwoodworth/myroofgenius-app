@@ -9,10 +9,12 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = (await req.json()) as DroneScan;
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!url || !key) {
+      throw new Error('Supabase environment variables not configured');
+    }
+    const supabase = createClient(url, key);
 
     await supabase.from('ar_models').insert({
       model_url: body.modelUrl,
@@ -20,7 +22,7 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ status: 'success' });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: 'save failed' }, { status: 500 });
   }
 }
@@ -31,16 +33,18 @@ export async function GET() {
   }
 
   try {
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    );
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!url || !key) {
+      throw new Error('Supabase environment variables not configured');
+    }
+    const supabase = createClient(url, key);
 
     const { data, error } = await supabase.from('ar_models').select('*');
     if (error) throw error;
 
     return NextResponse.json({ models: data || [] });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: 'fetch failed' }, { status: 500 });
   }
 }

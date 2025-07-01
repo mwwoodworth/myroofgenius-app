@@ -56,7 +56,7 @@ async function analyzeWithLLM(file: File): Promise<AnalysisResult> {
     if (!match) throw new Error('no json');
     const json = JSON.parse(match[0]);
     return json;
-  } catch (e) {
+  } catch {
     throw new Error('parse failed');
   }
 }
@@ -71,8 +71,8 @@ async function analyze(file: File): Promise<AnalysisResult> {
         body: formData,
       });
       if (res.ok) return res.json();
-    } catch (e) {
-      console.error('edge inference failed', e);
+    } catch {
+      // ignore edge inference errors
     }
   }
   return analyzeWithLLM(file);
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
   if (address && !file) {
     try {
       file = await fetchSatelliteImage(address);
-    } catch (e) {
+    } catch {
       return NextResponse.json(
         { error: 'address lookup failed' },
         { status: 500 }
@@ -101,11 +101,14 @@ export async function POST(request: NextRequest) {
     }
   }
 
+  if (!file) {
+    return NextResponse.json({ error: 'file missing' }, { status: 400 });
+  }
+
   try {
-    const result = await analyze(file!);
+    const result = await analyze(file);
     return NextResponse.json(result);
-  } catch (e) {
-    console.error('analysis failed', e);
+  } catch {
     return NextResponse.json({ error: 'analysis failed' }, { status: 500 });
   }
 }

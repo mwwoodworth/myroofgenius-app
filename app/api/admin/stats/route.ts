@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const admin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl || !serviceKey) {
+  throw new Error('Supabase environment variables not configured');
+}
+
+const admin = createClient(supabaseUrl, serviceKey);
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -30,8 +34,10 @@ export async function GET(req: NextRequest) {
   ]);
 
   const totalRevenue =
-    ordersRes.data?.reduce((sum: number, o: any) => sum + Number(o.amount), 0) ||
-    0;
+    ordersRes.data?.reduce((sum: number, o: unknown) => {
+      const order = o as { amount: number };
+      return sum + Number(order.amount);
+    }, 0) || 0;
 
   return NextResponse.json({
     totalUsers: usersRes.count || 0,

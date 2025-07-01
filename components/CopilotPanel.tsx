@@ -14,8 +14,8 @@ export default function CopilotPanel({ open, onClose }: { open: boolean; onClose
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [recording, setRecording] = useState(false);
-  // SpeechRecognition types are not universally available so we fall back to `any`
-  const recognizer = useRef<any>(null);
+  // SpeechRecognition types are not universally available
+  const recognizer = useRef<SpeechRecognition | null>(null);
 
   const { role: userRole, setRole } = useRole();
 
@@ -88,12 +88,19 @@ export default function CopilotPanel({ open, onClose }: { open: boolean; onClose
   };
 
   const startVoice = () => {
-    const Rec = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const Rec = (window as unknown as {
+      SpeechRecognition?: typeof SpeechRecognition;
+      webkitSpeechRecognition?: typeof SpeechRecognition;
+    }).SpeechRecognition ||
+    (window as unknown as {
+      SpeechRecognition?: typeof SpeechRecognition;
+      webkitSpeechRecognition?: typeof SpeechRecognition;
+    }).webkitSpeechRecognition;
     if (!Rec) return;
     recognizer.current = new Rec();
     recognizer.current.lang = 'en-US';
     recognizer.current.interimResults = false;
-    recognizer.current.onresult = (e: any) => {
+    recognizer.current.onresult = (e: SpeechRecognitionEvent) => {
       const t = e.results[0][0].transcript;
       setInput(t);
     };
@@ -120,7 +127,7 @@ export default function CopilotPanel({ open, onClose }: { open: boolean; onClose
       <select
         className="mb-4 w-full rounded-md bg-bg-card border border-gray-700 p-2 text-sm"
         value={userRole}
-        onChange={(e) => setRole(e.target.value as any)}
+        onChange={(e) => setRole(e.target.value as Role)}
       >
         <option value="field">Field</option>
         <option value="pm">Project Manager</option>

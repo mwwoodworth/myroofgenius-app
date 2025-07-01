@@ -1,5 +1,6 @@
 'use client';
 import { useRole } from './RoleProvider';
+import type { Role } from './RoleProvider';
 
 export default function RoleSwitcher() {
   const { role, setRole } = useRole();
@@ -8,7 +9,7 @@ export default function RoleSwitcher() {
       <select
         className="bg-bg-card border border-gray-700 p-2 rounded"
         value={role}
-        onChange={(e) => setRole(e.target.value as any)}
+        onChange={(e) => setRole(e.target.value as Role)}
       >
         <option value="pm">Project Manager</option>
         <option value="exec">Executive</option>

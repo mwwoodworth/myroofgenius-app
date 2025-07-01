@@ -9,8 +9,8 @@ export default class ErrorBoundary extends Component<Props, State> {
   static getDerivedStateFromError() {
     return { hasError: true };
   }
-  componentDidCatch(err: any) {
-    console.error('ErrorBoundary caught', err);
+  componentDidCatch(_err: unknown) {
+    // Log error to monitoring service if desired
   }
   render() {
     if (this.state.hasError) {

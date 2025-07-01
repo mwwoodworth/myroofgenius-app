@@ -10,10 +10,12 @@ export async function GET(
     return NextResponse.json({ error: 'Invalid token' }, { status: 400 });
   }
 
-  const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    return NextResponse.json({ error: 'supabase not configured' }, { status: 500 });
+  }
+  const supabaseAdmin = createClient(url, key);
 
   const { data: downloads, error } = await supabaseAdmin
     .from('downloads')
@@ -62,8 +64,7 @@ export async function GET(
       }
       fileResponse = new Response(data, { status: 200 });
     }
-  } catch (err) {
-    console.error('File download error:', err);
+  } catch {
     return NextResponse.json(
       { error: 'Failed to retrieve file' },
       { status: 500 },
@@ -85,8 +86,8 @@ export async function GET(
       ip: request.headers.get('x-forwarded-for') || request.ip || '',
       user_agent: request.headers.get('user-agent') || '',
     });
-  } catch (e) {
-    console.error('download log failed', e);
+  } catch {
+    // ignore log errors
   }
   return res;
 }

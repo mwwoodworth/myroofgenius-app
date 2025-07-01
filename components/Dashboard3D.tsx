@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable react/no-unknown-property */
 import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
 
