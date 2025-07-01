@@ -44,11 +44,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to track event' }, { status: 500 });
   }
 
-    // Also send to Google Analytics if configured
-  if (process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && typeof window !== 'undefined') {
-    const win = window as unknown as { gtag?: (name: string, data?: unknown) => void };
-    win.gtag?.('event', event_type, event_data);
-  }
+// ...previous code...
+if (process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && typeof window !== 'undefined') {
+  // Correctly type gtag for three arguments
+  const win = window as unknown as { gtag?: (name: string, action: string, params?: unknown) => void };
+  win.gtag?.('event', event_type, event_data);
+}
 
     return NextResponse.json({ success: true });
   } catch {
