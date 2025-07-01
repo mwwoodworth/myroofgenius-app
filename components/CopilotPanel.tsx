@@ -8,6 +8,15 @@ type Msg = {
   content: string
 }
 
+// Add this before using SpeechRecognition (top of the file or before the useRef line)
+declare global {
+  interface Window {
+    SpeechRecognition: typeof SpeechRecognition;
+    webkitSpeechRecognition: typeof SpeechRecognition;
+  }
+}
+type SpeechRecognition = any; // fallback for TypeScript
+
 export default function CopilotPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
