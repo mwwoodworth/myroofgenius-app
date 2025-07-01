@@ -1,5 +1,5 @@
-'use client'
-import { useEffect, useState } from 'react'
+'use client';
+import { useEffect, useState } from 'react';
 
 interface FeatureFlag {
   key: string
@@ -33,23 +33,23 @@ const initialFlags: FeatureFlag[] = [
     description: 'Product marketplace',
     enabled: process.env.NEXT_PUBLIC_SALES_ENABLED === 'true'
   }
-]
+];
 
 export default function AdminSettings() {
-  const [flags, setFlags] = useState<FeatureFlag[]>([])
+  const [flags, setFlags] = useState<FeatureFlag[]>([]);
 
   useEffect(() => {
     const withOverrides = initialFlags.map(f => {
-      const override = localStorage.getItem(f.key)
-      return override ? { ...f, enabled: override === 'true' } : f
-    })
-    setFlags(withOverrides)
-  }, [])
+      const override = localStorage.getItem(f.key);
+      return override ? { ...f, enabled: override === 'true' } : f;
+    });
+    setFlags(withOverrides);
+  }, []);
 
   const toggle = (key: string, value: boolean) => {
-    localStorage.setItem(key, value ? 'true' : 'false')
-    setFlags(flags.map(f => (f.key === key ? { ...f, enabled: value } : f)))
-  }
+    localStorage.setItem(key, value ? 'true' : 'false');
+    setFlags(flags.map(f => (f.key === key ? { ...f, enabled: value } : f)));
+  };
 
   return (
     <div className="p-6 space-y-6">
@@ -69,5 +69,5 @@ export default function AdminSettings() {
         Changes apply on next page load and are stored in localStorage.
       </p>
     </div>
-  )
+  );
 }

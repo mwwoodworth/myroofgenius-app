@@ -1,4 +1,4 @@
-import { Product, Contractor, RecommendationContext } from '../../types/marketplace'
+import { Product, Contractor, RecommendationContext } from '../../types/marketplace';
 
 export class MarketplaceRecommender {
   async getProductRecommendations(
@@ -6,7 +6,7 @@ export class MarketplaceRecommender {
     limit = 12
   ): Promise<Product[]> {
     // TODO: implement vector search and AI reasoning
-    return []
+    return [];
   }
 
   async getContractorRecommendations(
@@ -14,8 +14,8 @@ export class MarketplaceRecommender {
     limit = 6
   ): Promise<Contractor[]> {
     // TODO: call LLM for contractor ranking
-    const response: any = {}
-    return this.processContractorRecommendations(response)
+    const response: any = {};
+    return this.processContractorRecommendations(response);
   }
 
   private async generateContextEmbedding(context: RecommendationContext) {
@@ -32,6 +32,6 @@ export class MarketplaceRecommender {
 
   private processContractorRecommendations(_response: any): Contractor[] {
     // TODO: parse response
-    return []
+    return [];
   }
 }

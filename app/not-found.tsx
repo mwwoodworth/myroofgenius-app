@@ -1,5 +1,5 @@
-'use client'
-export const dynamic = 'force-dynamic'
+'use client';
+export const dynamic = 'force-dynamic';
 
 export default function NotFound() {
   return (
@@ -8,5 +8,5 @@ export default function NotFound() {
       <p className="text-text-secondary mb-6">You’ve reached an invalid page, but your estimate is still just one click away.</p>
       <a href="/" className="btn-accent px-6 py-2 rounded-xl font-bold">Return Home</a>
     </div>
-  )
+  );
 }

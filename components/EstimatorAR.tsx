@@ -1,6 +1,6 @@
-'use client'
-import { Canvas } from '@react-three/fiber'
-import { Suspense } from 'react'
+'use client';
+import { Canvas } from '@react-three/fiber';
+import { Suspense } from 'react';
 
 export default function EstimatorAR() {
   return (
@@ -16,5 +16,5 @@ export default function EstimatorAR() {
         </Suspense>
       </Canvas>
     </div>
-  )
+  );
 }

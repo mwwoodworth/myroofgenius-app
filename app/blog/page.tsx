@@ -1,29 +1,29 @@
-import { createClient } from '@supabase/supabase-js'
-import Link from 'next/link'
-import Image from 'next/image'
+import { createClient } from '@supabase/supabase-js';
+import Link from 'next/link';
+import Image from 'next/image';
 
 // Add dynamic export to prevent static generation
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 async function getBlogPosts() {
   // Handle missing env vars gracefully
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.warn('Supabase environment variables not configured')
-    return []
+    console.warn('Supabase environment variables not configured');
+    return [];
   }
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  )
-  
+  );
+
   const { data } = await supabase
     .from('blog_posts')
     .select('*')
     .eq('published', true)
-    .order('published_at', { ascending: false })
-    
-  return data || []
+    .order('published_at', { ascending: false });
+
+  return data || [];
 }
 
 // Static blog posts for initial content
@@ -61,12 +61,12 @@ const staticPosts = [
     read_time: '10 min read',
     image_url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=400&fit=crop'
   }
-]
+];
 
 export default async function Blog() {
-  const dbPosts = await getBlogPosts()
-  const posts = dbPosts.length > 0 ? dbPosts : staticPosts
-  
+  const dbPosts = await getBlogPosts();
+  const posts = dbPosts.length > 0 ? dbPosts : staticPosts;
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -167,7 +167,7 @@ export default async function Blog() {
           <p className="text-blue-100 mb-6">
             Join 2,800+ contractors receiving actionable insights every Tuesday
           </p>
-          <Link 
+          <Link
             href="/#newsletter"
             className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-gray-100 font-semibold"
           >
@@ -176,5 +176,5 @@ export default async function Blog() {
         </div>
       </section>
     </div>
-  )
+  );
 }

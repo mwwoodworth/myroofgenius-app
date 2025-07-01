@@ -1,32 +1,32 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js';
 
 // Add dynamic export to prevent static generation
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 async function getOrders() {
   // Handle missing env vars gracefully
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.warn('Supabase environment variables not configured')
-    return []
+    console.warn('Supabase environment variables not configured');
+    return [];
   }
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  )
-  
+  );
+
   // For now, return empty array - add auth later
-  return []
+  return [];
 }
 
 export default async function Account() {
-  const orders = await getOrders()
-  
+  const orders = await getOrders();
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">My Account</h1>
-        
+
         <div className="bg-white rounded-lg shadow p-6">
           <h2 className="text-xl font-semibold mb-4">Order History</h2>
           {orders.length === 0 ? (
@@ -37,7 +37,7 @@ export default async function Account() {
             </div>
           )}
         </div>
-        
+
         <div className="mt-6 bg-white rounded-lg shadow p-6">
           <h2 className="text-xl font-semibold mb-4">Account Settings</h2>
           <p className="text-gray-600">Authentication coming soon...</p>
@@ -53,5 +53,5 @@ export default async function Account() {
         </div>
       </div>
     </div>
-  )
+  );
 }

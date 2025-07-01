@@ -1,32 +1,32 @@
-import { createClient } from '@supabase/supabase-js'
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
+import { createClient } from '@supabase/supabase-js';
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
 
 // Add dynamic params export to handle dynamic routes
 export async function generateStaticParams() {
   // Return empty array to disable static generation for dynamic routes
-  return []
+  return [];
 }
 
 async function getBlogPost(slug: string) {
   // Handle missing env vars gracefully
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.warn('Supabase environment variables not configured')
-    return null
+    console.warn('Supabase environment variables not configured');
+    return null;
   }
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  )
-  
+  );
+
   const { data } = await supabase
     .from('blog_posts')
     .select('*')
     .eq('slug', slug)
-    .single()
-    
-  return data
+    .single();
+
+  return data;
 }
 
 // Static content for demo
@@ -76,12 +76,12 @@ const staticContent = {
       <p>Understanding these hidden cost drivers is the first step to avoiding budget overruns. Our Quote-to-Close Kit provides comprehensive tools to identify and account for these factors before they impact your project.</p>
     </div>
   `
-}
+};
 
 export default async function BlogPost({ params }: { params: { slug: string } }) {
   // Try to get from database first
-  let post = await getBlogPost(params.slug)
-  
+  let post = await getBlogPost(params.slug);
+
   // If not in database, check static content
   if (!post && staticContent[params.slug as keyof typeof staticContent]) {
     post = {
@@ -92,13 +92,13 @@ export default async function BlogPost({ params }: { params: { slug: string } })
       published_at: '2025-06-15',
       category: 'Cost Management',
       read_time: '8 min read'
-    }
+    };
   }
-  
+
   if (!post) {
-    notFound()
+    notFound();
   }
-  
+
   return (
     <div className="min-h-screen bg-white">
       <article className="max-w-4xl mx-auto px-4 py-12">
@@ -124,7 +124,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
         </header>
 
         {/* Article Content */}
-        <div 
+        <div
           className="prose prose-lg max-w-none"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
@@ -135,7 +135,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
           <p className="text-gray-600 mb-6">
             Download our comprehensive Quote-to-Close Kit and take control of your next roofing project.
           </p>
-          <Link 
+          <Link
             href="/marketplace"
             className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
           >
@@ -158,5 +158,5 @@ export default async function BlogPost({ params }: { params: { slug: string } })
         </div>
       </article>
     </div>
-  )
+  );
 }

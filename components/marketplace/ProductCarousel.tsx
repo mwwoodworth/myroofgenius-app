@@ -1,8 +1,8 @@
-'use client'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect } from 'react'
-import { Product } from '../../types/marketplace'
-import GlassPanel from '../ui/Card'
+'use client';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { Product } from '../../types/marketplace';
+import GlassPanel from '../ui/Card';
 
 interface ProductCarouselProps {
   products: Product[]
@@ -15,16 +15,16 @@ export default function ProductCarousel({
   isLoading,
   title = 'AI-Recommended Products'
 }: ProductCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [autoPlay, setAutoPlay] = useState(true)
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [autoPlay, setAutoPlay] = useState(true);
 
   useEffect(() => {
-    if (!autoPlay || products.length === 0) return
+    if (!autoPlay || products.length === 0) return;
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % products.length)
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [autoPlay, products.length])
+      setCurrentIndex((prev) => (prev + 1) % products.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [autoPlay, products.length]);
 
   return (
     <div className="relative w-full" onMouseEnter={() => setAutoPlay(false)} onMouseLeave={() => setAutoPlay(true)}>
@@ -54,5 +54,5 @@ export default function ProductCarousel({
         </AnimatePresence>
       </div>
     </div>
-  )
+  );
 }

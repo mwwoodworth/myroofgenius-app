@@ -1,35 +1,35 @@
-import { createClient } from '@supabase/supabase-js'
-import { notFound } from 'next/navigation'
-import CheckoutButton from './CheckoutButton'
-import Image from 'next/image'
-import Link from 'next/link'
-import { salesEnabled } from '../../lib/features'
+import { createClient } from '@supabase/supabase-js';
+import { notFound } from 'next/navigation';
+import CheckoutButton from './CheckoutButton';
+import Image from 'next/image';
+import Link from 'next/link';
+import { salesEnabled } from '../../lib/features';
 
 // Add dynamic params export to handle dynamic routes
 export async function generateStaticParams() {
   // Return empty array to disable static generation for dynamic routes
-  return []
+  return [];
 }
 
 async function getProduct(id: string) {
   // Handle missing env vars gracefully
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.warn('Supabase environment variables not configured')
-    return null
+    console.warn('Supabase environment variables not configured');
+    return null;
   }
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  )
-  
+  );
+
   const { data } = await supabase
     .from('products')
     .select('*')
     .eq('id', id)
-    .single()
-    
-  return data
+    .single();
+
+  return data;
 }
 
 export default async function ProductPage({ params }: { params: { id: string } }) {
@@ -38,14 +38,14 @@ export default async function ProductPage({ params }: { params: { id: string } }
       <div className="min-h-screen flex items-center justify-center p-8">
         <p>Marketplace is currently disabled.</p>
       </div>
-    )
+    );
   }
-  const product = await getProduct(params.id)
-  
+  const product = await getProduct(params.id);
+
   if (!product) {
-    notFound()
+    notFound();
   }
-  
+
   // Mock data for demonstration - would come from product data
   const features = product.features?.split(',') || [
     'Instant download after purchase',
@@ -53,14 +53,14 @@ export default async function ProductPage({ params }: { params: { id: string } }
     'Email support for 90 days',
     'Compatible with Excel 2016+',
     'Works on Mac and PC'
-  ]
-  
+  ];
+
   const benefits = [
     { icon: '⏰', title: 'Save 3+ Hours', desc: 'Per estimate with automated calculations' },
     { icon: '💰', title: 'Increase Margins', desc: 'Catch hidden costs before they eat profits' },
     { icon: '🎯', title: 'Win More Bids', desc: 'Professional proposals that stand out' },
-  ]
-  
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -95,9 +95,9 @@ export default async function ProductPage({ params }: { params: { id: string } }
                 {product.category || 'Professional Tool'}
               </span>
             </div>
-            
+
             <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-            
+
             <div className="flex items-center gap-4 mb-6">
               <div className="flex text-yellow-400">
                 {'★★★★★'.split('').map((star, i) => (
@@ -124,12 +124,12 @@ export default async function ProductPage({ params }: { params: { id: string } }
                 </div>
                 <span className="text-green-600 font-semibold">You save ${((product.original_price || product.price) - product.price).toFixed(2)}</span>
               </div>
-              
-              <CheckoutButton 
-                priceId={product.price_id} 
+
+              <CheckoutButton
+                priceId={product.price_id}
                 productId={product.id}
               />
-              
+
               <div className="mt-4 flex items-center justify-center gap-6 text-sm text-gray-600">
                 <span className="flex items-center gap-1">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -236,5 +236,5 @@ export default async function ProductPage({ params }: { params: { id: string } }
         </section>
       </div>
     </div>
-  )
+  );
 }

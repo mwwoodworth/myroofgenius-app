@@ -1,0 +1,21 @@
+# Ignore build output and config files
+.next/
+node_modules/
+dist/
+build/
+coverage/
+public/
+out/
+
+# Ignore config and setup files (you can tweak this as needed)
+jest.config.js
+jest.setup.js
+scripts/
+*.config.js
+*.setup.js
+
+# Ignore test outputs (optional)
+test-results/
+
+# Ignore JS files that aren't part of the main app
+src/config/validate-env.js

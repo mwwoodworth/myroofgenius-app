@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 export default function Cancel() {
   return (
@@ -11,5 +11,5 @@ export default function Cancel() {
         </a>
       </div>
     </div>
-  )
+  );
 }

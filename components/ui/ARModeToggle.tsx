@@ -1,8 +1,8 @@
-'use client'
-import { useARMode } from './ARModeProvider'
+'use client';
+import { useARMode } from './ARModeProvider';
 
 export default function ARModeToggle() {
-  const { enabled, toggle } = useARMode()
+  const { enabled, toggle } = useARMode();
   return (
     <button
       onClick={toggle}
@@ -10,5 +10,5 @@ export default function ARModeToggle() {
     >
       {enabled ? 'Disable AR' : 'Enable AR'}
     </button>
-  )
+  );
 }

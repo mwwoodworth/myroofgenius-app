@@ -1,22 +1,22 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
-import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider } from '../components/ui'
-import type { ReactNode } from 'react'
-import { AuthProvider } from '../src/context/AuthContext'
-import Navbar from '../components/Navbar'
-import ErrorBoundary from '../components/ErrorBoundary'
-import CopilotWrapper from '../components/layout/CopilotWrapper'
-import './lib/sentry'
-import { maintenanceMode, aiCopilotEnabled, arModeEnabled } from './lib/features'
+import './globals.css';
+import { Inter } from 'next/font/google';
+import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider } from '../components/ui';
+import type { ReactNode } from 'react';
+import { AuthProvider } from '../src/context/AuthContext';
+import Navbar from '../components/Navbar';
+import ErrorBoundary from '../components/ErrorBoundary';
+import CopilotWrapper from '../components/layout/CopilotWrapper';
+import './lib/sentry';
+import { maintenanceMode, aiCopilotEnabled, arModeEnabled } from './lib/features';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'MyRoofGenius - Smart Roofing Solutions',
   description: 'AI-powered roofing tools and marketplace',
-}
+};
 
 export default function RootLayout({
   children,
@@ -32,7 +32,7 @@ export default function RootLayout({
           </div>
         </body>
       </html>
-    )
+    );
   }
   return (
     <html lang="en" className="dark">
@@ -66,5 +66,5 @@ export default function RootLayout({
         </div>
       </body>
     </html>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-'use client'
-import Card from './ui/Card'
+'use client';
+import Card from './ui/Card';
 
 interface TestimonialProps {
   quote: string
@@ -16,5 +16,5 @@ export default function Testimonial({ quote, author, title }: TestimonialProps) 
         {title && <p className="text-xs text-text-secondary">{title}</p>}
       </div>
     </Card>
-  )
+  );
 }

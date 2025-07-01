@@ -1,39 +1,39 @@
-'use client'
-export const dynamic = 'force-dynamic'
+'use client';
+export const dynamic = 'force-dynamic';
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 export default function Success() {
-  const [downloads, setDownloads] = useState<Array<{ file_name: string, download_url: string }>>([])
-  const [loading, setLoading] = useState(true)
-  const [message, setMessage] = useState('')
+  const [downloads, setDownloads] = useState<Array<{ file_name: string, download_url: string }>>([]);
+  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const sessionId = params.get('session_id')
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get('session_id');
     async function fetchDownloads() {
       if (!sessionId) {
-        setMessage('No order session found.')
-        setLoading(false)
-        return
+        setMessage('No order session found.');
+        setLoading(false);
+        return;
       }
       try {
-        const res = await fetch(`/api/order/${sessionId}`)
+        const res = await fetch(`/api/order/${sessionId}`);
         if (!res.ok) {
-          setMessage('Your order is confirmed. Please check your email for the download links.')
+          setMessage('Your order is confirmed. Please check your email for the download links.');
         } else {
-          const data = await res.json()
-          setDownloads(data.downloads || [])
+          const data = await res.json();
+          setDownloads(data.downloads || []);
         }
       } catch (error) {
-        console.error('Failed to fetch downloads:', error)
-        setMessage('An error occurred retrieving your downloads. Please check your email for the files.')
+        console.error('Failed to fetch downloads:', error);
+        setMessage('An error occurred retrieving your downloads. Please check your email for the files.');
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
-    fetchDownloads()
-  }, [])
+    fetchDownloads();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -68,5 +68,5 @@ export default function Success() {
         </div>
       </div>
     </div>
-  )
+  );
 }

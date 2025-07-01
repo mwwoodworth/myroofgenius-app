@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { chat } from '../../../lib/llm'
+import { NextRequest, NextResponse } from 'next/server';
+import { chat } from '../../../lib/llm';
 
 interface AnalysisResult {
   squareFeet: number
@@ -9,30 +9,30 @@ interface AnalysisResult {
 }
 
 async function fetchSatelliteImage(address: string): Promise<File> {
-  const token = process.env.MAPBOX_TOKEN
-  if (!token) throw new Error('MAPBOX_TOKEN not set')
+  const token = process.env.MAPBOX_TOKEN;
+  if (!token) throw new Error('MAPBOX_TOKEN not set');
   const geoRes = await fetch(
     `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${token}`,
-  )
-  const geo = await geoRes.json()
-  if (!geo.features?.length) throw new Error('address not found')
-  const [lon, lat] = geo.features[0].center
+  );
+  const geo = await geoRes.json();
+  if (!geo.features?.length) throw new Error('address not found');
+  const [lon, lat] = geo.features[0].center;
   const imgRes = await fetch(
     `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/${lon},${lat},18/600x600?access_token=${token}`,
-  )
-  const buffer = await imgRes.arrayBuffer()
-  return new File([buffer], 'satellite.jpg', { type: 'image/jpeg' })
+  );
+  const buffer = await imgRes.arrayBuffer();
+  return new File([buffer], 'satellite.jpg', { type: 'image/jpeg' });
 }
 
 async function analyzeWithLLM(file: File): Promise<AnalysisResult> {
-  const apiKey = process.env.OPENAI_API_KEY
+  const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     // Fallback to mock when API key is missing
-    return { squareFeet: 1500, damage: 'unknown', confidence: 0.5 }
+    return { squareFeet: 1500, damage: 'unknown', confidence: 0.5 };
   }
 
-  const buffer = Buffer.from(await file.arrayBuffer())
-  const base64 = buffer.toString('base64')
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const base64 = buffer.toString('base64');
 
   const text = await chat([
     {
@@ -49,63 +49,63 @@ async function analyzeWithLLM(file: File): Promise<AnalysisResult> {
         },
       ],
     },
-  ])
+  ]);
 
   try {
-    const match = text.match(/\{[\s\S]*\}/)
-    if (!match) throw new Error('no json')
-    const json = JSON.parse(match[0])
-    return json
+    const match = text.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('no json');
+    const json = JSON.parse(match[0]);
+    return json;
   } catch (e) {
-    throw new Error('parse failed')
+    throw new Error('parse failed');
   }
 }
 
 async function analyze(file: File): Promise<AnalysisResult> {
   if (process.env.EDGE_AI_MODE === 'true' && process.env.API_BASE_URL) {
     try {
-      const formData = new FormData()
-      formData.append('file', file)
+      const formData = new FormData();
+      formData.append('file', file);
       const res = await fetch(`${process.env.API_BASE_URL}/api/ai/analyze-roof`, {
         method: 'POST',
         body: formData,
-      })
-      if (res.ok) return res.json()
+      });
+      if (res.ok) return res.json();
     } catch (e) {
-      console.error('edge inference failed', e)
+      console.error('edge inference failed', e);
     }
   }
-  return analyzeWithLLM(file)
+  return analyzeWithLLM(file);
 }
 
 export async function POST(request: NextRequest) {
-  const formData = await request.formData()
-  let file = formData.get('file') as File | null
-  const address = formData.get('address') as string | null
+  const formData = await request.formData();
+  let file = formData.get('file') as File | null;
+  const address = formData.get('address') as string | null;
 
   if (!file && !address) {
     return NextResponse.json(
       { error: 'file or address required' },
       { status: 400 }
-    )
+    );
   }
 
   if (address && !file) {
     try {
-      file = await fetchSatelliteImage(address)
+      file = await fetchSatelliteImage(address);
     } catch (e) {
       return NextResponse.json(
         { error: 'address lookup failed' },
         { status: 500 }
-      )
+      );
     }
   }
 
   try {
-    const result = await analyze(file!)
-    return NextResponse.json(result)
+    const result = await analyze(file!);
+    return NextResponse.json(result);
   } catch (e) {
-    console.error('analysis failed', e)
-    return NextResponse.json({ error: 'analysis failed' }, { status: 500 })
+    console.error('analysis failed', e);
+    return NextResponse.json({ error: 'analysis failed' }, { status: 500 });
   }
 }

@@ -1,6 +1,6 @@
-'use client'
-import { Contractor } from '../../types/marketplace'
-import ContractorCard from './ContractorCard'
+'use client';
+import { Contractor } from '../../types/marketplace';
+import ContractorCard from './ContractorCard';
 
 export default function ContractorGrid({ contractors }: { contractors: Contractor[] }) {
   return (
@@ -9,5 +9,5 @@ export default function ContractorGrid({ contractors }: { contractors: Contracto
         <ContractorCard key={c.id} contractor={c} />
       ))}
     </div>
-  )
+  );
 }

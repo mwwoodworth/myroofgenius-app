@@ -1,11 +1,11 @@
-'use client'
-import { motion } from 'framer-motion'
+'use client';
+import { motion } from 'framer-motion';
 
 const actions = [
   { label: 'Create Estimate', href: '/estimator' },
   { label: 'Upload Roof Plan', href: '/dashboard' },
   { label: 'View Templates', href: '/marketplace' },
-]
+];
 
 export default function HotActions() {
   return (
@@ -21,5 +21,5 @@ export default function HotActions() {
         </motion.a>
       ))}
     </div>
-  )
+  );
 }

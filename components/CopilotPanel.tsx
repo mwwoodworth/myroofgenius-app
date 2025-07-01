@@ -1,7 +1,7 @@
-'use client'
-import { motion } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
-import { useRole } from './ui'
+'use client';
+import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { useRole } from './ui';
 
 type Msg = {
   role: 'user' | 'assistant'
@@ -9,105 +9,104 @@ type Msg = {
 }
 
 export default function CopilotPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const [input, setInput] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [sessionId, setSessionId] = useState<string | null>(null)
-  const [messages, setMessages] = useState<Msg[]>([])
-  const [recording, setRecording] = useState(false)
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [messages, setMessages] = useState<Msg[]>([]);
+  const [recording, setRecording] = useState(false);
   // SpeechRecognition types are not universally available so we fall back to `any`
-  const recognizer = useRef<any>(null)
+  const recognizer = useRef<any>(null);
 
-  const { role: userRole, setRole } = useRole()
+  const { role: userRole, setRole } = useRole();
 
   useEffect(() => {
     if (open) {
-      const stored = localStorage.getItem('copilotSession')
-      const sid = stored || crypto.randomUUID()
-      setSessionId(sid)
-      localStorage.setItem('copilotSession', sid)
+      const stored = localStorage.getItem('copilotSession');
+      const sid = stored || crypto.randomUUID();
+      setSessionId(sid);
+      localStorage.setItem('copilotSession', sid);
     }
-  }, [open])
+  }, [open]);
 
   useEffect(() => {
     if (sessionId) {
       fetch(`/api/copilot?sessionId=${sessionId}`)
         .then((res) => res.json())
         .then((d) => setMessages(d.history || []))
-        .catch(() => {})
+        .catch(() => {});
     }
-  }, [sessionId])
+  }, [sessionId]);
 
-  if (!open) return null
+  if (!open) return null;
 
   const appendAssistant = (text: string) => {
     setMessages((m) => {
-      const copy = [...m]
-      const last = copy[copy.length - 1]
+      const copy = [...m];
+      const last = copy[copy.length - 1];
       if (last && last.role === 'assistant') {
-        copy[copy.length - 1] = { role: 'assistant', content: text }
-        return copy
+        copy[copy.length - 1] = { role: 'assistant', content: text };
+        return copy;
       }
-      return [...copy, { role: 'assistant', content: text }]
-    })
-  }
+      return [...copy, { role: 'assistant', content: text }];
+    });
+  };
 
   const send = async (content?: string) => {
-    const msg = content ?? input
-    if (!msg) return
-    setInput('')
-    setLoading(true)
-    setMessages((m) => [...m, { role: 'user', content: msg }])
+    const msg = content ?? input;
+    if (!msg) return;
+    setInput('');
+    setLoading(true);
+    setMessages((m) => [...m, { role: 'user', content: msg }]);
     try {
       const res = await fetch('/api/copilot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: msg, sessionId }),
-      })
+      });
 
-      const sid = res.headers.get('x-session-id')
+      const sid = res.headers.get('x-session-id');
       if (sid) {
-        setSessionId(sid)
-        localStorage.setItem('copilotSession', sid)
+        setSessionId(sid);
+        localStorage.setItem('copilotSession', sid);
       }
 
-      const reader = res.body?.getReader()
-      const decoder = new TextDecoder()
-      let acc = ''
+      const reader = res.body?.getReader();
+      const decoder = new TextDecoder();
+      let acc = '';
       if (reader) {
         // eslint-disable-next-line no-constant-condition
         while (true) {
-          const { value, done } = await reader.read()
-          if (done) break
-          acc += decoder.decode(value)
-          appendAssistant(acc)
+          const { value, done } = await reader.read();
+          if (done) break;
+          acc += decoder.decode(value);
+          appendAssistant(acc);
         }
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const startVoice = () => {
-    const Rec = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
-    if (!Rec) return
-    recognizer.current = new Rec()
-    recognizer.current.lang = 'en-US'
-    recognizer.current.interimResults = false
+    const Rec = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!Rec) return;
+    recognizer.current = new Rec();
+    recognizer.current.lang = 'en-US';
+    recognizer.current.interimResults = false;
     recognizer.current.onresult = (e: any) => {
-      const t = e.results[0][0].transcript
-      setInput(t)
-    }
-    recognizer.current.onend = () => setRecording(false)
-    recognizer.current.start()
-    setRecording(true)
-  }
+      const t = e.results[0][0].transcript;
+      setInput(t);
+    };
+    recognizer.current.onend = () => setRecording(false);
+    recognizer.current.start();
+    setRecording(true);
+  };
 
   const quickActions: Record<string, string[]> = {
     field: ['Generate an estimate'],
     pm: ['Create a support ticket'],
     executive: ['Show best-selling template'],
-  }
-
+  };
 
   return (
     <motion.aside
@@ -171,5 +170,5 @@ export default function CopilotPanel({ open, onClose }: { open: boolean; onClose
         </button>
       </div>
     </motion.aside>
-  )
+  );
 }

@@ -1,10 +1,10 @@
-'use client'
-import { useState, useRef, useCallback } from 'react'
-import { useDropzone } from 'react-dropzone'
-import { Camera, Upload, FileText, Download, AlertCircle, CheckCircle, X } from 'lucide-react'
-import Image from 'next/image'
-import Button from './ui/Button'
-import { motion, AnimatePresence } from 'framer-motion'
+'use client';
+import { useState, useRef, useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { Camera, Upload, FileText, Download, AlertCircle, CheckCircle, X } from 'lucide-react';
+import Image from 'next/image';
+import Button from './ui/Button';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface AnalysisResult {
   square_feet: number
@@ -31,30 +31,30 @@ interface AnalysisResult {
 type Step = 'upload' | 'analyzing' | 'results' | 'report'
 
 export default function AIEstimator() {
-  const [step, setStep] = useState<Step>('upload')
-  const [file, setFile] = useState<File | null>(null)
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
-  const [result, setResult] = useState<AnalysisResult | null>(null)
-  const [address, setAddress] = useState('')
-  const [error, setError] = useState('')
-  const [reportUrl, setReportUrl] = useState<string | null>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [isCapturing, setIsCapturing] = useState(false)
+  const [step, setStep] = useState<Step>('upload');
+  const [file, setFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [result, setResult] = useState<AnalysisResult | null>(null);
+  const [address, setAddress] = useState('');
+  const [error, setError] = useState('');
+  const [reportUrl, setReportUrl] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isCapturing, setIsCapturing] = useState(false);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    const file = acceptedFiles[0]
+    const file = acceptedFiles[0];
     if (file) {
-      setFile(file)
-      setError('')
-      
+      setFile(file);
+      setError('');
+
       // Create preview
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result as string)
-      }
-      reader.readAsDataURL(file)
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     }
-  }, [])
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -63,93 +63,93 @@ export default function AIEstimator() {
     },
     maxSize: 10 * 1024 * 1024, // 10MB
     multiple: false
-  })
+  });
 
   const startCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment' } 
-      })
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' }
+      });
       if (videoRef.current) {
-        videoRef.current.srcObject = stream
-        setIsCapturing(true)
+        videoRef.current.srcObject = stream;
+        setIsCapturing(true);
       }
     } catch (err) {
-      setError('Unable to access camera. Please upload a photo instead.')
+      setError('Unable to access camera. Please upload a photo instead.');
     }
-  }
+  };
 
   const capturePhoto = () => {
     if (videoRef.current) {
-      const canvas = document.createElement('canvas')
-      canvas.width = videoRef.current.videoWidth
-      canvas.height = videoRef.current.videoHeight
-      const ctx = canvas.getContext('2d')
-      ctx?.drawImage(videoRef.current, 0, 0)
-      
+      const canvas = document.createElement('canvas');
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx?.drawImage(videoRef.current, 0, 0);
+
       canvas.toBlob((blob) => {
         if (blob) {
-          const file = new File([blob], 'roof-capture.jpg', { type: 'image/jpeg' })
-          setFile(file)
-          setImagePreview(canvas.toDataURL())
-          stopCamera()
+          const file = new File([blob], 'roof-capture.jpg', { type: 'image/jpeg' });
+          setFile(file);
+          setImagePreview(canvas.toDataURL());
+          stopCamera();
         }
-      }, 'image/jpeg', 0.95)
+      }, 'image/jpeg', 0.95);
     }
-  }
+  };
 
   const stopCamera = () => {
     if (videoRef.current && videoRef.current.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream
-      stream.getTracks().forEach(track => track.stop())
-      setIsCapturing(false)
+      const stream = videoRef.current.srcObject as MediaStream;
+      stream.getTracks().forEach(track => track.stop());
+      setIsCapturing(false);
     }
-  }
+  };
 
   const analyzeRoof = async () => {
-    if (!file) return
-    
-    setStep('analyzing')
-    setError('')
-    
-    const formData = new FormData()
-    formData.append('file', file)
+    if (!file) return;
+
+    setStep('analyzing');
+    setError('');
+
+    const formData = new FormData();
+    formData.append('file', file);
     if (address) {
-      formData.append('address', address)
+      formData.append('address', address);
     }
-    formData.append('analysis_type', 'full')
-    
+    formData.append('analysis_type', 'full');
+
     try {
       const response = await fetch('/api/ai/analyze-roof', {
         method: 'POST',
         body: formData
-      })
-      
+      });
+
       if (!response.ok) {
-        throw new Error('Analysis failed')
+        throw new Error('Analysis failed');
       }
-      
-      const data = await response.json()
-      setResult(data)
-      setStep('results')
-      
+
+      const data = await response.json();
+      setResult(data);
+      setStep('results');
+
       // Track successful analysis
       if ((window as any).gtag) {
         (window as any).gtag('event', 'roof_analysis_complete', {
           material: data.material,
           condition: data.condition,
           square_feet: data.square_feet
-        })
+        });
       }
     } catch (err) {
-      setError('Analysis failed. Please try again.')
-      setStep('upload')
+      setError('Analysis failed. Please try again.');
+      setStep('upload');
     }
-  }
+  };
 
   const generateReport = async () => {
-    if (!result) return
-    
+    if (!result) return;
+
     try {
       const response = await fetch('/api/ai/generate-report', {
         method: 'POST',
@@ -160,29 +160,29 @@ export default function AIEstimator() {
           include_photos: true,
           format: 'pdf'
         })
-      })
-      
+      });
+
       if (!response.ok) {
-        throw new Error('Report generation failed')
+        throw new Error('Report generation failed');
       }
-      
-      const { report_url } = await response.json()
-      setReportUrl(report_url)
-      setStep('report')
+
+      const { report_url } = await response.json();
+      setReportUrl(report_url);
+      setStep('report');
     } catch (err) {
-      setError('Failed to generate report. Please try again.')
+      setError('Failed to generate report. Please try again.');
     }
-  }
+  };
 
   const reset = () => {
-    setStep('upload')
-    setFile(null)
-    setImagePreview(null)
-    setResult(null)
-    setAddress('')
-    setError('')
-    setReportUrl(null)
-  }
+    setStep('upload');
+    setFile(null);
+    setImagePreview(null);
+    setResult(null);
+    setAddress('');
+    setError('');
+    setReportUrl(null);
+  };
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -418,7 +418,7 @@ export default function AIEstimator() {
                   <span className="text-blue-600">🔧</span> Repair Estimate
                 </h3>
                 <p className="text-3xl font-bold mb-2">
-                  ${result.repair_cost_estimate[0].toLocaleString()} - 
+                  ${result.repair_cost_estimate[0].toLocaleString()} -
                   ${result.repair_cost_estimate[1].toLocaleString()}
                 </p>
                 <p className="text-sm text-gray-600">
@@ -430,7 +430,7 @@ export default function AIEstimator() {
                   <span className="text-green-600">🏠</span> Replacement Estimate
                 </h3>
                 <p className="text-3xl font-bold mb-2">
-                  ${result.replacement_cost_estimate[0].toLocaleString()} - 
+                  ${result.replacement_cost_estimate[0].toLocaleString()} -
                   ${result.replacement_cost_estimate[1].toLocaleString()}
                 </p>
                 <p className="text-sm text-gray-600">
@@ -524,5 +524,5 @@ export default function AIEstimator() {
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }

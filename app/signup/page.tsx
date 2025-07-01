@@ -1,38 +1,38 @@
-'use client'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export default function SignupPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
-  const supabase = createClientComponentClient()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const supabase = createClientComponentClient();
 
   const handleSignup = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError(null)
-    setLoading(true)
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: { emailRedirectTo: `${window.location.origin}/auth/callback` }
-    })
-    if (error) setError(error.message)
-    else setSuccess(true)
-    setLoading(false)
-  }
+    });
+    if (error) setError(error.message);
+    else setSuccess(true);
+    setLoading(false);
+  };
 
   if (success) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <p className="text-center">Check your email to confirm your account.</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -74,5 +74,5 @@ export default function SignupPage() {
         </p>
       </div>
     </div>
-  )
+  );
 }

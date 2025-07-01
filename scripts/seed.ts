@@ -1,15 +1,15 @@
-import { createClient } from '@supabase/supabase-js'
-import * as dotenv from 'dotenv'
+import { createClient } from '@supabase/supabase-js';
+import * as dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+);
 
 async function seedDatabase() {
-  console.log('🌱 Seeding database with initial data...')
+  console.log('🌱 Seeding database with initial data...');
 
   const products = [
     {
@@ -59,7 +59,7 @@ async function seedDatabase() {
       image_url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800',
       is_active: true
     }
-  ]
+  ];
 
   for (const product of products) {
     const { data: prod, error } = await supabase
@@ -69,13 +69,13 @@ async function seedDatabase() {
         price_id: `price_${Date.now()}_${Math.random().toString(36).slice(-8)}`
       })
       .select()
-      .single()
+      .single();
 
     if (error) {
-      console.error('Error inserting product:', error.message)
-      continue
+      console.error('Error inserting product:', error.message);
+      continue;
     }
-    console.log(`Inserted product: ${prod.name}`)
+    console.log(`Inserted product: ${prod.name}`);
 
     await supabase.from('product_files').insert([
       {
@@ -92,7 +92,7 @@ async function seedDatabase() {
         file_size: Math.floor(Math.random() * 2000000) + 200000,
         file_type: 'application/pdf'
       }
-    ])
+    ]);
   }
 
   const prompts = [
@@ -128,11 +128,11 @@ Include estimated repair and replacement costs in recommendations.`,
       category: 'analysis',
       is_active: true
     }
-  ]
+  ];
   for (const prompt of prompts) {
-    await supabase.from('prompts').insert(prompt)
+    await supabase.from('prompts').insert(prompt);
   }
-  console.log('Inserted AI prompts.')
+  console.log('Inserted AI prompts.');
 
   const emailTemplates = [
     {
@@ -171,15 +171,15 @@ Include estimated repair and replacement costs in recommendations.`,
       variables: ['order_number', 'download_links', 'product_name', 'amount'],
       is_active: true
     }
-  ]
+  ];
   for (const template of emailTemplates) {
-    await supabase.from('email_templates').insert(template)
+    await supabase.from('email_templates').insert(template);
   }
-  console.log('Inserted email templates.')
+  console.log('Inserted email templates.');
 
-  console.log('✅ Seeding complete.')
+  console.log('✅ Seeding complete.');
 }
 
 seedDatabase().catch(err => {
-  console.error('Seed error:', err)
-})
+  console.error('Seed error:', err);
+});

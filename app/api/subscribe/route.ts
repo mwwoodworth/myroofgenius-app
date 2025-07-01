@@ -1,14 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json()
-    
+    const { email } = await request.json();
+
     if (!email) {
       return NextResponse.json(
         { error: 'Email required' },
         { status: 400 }
-      )
+      );
     }
 
     const response = await fetch(
@@ -21,17 +21,17 @@ export async function POST(request: NextRequest) {
           email,
         }),
       }
-    )
+    );
 
     if (!response.ok) {
-      throw new Error('ConvertKit API error')
+      throw new Error('ConvertKit API error');
     }
 
-    return NextResponse.json({ status: 'success' })
+    return NextResponse.json({ status: 'success' });
   } catch (error) {
     return NextResponse.json(
       { error: 'Subscription failed' },
       { status: 500 }
-    )
+    );
   }
 }

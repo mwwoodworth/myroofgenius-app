@@ -1,5 +1,5 @@
-import { getPrompt } from '../../prompts'
+import { getPrompt } from '../../prompts';
 
 test('returns prompt', () => {
-  expect(getPrompt('copilot_intro')).toBe('Hello from MyRoofGenius Copilot.')
-})
+  expect(getPrompt('copilot_intro')).toBe('Hello from MyRoofGenius Copilot.');
+});

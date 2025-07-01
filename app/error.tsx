@@ -1,7 +1,7 @@
-'use client'
-export const dynamic = 'force-dynamic'
-import { useEffect } from 'react'
-import { sendAlert } from './lib/notify'
+'use client';
+export const dynamic = 'force-dynamic';
+import { useEffect } from 'react';
+import { sendAlert } from './lib/notify';
 
 export default function Error({
   error,
@@ -11,8 +11,8 @@ export default function Error({
   reset: () => void
 }) {
   useEffect(() => {
-    sendAlert(`Next.js error: ${error.message}`)
-  }, [error])
+    sendAlert(`Next.js error: ${error.message}`);
+  }, [error]);
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
@@ -26,5 +26,5 @@ export default function Error({
         </button>
       </div>
     </div>
-  )
+  );
 }

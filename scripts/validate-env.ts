@@ -9,23 +9,23 @@ const requiredEnvVars: Record<string, string> = {
   SENTRY_DSN: 'Recommended for error tracking',
   GOOGLE_GENERATIVE_AI_API_KEY: 'Optional for Gemini AI',
   ANTHROPIC_API_KEY: 'Optional for Claude AI'
-}
+};
 
-const missing: string[] = []
+const missing: string[] = [];
 for (const key of Object.keys(requiredEnvVars)) {
   if (!process.env[key]) {
-    missing.push(`${key} - ${requiredEnvVars[key]}`)
+    missing.push(`${key} - ${requiredEnvVars[key]}`);
   }
 }
 
 if (missing.length) {
-  console.error('Missing environment variables:\n')
-  for (const line of missing) console.error(`- ${line}`)
-  console.error('\nCopy the following into your .env file:\n')
+  console.error('Missing environment variables:\n');
+  for (const line of missing) console.error(`- ${line}`);
+  console.error('\nCopy the following into your .env file:\n');
   for (const key of Object.keys(requiredEnvVars)) {
-    console.error(`${key}=`)
+    console.error(`${key}=`);
   }
-  process.exit(1)
+  process.exit(1);
 }
 
-console.log('All required environment variables are set.')
+console.log('All required environment variables are set.');

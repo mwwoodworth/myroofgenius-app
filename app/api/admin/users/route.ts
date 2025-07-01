@@ -1,29 +1,29 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { createClient } from '@supabase/supabase-js'
-import { cookies } from 'next/headers'
+import { NextRequest, NextResponse } from 'next/server';
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@supabase/supabase-js';
+import { cookies } from 'next/headers';
 
 async function verifyAdmin() {
-  const supabase = createRouteHandlerClient({ cookies })
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { error: true }
-  const { data: profile } = await supabase.from('user_profiles').select('is_admin').eq('user_id', user.id).single()
-  if (!profile?.is_admin) return { error: true }
-  return {}
+  const supabase = createRouteHandlerClient({ cookies });
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: true };
+  const { data: profile } = await supabase.from('user_profiles').select('is_admin').eq('user_id', user.id).single();
+  if (!profile?.is_admin) return { error: true };
+  return {};
 }
 
 export async function GET() {
-  const check = await verifyAdmin()
-  if (check.error) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+  const check = await verifyAdmin();
+  if (check.error) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
   const [{ data: profiles }, { data: userList }] = await Promise.all([
     admin.from('user_profiles').select('user_id, full_name, company_name, is_admin'),
     admin.auth.admin.listUsers()
-  ])
-  const emailMap: Record<string, string> = {}
+  ]);
+  const emailMap: Record<string, string> = {};
   if (userList?.users) {
     for (const u of userList.users) {
-      emailMap[u.id] = u.email ?? ''
+      emailMap[u.id] = u.email ?? '';
     }
   }
   const combined = (profiles || []).map(p => ({
@@ -32,15 +32,15 @@ export async function GET() {
     company_name: p.company_name || '',
     email: emailMap[p.user_id] || '',
     is_admin: p.is_admin
-  }))
-  return NextResponse.json({ users: combined })
+  }));
+  return NextResponse.json({ users: combined });
 }
 
 export async function POST(request: NextRequest) {
-  const check = await verifyAdmin()
-  if (check.error) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-  const body = await request.json()
-  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
-  await admin.from('user_profiles').update({ is_admin: body.is_admin }).eq('user_id', body.user_id)
-  return NextResponse.json({ success: true })
+  const check = await verifyAdmin();
+  if (check.error) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  const body = await request.json();
+  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+  await admin.from('user_profiles').update({ is_admin: body.is_admin }).eq('user_id', body.user_id);
+  return NextResponse.json({ success: true });
 }

@@ -1,18 +1,18 @@
 // @ts-nocheck
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import AIEstimator from "../../components/AIEstimator";
-import { rest } from "msw";
-import { setupServer } from "msw/node";
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import AIEstimator from '../../components/AIEstimator';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
 
 const server = setupServer(
-  rest.post("/api/ai/analyze-roof", (req, res, ctx) => {
+  rest.post('/api/ai/analyze-roof', (req, res, ctx) => {
     return res(
       ctx.json({
         square_feet: 2000,
-        material: "asphalt shingle",
-        condition: "good",
+        material: 'asphalt shingle',
+        condition: 'good',
         damage_areas: [],
-        recommendations: ["Regular maintenance recommended"],
+        recommendations: ['Regular maintenance recommended'],
         estimated_remaining_life: 15,
         repair_cost_estimate: [1000, 2000],
         replacement_cost_estimate: [8000, 12000],
@@ -30,17 +30,17 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-describe("AIEstimator", () => {
-  it("renders upload interface initially", () => {
+describe('AIEstimator', () => {
+  it('renders upload interface initially', () => {
     render(<AIEstimator />);
     expect(screen.getByText(/drag & drop a roof photo/i)).toBeInTheDocument();
   });
 
-  it("handles file upload and analysis", async () => {
+  it('handles file upload and analysis', async () => {
     render(<AIEstimator />);
 
     // Mock file upload
-    const file = new File(["test"], "roof.jpg", { type: "image/jpeg" });
+    const file = new File(['test'], 'roof.jpg', { type: 'image/jpeg' });
     const input = screen.getByLabelText(/drag & drop/i);
 
     fireEvent.change(input, { target: { files: [file] } });
@@ -57,7 +57,7 @@ describe("AIEstimator", () => {
     });
   });
 
-  it("displays cost estimates correctly", async () => {
+  it('displays cost estimates correctly', async () => {
     render(<AIEstimator />);
 
     // ... upload and analyze ...
@@ -68,13 +68,13 @@ describe("AIEstimator", () => {
     });
   });
 
-  it("handles camera capture", async () => {
+  it('handles camera capture', async () => {
     // Mock getUserMedia
     const mockGetUserMedia = jest.fn(async () => ({
       getTracks: () => [],
     }));
 
-    Object.defineProperty(navigator.mediaDevices, "getUserMedia", {
+    Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
       value: mockGetUserMedia,
     });
 
@@ -84,7 +84,7 @@ describe("AIEstimator", () => {
     fireEvent.click(cameraButton);
 
     expect(mockGetUserMedia).toHaveBeenCalledWith({
-      video: { facingMode: "environment" },
+      video: { facingMode: 'environment' },
     });
 
     await waitFor(() => {
@@ -92,11 +92,11 @@ describe("AIEstimator", () => {
     });
   });
 
-  it("generates report after analysis", async () => {
+  it('generates report after analysis', async () => {
     render(<AIEstimator />);
 
     // Upload and analyze first
-    const file = new File(["test"], "roof.jpg", { type: "image/jpeg" });
+    const file = new File(['test'], 'roof.jpg', { type: 'image/jpeg' });
     const input = screen.getByLabelText(/drag & drop/i);
     fireEvent.change(input, { target: { files: [file] } });
 

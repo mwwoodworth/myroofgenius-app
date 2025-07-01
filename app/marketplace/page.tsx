@@ -1,14 +1,14 @@
-"use client"
-export const dynamic = 'force-dynamic'
-import { createClient } from '@supabase/supabase-js'
-import Image from 'next/image'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
-import { Search, Filter, ChevronDown, Star, ShoppingCart, Eye } from 'lucide-react'
-import ProductCarousel from '../../components/marketplace/ProductCarousel'
-import ContractorGrid from '../../components/marketplace/ContractorGrid'
-import { Product as RecommendedProduct, Contractor, RecommendationContext } from '../../types/marketplace'
+'use client';
+export const dynamic = 'force-dynamic';
+import { createClient } from '@supabase/supabase-js';
+import Image from 'next/image';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { Search, Filter, ChevronDown, Star, ShoppingCart, Eye } from 'lucide-react';
+import ProductCarousel from '../../components/marketplace/ProductCarousel';
+import ContractorGrid from '../../components/marketplace/ContractorGrid';
+import { Product as RecommendedProduct, Contractor, RecommendationContext } from '../../types/marketplace';
 
 const categories = [
   { id: 'all', name: 'All Products', icon: '🏠' },
@@ -19,7 +19,7 @@ const categories = [
   { id: 'safety', name: 'Safety Resources', icon: '⚠️' },
   { id: 'training', name: 'Training Materials', icon: '🎓' },
   { id: 'marketing', name: 'Marketing Assets', icon: '📣' },
-]
+];
 
 const sortOptions = [
   { value: 'popular', label: 'Most Popular' },
@@ -27,7 +27,7 @@ const sortOptions = [
   { value: 'price_low', label: 'Price: Low to High' },
   { value: 'price_high', label: 'Price: High to Low' },
   { value: 'rating', label: 'Highest Rated' },
-]
+];
 
 interface Product {
   id: string
@@ -47,39 +47,39 @@ interface Product {
 }
 
 export default function Marketplace() {
-  const [products, setProducts] = useState<Product[]>([])
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [recommendations, setRecommendations] = useState<{
     products: RecommendedProduct[]
     contractors: Contractor[]
-  } | null>(null)
-  const [selectedCategory, setSelectedCategory] = useState('all')
-  const [searchTerm, setSearchTerm] = useState('')
-  const [sortBy, setSortBy] = useState('popular')
-  const [loading, setLoading] = useState(true)
-  const [showFilters, setShowFilters] = useState(false)
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500])
+  } | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('popular');
+  const [loading, setLoading] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
 
   useEffect(() => {
-    fetchProducts()
-    fetchRecommendations()
-  }, [])
+    fetchProducts();
+    fetchRecommendations();
+  }, []);
 
   useEffect(() => {
-    filterAndSortProducts()
-  }, [products, selectedCategory, searchTerm, sortBy, priceRange])
+    filterAndSortProducts();
+  }, [products, selectedCategory, searchTerm, sortBy, priceRange]);
 
   async function fetchProducts() {
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    )
+    );
 
     const { data, error } = await supabase
       .from('products')
       .select('*')
       .eq('is_active', true)
-      .order('created_at', { ascending: false })
+      .order('created_at', { ascending: false });
 
     if (data) {
       // Simulate additional product data for demo
@@ -90,10 +90,10 @@ export default function Marketplace() {
         sales_count: Math.floor(Math.random() * 1000) + 50,
         is_featured: Math.random() > 0.7,
         is_new: Math.random() > 0.8,
-      }))
-      setProducts(enrichedProducts)
+      }));
+      setProducts(enrichedProducts);
     }
-    setLoading(false)
+    setLoading(false);
   }
 
   async function fetchRecommendations() {
@@ -102,22 +102,22 @@ export default function Marketplace() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({}) as any
-      })
+      });
       if (res.ok) {
-        const data = await res.json()
-        setRecommendations(data)
+        const data = await res.json();
+        setRecommendations(data);
       }
     } catch (error) {
-      console.error('Failed to fetch recommendations', error)
+      console.error('Failed to fetch recommendations', error);
     }
   }
 
   function filterAndSortProducts() {
-    let filtered = [...products]
+    let filtered = [...products];
 
     // Category filter
     if (selectedCategory !== 'all') {
-      filtered = filtered.filter(p => p.category === selectedCategory)
+      filtered = filtered.filter(p => p.category === selectedCategory);
     }
 
     // Search filter
@@ -125,34 +125,34 @@ export default function Marketplace() {
       filtered = filtered.filter(p =>
         p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         p.description.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      );
     }
 
     // Price filter
-    filtered = filtered.filter(p => 
+    filtered = filtered.filter(p =>
       p.price >= priceRange[0] && p.price <= priceRange[1]
-    )
+    );
 
     // Sort
     switch (sortBy) {
       case 'newest':
-        filtered.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-        break
+        filtered.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        break;
       case 'price_low':
-        filtered.sort((a, b) => a.price - b.price)
-        break
+        filtered.sort((a, b) => a.price - b.price);
+        break;
       case 'price_high':
-        filtered.sort((a, b) => b.price - a.price)
-        break
+        filtered.sort((a, b) => b.price - a.price);
+        break;
       case 'rating':
-        filtered.sort((a, b) => b.rating - a.rating)
-        break
+        filtered.sort((a, b) => b.rating - a.rating);
+        break;
       case 'popular':
       default:
-        filtered.sort((a, b) => b.sales_count - a.sales_count)
+        filtered.sort((a, b) => b.sales_count - a.sales_count);
     }
 
-    setFilteredProducts(filtered)
+    setFilteredProducts(filtered);
   }
 
   const buyNow = async (product: Product) => {
@@ -161,15 +161,15 @@ export default function Marketplace() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ price_id: product.price_id, product_id: product.id })
-      })
-      const data = await res.json()
+      });
+      const data = await res.json();
       if (data.url) {
-        window.location.href = data.url
+        window.location.href = data.url;
       }
     } catch (err) {
-      console.error('Checkout error', err)
+      console.error('Checkout error', err);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -400,9 +400,9 @@ export default function Marketplace() {
                 <p className="text-gray-600 mb-4">No products found matching your criteria.</p>
                 <button
                   onClick={() => {
-                    setSelectedCategory('all')
-                    setSearchTerm('')
-                    setPriceRange([0, 500])
+                    setSelectedCategory('all');
+                    setSearchTerm('');
+                    setPriceRange([0, 500]);
                   }}
                   className="text-blue-600 hover:underline"
                 >
@@ -444,7 +444,7 @@ export default function Marketplace() {
                       <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                         {product.description}
                       </p>
-                      
+
                       {/* Features */}
                       <div className="mb-4">
                         <ul className="text-xs text-gray-500 space-y-1">
@@ -556,5 +556,5 @@ export default function Marketplace() {
         </div>
       </section>
     </div>
-  )
+  );
 }

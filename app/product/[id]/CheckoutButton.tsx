@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface CheckoutButtonProps {
   priceId: string
@@ -9,12 +9,12 @@ interface CheckoutButtonProps {
 }
 
 export default function CheckoutButton({ priceId, productId }: CheckoutButtonProps) {
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleCheckout = async () => {
-    setLoading(true)
-    
+    setLoading(true);
+
     try {
       const response = await fetch('/api/checkout', {
         method: 'POST',
@@ -23,29 +23,29 @@ export default function CheckoutButton({ priceId, productId }: CheckoutButtonPro
           price_id: priceId,
           product_id: productId
         })
-      })
-      
-      const data = await response.json()
-      
+      });
+
+      const data = await response.json();
+
       if (data.url) {
-        window.location.href = data.url
+        window.location.href = data.url;
       } else {
-        console.error('No checkout URL returned')
+        console.error('No checkout URL returned');
       }
     } catch (error) {
-      console.error('Checkout error:', error)
+      console.error('Checkout error:', error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
-    <button 
+    <button
       onClick={handleCheckout}
       disabled={loading}
       className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50"
     >
       {loading ? 'Loading...' : 'Buy Now'}
     </button>
-  )
+  );
 }

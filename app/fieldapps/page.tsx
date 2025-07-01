@@ -1,8 +1,8 @@
-"use client"
-import Card from '../../components/ui/Card'
-import Button from '../../components/ui/Button'
+'use client';
+import Card from '../../components/ui/Card';
+import Button from '../../components/ui/Button';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 export default function FieldApps() {
   const apps = [
@@ -21,7 +21,7 @@ export default function FieldApps() {
       description: 'Track project tasks collaboratively with AI suggestions.',
       url: 'https://claude.ai/punchlist'
     }
-  ]
+  ];
   return (
     <main className="min-h-screen pt-32 bg-bg text-text-primary px-4">
       <h1 className="text-4xl font-bold text-center mb-8">Field Apps</h1>
@@ -40,5 +40,5 @@ export default function FieldApps() {
         ))}
       </div>
     </main>
-  )
+  );
 }

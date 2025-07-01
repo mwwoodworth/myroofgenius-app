@@ -1,8 +1,8 @@
-'use client'
-import { useRole } from './RoleProvider'
+'use client';
+import { useRole } from './RoleProvider';
 
 export default function RoleSwitcher() {
-  const { role, setRole } = useRole()
+  const { role, setRole } = useRole();
   return (
     <div className="fixed top-20 right-4 z-50">
       <select
@@ -15,5 +15,5 @@ export default function RoleSwitcher() {
         <option value="field">Field</option>
       </select>
     </div>
-  )
+  );
 }

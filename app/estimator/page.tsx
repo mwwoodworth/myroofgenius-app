@@ -1,9 +1,9 @@
-import dynamicImport from 'next/dynamic'
-import { estimatorEnabled } from '../lib/features'
+import dynamicImport from 'next/dynamic';
+import { estimatorEnabled } from '../lib/features';
 
-const Estimator = dynamicImport(() => import('../../components/AIEstimator'), { ssr: false })
+const Estimator = dynamicImport(() => import('../../components/AIEstimator'), { ssr: false });
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 export default function EstimatorPage() {
   if (!estimatorEnabled) {
@@ -11,11 +11,11 @@ export default function EstimatorPage() {
       <div className="min-h-screen flex items-center justify-center p-8">
         <p>Estimator feature is disabled.</p>
       </div>
-    )
+    );
   }
   return (
     <div className="min-h-screen flex items-center justify-center p-8">
       <Estimator />
     </div>
-  )
+  );
 }

@@ -1,39 +1,39 @@
-'use client'
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import type { User } from '@supabase/supabase-js'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
-import { ThemeToggle } from './ui'
+'use client';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import type { User } from '@supabase/supabase-js';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
+import { ThemeToggle } from './ui';
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false)
-  const [user, setUser] = useState<User | null>(null)
-  const router = useRouter()
-  const supabase = createClientComponentClient()
+  const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
+  const supabase = createClientComponentClient();
 
   useEffect(() => {
     const getUser = async () => {
       const {
         data: { user }
-      } = await supabase.auth.getUser()
-      setUser(user)
-    }
-    getUser()
+      } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    getUser();
     const {
       data: { subscription }
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
-    return () => subscription.unsubscribe()
-  }, [supabase])
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, [supabase]);
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.push('/')
-    router.refresh()
-  }
+    await supabase.auth.signOut();
+    router.push('/');
+    router.refresh();
+  };
 
   const links = [
     { href: '/', label: 'Home' },
@@ -41,7 +41,7 @@ export default function Navbar() {
     { href: '/tools', label: 'Tools' },
     { href: '/marketplace', label: 'Marketplace' },
     { href: '/blog', label: 'Blog' },
-  ]
+  ];
 
   return (
     <>
@@ -123,8 +123,8 @@ export default function Navbar() {
                 </a>
                 <button
                   onClick={() => {
-                    handleSignOut()
-                    setOpen(false)
+                    handleSignOut();
+                    setOpen(false);
                   }}
                   className="block w-full text-left px-8 py-4 border-b border-[rgba(255,255,255,0.07)] hover:text-accent"
                 >
@@ -156,5 +156,5 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }

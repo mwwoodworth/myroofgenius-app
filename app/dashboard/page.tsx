@@ -1,7 +1,7 @@
-import { createClient } from '@supabase/supabase-js'
-import { redirect } from 'next/navigation'
-import Link from 'next/link'
-import { 
+import { createClient } from '@supabase/supabase-js';
+import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import {
   DollarSign,
   Package,
   Users,
@@ -9,29 +9,29 @@ import {
   FileText,
   Bell,
   BarChart3
-} from 'lucide-react'
+} from 'lucide-react';
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 async function getDashboardData() {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
-  )
-  
+  );
+
   // Check authentication
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
-    redirect('/login')
+    redirect('/login');
   }
-  
+
   // Get user profile
   const { data: profile } = await supabase
     .from('user_profiles')
     .select('*')
     .eq('user_id', user.id)
-    .single()
-  
+    .single();
+
   // Get orders with product details
   const { data: orders } = await supabase
     .from('orders')
@@ -45,8 +45,8 @@ async function getDashboardData() {
     `)
     .eq('user_id', user.id)
     .order('created_at', { ascending: false })
-    .limit(10)
-  
+    .limit(10);
+
   // Get download history
   const { data: downloads } = await supabase
     .from('downloads')
@@ -59,35 +59,35 @@ async function getDashboardData() {
     `)
     .eq('user_id', user.id)
     .order('created_at', { ascending: false })
-    .limit(10)
-  
+    .limit(10);
+
   // Get AI analyses
   const { data: analyses } = await supabase
     .from('roof_analyses')
     .select('*')
     .eq('user_id', user.id)
     .order('created_at', { ascending: false })
-    .limit(5)
-  
+    .limit(5);
+
   // Get support tickets
   const { data: tickets } = await supabase
     .from('support_tickets')
     .select('*')
     .eq('user_id', user.id)
     .order('created_at', { ascending: false })
-    .limit(5)
-  
+    .limit(5);
+
   // Calculate analytics
-  const totalSpent = orders?.reduce((sum, order) => sum + (order.amount || 0), 0) || 0
-  const totalDownloads = downloads?.length || 0
-  const activeTickets = tickets?.filter(t => t.status !== 'closed').length || 0
-  
+  const totalSpent = orders?.reduce((sum, order) => sum + (order.amount || 0), 0) || 0;
+  const totalDownloads = downloads?.length || 0;
+  const activeTickets = tickets?.filter(t => t.status !== 'closed').length || 0;
+
   // Get monthly spending for chart
-  const monthlySpending = calculateMonthlySpending(orders || [])
-  
+  const monthlySpending = calculateMonthlySpending(orders || []);
+
   // Get category breakdown
-  const categoryBreakdown = calculateCategoryBreakdown(orders || [])
-  
+  const categoryBreakdown = calculateCategoryBreakdown(orders || []);
+
   return {
     user,
     profile,
@@ -106,51 +106,51 @@ async function getDashboardData() {
       monthlySpending,
       categoryBreakdown
     }
-  }
+  };
 }
 
 function calculateMonthlySpending(orders: any[]) {
-  const months = {}
-  const now = new Date()
-  
+  const months = {};
+  const now = new Date();
+
   // Initialize last 6 months
   for (let i = 5; i >= 0; i--) {
-    const date = new Date(now.getFullYear(), now.getMonth() - i, 1)
-    const key = date.toISOString().slice(0, 7)
-    months[key] = 0
+    const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const key = date.toISOString().slice(0, 7);
+    months[key] = 0;
   }
-  
+
   // Sum spending by month
   orders.forEach(order => {
-    const month = order.created_at.slice(0, 7)
+    const month = order.created_at.slice(0, 7);
     if (months[month] !== undefined) {
-      months[month] += order.amount
+      months[month] += order.amount;
     }
-  })
-  
+  });
+
   return Object.entries(months).map(([month, amount]) => ({
     month,
     amount
-  }))
+  }));
 }
 
 function calculateCategoryBreakdown(orders: any[]) {
-  const categories = {}
-  
+  const categories = {};
+
   orders.forEach(order => {
-    const category = order.products?.category || 'Other'
-    categories[category] = (categories[category] || 0) + order.amount
-  })
-  
+    const category = order.products?.category || 'Other';
+    categories[category] = (categories[category] || 0) + order.amount;
+  });
+
   return Object.entries(categories).map(([category, amount]) => ({
     category,
     amount
-  }))
+  }));
 }
 
 export default async function Dashboard() {
-  const data = await getDashboardData()
-  
+  const data = await getDashboardData();
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -194,7 +194,7 @@ export default async function Dashboard() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -206,7 +206,7 @@ export default async function Dashboard() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -218,7 +218,7 @@ export default async function Dashboard() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -230,7 +230,7 @@ export default async function Dashboard() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -262,7 +262,7 @@ export default async function Dashboard() {
               <div className="p-6">
                 {data.orders.length === 0 ? (
                   <p className="text-gray-600 text-center py-8">
-                    No orders yet. 
+                    No orders yet.
                     <Link href="/marketplace" className="text-blue-600 hover:underline ml-1">
                       Browse marketplace
                     </Link>
@@ -284,8 +284,8 @@ export default async function Dashboard() {
                           <p className="font-semibold">${order.amount.toFixed(2)}</p>
                           <span className={`
                             text-sm px-2 py-1 rounded
-                            ${order.status === 'completed' 
-                              ? 'bg-green-100 text-green-800' 
+                            ${order.status === 'completed'
+                              ? 'bg-green-100 text-green-800'
                               : 'bg-yellow-100 text-yellow-800'
                             }
                           `}>
@@ -462,5 +462,5 @@ export default async function Dashboard() {
         )}
       </div>
     </div>
-  )
+  );
 }
