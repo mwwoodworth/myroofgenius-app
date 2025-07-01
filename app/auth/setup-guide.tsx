@@ -3,10 +3,12 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
 async function getBlogPost(slug: string) {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) {
+    return null;
+  }
+  const supabase = createClient(url, key);
 
   const { data } = await supabase
     .from('blog_posts')

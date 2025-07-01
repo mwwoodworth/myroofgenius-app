@@ -4,11 +4,11 @@ import { createClient } from '@supabase/supabase-js';
 
 export async function POST(request: NextRequest) {
   try {
-    const { analysis, address, roofImageUrl, recommendations } = await request.json();
+    const { analysis, address, roofImageUrl: _roofImageUrl, recommendations } = await request.json();
 
     const pdf = await PDFDocument.create();
     const page = pdf.addPage();
-    const { width, height } = page.getSize();
+    const { width: _width, height } = page.getSize();
     const font = await pdf.embedFont(StandardFonts.Helvetica);
 
     page.drawText('Roof Analysis Report', {
@@ -37,10 +37,12 @@ export async function POST(request: NextRequest) {
 
     const pdfBytes = await pdf.save();
 
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!url || !key) {
+      throw new Error('Supabase environment variables not configured');
+    }
+    const supabase = createClient(url, key);
 
     const fileName = `report_${Date.now()}.pdf`;
     const { error } = await supabase.storage.from('reports').upload(fileName, pdfBytes, {
@@ -48,14 +50,12 @@ export async function POST(request: NextRequest) {
     });
 
     if (error) {
-      console.error('Upload error:', error);
       return NextResponse.json({ error: 'Failed to upload report' }, { status: 500 });
     }
 
     const { data } = await supabase.storage.from('reports').createSignedUrl(fileName, 86400);
     return NextResponse.json({ report_url: data?.signedUrl });
-  } catch (error) {
-    console.error('Report generation error:', error);
+  } catch {
     return NextResponse.json({ error: 'Failed to generate report' }, { status: 500 });
   }
 }

@@ -3,7 +3,11 @@ import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
 
 export async function GET() {
-  const checks: any = {
+  const checks: {
+    status: string;
+    timestamp: string;
+    services: Record<string, string>;
+  } = {
     status: 'healthy',
     timestamp: new Date().toISOString(),
     services: {
@@ -16,10 +20,12 @@ export async function GET() {
   };
 
   try {
-    const supabaseAdmin = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!url || !key) {
+      throw new Error('Supabase environment variables not configured');
+    }
+    const supabaseAdmin = createClient(url, key);
 
     const { error: dbError } = await supabaseAdmin.from('products').select('id').limit(1);
     checks.services.database = dbError ? 'unhealthy' : 'healthy';
@@ -50,7 +56,7 @@ export async function GET() {
     }
 
     return NextResponse.json(checks);
-  } catch (error) {
+  } catch {
     checks.status = 'unhealthy';
     return NextResponse.json(checks, { status: 500 });
   }

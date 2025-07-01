@@ -3,8 +3,12 @@ import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 import * as Sentry from '@sentry/nextjs';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2023-10-16' });
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+if (!stripeKey || !endpointSecret) {
+  throw new Error('Stripe environment variables not configured');
+}
+const stripe = new Stripe(stripeKey, { apiVersion: '2023-10-16' });
 
 export async function POST(request: NextRequest) {
   const payload = await request.text();
@@ -18,10 +22,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
   }
 
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    return NextResponse.json({ error: 'supabase not configured' }, { status: 500 });
+  }
+  const supabase = createClient(url, key);
 
   try {
     switch (event.type) {

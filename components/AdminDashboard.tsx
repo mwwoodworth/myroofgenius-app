@@ -1,26 +1,37 @@
 'use client';
 export const dynamic = 'force-dynamic';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { Users, Package, DollarSign, FileText, Settings as SettingsIcon, BarChart3 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 async function checkAdminAccess() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) {
+    return false;
+  }
+  const supabase = createClient(url, key);
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return false;
   const { data: profile } = await supabase.from('user_profiles').select('is_admin').eq('user_id', user.id).single();
   return profile?.is_admin === true;
 }
 
+interface DashboardStats {
+  totalUsers: number;
+  totalOrders: number;
+  totalRevenue: number;
+  activeProducts: number;
+  pendingTickets: number;
+  monthlyRevenue: Array<{ month: string; revenue: number }>;
+}
+
 export default function AdminDashboard() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [stats, setStats] = useState({
+  const [stats, setStats] = useState<DashboardStats>({
     totalUsers: 0,
     totalOrders: 0,
     totalRevenue: 0,
@@ -31,10 +42,19 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const router = useRouter();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const verifyAccess = useCallback(async () => {
+    const hasAccess = await checkAdminAccess();
+    if (!hasAccess) {
+      router.push('/dashboard');
+    } else {
+      setIsAdmin(true);
+      setLoading(false);
+    }
+  }, [router]);
+
   useEffect(() => {
     verifyAccess();
-  }, []);
+  }, [verifyAccess]);
 
   useEffect(() => {
     if (isAdmin) {
@@ -58,18 +78,6 @@ export default function AdminDashboard() {
       const data = await res.json();
       setStats(data);
     }
-  }
-
-  function calculateMonthlyRevenue(orders: any[]) {
-    const revenueByMonth: { [month: string]: number } = {};
-    orders.forEach(order => {
-      const date = new Date(order.created_at);
-      const month = `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}`;
-      revenueByMonth[month] = (revenueByMonth[month] || 0) + order.amount;
-    });
-    const months = Object.keys(revenueByMonth).sort();
-    const recentMonths = months.slice(-12);
-    return recentMonths.map(month => ({ month, revenue: revenueByMonth[month] }));
   }
 
   if (loading) return <div className="p-4">Loading...</div>;
@@ -111,8 +119,8 @@ export default function AdminDashboard() {
   );
 }
 
-function OverviewTab({ stats }: { stats: any }) {
-  const maxRevenue = stats.monthlyRevenue.length ? Math.max(...stats.monthlyRevenue.map((m: any) => m.revenue)) : 0;
+function OverviewTab({ stats }: { stats: DashboardStats }) {
+  const maxRevenue = stats.monthlyRevenue.length ? Math.max(...stats.monthlyRevenue.map((m) => m.revenue)) : 0;
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
@@ -126,7 +134,7 @@ function OverviewTab({ stats }: { stats: any }) {
         <h2 className="text-xl font-semibold mb-4">Revenue Trend</h2>
         {stats.monthlyRevenue.length > 0 ? (
           <div className="flex items-end space-x-2 h-40">
-            {stats.monthlyRevenue.map((monthData: any) => (
+            {stats.monthlyRevenue.map((monthData) => (
               <div key={monthData.month} className="relative bg-blue-500" style={{ height: `${maxRevenue ? (monthData.revenue / maxRevenue) * 100 : 0}%`, width: '12px' }} title={`${monthData.month}: $${monthData.revenue.toFixed(2)}`}></div>
             ))}
           </div>
@@ -138,7 +146,7 @@ function OverviewTab({ stats }: { stats: any }) {
   );
 }
 
-function StatCard({ title, value, icon, color }: { title: string, value: any, icon: JSX.Element, color: string }) {
+function StatCard({ title, value, icon, color }: { title: string; value: number | string; icon: JSX.Element; color: string }) {
   const colorClasses: Record<string, string> = {
     blue: 'bg-blue-100 text-blue-600',
     green: 'bg-green-100 text-green-600',
@@ -159,8 +167,17 @@ function StatCard({ title, value, icon, color }: { title: string, value: any, ic
   );
 }
 
+interface Order {
+  id: string;
+  amount: number;
+  created_at: string;
+  status: string;
+  customer_email?: string;
+  products?: { name?: string } | null;
+}
+
 function OrdersTab() {
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -214,8 +231,18 @@ function OrdersTab() {
   );
 }
 
+interface ProductItem {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  image_url: string;
+  is_active: boolean;
+}
+
 function ProductsTab() {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<ProductItem[]>([]);
   const [showAdd, setShowAdd] = useState(false);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -343,8 +370,16 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
   );
 }
 
+interface AdminUser {
+  user_id: string;
+  full_name?: string;
+  email?: string;
+  company_name?: string;
+  is_admin: boolean;
+}
+
 function UsersTab() {
-  const [users, setUsers] = useState<Array<any>>([]);
+  const [users, setUsers] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -407,9 +442,9 @@ function UsersTab() {
   );
 }
 
-function AnalyticsTab({ stats }: { stats: any }) {
+function AnalyticsTab({ stats }: { stats: DashboardStats }) {
   const data = stats.monthlyRevenue;
-  const maxRevenue = data.length ? Math.max(...data.map((m: any) => m.revenue)) : 0;
+  const maxRevenue = data.length ? Math.max(...data.map((m) => m.revenue)) : 0;
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
@@ -417,7 +452,7 @@ function AnalyticsTab({ stats }: { stats: any }) {
       </h2>
       {data.length > 0 ? (
         <div className="flex items-end space-x-3 h-56 px-2">
-          {data.map((m: any) => (
+          {data.map((m) => (
             <div key={m.month} className="relative bg-blue-500" style={{ height: `${maxRevenue ? (m.revenue / maxRevenue) * 100 : 0}%`, width: '16px' }} title={`${m.month}: $${m.revenue.toFixed(2)}` }>
               <span className="absolute bottom-0 text-xs text-white text-center w-full" style={{ transform: 'translateY(100%) rotate(-45deg)' }}>{m.month.slice(2)}</span>
             </div>
@@ -431,7 +466,7 @@ function AnalyticsTab({ stats }: { stats: any }) {
 }
 
 function SettingsTab() {
-  const [health, setHealth] = useState<{ status: string, services: any } | null>(null);
+  const [health, setHealth] = useState<{ status: string; services: Record<string, string> } | null>(null);
   const [loading, setLoading] = useState(true);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -441,8 +476,7 @@ function SettingsTab() {
         const res = await fetch('/api/health');
         const data = await res.json();
         setHealth(data);
-      } catch (error) {
-        console.error('Health check failed:', error);
+      } catch {
         setHealth(null);
       } finally {
         setLoading(false);

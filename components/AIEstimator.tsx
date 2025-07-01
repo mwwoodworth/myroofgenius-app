@@ -74,7 +74,7 @@ export default function AIEstimator() {
         videoRef.current.srcObject = stream;
         setIsCapturing(true);
       }
-    } catch (err) {
+    } catch {
       setError('Unable to access camera. Please upload a photo instead.');
     }
   };
@@ -134,14 +134,15 @@ export default function AIEstimator() {
       setStep('results');
 
       // Track successful analysis
-      if ((window as any).gtag) {
-        (window as any).gtag('event', 'roof_analysis_complete', {
+      const win = window as unknown as { gtag?: (event: string, data: Record<string, unknown>) => void };
+      if (win.gtag) {
+        win.gtag('event', 'roof_analysis_complete', {
           material: data.material,
           condition: data.condition,
           square_feet: data.square_feet
         });
       }
-    } catch (err) {
+    } catch {
       setError('Analysis failed. Please try again.');
       setStep('upload');
     }
@@ -169,7 +170,7 @@ export default function AIEstimator() {
       const { report_url } = await response.json();
       setReportUrl(report_url);
       setStep('report');
-    } catch (err) {
+    } catch {
       setError('Failed to generate report. Please try again.');
     }
   };

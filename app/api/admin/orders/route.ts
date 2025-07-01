@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const admin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl || !serviceKey) {
+  throw new Error('Supabase environment variables not configured');
+}
+
+const admin = createClient(supabaseUrl, serviceKey);
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -31,13 +35,22 @@ export async function GET(req: NextRequest) {
     .order('created_at', { ascending: false })
     .limit(20);
 
-  const orders = (data || []).map((o: any) => ({
-    order_id: o.id,
-    email: o.user_profiles?.email || '',
-    product: o.products?.name || '',
-    amount: Number(o.amount),
-    created_at: o.created_at
-  }));
+  const orders = (data || []).map((o: unknown) => {
+    const order = o as {
+      id: number;
+      amount: number;
+      created_at: string;
+      products?: { name?: string } | null;
+      user_profiles?: { email?: string } | null;
+    };
+    return {
+      order_id: order.id,
+      email: order.user_profiles?.email || '',
+      product: order.products?.name || '',
+      amount: Number(order.amount),
+      created_at: order.created_at
+    };
+  });
 
   return NextResponse.json(orders);
 }

@@ -15,7 +15,12 @@ async function verifyAdmin() {
 export async function GET() {
   const check = await verifyAdmin();
   if (check.error) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    throw new Error('Supabase environment variables not configured');
+  }
+  const admin = createClient(url, key);
   const [{ data: profiles }, { data: userList }] = await Promise.all([
     admin.from('user_profiles').select('user_id, full_name, company_name, is_admin'),
     admin.auth.admin.listUsers()
@@ -40,7 +45,12 @@ export async function POST(request: NextRequest) {
   const check = await verifyAdmin();
   if (check.error) return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   const body = await request.json();
-  const admin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    throw new Error('Supabase environment variables not configured');
+  }
+  const admin = createClient(url, key);
   await admin.from('user_profiles').update({ is_admin: body.is_admin }).eq('user_id', body.user_id);
   return NextResponse.json({ success: true });
 }

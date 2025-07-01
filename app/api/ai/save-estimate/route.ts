@@ -4,10 +4,12 @@ import { createClient } from '@supabase/supabase-js';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!url || !key) {
+      throw new Error('Supabase environment variables not configured');
+    }
+    const supabase = createClient(url, key);
     await supabase.from('estimates').insert({
       square_feet: body.squareFeet,
       damage: body.damage,
@@ -16,7 +18,7 @@ export async function POST(request: NextRequest) {
       bbox: body.bbox || null,
     });
     return NextResponse.json({ status: 'success' });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: 'save failed' }, { status: 500 });
   }
 }

@@ -4,11 +4,11 @@ import { createClient } from '@supabase/supabase-js';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { Search, Filter, ChevronDown, Star, ShoppingCart, Eye } from 'lucide-react';
+import { useEffect, useState, useCallback } from 'react';
+import { Search, Filter, Star, ShoppingCart, Eye } from 'lucide-react';
 import ProductCarousel from '../../components/marketplace/ProductCarousel';
 import ContractorGrid from '../../components/marketplace/ContractorGrid';
-import { Product as RecommendedProduct, Contractor, RecommendationContext } from '../../types/marketplace';
+import { Product as RecommendedProduct, Contractor } from '../../types/marketplace';
 
 const categories = [
   { id: 'all', name: 'All Products', icon: '🏠' },
@@ -67,15 +67,18 @@ export default function Marketplace() {
 
   useEffect(() => {
     filterAndSortProducts();
-  }, [products, selectedCategory, searchTerm, sortBy, priceRange]);
+  }, [filterAndSortProducts]);
 
   async function fetchProducts() {
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!url || !key) {
+      setLoading(false);
+      return;
+    }
+    const supabase = createClient(url, key);
 
-    const { data, error } = await supabase
+    const { data, error: _error } = await supabase
       .from('products')
       .select('*')
       .eq('is_active', true)
@@ -83,7 +86,7 @@ export default function Marketplace() {
 
     if (data) {
       // Simulate additional product data for demo
-      const enrichedProducts = data.map((product: any) => ({
+      const enrichedProducts = data.map((product: Product) => ({
         ...product,
         rating: 4.5 + Math.random() * 0.5,
         reviews_count: Math.floor(Math.random() * 200) + 10,
@@ -101,18 +104,18 @@ export default function Marketplace() {
       const res = await fetch('/api/marketplace/recommendations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({}) as any
+        body: JSON.stringify({})
       });
       if (res.ok) {
         const data = await res.json();
         setRecommendations(data);
       }
-    } catch (error) {
-      console.error('Failed to fetch recommendations', error);
+    } catch {
+      /* ignored */
     }
   }
 
-  function filterAndSortProducts() {
+  const filterAndSortProducts = useCallback(() => {
     let filtered = [...products];
 
     // Category filter
@@ -136,7 +139,7 @@ export default function Marketplace() {
     // Sort
     switch (sortBy) {
       case 'newest':
-        filtered.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        filtered.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
         break;
       case 'price_low':
         filtered.sort((a, b) => a.price - b.price);
@@ -153,7 +156,7 @@ export default function Marketplace() {
     }
 
     setFilteredProducts(filtered);
-  }
+  }, [products, selectedCategory, searchTerm, sortBy, priceRange]);
 
   const buyNow = async (product: Product) => {
     try {
@@ -166,8 +169,8 @@ export default function Marketplace() {
       if (data.url) {
         window.location.href = data.url;
       }
-    } catch (err) {
-      console.error('Checkout error', err);
+    } catch {
+      /* ignore checkout errors */
     }
   };
 

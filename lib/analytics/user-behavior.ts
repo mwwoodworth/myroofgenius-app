@@ -1,8 +1,6 @@
-export function trackMarketplaceView(productId: string) {
+export function trackMarketplaceView(_productId: string) {
   // TODO: send event to analytics system
-  console.log('track view', productId);
 }
 
-export function trackContractorView(contractorId: string) {
-  console.log('track contractor view', contractorId);
+export function trackContractorView(_contractorId: string) {
 }
