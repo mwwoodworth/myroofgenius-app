@@ -5,14 +5,22 @@ import * as Sentry from '@sentry/nextjs';
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-if (!stripeKey || !endpointSecret) {
-  throw new Error('Stripe environment variables not configured');
-}
+
+// Properly error out at runtime if secrets are missing.
+if (!stripeKey) throw new Error('Stripe secret key is not configured');
+if (!endpointSecret) throw new Error('Stripe webhook secret is not configured');
+
 const stripe = new Stripe(stripeKey, { apiVersion: '2023-10-16' });
 
 export async function POST(request: NextRequest) {
   const payload = await request.text();
   const signature = request.headers.get('stripe-signature') || '';
+
+  // Ensure endpointSecret is a string
+  if (!endpointSecret) {
+    console.error('Missing Stripe webhook secret in environment variables');
+    return NextResponse.json({ error: 'Missing Stripe webhook secret' }, { status: 500 });
+  }
 
   let event: Stripe.Event;
   try {
@@ -68,7 +76,7 @@ export async function POST(request: NextRequest) {
       }
       case 'customer.subscription.created':
       case 'customer.subscription.deleted': {
-        // Handle subscription events as needed
+        // Add custom logic for subscription events if needed
         break;
       }
       default:
