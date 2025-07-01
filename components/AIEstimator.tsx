@@ -136,7 +136,7 @@ export default function AIEstimator() {
       // Track successful analysis
       const win = window as unknown as { gtag?: (event: string, data: Record<string, unknown>) => void };
       if (win.gtag) {
-        win.gtag('event', 'roof_analysis_complete', {
+        win.gtag('roof_analysis_complete', {
           material: data.material,
           condition: data.condition,
           square_feet: data.square_feet
