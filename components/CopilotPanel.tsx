@@ -4,26 +4,32 @@ import { useEffect, useRef, useState } from 'react';
 import { useRole } from './ui';
 
 type Msg = {
-  role: 'user' | 'assistant'
-  content: string
-}
+  role: 'user' | 'assistant';
+  content: string;
+};
 
-// Add this before using SpeechRecognition (top of the file or before the useRef line)
+// Patch for SpeechRecognition types (TS compatibility)
+type SpeechRecognition = any;
+
 declare global {
   interface Window {
-    SpeechRecognition: typeof SpeechRecognition;
-    webkitSpeechRecognition: typeof SpeechRecognition;
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
   }
 }
-type SpeechRecognition = any; // fallback for TypeScript
 
-export default function CopilotPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+export default function CopilotPanel({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [recording, setRecording] = useState(false);
-  // SpeechRecognition types are not universally available
   const recognizer = useRef<SpeechRecognition | null>(null);
 
   const { role: userRole, setRole } = useRole();
@@ -97,19 +103,14 @@ export default function CopilotPanel({ open, onClose }: { open: boolean; onClose
   };
 
   const startVoice = () => {
-    const Rec = (window as unknown as {
-      SpeechRecognition?: typeof SpeechRecognition;
-      webkitSpeechRecognition?: typeof SpeechRecognition;
-    }).SpeechRecognition ||
-    (window as unknown as {
-      SpeechRecognition?: typeof SpeechRecognition;
-      webkitSpeechRecognition?: typeof SpeechRecognition;
-    }).webkitSpeechRecognition;
+    const Rec =
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition;
     if (!Rec) return;
     recognizer.current = new Rec();
     recognizer.current.lang = 'en-US';
     recognizer.current.interimResults = false;
-    recognizer.current.onresult = (e: SpeechRecognitionEvent) => {
+    recognizer.current.onresult = (e: any) => {
       const t = e.results[0][0].transcript;
       setInput(t);
     };
@@ -131,18 +132,23 @@ export default function CopilotPanel({ open, onClose }: { open: boolean; onClose
       exit={{ x: '100%' }}
       className="fixed right-0 top-0 h-full w-96 bg-[rgba(44,44,46,0.8)] backdrop-blur-xl border-l border-[rgba(255,255,255,0.1)] shadow-2xl z-40 p-8"
     >
-      <button className="absolute top-4 right-4 text-accent font-bold" onClick={onClose}>✕</button>
+      <button
+        className="absolute top-4 right-4 text-accent font-bold"
+        onClick={onClose}
+      >
+        ✕
+      </button>
       <h3 className="text-2xl font-bold mb-4">AI Copilot</h3>
       <select
         className="mb-4 w-full rounded-md bg-bg-card border border-gray-700 p-2 text-sm"
         value={userRole}
-        onChange={(e) => setRole(e.target.value as Role)}
+        onChange={(e) => setRole(e.target.value as any)}
       >
         <option value="field">Field</option>
         <option value="pm">Project Manager</option>
       </select>
       <div className="flex gap-2 mb-4">
-        {quickActions[userRole].map((a) => (
+        {(quickActions[userRole] || []).map((a) => (
           <button
             key={a}
             onClick={() => send(a)}
@@ -158,7 +164,11 @@ export default function CopilotPanel({ open, onClose }: { open: boolean; onClose
             key={i}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className={m.role === 'user' ? 'text-right text-blue-200' : 'text-green-200'}
+            className={
+              m.role === 'user'
+                ? 'text-right text-blue-200'
+                : 'text-green-200'
+            }
           >
             {m.content}
           </motion.p>
