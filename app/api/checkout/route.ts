@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+if (!stripeKey) {
+  throw new Error('STRIPE_SECRET_KEY not set');
+}
+const stripe = new Stripe(stripeKey, {
   apiVersion: '2023-10-16', // Changed from '2024-11-20.acacia'
 });
 
@@ -19,7 +23,7 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ url: session.url });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Checkout failed' }, { status: 500 });
   }
 }

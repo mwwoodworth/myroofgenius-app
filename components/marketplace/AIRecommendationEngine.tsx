@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { RecommendationContext } from '../../types/marketplace';
 
-export default function AIRecommendationEngine({ context, onUpdate }: { context: RecommendationContext; onUpdate: (data: any) => void }) {
+export default function AIRecommendationEngine({ context, onUpdate }: { context: RecommendationContext; onUpdate: (data: unknown) => void }) {
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch('/api/marketplace/recommendations', {

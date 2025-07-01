@@ -4,7 +4,7 @@ export interface DroneScan {
   modelUrl: string
   location?: [number, number]
   createdAt?: string
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 }
 
 export interface ARModel {

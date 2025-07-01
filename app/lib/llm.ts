@@ -1,8 +1,8 @@
 export type LLMProvider = 'openai' | 'claude' | 'gemini'
 
 export interface ChatMessage {
-  role: 'system' | 'user' | 'assistant'
-  content: string | any
+  role: 'system' | 'user' | 'assistant';
+  content: string | unknown;
 }
 
 export async function chatStream(
@@ -75,7 +75,6 @@ async function callOpenAI(messages: ChatMessage[]): Promise<string> {
 async function callClaude(messages: ChatMessage[]): Promise<string> {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    console.warn('Claude API key not set, falling back to OpenAI');
     return callOpenAI(messages);
   }
   const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -98,7 +97,6 @@ async function callClaude(messages: ChatMessage[]): Promise<string> {
 async function callGemini(messages: ChatMessage[]): Promise<string> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    console.warn('Gemini API key not set, falling back to OpenAI');
     return callOpenAI(messages);
   }
   const res = await fetch(

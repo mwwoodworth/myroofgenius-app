@@ -10,7 +10,7 @@ interface CheckoutButtonProps {
 
 export default function CheckoutButton({ priceId, productId }: CheckoutButtonProps) {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const _router = useRouter();
 
   const handleCheckout = async () => {
     setLoading(true);
@@ -29,11 +29,9 @@ export default function CheckoutButton({ priceId, productId }: CheckoutButtonPro
 
       if (data.url) {
         window.location.href = data.url;
-      } else {
-        console.error('No checkout URL returned');
       }
-    } catch (error) {
-      console.error('Checkout error:', error);
+    } catch {
+      /* ignore checkout errors */
     } finally {
       setLoading(false);
     }

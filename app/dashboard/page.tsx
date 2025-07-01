@@ -14,10 +14,12 @@ import {
 export const dynamic = 'force-dynamic';
 
 async function getDashboardData() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    redirect('/');
+  }
+  const supabase = createClient(url, key);
 
   // Check authentication
   const { data: { user } } = await supabase.auth.getUser();
@@ -109,7 +111,13 @@ async function getDashboardData() {
   };
 }
 
-function calculateMonthlySpending(orders: any[]) {
+interface OrderData {
+  amount: number;
+  created_at: string;
+  products?: { category?: string } | null;
+}
+
+function calculateMonthlySpending(orders: OrderData[]) {
   const months = {};
   const now = new Date();
 
@@ -134,7 +142,7 @@ function calculateMonthlySpending(orders: any[]) {
   }));
 }
 
-function calculateCategoryBreakdown(orders: any[]) {
+function calculateCategoryBreakdown(orders: OrderData[]) {
   const categories = {};
 
   orders.forEach(order => {

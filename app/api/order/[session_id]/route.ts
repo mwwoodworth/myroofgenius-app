@@ -3,10 +3,12 @@ import { createClient } from '@supabase/supabase-js';
 
 export async function GET(request: NextRequest, { params }: { params: { session_id: string } }) {
   const sessionId = params.session_id;
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    return NextResponse.json({ error: 'supabase not configured' }, { status: 500 });
+  }
+  const supabase = createClient(url, key);
   const { data: orders, error } = await supabase
     .from('orders')
     .select('id, status')
@@ -24,12 +26,17 @@ export async function GET(request: NextRequest, { params }: { params: { session_
     .select('download_token, product_files(file_name)')
     .eq('order_id', order.id);
   if (dlError) {
-    console.error('Error fetching downloads:', dlError.message);
     return NextResponse.json({ downloads: [] });
   }
-  const downloadList = (downloads || []).map((d: any) => ({
-    file_name: d.product_files?.file_name || 'File',
-    download_url: `/api/download/${d.download_token}`
-  }));
+  const downloadList = (downloads || []).map((d: unknown) => {
+    const item = d as {
+      download_token: string;
+      product_files?: { file_name?: string } | null;
+    };
+    return {
+      file_name: item.product_files?.file_name || 'File',
+      download_url: `/api/download/${item.download_token}`
+    };
+  });
   return NextResponse.json({ downloads: downloadList });
 }

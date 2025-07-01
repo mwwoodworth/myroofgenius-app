@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ status: 'success' });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Subscription failed' },
       { status: 500 }
