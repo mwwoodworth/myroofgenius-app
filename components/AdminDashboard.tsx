@@ -37,7 +37,7 @@ export default function AdminDashboard() {
     totalRevenue: 0,
     activeProducts: 0,
     pendingTickets: 0,
-    monthlyRevenue: [] as { month: string, revenue: number }[]
+    monthlyRevenue: []
   });
   const [activeTab, setActiveTab] = useState('overview');
   const router = useRouter();
@@ -60,17 +60,8 @@ export default function AdminDashboard() {
     if (isAdmin) {
       loadDashboardData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAdmin]);
-
-  async function verifyAccess() {
-    const hasAccess = await checkAdminAccess();
-    if (!hasAccess) {
-      router.push('/dashboard');
-    } else {
-      setIsAdmin(true);
-      setLoading(false);
-    }
-  }
 
   async function loadDashboardData() {
     const res = await fetch('/api/admin/stats');
@@ -180,7 +171,6 @@ function OrdersTab() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadOrders();
   }, []);
@@ -245,7 +235,6 @@ function ProductsTab() {
   const [products, setProducts] = useState<ProductItem[]>([]);
   const [showAdd, setShowAdd] = useState(false);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadProducts();
   }, []);
@@ -382,7 +371,6 @@ function UsersTab() {
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { loadUsers(); }, []);
 
   async function loadUsers() {
@@ -469,7 +457,6 @@ function SettingsTab() {
   const [health, setHealth] = useState<{ status: string; services: Record<string, string> } | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     async function fetchHealth() {
       try {
