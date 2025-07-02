@@ -10,6 +10,20 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
+async function withRetry<T>(fn: () => Promise<T>, attempts = 3): Promise<T> {
+  let delay = 500;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (i === attempts - 1) throw err;
+      await new Promise((r) => setTimeout(r, delay));
+      delay *= 2;
+    }
+  }
+  throw new Error('unreachable');
+}
+
 // Create service role client for webhook
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -19,6 +33,7 @@ const supabase = createClient(
 export async function POST(req: Request) {
   const body = await req.text();
   const sig = headers().get('stripe-signature')!;
+  const idempotencyKey = headers().get('idempotency-key');
   const correlationId = crypto.randomUUID();
 
   let event: Stripe.Event;
@@ -34,10 +49,23 @@ export async function POST(req: Request) {
     );
   }
 
+  if (idempotencyKey) {
+    const { data: existing } = await supabase
+      .from('webhook_logs')
+      .select('id')
+      .eq('idempotency_key', idempotencyKey)
+      .maybeSingle();
+    if (existing) {
+      console.log('Duplicate webhook via idempotency key');
+      return NextResponse.json({ received: true });
+    }
+  }
+
   // Log attempt
   await supabase.from('webhook_logs').insert({
     id: correlationId,
     event_id: event.id,
+    idempotency_key: idempotencyKey,
     type: event.type,
     payload: body,
   });
@@ -74,28 +102,45 @@ export async function POST(req: Request) {
       const expiresAt = new Date();
       expiresAt.setDate(expiresAt.getDate() + 7);
 
-      const { error: updateError } = await supabase.from('orders').update({
-        status: 'completed',
-        stripe_session_id: session.id,
-        payment_intent: session.payment_intent as string,
-      }).eq('id', session.metadata?.order_id);
+      const { error: updateError } = (await withRetry(async () =>
+        supabase
+          .from('orders')
+          .update({
+            status: 'completed',
+            stripe_session_id: session.id,
+            payment_intent: session.payment_intent as string,
+          })
+          .eq('id', session.metadata?.order_id)
+          .throwOnError()
+      )) as any;
 
       if (updateError) {
         console.error('Order update failed:', updateError);
         throw updateError;
       }
 
-      const { error: downloadError } = await supabase.from('downloads').insert({
-        user_id: session.metadata?.user_id,
-        order_id: session.metadata?.order_id,
-        product_id: session.metadata?.product_id,
-        token: downloadToken,
-        expires_at: expiresAt.toISOString(),
-      });
+      const { error: downloadError } = (await withRetry(async () =>
+        supabase
+          .from('downloads')
+          .insert({
+            user_id: session.metadata?.user_id,
+            order_id: session.metadata?.order_id,
+            product_id: session.metadata?.product_id,
+            token: downloadToken,
+            expires_at: expiresAt.toISOString(),
+          })
+          .throwOnError()
+      )) as any;
 
       if (downloadError) {
         // rollback order status
-        await supabase.from('orders').update({ status: 'pending' }).eq('id', session.metadata?.order_id);
+        await withRetry(async () =>
+          supabase
+            .from('orders')
+            .update({ status: 'pending' })
+            .eq('id', session.metadata?.order_id)
+            .throwOnError()
+        );
         console.error('Download creation failed:', downloadError);
         throw downloadError;
       }
@@ -104,10 +149,15 @@ export async function POST(req: Request) {
       try {
         console.log('Sending confirmation email for', session.metadata?.order_id);
       } catch (emailErr) {
-        await supabase.from('email_queue').insert({
-          order_id: session.metadata?.order_id,
-          payload: {},
-        });
+        await withRetry(async () =>
+          supabase
+            .from('email_queue')
+            .insert({
+              order_id: session.metadata?.order_id,
+              payload: {},
+            })
+            .throwOnError()
+        );
         console.error('Email send failed, queued for retry', emailErr);
       }
 
@@ -115,6 +165,16 @@ export async function POST(req: Request) {
 
     } catch (error) {
       console.error('Webhook processing error:', error);
+      await withRetry(async () =>
+        supabase
+          .from('webhook_dead_letter')
+          .insert({
+            event_id: event.id,
+            payload: body,
+            error: String(error),
+          })
+          .throwOnError()
+      );
       return NextResponse.json(
         { error: 'Failed to process webhook' },
         { status: 500 }

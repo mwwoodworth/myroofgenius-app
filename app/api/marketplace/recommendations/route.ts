@@ -12,7 +12,8 @@ export async function POST(request: NextRequest) {
     ]);
     return NextResponse.json({ products, contractors, generatedAt: new Date().toISOString() });
   } catch (error) {
-    console.error('Recommendation error:', error);
-    return NextResponse.json({ error: 'Failed to generate recommendations' }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Operation failed';
+    console.error(`[Recommendations] API error: ${message}`);
+    return NextResponse.json({ error: 'Unable to complete request. Please refresh and try again.' }, { status: 500 });
   }
 }

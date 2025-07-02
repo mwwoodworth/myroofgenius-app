@@ -94,8 +94,10 @@ export async function POST(request: NextRequest) {
     try {
       file = await fetchSatelliteImage(address);
     } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Operation failed';
+      console.error(`[AnalyzeRoof] address fetch failed: ${message}`);
       return NextResponse.json(
-        { error: 'address lookup failed' },
+        { error: 'Unable to complete request. Please refresh and try again.' },
         { status: 500 }
       );
     }
@@ -109,6 +111,11 @@ export async function POST(request: NextRequest) {
     const result = await analyze(file);
     return NextResponse.json(result);
   } catch (error: unknown) {
-    return NextResponse.json({ error: 'analysis failed' }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Operation failed';
+    console.error(`[AnalyzeRoof] analysis failed: ${message}`);
+    return NextResponse.json(
+      { error: 'Unable to complete request. Please refresh and try again.' },
+      { status: 500 }
+    );
   }
 }

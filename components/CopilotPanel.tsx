@@ -38,14 +38,21 @@ export default function CopilotPanel({
 
   useEffect(() => {
     if (open) {
+      const ts = Number(localStorage.getItem('copilotSessionTimestamp') || '0');
+      if (ts && Date.now() - ts > 30 * 24 * 60 * 60 * 1000) {
+        localStorage.removeItem('copilotSession');
+        localStorage.removeItem('copilotDraft');
+      }
       const stored = localStorage.getItem('copilotSession');
       const sid = stored || crypto.randomUUID();
       setSessionId(sid);
       localStorage.setItem('copilotSession', sid);
+      localStorage.setItem('copilotSessionTimestamp', Date.now().toString());
       const draft = localStorage.getItem('copilotDraft');
       if (draft) {
         try {
-          const { messages: savedMsgs, input: savedInput } = JSON.parse(draft);
+          const decoded = JSON.parse(atob(draft));
+          const { messages: savedMsgs, input: savedInput } = decoded;
           setMessages(savedMsgs || []);
           setInput(savedInput || '');
         } catch {}
@@ -65,13 +72,21 @@ export default function CopilotPanel({
   useEffect(() => {
     const interval = setInterval(() => {
       try {
-        localStorage.setItem('copilotDraft', JSON.stringify({ messages, input }));
+        const payload = JSON.stringify({ messages, input });
+        localStorage.setItem('copilotDraft', btoa(payload));
         setSaved(true);
         setTimeout(() => setSaved(false), 1000);
       } catch {}
     }, 30000);
     return () => clearInterval(interval);
   }, [messages, input]);
+
+  useEffect(() => {
+    if (messages.length && messages.length % 10 === 0) {
+      const size = new Blob([JSON.stringify(messages)]).size;
+      console.log(`[Copilot] memory usage ~${size} bytes`);
+    }
+  }, [messages]);
 
   if (!open) return null;
 
@@ -81,9 +96,10 @@ export default function CopilotPanel({
       const last = copy[copy.length - 1];
       if (last && last.role === 'assistant') {
         copy[copy.length - 1] = { role: 'assistant', content: text };
-        return copy;
+      } else {
+        copy.push({ role: 'assistant', content: text });
       }
-      return [...copy, { role: 'assistant', content: text }];
+      return copy.slice(-50);
     });
   };
 
@@ -92,7 +108,7 @@ export default function CopilotPanel({
     if (!msg) return;
     setInput('');
     setLoading(true);
-    setMessages((m) => [...m, { role: 'user', content: msg }]);
+    setMessages((m) => [...m, { role: 'user', content: msg } as Msg].slice(-50));
     try {
       const res = await fetch('/api/copilot', {
         method: 'POST',

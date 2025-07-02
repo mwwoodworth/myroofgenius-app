@@ -13,6 +13,24 @@ import {
 
 export const dynamic = 'force-dynamic';
 
+const profileCache = new Map<string, { data: any; timestamp: number }>();
+
+async function fetchProfile(supabase: ReturnType<typeof createServerSupabaseClient>, userId: string) {
+  const cached = profileCache.get(userId);
+  if (cached && Date.now() - cached.timestamp < 5 * 60 * 1000) {
+    return cached.data;
+  }
+  const { data } = await supabase
+    .from('user_profiles')
+    .select('*')
+    .eq('id', userId)
+    .single();
+  if (data) {
+    profileCache.set(userId, { data, timestamp: Date.now() });
+  }
+  return data;
+}
+
 async function getDashboardData() {
   const user = await getUser();
   if (!user) {
@@ -21,13 +39,10 @@ async function getDashboardData() {
 
   const supabase = createServerSupabaseClient();
 
-  const [profileRes, ordersRes, downloadsRes, analysesRes, ticketsRes] =
+  const profilePromise = fetchProfile(supabase, user.id);
+
+  const [ordersRes, downloadsRes, analysesRes, ticketsRes] =
     await Promise.allSettled([
-      supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single(),
       supabase
         .from('orders')
         .select(`
@@ -66,8 +81,7 @@ async function getDashboardData() {
         .order('created_at', { ascending: false })
         .limit(5),
     ]);
-
-  const profile = profileRes.status === 'fulfilled' ? profileRes.value.data : null;
+  const profile = await profilePromise;
   const orders = ordersRes.status === 'fulfilled' ? ordersRes.value.data : null;
   const downloads = downloadsRes.status === 'fulfilled' ? downloadsRes.value.data : null;
   const analyses = analysesRes.status === 'fulfilled' ? analysesRes.value.data : null;
