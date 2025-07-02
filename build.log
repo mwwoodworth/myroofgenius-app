@@ -1,0 +1,65 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> myroofgenius-app@1.0.0 build
+> next build
+
+ ⚠ You are using a non-standard "NODE_ENV" value in your environment. This creates inconsistencies in the project and is strongly advised against. Read more: https://nextjs.org/docs/messages/non-standard-node-env
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Expected object, received boolean at "experimental.serverActions"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ⚠ Server Actions are available by default now, `experimental.serverActions` option can be safely removed.
+  ▲ Next.js 14.2.30
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./app/api/admin/users/route.ts
+34:45  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./app/api/ai/generate-report/route.ts
+7:46  Warning: '_roofImageUrl' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+11:20  Warning: '_width' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/login/page.tsx
+59:14  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./app/marketplace/page.tsx
+128:26  Warning: '_error' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/product/[id]/CheckoutButton.tsx
+13:9  Warning: '_router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/signup/page.tsx
+13:9  Warning: '_router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./app/success/page.tsx
+4:3  Warning: 'searchParams' is defined but never used. Allowed unused args must match /^_/u.  @typescript-eslint/no-unused-vars
+21:45  Warning: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./components/CopilotPanel.tsx
+12:26  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+107:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+108:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+145:52  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./components/ui/Button.tsx
+28:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./components/ui/Card.tsx
+17:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+Failed to compile.
+
+./app/api/ai/analyze-roof/route.ts:58:5
+Type error: Type 'unknown' is not assignable to type 'AnalysisResult'.
+
+[0m [90m 56 |[39m     [36mif[39m ([33m![39mmatch) [36mthrow[39m [36mnew[39m [33mError[39m([32m'no json'[39m)[33m;[39m[0m
+[0m [90m 57 |[39m     [36mconst[39m json [33m=[39m [33mJSON[39m[33m.[39mparse(match[[35m0[39m])[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 58 |[39m     [36mreturn[39m json[33m;[39m[0m
+[0m [90m    |[39m     [31m[1m^[22m[39m[0m
+[0m [90m 59 |[39m   } [36mcatch[39m {[0m
+[0m [90m 60 |[39m     [36mthrow[39m [36mnew[39m [33mError[39m([32m'parse failed'[39m)[33m;[39m[0m
+[0m [90m 61 |[39m   }[0m
+Next.js build worker exited with code: 1 and signal: null

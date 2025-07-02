@@ -31,7 +31,7 @@ export async function GET() {
       emailMap[u.id] = u.email ?? '';
     }
   }
-  const combined = (profiles || []).map(p => ({
+  const combined = (profiles || []).map((p: any) => ({
     user_id: p.user_id,
     full_name: p.full_name || '',
     company_name: p.company_name || '',

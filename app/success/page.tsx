@@ -21,7 +21,7 @@ export default function SuccessPage({
             Thank you for your purchase. You'll receive a confirmation email shortly.
           </p>
         </div>
-        
+
         <div className="mt-8 space-y-4">
           <Link
             href="/dashboard"
