@@ -10,6 +10,7 @@ type Msg = {
 
 // Patch for SpeechRecognition types (TS compatibility)
 type SpeechRecognition = any;
+type SpeechRecognitionEvent = any;
 
 declare global {
   interface Window {
@@ -30,6 +31,7 @@ export default function CopilotPanel({
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [recording, setRecording] = useState(false);
+  const [saved, setSaved] = useState(false);
   const recognizer = useRef<SpeechRecognition | null>(null);
 
   const { role: userRole, setRole } = useRole();
@@ -40,6 +42,14 @@ export default function CopilotPanel({
       const sid = stored || crypto.randomUUID();
       setSessionId(sid);
       localStorage.setItem('copilotSession', sid);
+      const draft = localStorage.getItem('copilotDraft');
+      if (draft) {
+        try {
+          const { messages: savedMsgs, input: savedInput } = JSON.parse(draft);
+          setMessages(savedMsgs || []);
+          setInput(savedInput || '');
+        } catch {}
+      }
     }
   }, [open]);
 
@@ -51,6 +61,17 @@ export default function CopilotPanel({
         .catch(() => {});
     }
   }, [sessionId]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      try {
+        localStorage.setItem('copilotDraft', JSON.stringify({ messages, input }));
+        setSaved(true);
+        setTimeout(() => setSaved(false), 1000);
+      } catch {}
+    }, 30000);
+    return () => clearInterval(interval);
+  }, [messages, input]);
 
   if (!open) return null;
 
@@ -77,6 +98,8 @@ export default function CopilotPanel({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: msg, sessionId }),
+      }).catch(() => {
+        throw new Error('network');
       });
 
       const sid = res.headers.get('x-session-id');
@@ -97,6 +120,9 @@ export default function CopilotPanel({
           appendAssistant(acc);
         }
       }
+    } catch (error) {
+      console.error('Message send failed', error);
+      appendAssistant('Network error, please try again.');
     } finally {
       setLoading(false);
     }
@@ -111,8 +137,13 @@ export default function CopilotPanel({
     recognizer.current.lang = 'en-US';
     recognizer.current.interimResults = false;
     recognizer.current.onresult = (e: unknown) => {
-      const t = e.results[0][0].transcript;
-      setInput(t);
+      try {
+        const event = e as SpeechRecognitionEvent;
+        const t = event.results[0][0].transcript;
+        setInput(t);
+      } catch (error) {
+        console.error('Speech recognition error', error);
+      }
     };
     recognizer.current.onend = () => setRecording(false);
     recognizer.current.start();
@@ -194,6 +225,7 @@ export default function CopilotPanel({
         >
           {loading ? '...' : 'Send'}
         </button>
+        {saved && <span className="text-xs text-gray-400 ml-2">message saved</span>}
       </div>
     </motion.aside>
   );
