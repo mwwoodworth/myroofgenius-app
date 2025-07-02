@@ -11,6 +11,7 @@ export default function Dashboard3D() {
           {/* Placeholder 3D scene */}
           <mesh rotation={[0.4, 0.2, 0]}>
             <boxGeometry args={[2, 2, 2]} />
+            {/* @ts-ignore */}
             <meshStandardMaterial color="#5E5CE6" />
           </mesh>
           <ambientLight intensity={0.5} />

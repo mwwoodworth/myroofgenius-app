@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
+import { createServerSupabaseClient, getUser } from '@/lib/supabase-auth-helpers';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -14,24 +14,18 @@ import {
 export const dynamic = 'force-dynamic';
 
 async function getDashboardData() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) {
-    redirect('/');
-  }
-  const supabase = createClient(url, key);
-
-  // Check authentication
-  const { data: { user } } = await supabase.auth.getUser();
+  const user = await getUser();
   if (!user) {
     redirect('/login');
   }
+
+  const supabase = createServerSupabaseClient();
 
   // Get user profile
   const { data: profile } = await supabase
     .from('user_profiles')
     .select('*')
-    .eq('user_id', user.id)
+    .eq('id', user.id)
     .single();
 
   // Get orders with product details

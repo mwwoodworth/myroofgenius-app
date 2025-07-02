@@ -198,3 +198,4 @@ export default function CopilotPanel({
     </motion.aside>
   );
 }
+export const RoleSwitcher = () => null;
