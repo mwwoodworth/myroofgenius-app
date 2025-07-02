@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { chatStream, ChatMessage } from '../../lib/llm';
+import { logCopilotInteraction } from '../../../src/services/copilotLogger';
 
 const sessions: Record<string, ChatMessage[]> = {};
 
 export async function POST(req: NextRequest) {
-  const { message, sessionId } = await req.json();
+  const { message, sessionId, userId } = await req.json();
   if (!message) {
     return NextResponse.json({ error: 'Message is required' }, { status: 400 });
   }
@@ -12,6 +13,13 @@ export async function POST(req: NextRequest) {
   const sid = sessionId || crypto.randomUUID();
   sessions[sid] = sessions[sid] || [];
   sessions[sid].push({ role: 'user', content: message });
+  // Fire and forget logging of the user message
+  logCopilotInteraction({
+    session_id: sid,
+    user_id: userId,
+    role: 'user',
+    message,
+  }).catch(() => {});
 
   let responseText = '';
   const encoder = new TextEncoder();
@@ -23,6 +31,13 @@ export async function POST(req: NextRequest) {
       });
       controller.close();
       sessions[sid].push({ role: 'assistant', content: responseText });
+      // Log assistant response
+      logCopilotInteraction({
+        session_id: sid,
+        user_id: userId,
+        role: 'assistant',
+        message: responseText,
+      }).catch(() => {});
     }
   });
 
