@@ -11,6 +11,7 @@ export default function EstimatorAR() {
           {/* Placeholder plane representing roof model */}
           <mesh rotation={[-0.5, 0.2, 0]}>
             <planeGeometry args={[3, 3]} />
+            {/* @ts-ignore */}
             <meshStandardMaterial color="orange" />
           </mesh>
           <ambientLight intensity={0.5} />

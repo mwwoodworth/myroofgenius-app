@@ -1,7 +1,7 @@
 'use client';
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 
-type Role = 'pm' | 'exec' | 'field'
+export type Role = 'pm' | 'exec' | 'field'
 interface RoleCtx {
   role: Role
   setRole: (r: Role) => void

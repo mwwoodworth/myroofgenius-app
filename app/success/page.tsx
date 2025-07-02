@@ -1,70 +1,40 @@
-'use client';
-export const dynamic = 'force-dynamic';
+import Link from 'next/link';
 
-import { useState, useEffect } from 'react';
-
-export default function Success() {
-  const [downloads, setDownloads] = useState<Array<{ file_name: string, download_url: string }>>([]);
-  const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const sessionId = params.get('session_id');
-    async function fetchDownloads() {
-      if (!sessionId) {
-        setMessage('No order session found.');
-        setLoading(false);
-        return;
-      }
-      try {
-        const res = await fetch(`/api/order/${sessionId}`);
-        if (!res.ok) {
-          setMessage('Your order is confirmed. Please check your email for the download links.');
-        } else {
-          const data = await res.json();
-          setDownloads(data.downloads || []);
-        }
-      } catch (error) {
-        console.error('Failed to fetch downloads:', error);
-        setMessage('An error occurred retrieving your downloads. Please check your email for the files.');
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchDownloads();
-  }, []);
-
+export default function SuccessPage({
+  searchParams,
+}: {
+  searchParams: { session_id?: string };
+}) {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="text-center max-w-md">
-        <h1 className="text-3xl font-bold mb-4">Order Confirmed</h1>
-        <p className="text-lg text-gray-700 mb-6">Download Your Files</p>
-
-        {loading ? (
-          <p className="text-gray-600">Retrieving your files...</p>
-        ) : (
-          <>
-            {downloads.length > 0 ? (
-              <div className="space-y-4">
-                {downloads.map((file, idx) => (
-                  <div key={idx}>
-                    <a href={file.download_url} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
-                      {file.file_name || `File ${idx + 1}`}
-                    </a>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-600">{message}</p>
-            )}
-          </>
-        )}
-
-        <div className="mt-8">
-          <a href="/dashboard" className="text-blue-600 hover:underline">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
+        <div className="text-center">
+          <div className="mx-auto h-12 w-12 text-green-500">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+            Payment Successful!
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Thank you for your purchase. You'll receive a confirmation email shortly.
+          </p>
+        </div>
+        
+        <div className="mt-8 space-y-4">
+          <Link
+            href="/dashboard"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+          >
             Go to Dashboard
-          </a>
+          </Link>
+          <Link
+            href="/products"
+            className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+          >
+            Browse More Products
+          </Link>
         </div>
       </div>
     </div>

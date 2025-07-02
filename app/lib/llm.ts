@@ -25,7 +25,7 @@ export async function chatStream(
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'gpt-4o',
+      model: 'gpt-4',
       messages,
       stream: true,
     }),
@@ -63,7 +63,7 @@ async function callOpenAI(messages: ChatMessage[]): Promise<string> {
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'gpt-4o',
+      model: 'gpt-4',
       messages,
       max_tokens: 400,
     }),

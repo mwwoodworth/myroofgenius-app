@@ -1,91 +1,86 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { headers } from 'next/headers';
+import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
-import * as Sentry from '@sentry/nextjs';
 
-const stripeKey = process.env.STRIPE_SECRET_KEY;
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2023-10-16',
+});
 
-// Properly error out at runtime if secrets are missing.
-if (!stripeKey) throw new Error('Stripe secret key is not configured');
-if (!endpointSecret) throw new Error('Stripe webhook secret is not configured');
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
-const stripe = new Stripe(stripeKey, { apiVersion: '2023-10-16' });
+// Create service role client for webhook
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
-export async function POST(request: NextRequest) {
-  const payload = await request.text();
-  const signature = request.headers.get('stripe-signature') || '';
-
-  // Ensure endpointSecret is a string
-  if (!endpointSecret) {
-    console.error('Missing Stripe webhook secret in environment variables');
-    return NextResponse.json({ error: 'Missing Stripe webhook secret' }, { status: 500 });
-  }
+export async function POST(req: Request) {
+  const body = await req.text();
+  const sig = headers().get('stripe-signature')!;
 
   let event: Stripe.Event;
-  try {
-    event = stripe.webhooks.constructEvent(payload, signature, endpointSecret);
-  } catch (err) {
-    Sentry.captureException(err);
-    return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
-  }
-
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) {
-    return NextResponse.json({ error: 'supabase not configured' }, { status: 500 });
-  }
-  const supabase = createClient(url, key);
 
   try {
-    switch (event.type) {
-      case 'checkout.session.completed': {
-        const session = event.data.object as Stripe.Checkout.Session;
-        const { data: existing } = await supabase
-          .from('orders')
-          .select('id')
-          .eq('stripe_session_id', session.id)
-          .single();
+    event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
+  } catch (err: any) {
+    console.error(`Webhook error: ${err.message}`);
+    return NextResponse.json(
+      { error: `Webhook Error: ${err.message}` },
+      { status: 400 }
+    );
+  }
 
-        if (!existing) {
-          await supabase.from('orders').insert({
-            user_id: session.metadata?.user_id || null,
-            product_id: session.metadata?.product_id,
-            stripe_session_id: session.id,
-            amount: session.amount_total ? session.amount_total / 100 : null,
-            status: 'paid'
-          });
-        }
-        break;
+  // Handle the checkout.session.completed event
+  if (event.type === 'checkout.session.completed') {
+    const session = event.data.object as Stripe.Checkout.Session;
+    
+    try {
+      // Update order status
+      const { error: updateError } = await supabase
+        .from('orders')
+        .update({ 
+          status: 'completed',
+          stripe_session_id: session.id,
+          payment_intent: session.payment_intent as string,
+        })
+        .eq('id', session.metadata?.order_id);
+
+      if (updateError) {
+        console.error('Order update failed:', updateError);
+        throw updateError;
       }
-      case 'payment_intent.succeeded': {
-        const intent = event.data.object as Stripe.PaymentIntent;
-        await supabase
-          .from('orders')
-          .update({ status: 'completed' })
-          .eq('stripe_session_id', intent.metadata?.session_id || '');
-        break;
+
+      // Create download record
+      const downloadToken = crypto.randomUUID();
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 7);
+
+      const { error: downloadError } = await supabase
+        .from('downloads')
+        .insert({
+          user_id: session.metadata?.user_id,
+          order_id: session.metadata?.order_id,
+          product_id: session.metadata?.product_id,
+          token: downloadToken,
+          expires_at: expiresAt.toISOString(),
+        });
+
+      if (downloadError) {
+        console.error('Download creation failed:', downloadError);
       }
-      case 'payment_intent.payment_failed': {
-        const intent = event.data.object as Stripe.PaymentIntent;
-        await supabase
-          .from('orders')
-          .update({ status: 'failed' })
-          .eq('stripe_session_id', intent.metadata?.session_id || '');
-        break;
-      }
-      case 'customer.subscription.created':
-      case 'customer.subscription.deleted': {
-        // Add custom logic for subscription events if needed
-        break;
-      }
-      default:
-        break;
+
+      // TODO: Send confirmation email
+      console.log('Order completed:', session.metadata?.order_id);
+      
+    } catch (error) {
+      console.error('Webhook processing error:', error);
+      return NextResponse.json(
+        { error: 'Failed to process webhook' },
+        { status: 500 }
+      );
     }
-
-    return NextResponse.json({ received: true });
-  } catch (err) {
-    Sentry.captureException(err);
-    return NextResponse.json({ error: 'Webhook handler error' }, { status: 500 });
   }
+
+  return NextResponse.json({ received: true });
 }
