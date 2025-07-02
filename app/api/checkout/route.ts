@@ -49,7 +49,11 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ url: session.url });
   } catch (error: unknown) {
-    const msg = error instanceof Error ? error.message : 'Unknown error';
-    return NextResponse.json({ error: `Checkout failed: ${msg}` }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Operation failed';
+    console.error(`[Checkout] session creation failed: ${message}`);
+    return NextResponse.json(
+      { error: 'Unable to complete request. Please refresh and try again.' },
+      { status: 500 }
+    );
   }
 }
