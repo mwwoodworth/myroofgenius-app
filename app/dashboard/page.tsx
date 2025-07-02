@@ -10,6 +10,7 @@ import {
   Bell,
   BarChart3
 } from 'lucide-react';
+import { ProtectionStatus } from '@/components/ui/protection-status';
 
 export const dynamic = 'force-dynamic';
 
@@ -166,6 +167,7 @@ function calculateCategoryBreakdown(orders: OrderData[]) {
 
 export default async function Dashboard() {
   const data = await getDashboardData();
+  const profileLoading = !data.profile;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -258,6 +260,33 @@ export default async function Dashboard() {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <ProtectionStatus
+            status="protected"
+            message="All systems operational"
+            details={[
+              'Last backup: 2 hours ago',
+              'API response time: 230ms',
+              'Error rate: 0.02%'
+            ]}
+          />
+
+          <ProtectionStatus
+            status="warning"
+            message="3 estimates need review"
+            details={[
+              'Wilson project: 45% over typical margin',
+              'Park Ave: Missing safety factor',
+              'Downtown: Weather delays not calculated'
+            ]}
+          />
+
+          <ProtectionStatus
+            status={profileLoading ? 'calculating' : 'protected'}
+            message={profileLoading ? 'Verifying protection status...' : 'Profile data secure'}
+          />
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">

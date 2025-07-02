@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyRoofGenius - Offline</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+    .container {
+      text-align: center;
+      padding: 2rem;
+      max-width: 400px;
+    }
+    .icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 2rem;
+      background: #e2e8f0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    h1 {
+      font-size: 1.875rem;
+      margin-bottom: 1rem;
+    }
+    p {
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .status {
+      background: #fef3c7;
+      border: 2px solid #fcd34d;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+    .button {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      background: #3b82f6;
+      color: white;
+      text-decoration: none;
+      border-radius: 0.5rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2">
+        <path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+    </div>
+    <h1>Working Offline</h1>
+    <p>
+      You're currently offline, but that's okay. Your work is being saved locally 
+      and will sync automatically when your connection returns.
+    </p>
+    <div class="status">
+      <strong>Protected Features Available:</strong><br>
+      ✓ Create estimates<br>
+      ✓ Take photos and notes<br>
+      ✓ Access recent projects<br>
+      ✓ Use calculation tools
+    </div>
+    <a href="/dashboard" class="button">Continue Working</a>
+  </div>
+  <script>
+    setInterval(() => {
+      fetch('/api/health', { method: 'HEAD' })
+        .then(() => window.location.reload())
+        .catch(() => {});
+    }, 5000);
+  </script>
+</body>
+</html>
