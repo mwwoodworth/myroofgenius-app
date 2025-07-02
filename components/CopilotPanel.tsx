@@ -13,8 +13,8 @@ type SpeechRecognition = any;
 
 declare global {
   interface Window {
-    SpeechRecognition: any;
-    webkitSpeechRecognition: any;
+    SpeechRecognition: unknown;
+    webkitSpeechRecognition: unknown;
   }
 }
 
@@ -110,7 +110,7 @@ export default function CopilotPanel({
     recognizer.current = new Rec();
     recognizer.current.lang = 'en-US';
     recognizer.current.interimResults = false;
-    recognizer.current.onresult = (e: any) => {
+    recognizer.current.onresult = (e: unknown) => {
       const t = e.results[0][0].transcript;
       setInput(t);
     };

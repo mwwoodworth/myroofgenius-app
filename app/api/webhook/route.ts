@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
   try {
     event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error(`Webhook error: ${err.message}`);
     return NextResponse.json(
       { error: `Webhook Error: ${err.message}` },
@@ -34,12 +34,12 @@ export async function POST(req: Request) {
   // Handle the checkout.session.completed event
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
-    
+
     try {
       // Update order status
       const { error: updateError } = await supabase
         .from('orders')
-        .update({ 
+        .update({
           status: 'completed',
           stripe_session_id: session.id,
           payment_intent: session.payment_intent as string,
@@ -72,7 +72,7 @@ export async function POST(req: Request) {
 
       // TODO: Send confirmation email
       console.log('Order completed:', session.metadata?.order_id);
-      
+
     } catch (error) {
       console.error('Webhook processing error:', error);
       return NextResponse.json(
