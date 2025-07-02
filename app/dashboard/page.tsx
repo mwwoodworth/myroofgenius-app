@@ -21,57 +21,57 @@ async function getDashboardData() {
 
   const supabase = createServerSupabaseClient();
 
-  // Get user profile
-  const { data: profile } = await supabase
-    .from('user_profiles')
-    .select('*')
-    .eq('id', user.id)
-    .single();
+  const [profileRes, ordersRes, downloadsRes, analysesRes, ticketsRes] =
+    await Promise.allSettled([
+      supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single(),
+      supabase
+        .from('orders')
+        .select(`
+          *,
+          products (
+            name,
+            price,
+            category
+          )
+        `)
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(10),
+      supabase
+        .from('downloads')
+        .select(`
+          *,
+          product_files (
+            file_name,
+            product_id
+          )
+        `)
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(10),
+      supabase
+        .from('roof_analyses')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(5),
+      supabase
+        .from('support_tickets')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(5),
+    ]);
 
-  // Get orders with product details
-  const { data: orders } = await supabase
-    .from('orders')
-    .select(`
-      *,
-      products (
-        name,
-        price,
-        category
-      )
-    `)
-    .eq('user_id', user.id)
-    .order('created_at', { ascending: false })
-    .limit(10);
-
-  // Get download history
-  const { data: downloads } = await supabase
-    .from('downloads')
-    .select(`
-      *,
-      product_files (
-        file_name,
-        product_id
-      )
-    `)
-    .eq('user_id', user.id)
-    .order('created_at', { ascending: false })
-    .limit(10);
-
-  // Get AI analyses
-  const { data: analyses } = await supabase
-    .from('roof_analyses')
-    .select('*')
-    .eq('user_id', user.id)
-    .order('created_at', { ascending: false })
-    .limit(5);
-
-  // Get support tickets
-  const { data: tickets } = await supabase
-    .from('support_tickets')
-    .select('*')
-    .eq('user_id', user.id)
-    .order('created_at', { ascending: false })
-    .limit(5);
+  const profile = profileRes.status === 'fulfilled' ? profileRes.value.data : null;
+  const orders = ordersRes.status === 'fulfilled' ? ordersRes.value.data : null;
+  const downloads = downloadsRes.status === 'fulfilled' ? downloadsRes.value.data : null;
+  const analyses = analysesRes.status === 'fulfilled' ? analysesRes.value.data : null;
+  const tickets = ticketsRes.status === 'fulfilled' ? ticketsRes.value.data : null;
 
   // Calculate analytics
   const totalSpent = orders?.reduce((sum, order) => sum + (order.amount || 0), 0) || 0;

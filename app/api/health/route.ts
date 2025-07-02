@@ -3,20 +3,11 @@ import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
 
 export async function GET() {
-  const checks: {
-    status: string;
-    timestamp: string;
-    services: Record<string, string>;
-  } = {
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    services: {
-      database: 'unknown',
-      storage: 'unknown',
-      stripe: 'unknown',
-      openai: 'unknown',
-      email: 'unknown'
-    }
+  const checks: Record<string, boolean> = {
+    database: false,
+    stripe: false,
+    email: false,
+    ai: false
   };
 
   try {
@@ -28,36 +19,27 @@ export async function GET() {
     const supabaseAdmin = createClient(url, key);
 
     const { error: dbError } = await supabaseAdmin.from('products').select('id').limit(1);
-    checks.services.database = dbError ? 'unhealthy' : 'healthy';
+    checks.database = !dbError;
 
     const { error: storageError } = await supabaseAdmin.storage.from('product-files').list('', { limit: 1 });
-    checks.services.storage = storageError ? 'unhealthy' : 'healthy';
+    checks.database &&= !storageError;
 
     if (process.env.STRIPE_SECRET_KEY) {
       try {
         const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: '2023-10-16' });
         await stripe.balance.retrieve();
-        checks.services.stripe = 'healthy';
+        checks.stripe = true;
       } catch {
-        checks.services.stripe = 'unhealthy';
+        checks.stripe = false;
       }
     }
 
-    if (process.env.OPENAI_API_KEY) {
-      checks.services.openai = 'healthy';
-    }
-    if (process.env.RESEND_API_KEY) {
-      checks.services.email = 'healthy';
-    }
+    checks.email = !!process.env.RESEND_API_KEY;
+    checks.ai = !!process.env.OPENAI_API_KEY;
 
-    const anyUnhealthy = Object.values(checks.services).includes('unhealthy');
-    if (anyUnhealthy) {
-      checks.status = 'degraded';
-    }
-
-    return NextResponse.json(checks);
+    const allOk = Object.values(checks).every(Boolean);
+    return NextResponse.json({ checks, ok: allOk }, { status: allOk ? 200 : 503 });
   } catch {
-    checks.status = 'unhealthy';
-    return NextResponse.json(checks, { status: 500 });
+    return NextResponse.json({ checks, ok: false }, { status: 503 });
   }
 }

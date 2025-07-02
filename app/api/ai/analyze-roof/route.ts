@@ -54,9 +54,9 @@ async function analyzeWithLLM(file: File): Promise<AnalysisResult> {
   try {
     const match = text.match(/\{[\s\S]*\}/);
     if (!match) throw new Error('no json');
-    const json = JSON.parse(match[0]);
+    const json = JSON.parse(match[0]) as AnalysisResult;
     return json;
-  } catch {
+  } catch (error: unknown) {
     throw new Error('parse failed');
   }
 }
@@ -71,7 +71,7 @@ async function analyze(file: File): Promise<AnalysisResult> {
         body: formData,
       });
       if (res.ok) return res.json();
-    } catch {
+    } catch (error: unknown) {
       // ignore edge inference errors
     }
   }
@@ -79,7 +79,7 @@ async function analyze(file: File): Promise<AnalysisResult> {
 }
 
 export async function POST(request: NextRequest) {
-  const formData = await request.formData();
+  const formData = await request.formData() as FormData;
   let file = formData.get('file') as File | null;
   const address = formData.get('address') as string | null;
 
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
   if (address && !file) {
     try {
       file = await fetchSatelliteImage(address);
-    } catch {
+    } catch (error: unknown) {
       return NextResponse.json(
         { error: 'address lookup failed' },
         { status: 500 }
@@ -108,7 +108,7 @@ export async function POST(request: NextRequest) {
   try {
     const result = await analyze(file);
     return NextResponse.json(result);
-  } catch {
+  } catch (error: unknown) {
     return NextResponse.json({ error: 'analysis failed' }, { status: 500 });
   }
 }
