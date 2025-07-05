@@ -2,15 +2,28 @@
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useRole } from './ui';
+import type { Role } from './ui/RoleProvider';
 
 type Msg = {
   role: 'user' | 'assistant';
   content: string;
 };
 
-// Patch for SpeechRecognition types (TS compatibility)
-type SpeechRecognition = any;
-type SpeechRecognitionEvent = any;
+// Minimal SpeechRecognition types
+interface SpeechRecognitionEvent {
+  results: {
+    [index: number]: {
+      [index: number]: { transcript: string };
+    };
+  };
+}
+interface SpeechRecognition {
+  lang: string;
+  interimResults: boolean;
+  onresult: (e: SpeechRecognitionEvent) => void;
+  onend: () => void;
+  start: () => void;
+}
 
 declare global {
   interface Window {
@@ -146,8 +159,14 @@ export default function CopilotPanel({
 
   const startVoice = () => {
     const Rec =
-      (window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition;
+      (window as unknown as {
+        SpeechRecognition?: new () => SpeechRecognition;
+        webkitSpeechRecognition?: new () => SpeechRecognition;
+      }).SpeechRecognition ||
+      (window as unknown as {
+        SpeechRecognition?: new () => SpeechRecognition;
+        webkitSpeechRecognition?: new () => SpeechRecognition;
+      }).webkitSpeechRecognition;
     if (!Rec) return;
     recognizer.current = new Rec();
     recognizer.current.lang = 'en-US';
@@ -189,7 +208,7 @@ export default function CopilotPanel({
       <select
         className="mb-4 w-full rounded-md bg-bg-card border border-gray-700 p-2 text-sm"
         value={userRole}
-        onChange={(e) => setRole(e.target.value as any)}
+        onChange={(e) => setRole(e.target.value as Role)}
       >
         <option value="field">Field</option>
         <option value="pm">Project Manager</option>

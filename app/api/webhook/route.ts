@@ -4,9 +4,15 @@ import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-10-16',
-});
+let stripe: Stripe | null = null;
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) return null;
+  if (!stripe) {
+    stripe = new Stripe(key, { apiVersion: '2023-10-16' });
+  }
+  return stripe;
+}
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
@@ -25,21 +31,35 @@ async function withRetry<T>(fn: () => Promise<T>, attempts = 3): Promise<T> {
 }
 
 // Create service role client for webhook
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
+let supabase: ReturnType<typeof createClient> | null = null;
+function getSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return null;
+  if (!supabase) {
+    supabase = createClient(url, key);
+  }
+  return supabase;
+}
 export async function POST(req: Request) {
+  const supabase = getSupabase();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Server not configured' }, { status: 500 });
+  }
   const body = await req.text();
   const sig = headers().get('stripe-signature')!;
   const idempotencyKey = headers().get('idempotency-key');
   const correlationId = crypto.randomUUID();
 
+  const stripeClient = getStripe();
+  if (!stripeClient) {
+    return NextResponse.json({ error: 'Server not configured' }, { status: 500 });
+  }
+
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
+    event = stripeClient.webhooks.constructEvent(body, sig, endpointSecret);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     console.error(`Webhook error: ${message}`);
@@ -90,7 +110,7 @@ export async function POST(req: Request) {
       const { data: order } = await supabase
         .from('orders')
         .select('status')
-        .eq('id', session.metadata?.order_id)
+        .eq('id', session.metadata?.order_id || '')
         .single();
       if (order?.status === 'completed') {
         console.log('Order already completed');
@@ -110,7 +130,7 @@ export async function POST(req: Request) {
             stripe_session_id: session.id,
             payment_intent: session.payment_intent as string,
           })
-          .eq('id', session.metadata?.order_id)
+        .eq('id', session.metadata?.order_id || '')
           .throwOnError()
       )) as any;
 
@@ -138,7 +158,7 @@ export async function POST(req: Request) {
           supabase
             .from('orders')
             .update({ status: 'pending' })
-            .eq('id', session.metadata?.order_id)
+            .eq('id', session.metadata?.order_id || '')
             .throwOnError()
         );
         console.error('Download creation failed:', downloadError);

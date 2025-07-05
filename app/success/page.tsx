@@ -1,10 +1,6 @@
 import Link from 'next/link';
 
-export default function SuccessPage({
-  searchParams,
-}: {
-  searchParams: { session_id?: string };
-}) {
+export default function SuccessPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
