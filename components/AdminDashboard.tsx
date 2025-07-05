@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useLocale } from '../src/context/LocaleContext';
 import { useRouter } from 'next/navigation';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { Modal, useToast } from './ui';
 
 async function checkAdminAccess() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -302,6 +303,7 @@ function ProductsTab() {
 }
 
 function AddProductModal({ onClose }: { onClose: () => void }) {
+  const toast = useToast();
   const [formData, setFormData] = useState({ name: '', description: '', price: '', category: 'estimation', features: '', image_url: '' });
 
   async function handleSubmit(e: React.FormEvent) {
@@ -312,15 +314,17 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
       body: JSON.stringify(formData)
     });
     if (res.ok) {
+      toast('Product added', 'success');
       onClose();
+    } else {
+      toast('Failed to add product', 'error');
     }
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg max-w-lg w-full p-6">
-        <h3 className="text-xl font-semibold mb-4">Add New Product</h3>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <Modal open onClose={onClose}>
+      <h3 className="text-xl font-semibold mb-4">Add New Product</h3>
+      <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">Product Name</label>
             <input type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full px-3 py-2 border rounded-lg" required />
@@ -360,8 +364,7 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
             <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Add Product</button>
           </div>
         </form>
-      </div>
-    </div>
+    </Modal>
   );
 }
 

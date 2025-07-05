@@ -1,6 +1,6 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider } from '../components/ui';
+import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider, ToastProvider } from '../components/ui';
 import type { ReactNode } from 'react';
 import { AuthProvider } from '../src/context/AuthContext';
 import { LocaleProvider } from '../src/context/LocaleContext';
@@ -51,6 +51,7 @@ export default function RootLayout({
           <AuthProvider>
           <RoleProvider>
             <ThemeProvider>
+              <ToastProvider>
               {arModeEnabled ? (
                 <ARModeProvider>
                   <Navbar />
@@ -72,6 +73,7 @@ export default function RootLayout({
                   {aiCopilotEnabled && <CopilotWrapper />}
                 </>
               )}
+              </ToastProvider>
             </ThemeProvider>
           </RoleProvider>
           </AuthProvider>
