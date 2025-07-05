@@ -73,10 +73,10 @@ export default function AdminDashboard() {
     }
   }
 
+  const { messages } = useLocale();
+
   if (loading) return <div className="p-4">Loading...</div>;
   if (!isAdmin) return <div className="p-4">Access Denied</div>;
-
-  const { messages } = useLocale();
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white shadow">

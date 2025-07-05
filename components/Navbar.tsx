@@ -5,7 +5,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import type { User } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { ThemeToggle } from './ui';
+import { ThemeToggle, AccentColorPicker } from './ui';
 import LanguageSwitcher from './LanguageSwitcher';
 import CurrencySwitcher from './CurrencySwitcher';
 
@@ -60,6 +60,7 @@ export default function Navbar() {
           <LanguageSwitcher />
           <CurrencySwitcher />
           <ThemeToggle />
+          <AccentColorPicker />
           {user ? (
             <>
               {user.user_metadata?.role === 'admin' && (
@@ -157,6 +158,7 @@ export default function Navbar() {
               <LanguageSwitcher />
               <CurrencySwitcher />
               <ThemeToggle />
+              <AccentColorPicker />
             </div>
           </motion.div>
         )}

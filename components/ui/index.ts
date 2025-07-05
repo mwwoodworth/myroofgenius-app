@@ -7,3 +7,4 @@ export { default as RoleSwitcher } from './RoleSwitcher';
 export { default as HotActions } from '../HotActions';
 export { ARModeProvider, useARMode } from './ARModeProvider';
 export { default as ARModeToggle } from './ARModeToggle';
+export { default as AccentColorPicker } from './AccentColorPicker';

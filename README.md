@@ -22,6 +22,9 @@ npm test
 npm run build
 ```
 
+### Theme Accent
+Pick a custom accent color from the Navbar color picker. Your choice is persisted in localStorage.
+
 ## 📁 Project Structure
 
 ```
