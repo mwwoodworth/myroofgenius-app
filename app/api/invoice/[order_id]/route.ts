@@ -34,7 +34,7 @@ export async function GET(
   drawText('Invoice', height - 50);
   drawText(`Order: ${order.id}`, height - 80);
   drawText(`Date: ${new Date(order.created_at).toLocaleDateString()}`, height - 100);
-  drawText(`Product: ${order.products?.name ?? ''}`, height - 120);
+  drawText(`Product: ${order.products ? order.products[0]?.name : ''}`, height - 120);
   drawText(`Amount: $${order.amount.toFixed(2)}`, height - 140);
   if (order.license_keys && order.license_keys.length) {
     drawText('License Keys:', height - 170);
