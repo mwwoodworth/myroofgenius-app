@@ -8,7 +8,8 @@ import {
   Download,
   FileText,
   Bell,
-  BarChart3
+  BarChart3,
+  Key
 } from 'lucide-react';
 import { ProtectionStatus } from '@/components/ui/protection-status';
 
@@ -42,7 +43,7 @@ async function getDashboardData() {
 
   const profilePromise = fetchProfile(supabase, user.id);
 
-  const [ordersRes, downloadsRes, analysesRes, ticketsRes, favoritesRes] =
+  const [ordersRes, downloadsRes, analysesRes, ticketsRes, favoritesRes, licenseRes] =
     await Promise.allSettled([
       supabase
         .from('orders')
@@ -87,6 +88,12 @@ async function getDashboardData() {
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(10),
+      supabase
+        .from('license_keys')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(10),
     ]);
   const profile = await profilePromise;
   const orders = ordersRes.status === 'fulfilled' ? ordersRes.value.data : null;
@@ -94,6 +101,7 @@ async function getDashboardData() {
   const analyses = analysesRes.status === 'fulfilled' ? analysesRes.value.data : null;
   const tickets = ticketsRes.status === 'fulfilled' ? ticketsRes.value.data : null;
   const favorites = favoritesRes.status === 'fulfilled' ? favoritesRes.value.data : null;
+  const licenses = licenseRes.status === 'fulfilled' ? licenseRes.value.data : null;
 
   // Calculate analytics
   const totalSpent = orders?.reduce((sum, order) => sum + (order.amount || 0), 0) || 0;
@@ -114,6 +122,7 @@ async function getDashboardData() {
     analyses: analyses || [],
     tickets: tickets || [],
     favorites: favorites || [],
+    licenses: licenses || [],
     stats: {
       totalSpent,
       totalOrders: orders?.length || 0,
@@ -385,33 +394,54 @@ export default async function Dashboard() {
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Recent Downloads */}
-            <div className="bg-white rounded-lg shadow">
-              <div className="p-6 border-b">
-                <h2 className="text-xl font-semibold">Recent Downloads</h2>
-              </div>
-              <div className="p-6">
-                {data.downloads.length === 0 ? (
-                  <p className="text-gray-600 text-sm">No downloads yet</p>
-                ) : (
-                  <div className="space-y-3">
-                    {data.downloads.slice(0, 5).map((download) => (
-                      <div key={download.id} className="flex items-center gap-3">
-                        <Download className="w-4 h-4 text-gray-400" />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium truncate">
-                            {download.product_files?.file_name}
-                          </p>
-                          <p className="text-xs text-gray-500">
-                            {new Date(download.created_at).toLocaleDateString()}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+          {/* Recent Downloads */}
+          <div className="bg-white rounded-lg shadow">
+            <div className="p-6 border-b">
+              <h2 className="text-xl font-semibold">Recent Downloads</h2>
             </div>
+            <div className="p-6">
+              {data.downloads.length === 0 ? (
+                <p className="text-gray-600 text-sm">No downloads yet</p>
+              ) : (
+                <div className="space-y-3">
+                  {data.downloads.slice(0, 5).map((download) => (
+                    <div key={download.id} className="flex items-center gap-3">
+                      <Download className="w-4 h-4 text-gray-400" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate">
+                          {download.product_files?.file_name}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {new Date(download.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* License Keys */}
+          <div className="bg-white rounded-lg shadow">
+            <div className="p-6 border-b">
+              <h2 className="text-xl font-semibold">License Keys</h2>
+            </div>
+            <div className="p-6">
+              {data.licenses.length === 0 ? (
+                <p className="text-gray-600 text-sm">No licenses issued</p>
+              ) : (
+                <div className="space-y-2">
+                  {data.licenses.map((lic: any) => (
+                    <div key={lic.id} className="flex items-center gap-2 text-sm">
+                      <Key className="w-4 h-4 text-gray-400" />
+                      <span className="font-mono break-all">{lic.license_key}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
 
             {/* Recent AI Analyses */}
             <div className="bg-white rounded-lg shadow">

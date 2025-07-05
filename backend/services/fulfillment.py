@@ -55,6 +55,20 @@ class FulfillmentService:
                 "file_name": file["file_name"],
                 "download_url": f"{os.getenv('NEXT_PUBLIC_SITE_URL')}/api/download/{token}"
             })
+
+        # Generate license keys if required
+        license_keys: List[str] = []
+        if product.get("requires_license"):
+            qty = int(product.get("license_quantity", 1) or 1)
+            for _ in range(qty):
+                key = str(uuid.uuid4())
+                self.supabase.table("license_keys").insert({
+                    "user_id": order["user_id"],
+                    "order_id": order["id"],
+                    "product_id": product["id"],
+                    "license_key": key
+                }).execute()
+                license_keys.append(key)
         
         # 4. Update order status
         self.supabase.table("orders").update({
@@ -63,7 +77,7 @@ class FulfillmentService:
         }).eq("id", order["id"]).execute()
         
         # 5. Send email
-        await self._send_order_email(order, product, download_links)
+        await self._send_order_email(order, product, download_links, license_keys)
         
         # 6. Track analytics
         self._track_event("order_fulfilled", {
@@ -75,11 +89,18 @@ class FulfillmentService:
         return {
             "order_id": order["id"],
             "download_links": download_links,
+            "license_keys": license_keys,
             "email_sent": True
         }
     
-    async def _send_order_email(self, order: Dict, product: Dict, download_links: List[Dict]):
-        """Send order confirmation email with download links"""
+    async def _send_order_email(
+        self,
+        order: Dict,
+        product: Dict,
+        download_links: List[Dict],
+        license_keys: List[str] | None = None,
+    ):
+        """Send order confirmation email with download links and license keys"""
         
         # Get email template
         template_result = self.supabase.table("email_templates").select("*").eq(
@@ -95,6 +116,15 @@ class FulfillmentService:
             links_html += f'<li><a href="{link["download_url"]}">{link["file_name"]}</a></li>'
             links_text += f'- {link["file_name"]}: {link["download_url"]}\n'
         links_html += "</ul>"
+
+        license_html = ""
+        license_text = ""
+        if license_keys:
+            license_html = "<p>Your license key(s):</p><ul>"
+            for key in license_keys:
+                license_html += f"<li>{key}</li>"
+                license_text += f"- {key}\n"
+            license_html += "</ul>"
         
         # Get user email
         if order["user_id"]:
@@ -114,6 +144,7 @@ class FulfillmentService:
             product_name=product["name"],
             amount=f"${order['amount']:.2f}"
         )
+        html_content += license_html
         
         text_content = text_template.render(
             order_number=order["id"][:8],
@@ -121,6 +152,8 @@ class FulfillmentService:
             product_name=product["name"],
             amount=f"${order['amount']:.2f}"
         )
+        if license_text:
+            text_content += "\n" + license_text
         
         # Send email via Resend
         try:

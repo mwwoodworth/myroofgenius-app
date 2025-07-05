@@ -2,6 +2,7 @@
 
 ## v1.0.0
 - Initial commit of MyRoofGenius application.
+- Added license key system and invoice download endpoint.
 
 ## Sprint 009
 - Repository cleanup scripts and dependency audit.
