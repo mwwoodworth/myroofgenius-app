@@ -1,23 +1,31 @@
-'use client';
-import { createContext, useContext, useState, ReactNode } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { CheckCircle, XCircle, Info } from 'lucide-react';
+"use client";
+import { createContext, useContext, useState, ReactNode } from "react";
+import { useConfetti } from "../../hooks/use-confetti";
+import { AnimatePresence, motion } from "framer-motion";
+import { CheckCircle, XCircle, Info } from "lucide-react";
 
-type ToastType = 'success' | 'error' | 'info';
+type ToastType = "success" | "error" | "info";
 interface Toast {
   id: number;
   type: ToastType;
   message: string;
 }
 
-const ToastCtx = createContext<{ show: (message: string, type?: ToastType) => void } | null>(null);
+const ToastCtx = createContext<{
+  show: (message: string, type?: ToastType) => void;
+} | null>(null);
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
-  const show = (message: string, type: ToastType = 'info') => {
+  const triggerConfetti = useConfetti();
+  const show = (message: string, type: ToastType = "info") => {
     const id = Date.now();
     setToasts((t) => [...t, { id, type, message }]);
-    setTimeout(() => setToasts((t) => t.filter((toast) => toast.id !== id)), 3000);
+    setTimeout(
+      () => setToasts((t) => t.filter((toast) => toast.id !== id)),
+      3000,
+    );
+    if (type === "success") triggerConfetti();
   };
   return (
     <ToastCtx.Provider value={{ show }}>
@@ -32,9 +40,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               exit={{ rotateY: 90, opacity: 0 }}
               className="flex items-center gap-2 px-4 py-2 rounded-lg glass text-white shadow-xl"
             >
-              {t.type === 'success' && <CheckCircle className="w-4 h-4 text-green-400" />}
-              {t.type === 'error' && <XCircle className="w-4 h-4 text-red-400" />}
-              {t.type === 'info' && <Info className="w-4 h-4 text-blue-400" />}
+              {t.type === "success" && (
+                <CheckCircle className="w-4 h-4 text-green-400" />
+              )}
+              {t.type === "error" && (
+                <XCircle className="w-4 h-4 text-red-400" />
+              )}
+              {t.type === "info" && <Info className="w-4 h-4 text-blue-400" />}
               <span>{t.message}</span>
             </motion.div>
           ))}
@@ -46,6 +58,6 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
 export const useToast = () => {
   const ctx = useContext(ToastCtx);
-  if (!ctx) throw new Error('useToast must be used within ToastProvider');
+  if (!ctx) throw new Error("useToast must be used within ToastProvider");
   return ctx.show;
 };
