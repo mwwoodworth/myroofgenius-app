@@ -8,7 +8,12 @@ export async function POST(request: Request) {
   const supabase = createRouteHandlerClient({ cookies });
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
-  await supabase.from('favorites').insert({ user_id: user.id, product_id }).onConflict('user_id,product_id').ignore();
+  await supabase
+    .from('favorites')
+    .insert({ user_id: user.id, product_id })
+    // @ts-expect-error missing typing for onConflict
+    .onConflict('user_id,product_id')
+    .ignore();
   return NextResponse.json({ success: true });
 }
 

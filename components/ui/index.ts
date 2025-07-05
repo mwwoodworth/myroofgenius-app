@@ -8,3 +8,5 @@ export { default as HotActions } from '../HotActions';
 export { ARModeProvider, useARMode } from './ARModeProvider';
 export { default as ARModeToggle } from './ARModeToggle';
 export { default as AccentColorPicker } from './AccentColorPicker';
+export { default as AnimatedGradient } from './AnimatedGradient';
+export { default as Hero3D } from './Hero3D';
