@@ -1,9 +1,8 @@
 'use client';
-import { motion } from 'framer-motion';
+import { motion, type HTMLMotionProps } from 'framer-motion';
 import clsx from 'clsx';
-import type { ButtonHTMLAttributes } from 'react';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends HTMLMotionProps<'button'> {
   variant?: 'primary' | 'secondary'
   size?: 'sm' | 'md' | 'lg'
 }
@@ -25,7 +24,7 @@ export default function Button({ variant = 'primary', size = 'md', className, ..
       whileHover={{ scale: 1.05, boxShadow: '0 0 16px #5E5CE6' }}
       whileTap={{ scale: 0.95 }}
       className={clsx(base, variants[variant], sizes[size], className)}
-      {...(props as any)}
+      {...props}
     />
   );
 }

@@ -1,8 +1,8 @@
 'use client';
-import { motion } from 'framer-motion';
+import { motion, type HTMLMotionProps } from 'framer-motion';
 import clsx from 'clsx';
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CardProps extends HTMLMotionProps<'div'> {
   hover?: boolean
 }
 
@@ -14,7 +14,7 @@ export default function Card({ hover = true, className, ...props }: CardProps) {
     <motion.div
       {...motionProps}
       className={clsx('rounded-lg bg-bg-card p-6 min-h-[44px]', className)}
-      {...(props as any)}
+      {...props}
     />
   );
 }

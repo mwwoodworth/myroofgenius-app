@@ -1,16 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+let admin: ReturnType<typeof createClient> | null = null;
 
-if (!supabaseUrl || !serviceKey) {
-  throw new Error('Supabase environment variables not configured');
+function getAdmin() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseUrl || !serviceKey) {
+    return null;
+  }
+  if (!admin) {
+    admin = createClient(supabaseUrl, serviceKey);
+  }
+  return admin;
 }
 
-const admin = createClient(supabaseUrl, serviceKey);
-
 export async function GET(req: NextRequest) {
+  const admin = getAdmin();
+  if (!admin) {
+    return NextResponse.json(
+      { error: 'Server not configured' },
+      { status: 500 }
+    );
+  }
   const { searchParams } = new URL(req.url);
   const userId = searchParams.get('user_id');
   if (!userId) {

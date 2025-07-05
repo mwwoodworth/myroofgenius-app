@@ -3,13 +3,18 @@ import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 import crypto from 'crypto';
 
-const stripeKey = process.env.STRIPE_SECRET_KEY;
-if (!stripeKey) {
-  throw new Error('STRIPE_SECRET_KEY not set');
+let stripe: Stripe | null = null;
+
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) return null;
+  if (!stripe) {
+    stripe = new Stripe(key, {
+      apiVersion: '2023-10-16',
+    });
+  }
+  return stripe;
 }
-const stripe = new Stripe(stripeKey, {
-  apiVersion: '2023-10-16', // Changed from '2024-11-20.acacia'
-});
 
 export async function POST(request: NextRequest) {
   try {
@@ -36,7 +41,15 @@ export async function POST(request: NextRequest) {
 
     const idempotencyKey = request.headers.get('Idempotency-Key') || crypto.randomUUID();
 
-    const session = await stripe.checkout.sessions.create(
+    const stripeClient = getStripe();
+    if (!stripeClient) {
+      return NextResponse.json(
+        { error: 'Server not configured' },
+        { status: 500 }
+      );
+    }
+
+    const session = await stripeClient.checkout.sessions.create(
       {
         mode: 'payment',
         line_items: [{ price: price_id, quantity: 1 }],
@@ -57,3 +70,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
