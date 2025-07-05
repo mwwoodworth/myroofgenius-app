@@ -103,6 +103,22 @@ Download a purchased file using a secure one-time token.
 
 Tracks user actions for analytics.
 
+### Partner Products
+
+**GET** `/api/partner/products?tenant=<tenant_id>`
+
+Returns the active product list for a specific tenant. Requires an `x-api-key` header matching `PARTNER_API_KEY`.
+
+Example response:
+
+```json
+{
+  "products": [
+    {"id": "abc", "name": "Pro Toolkit"}
+  ]
+}
+```
+
 ### Error Responses
 
 Errors include a JSON message and HTTP status codes, e.g.:
