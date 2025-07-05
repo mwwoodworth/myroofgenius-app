@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+import secrets
 import stripe
 import httpx
 import sentry_sdk
@@ -215,3 +216,40 @@ async def universal_search(data: dict):
         raise HTTPException(status_code=500, detail="supabase not configured")
     results = search_products(supabase_admin, query)
     return {"results": results}
+
+
+@app.post("/api/developer/apikeys")
+async def create_api_key(request: Request):
+    """Generate a new API key for the given user"""
+    user_id = request.headers.get("x-user-id")
+    if not user_id:
+        raise HTTPException(status_code=400, detail="user_id required")
+    if not supabase_admin:
+        raise HTTPException(status_code=500, detail="supabase not configured")
+    key = secrets.token_urlsafe(32)
+    res = (
+        supabase_admin
+        .table("api_keys")
+        .insert({"user_id": user_id, "key": key})
+        .execute()
+    )
+    if getattr(res, "error", None):
+        raise HTTPException(status_code=500, detail="insert failed")
+    return {"api_key": key}
+
+
+@app.get("/api/developer/apikeys")
+async def list_api_keys(user_id: str | None = None):
+    """List API keys for a user"""
+    if not user_id:
+        raise HTTPException(status_code=400, detail="user_id required")
+    if not supabase_admin:
+        raise HTTPException(status_code=500, detail="supabase not configured")
+    res = (
+        supabase_admin
+        .table("api_keys")
+        .select("key, created_at")
+        .eq("user_id", user_id)
+        .execute()
+    )
+    return {"keys": getattr(res, "data", [])}
