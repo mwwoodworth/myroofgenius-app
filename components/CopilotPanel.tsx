@@ -135,6 +135,13 @@ export default function CopilotPanel({
     setInput('');
     setLoading(true);
     setMessages((m) => [...m, { role: 'user', content: msg } as Msg].slice(-50));
+    if (msg.toLowerCase().startsWith('support:')) {
+      await fetch('/api/support', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg.slice(8).trim() })
+      }).catch(() => {});
+    }
     try {
       const res = await fetch('/api/copilot', {
         method: 'POST',

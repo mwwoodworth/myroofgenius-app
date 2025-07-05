@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Lock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 interface CheckoutButtonProps {
   priceId: string
@@ -12,9 +13,21 @@ interface CheckoutButtonProps {
 export default function CheckoutButton({ priceId, productId }: CheckoutButtonProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const _router = useRouter();
+  const router = useRouter();
+  const supabase = createClientComponentClient();
+  const [signedIn, setSignedIn] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSignedIn(!!data.session);
+    });
+  }, [supabase]);
 
   const handleCheckout = async () => {
+    if (!signedIn) {
+      router.push('/login');
+      return;
+    }
     setLoading(true);
 
     try {

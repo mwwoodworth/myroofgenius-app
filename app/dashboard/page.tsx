@@ -42,7 +42,7 @@ async function getDashboardData() {
 
   const profilePromise = fetchProfile(supabase, user.id);
 
-  const [ordersRes, downloadsRes, analysesRes, ticketsRes] =
+  const [ordersRes, downloadsRes, analysesRes, ticketsRes, favoritesRes] =
     await Promise.allSettled([
       supabase
         .from('orders')
@@ -81,12 +81,19 @@ async function getDashboardData() {
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(5),
+      supabase
+        .from('favorites')
+        .select('product_id, products(name, price, image_url)')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(10),
     ]);
   const profile = await profilePromise;
   const orders = ordersRes.status === 'fulfilled' ? ordersRes.value.data : null;
   const downloads = downloadsRes.status === 'fulfilled' ? downloadsRes.value.data : null;
   const analyses = analysesRes.status === 'fulfilled' ? analysesRes.value.data : null;
   const tickets = ticketsRes.status === 'fulfilled' ? ticketsRes.value.data : null;
+  const favorites = favoritesRes.status === 'fulfilled' ? favoritesRes.value.data : null;
 
   // Calculate analytics
   const totalSpent = orders?.reduce((sum, order) => sum + (order.amount || 0), 0) || 0;
@@ -106,6 +113,7 @@ async function getDashboardData() {
     downloads: downloads || [],
     analyses: analyses || [],
     tickets: tickets || [],
+    favorites: favorites || [],
     stats: {
       totalSpent,
       totalOrders: orders?.length || 0,
@@ -440,6 +448,32 @@ export default async function Dashboard() {
                         >
                           View
                         </Link>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Favorites */}
+            <div className="bg-white rounded-lg shadow">
+              <div className="p-6 border-b">
+                <h2 className="text-xl font-semibold">Favorites</h2>
+              </div>
+              <div className="p-6">
+                {data.favorites.length === 0 ? (
+                  <p className="text-gray-600 text-sm">No favorites yet</p>
+                ) : (
+                  <div className="space-y-3">
+                    {data.favorites.map((fav: any) => (
+                      <div key={fav.product_id} className="flex items-center gap-3">
+                        <img src={fav.products?.image_url || ''} alt="" className="w-8 h-8 rounded" />
+                        <div className="flex-1">
+                          <p className="text-sm font-medium">
+                            {fav.products?.name}
+                          </p>
+                          <p className="text-xs text-gray-500">${fav.products?.price?.toFixed(2)}</p>
+                        </div>
                       </div>
                     ))}
                   </div>

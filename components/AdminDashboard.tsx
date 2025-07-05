@@ -5,6 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 import { Users, Package, DollarSign, FileText, Settings as SettingsIcon, BarChart3 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 async function checkAdminAccess() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -124,11 +125,14 @@ function OverviewTab({ stats }: { stats: DashboardStats }) {
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold mb-4">Revenue Trend</h2>
         {stats.monthlyRevenue.length > 0 ? (
-          <div className="flex items-end space-x-2 h-40">
-            {stats.monthlyRevenue.map((monthData) => (
-              <div key={monthData.month} className="relative bg-blue-500" style={{ height: `${maxRevenue ? (monthData.revenue / maxRevenue) * 100 : 0}%`, width: '12px' }} title={`${monthData.month}: $${monthData.revenue.toFixed(2)}`}></div>
-            ))}
-          </div>
+          <ResponsiveContainer width="100%" height={200}>
+            <LineChart data={stats.monthlyRevenue}>
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="revenue" stroke="#3b82f6" />
+            </LineChart>
+          </ResponsiveContainer>
         ) : (
           <p className="text-gray-500">No revenue data available.</p>
         )}
