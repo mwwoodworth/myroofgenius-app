@@ -14,6 +14,7 @@ from .prompt_service import (
     delete_prompt,
 )
 from .services.fulfillment import FulfillmentService
+from .services.search import search_products
 
 sentry_sdk.init(dsn=os.getenv("SENTRY_DSN"))
 
@@ -202,3 +203,15 @@ async def partner_products(request: Request, tenant: str):
         .execute()
     )
     return {"products": data.data or []}
+
+
+@app.post("/api/search")
+async def universal_search(data: dict):
+    """Basic search across products"""
+    query = data.get("query")
+    if not query:
+        raise HTTPException(status_code=400, detail="query required")
+    if not supabase_admin:
+        raise HTTPException(status_code=500, detail="supabase not configured")
+    results = search_products(supabase_admin, query)
+    return {"results": results}
