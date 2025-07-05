@@ -35,9 +35,11 @@ declare global {
 export default function CopilotPanel({
   open,
   onClose,
+  initialPrompt,
 }: {
   open: boolean;
   onClose: () => void;
+  initialPrompt?: string;
 }) {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -46,6 +48,7 @@ export default function CopilotPanel({
   const [recording, setRecording] = useState(false);
   const [saved, setSaved] = useState(false);
   const recognizer = useRef<SpeechRecognition | null>(null);
+  const initialSent = useRef(false);
 
   const { role: userRole, setRole } = useRole();
 
@@ -100,6 +103,16 @@ export default function CopilotPanel({
       console.log(`[Copilot] memory usage ~${size} bytes`);
     }
   }, [messages]);
+
+  useEffect(() => {
+    if (open && initialPrompt && !initialSent.current) {
+      initialSent.current = true;
+      send(initialPrompt);
+    }
+    if (!open) {
+      initialSent.current = false;
+    }
+  }, [open, initialPrompt]);
 
   if (!open) return null;
 

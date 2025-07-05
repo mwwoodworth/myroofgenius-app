@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 import { notFound } from 'next/navigation';
 import CheckoutButton from './CheckoutButton';
+import ProductAIInfo from './ProductAIInfo';
+import ProductQABtn from './ProductQABtn';
 import Image from 'next/image';
 import Link from 'next/link';
 import { salesEnabled } from '../../lib/features';
@@ -110,6 +112,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
             <p className="text-gray-600 mb-8 text-lg leading-relaxed">
               {product.description || 'Professional-grade tool designed specifically for commercial roofing contractors. Battle-tested on hundreds of projects.'}
             </p>
+            <ProductAIInfo id={product.id} name={product.name} description={product.description || ''} />
 
             {/* Price and CTA */}
             <div className="bg-gray-50 rounded-lg p-6 mb-8">
@@ -129,6 +132,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                 priceId={product.price_id}
                 productId={product.id}
               />
+              <ProductQABtn name={product.name} description={product.description || ''} />
 
               <div className="mt-4 flex items-center justify-center gap-6 text-sm text-gray-600">
                 <span className="flex items-center gap-1">

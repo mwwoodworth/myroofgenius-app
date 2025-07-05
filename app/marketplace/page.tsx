@@ -337,6 +337,16 @@ export default function Marketplace() {
                               NEW
                             </span>
                           )}
+                          {product.is_featured && (
+                            <span className="absolute top-2 right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded">
+                              FEATURED
+                            </span>
+                          )}
+                          {product.sales_count > 500 && (
+                            <span className="absolute bottom-2 left-2 bg-orange-500 text-white text-xs px-2 py-1 rounded">
+                              BESTSELLER
+                            </span>
+                          )}
                         </div>
                         <div className="flex-1 p-6">
                           <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600 transition">
@@ -436,6 +446,16 @@ export default function Marketplace() {
                       {product.is_new && (
                         <span className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
                           NEW
+                        </span>
+                      )}
+                      {product.is_featured && (
+                        <span className="absolute top-2 right-2 bg-purple-600 text-white text-xs px-2 py-1 rounded">
+                          FEATURED
+                        </span>
+                      )}
+                      {product.sales_count > 500 && (
+                        <span className="absolute bottom-2 left-2 bg-orange-500 text-white text-xs px-2 py-1 rounded">
+                          BESTSELLER
                         </span>
                       )}
                       <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition duration-300" />
