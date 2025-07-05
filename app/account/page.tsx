@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import EmptyState from '@/components/EmptyState';
 
 // Add dynamic export to prevent static generation
 export const dynamic = 'force-dynamic';
@@ -29,7 +30,7 @@ export default async function Account() {
         <div className="bg-white rounded-lg shadow p-6">
           <h2 className="text-xl font-semibold mb-4">Order History</h2>
           {orders.length === 0 ? (
-            <p className="text-gray-600">No orders yet.</p>
+            <EmptyState message="No orders yet." />
           ) : (
             <div className="space-y-4">
               {/* Order list would go here */}
