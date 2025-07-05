@@ -133,3 +133,13 @@ Errors include a JSON message and HTTP status codes, e.g.:
 - General API: 1000 requests per hour.
 
 Exceeding limits returns HTTP 429.
+
+### Universal Search
+
+**POST** `/api/search`
+
+Searches across public product content. Returns matching product IDs, names, and descriptions.
+
+- **Request Body:** `{ "query": "search text" }`
+- **Response:** `{ "results": [ {"id": "p1", "name": "Item", "description": "..."} ] }`
+
