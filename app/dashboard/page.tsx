@@ -12,6 +12,9 @@ import {
   Key
 } from 'lucide-react';
 import { ProtectionStatus } from '@/components/ui/protection-status';
+import dynamic from 'next/dynamic';
+
+const Dashboard3D = dynamic(() => import('@/components/Dashboard3D'), { ssr: false });
 
 export const dynamic = 'force-dynamic';
 
@@ -214,6 +217,9 @@ export default async function Dashboard() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="mb-8">
+          <Dashboard3D />
+        </div>
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow p-6">

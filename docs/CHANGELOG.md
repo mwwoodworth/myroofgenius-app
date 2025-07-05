@@ -2,6 +2,7 @@
 
 ## Unreleased
 - Accent color picker in Navbar to customize theme.
+- Interactive 3D dashboard model and card tilt effects.
 
 ## v1.0.0
 - Initial commit of MyRoofGenius application.
