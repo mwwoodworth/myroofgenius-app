@@ -8,3 +8,4 @@
 | Production API keys (Make.com, Claude) | Pending Founder | Provide keys |
 | Final copy for landing page | Pending Founder | Supply approved copy |
 | Deployment env vars (Vercel) | Pending Founder | Add to dashboard |
+| Localization & SSO | Ready | — |

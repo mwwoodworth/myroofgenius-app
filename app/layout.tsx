@@ -3,6 +3,9 @@ import { Inter } from 'next/font/google';
 import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider } from '../components/ui';
 import type { ReactNode } from 'react';
 import { AuthProvider } from '../src/context/AuthContext';
+import { LocaleProvider } from '../src/context/LocaleContext';
+import { CurrencyProvider } from '../src/context/CurrencyContext';
+import DocumentLang from '../components/DocumentLang';
 import Navbar from '../components/Navbar';
 import AnnouncementBanner from '../components/AnnouncementBanner';
 import ErrorBoundary from '../components/ErrorBoundary';
@@ -38,6 +41,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
+        <LocaleProvider>
+        <CurrencyProvider>
+        <DocumentLang />
         <div className="bg-bg min-h-screen text-text-primary font-inter">
           <AuthProvider>
           <RoleProvider>
@@ -67,6 +73,8 @@ export default function RootLayout({
           </RoleProvider>
           </AuthProvider>
         </div>
+        </CurrencyProvider>
+        </LocaleProvider>
       </body>
     </html>
   );
