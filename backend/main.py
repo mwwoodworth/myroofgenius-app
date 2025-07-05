@@ -5,6 +5,7 @@ import stripe
 import httpx
 import sentry_sdk
 from fastapi.responses import JSONResponse
+from supabase import create_client, Client
 from .prompt_service import (
     fetch_prompt,
     list_prompts,
@@ -18,6 +19,13 @@ sentry_sdk.init(dsn=os.getenv("SENTRY_DSN"))
 
 MAINTENANCE_MODE = os.getenv("MAINTENANCE_MODE") == "true"
 MAKE_WEBHOOK_URL = os.getenv("MAKE_WEBHOOK_URL")
+PARTNER_API_KEY = os.getenv("PARTNER_API_KEY")
+
+SUPABASE_URL = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
+SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+supabase_admin: Client | None = None
+if SUPABASE_URL and SUPABASE_SERVICE_KEY:
+    supabase_admin = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
 app = FastAPI()
 
@@ -176,3 +184,21 @@ async def legacy_get_prompt(name: str):
 @app.get("/api/health")
 async def health():
     return {"ok": True}
+
+
+@app.get("/api/partner/products")
+async def partner_products(request: Request, tenant: str):
+    """Public partner API to fetch tenant scoped products."""
+    if request.headers.get("x-api-key") != PARTNER_API_KEY:
+        raise HTTPException(status_code=401, detail="unauthorized")
+    if not supabase_admin:
+        raise HTTPException(status_code=500, detail="supabase not configured")
+    data = (
+        supabase_admin
+        .table("products")
+        .select("*")
+        .eq("tenant_id", tenant)
+        .eq("is_active", True)
+        .execute()
+    )
+    return {"products": data.data or []}
