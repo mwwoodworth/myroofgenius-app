@@ -6,3 +6,4 @@
 - Partner API endpoint for tenant product queries.
 - Universal search endpoint and search bar added.
 - Developer portal API key endpoints.
+- Accent color picker lets users personalize the UI theme.

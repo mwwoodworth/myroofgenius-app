@@ -9,6 +9,7 @@
   }
 
   :root {
+    --accent: 94 92 230;
     /* Protection Status Colors */
     --color-protected: 34 197 94;
     --color-warning: 251 146 60;

@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Accent color picker in Navbar to customize theme.
+
 ## v1.0.0
 - Initial commit of MyRoofGenius application.
 - Added license key system and invoice download endpoint.
