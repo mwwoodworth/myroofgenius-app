@@ -4,6 +4,7 @@ import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider } from '../co
 import type { ReactNode } from 'react';
 import { AuthProvider } from '../src/context/AuthContext';
 import Navbar from '../components/Navbar';
+import AnnouncementBanner from '../components/AnnouncementBanner';
 import ErrorBoundary from '../components/ErrorBoundary';
 import CopilotWrapper from '../components/layout/CopilotWrapper';
 import './lib/sentry';
@@ -44,6 +45,7 @@ export default function RootLayout({
               {arModeEnabled ? (
                 <ARModeProvider>
                   <Navbar />
+                  <AnnouncementBanner />
                   <RoleSwitcher />
                   <ErrorBoundary>
                     {children}
@@ -53,6 +55,7 @@ export default function RootLayout({
               ) : (
                 <>
                   <Navbar />
+                  <AnnouncementBanner />
                   <RoleSwitcher />
                   <ErrorBoundary>
                     {children}
