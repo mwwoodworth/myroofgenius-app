@@ -6,6 +6,8 @@ import type { User } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { ThemeToggle } from './ui';
+import LanguageSwitcher from './LanguageSwitcher';
+import CurrencySwitcher from './CurrencySwitcher';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -55,6 +57,8 @@ export default function Navbar() {
           ))}
         </div>
         <div className="hidden md:flex items-center gap-4">
+          <LanguageSwitcher />
+          <CurrencySwitcher />
           <ThemeToggle />
           {user ? (
             <>
@@ -149,7 +153,9 @@ export default function Navbar() {
                 </a>
               </>
             )}
-            <div className="p-4">
+            <div className="p-4 space-y-2">
+              <LanguageSwitcher />
+              <CurrencySwitcher />
               <ThemeToggle />
             </div>
           </motion.div>

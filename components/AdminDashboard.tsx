@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { Users, Package, DollarSign, FileText, Settings as SettingsIcon, BarChart3 } from 'lucide-react';
 import Image from 'next/image';
+import { useLocale } from '../src/context/LocaleContext';
 import { useRouter } from 'next/navigation';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -75,11 +76,12 @@ export default function AdminDashboard() {
   if (loading) return <div className="p-4">Loading...</div>;
   if (!isAdmin) return <div className="p-4">Access Denied</div>;
 
+  const { messages } = useLocale();
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+          <h1 className="text-3xl font-bold">{messages.adminDashboard}</h1>
         </div>
       </div>
 

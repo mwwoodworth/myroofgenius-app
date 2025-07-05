@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { signIn } from 'next-auth/react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -25,13 +26,13 @@ export default function LoginPage() {
     setLoading(false);
   };
 
-  const handleGoogle = async () => {
+  const handleProvider = async (provider: string) => {
     setError(null);
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: `${window.location.origin}/auth/callback` }
-    });
-    if (error) setError(error.message);
+    try {
+      await signIn(provider);
+    } catch (e: any) {
+      setError(e.message);
+    }
   };
 
   return (
@@ -65,10 +66,31 @@ export default function LoginPage() {
           </button>
           <button
             type="button"
-            onClick={handleGoogle}
+            onClick={() => handleProvider('google')}
             className="w-full border border-gray-300 py-2 rounded text-gray-700 mt-2"
           >
             Sign in with Google
+          </button>
+          <button
+            type="button"
+            onClick={() => handleProvider('azure-ad')}
+            className="w-full border border-gray-300 py-2 rounded text-gray-700 mt-2"
+          >
+            Sign in with Microsoft
+          </button>
+          <button
+            type="button"
+            onClick={() => handleProvider('linkedin')}
+            className="w-full border border-gray-300 py-2 rounded text-gray-700 mt-2"
+          >
+            Sign in with LinkedIn
+          </button>
+          <button
+            type="button"
+            onClick={() => handleProvider('apple')}
+            className="w-full border border-gray-300 py-2 rounded text-gray-700 mt-2"
+          >
+            Sign in with Apple
           </button>
         </form>
         <p className="text-center text-sm">
