@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
+import { Rnd } from 'react-rnd';
 import { useEffect, useRef, useState } from 'react';
 import { useRole } from './ui';
 import type { Role } from './ui/RoleProvider';
@@ -212,11 +213,18 @@ export default function CopilotPanel({
   };
 
   return (
+    <Rnd
+      default={{ x: typeof window === 'undefined' ? 0 : window.innerWidth - 400, y: 80, width: 380, height: 600 }}
+      bounds="window"
+      minWidth={300}
+      minHeight={400}
+      className="fixed z-40"
+    >
     <motion.aside
       initial={{ x: '100%' }}
       animate={{ x: 0 }}
       exit={{ x: '100%' }}
-      className="fixed right-0 top-0 h-full w-96 bg-[rgba(44,44,46,0.8)] backdrop-blur-xl border-l border-[rgba(255,255,255,0.1)] shadow-2xl z-40 p-8"
+      className="h-full w-full bg-[rgba(44,44,46,0.8)] backdrop-blur-xl border border-[rgba(255,255,255,0.1)] shadow-2xl p-8 rounded-xl"
     >
       <button
         className="absolute top-4 right-4 text-accent font-bold"
@@ -267,6 +275,10 @@ export default function CopilotPanel({
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
+        <input type="file" className="hidden" id="copilot-file" onChange={() => {}} />
+        <label htmlFor="copilot-file" className="px-3 py-2 rounded-lg bg-[rgba(255,255,255,0.1)] cursor-pointer">
+          📎
+        </label>
         <button
           onClick={startVoice}
           className="px-3 py-2 rounded-lg bg-[rgba(255,255,255,0.1)]"
@@ -280,9 +292,11 @@ export default function CopilotPanel({
         >
           {loading ? '...' : 'Send'}
         </button>
+        {loading && <motion.div className="ml-2 w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin" />}
         {saved && <span className="text-xs text-gray-400 ml-2">message saved</span>}
       </div>
     </motion.aside>
+    </Rnd>
   );
 }
 export const RoleSwitcher = () => null;

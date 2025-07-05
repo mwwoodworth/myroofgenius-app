@@ -10,6 +10,8 @@ import Navbar from '../components/Navbar';
 import AnnouncementBanner from '../components/AnnouncementBanner';
 import ErrorBoundary from '../components/ErrorBoundary';
 import CopilotWrapper from '../components/layout/CopilotWrapper';
+import dynamicImport from 'next/dynamic';
+const Starfield = dynamicImport(() => import('../components/Starfield'), { ssr: false });
 import './lib/sentry';
 import { maintenanceMode, aiCopilotEnabled, arModeEnabled } from './lib/features';
 
@@ -41,6 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
+        <Starfield />
         <LocaleProvider>
         <CurrencyProvider>
         <DocumentLang />

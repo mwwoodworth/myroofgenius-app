@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { ProtectionStatus } from '@/components/ui/protection-status';
 import dynamic from 'next/dynamic';
+import EmptyState from '@/components/EmptyState';
 
 const Dashboard3D = dynamic(() => import('@/components/Dashboard3D'), { ssr: false });
 
@@ -329,12 +330,11 @@ export default async function Dashboard() {
               </div>
               <div className="p-6">
                 {data.orders.length === 0 ? (
-                  <p className="text-gray-600 text-center py-8">
-                    No orders yet.
-                    <Link href="/marketplace" className="text-blue-600 hover:underline ml-1">
+                  <EmptyState message="No orders yet.">
+                    <Link href="/marketplace" className="text-blue-600 hover:underline">
                       Browse marketplace
                     </Link>
-                  </p>
+                  </EmptyState>
                 ) : (
                   <div className="space-y-4">
                     {data.orders.map((order) => (
