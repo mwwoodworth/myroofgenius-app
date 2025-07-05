@@ -1,5 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import Dashboard3D from '../../../components/Dashboard3D';
 import { RiskAnalysisEngine, ProjectData } from '../../utils/RiskAnalysisEngine';
 import { supabase } from '../../services/supabaseClient';
 
@@ -29,6 +31,9 @@ export default function EstimationDashboard() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-semibold mb-4">Estimation Dashboard</h1>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-6">
+        <Dashboard3D />
+      </motion.div>
       {loading && <p className="mb-4">Loading project...</p>}
       <div className="space-y-4">
         <div>
@@ -46,11 +51,16 @@ export default function EstimationDashboard() {
         <div className="mt-6 space-y-2">
           <h2 className="text-xl font-semibold">Identified Risks</h2>
           {risks.map(risk => (
-            <div key={risk.type} className="border p-2 rounded bg-white/10 backdrop-blur-sm">
+            <motion.div
+              key={risk.type}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="border p-2 rounded bg-white/10 backdrop-blur-sm"
+            >
               <p className="font-medium">{risk.type}</p>
               <p>Probability: {(risk.probability * 100).toFixed(0)}%</p>
               <p>Impact: ${risk.impactLow.toFixed(0)} - ${risk.impactHigh.toFixed(0)}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       )}
