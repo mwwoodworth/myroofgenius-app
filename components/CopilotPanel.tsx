@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion';
 import { Rnd } from 'react-rnd';
 import { useEffect, useRef, useState } from 'react';
-import { useRole } from './ui';
+import { useRole, PresenceProvider, PresenceAvatars } from './ui';
 import type { Role } from './ui/RoleProvider';
 
 type Msg = {
@@ -213,6 +213,7 @@ export default function CopilotPanel({
   };
 
   return (
+    <PresenceProvider room="copilot">
     <Rnd
       default={{ x: typeof window === 'undefined' ? 0 : window.innerWidth - 400, y: 80, width: 380, height: 600 }}
       bounds="window"
@@ -226,6 +227,7 @@ export default function CopilotPanel({
       exit={{ x: '100%' }}
       className="h-full w-full bg-[rgba(44,44,46,0.8)] backdrop-blur-xl border border-[rgba(255,255,255,0.1)] shadow-2xl p-8 rounded-xl"
     >
+      <PresenceAvatars />
       <button
         className="absolute top-4 right-4 text-accent font-bold"
         onClick={onClose}
@@ -293,10 +295,11 @@ export default function CopilotPanel({
           {loading ? '...' : 'Send'}
         </button>
         {loading && <motion.div className="ml-2 w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin" />}
-        {saved && <span className="text-xs text-gray-400 ml-2">message saved</span>}
+    {saved && <span className="text-xs text-gray-400 ml-2">message saved</span>}
       </div>
     </motion.aside>
     </Rnd>
+    </PresenceProvider>
   );
 }
 export const RoleSwitcher = () => null;

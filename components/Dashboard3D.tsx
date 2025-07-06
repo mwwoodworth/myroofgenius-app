@@ -3,10 +3,13 @@
 import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
 import { OrbitControls } from '@react-three/drei';
+import { PresenceProvider, PresenceAvatars } from './ui';
 
 export default function Dashboard3D() {
   return (
-    <div className="h-64 w-full bg-gray-900 text-white rounded-xl">
+    <PresenceProvider room="dashboard">
+    <div className="relative h-64 w-full bg-gray-900 text-white rounded-xl">
+      <PresenceAvatars />
       <Canvas camera={{ position: [3, 3, 3] }}>
         <Suspense fallback={null}>
           <group position={[0, 0, 0]}>
@@ -29,5 +32,6 @@ export default function Dashboard3D() {
         </Suspense>
       </Canvas>
     </div>
+    </PresenceProvider>
   );
 }

@@ -1,5 +1,6 @@
 'use client';
 import { useState, useRef, useCallback } from 'react';
+import { useConfetti } from '../hooks/use-confetti';
 import { useDropzone } from 'react-dropzone';
 import { Camera, Upload, FileText, Download, AlertCircle, CheckCircle, X } from 'lucide-react';
 import Image from 'next/image';
@@ -40,12 +41,14 @@ export default function AIEstimator() {
   const [reportUrl, setReportUrl] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isCapturing, setIsCapturing] = useState(false);
+  const triggerConfetti = useConfetti();
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
       setFile(file);
       setError('');
+      triggerConfetti();
 
       // Create preview
       const reader = new FileReader();
@@ -132,6 +135,7 @@ export default function AIEstimator() {
       const data = await response.json();
       setResult(data);
       setStep('results');
+      triggerConfetti();
 
       // Track successful analysis
       const win = window as unknown as { gtag?: (event: string, data: Record<string, unknown>) => void };
@@ -170,6 +174,7 @@ export default function AIEstimator() {
       const { report_url } = await response.json();
       setReportUrl(report_url);
       setStep('report');
+      triggerConfetti();
     } catch {
       setError('Failed to generate report. Please try again.');
     }
