@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Button from '../ui/Button'
+import Link from 'next/link'
 
 interface Tool {
   id: string
@@ -77,9 +78,9 @@ export default function FeaturedToolsCarousel() {
             <Image src={tools[index].image} alt={tools[index].name} fill className="object-cover" />
             <div className="absolute inset-0 bg-slate-900/50 flex flex-col items-center justify-center text-center p-4">
               <h3 className="text-2xl font-bold text-white mb-4 drop-shadow-lg">{tools[index].name}</h3>
-              <Button as="a" href={tools[index].href} className="px-6 py-3">
-                {tools[index].cta}
-              </Button>
+              <Link href={tools[index].href}>
+                <Button className="px-6 py-3">{tools[index].cta}</Button>
+              </Link>
             </div>
           </motion.div>
         </AnimatePresence>

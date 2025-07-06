@@ -1,6 +1,7 @@
 'use client'
 import Button from '../ui/Button'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 export default function UpgradeBanner() {
   return (
@@ -10,9 +11,11 @@ export default function UpgradeBanner() {
       className="bg-blue-600 text-white p-4 rounded-lg mb-6 flex items-center justify-between"
     >
       <p className="font-semibold">Upgrade to Pro and get every tool at 25% off!</p>
-      <Button as="a" href="/marketplace" variant="secondary" className="bg-white text-blue-600 hover:bg-white/80">
-        View Bundles
-      </Button>
+      <Link href="/marketplace">
+        <Button variant="secondary" className="bg-white text-blue-600 hover:bg-white/80">
+          View Bundles
+        </Button>
+      </Link>
     </motion.div>
   )
 }
