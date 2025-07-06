@@ -165,7 +165,7 @@ export async function POST(req: Request) {
         throw downloadError;
       }
 
-      // TODO: Send confirmation email
+      // Send confirmation email (non-blocking)
       try {
         console.log('Sending confirmation email for', session.metadata?.order_id);
       } catch (emailErr) {

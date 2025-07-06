@@ -40,7 +40,10 @@ export default async function Account() {
 
         <div className="mt-6 bg-white rounded-lg shadow p-6">
           <h2 className="text-xl font-semibold mb-4">Account Settings</h2>
-          <p className="text-gray-600">Authentication coming soon...</p>
+          <p className="text-gray-600">
+            Update your email or password from the profile menu. Contact support
+            if you need any help managing your subscription.
+          </p>
         </div>
 
         <div className="mt-8 text-center">

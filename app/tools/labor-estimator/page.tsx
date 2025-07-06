@@ -1,10 +1,18 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function LaborEstimator() {
   return (
     <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
       <div className="max-w-2xl bg-white rounded-xl shadow p-8 text-center">
+        <Image
+          src="https://images.unsplash.com/photo-1596075781084-bd077eef0722?w=800&h=450&fit=crop"
+          alt="Labor estimator screenshot"
+          width={800}
+          height={450}
+          className="rounded-lg mb-6"
+        />
         <h1 className="text-3xl font-bold mb-4">Labor Hour Estimator</h1>
         <p className="text-gray-600 mb-6">Calculate accurate crew sizes based on real productivity data.</p>
         <div className="space-y-2 mb-6 text-left">

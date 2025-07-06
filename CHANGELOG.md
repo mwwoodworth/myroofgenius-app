@@ -8,3 +8,6 @@
 - Developer portal API key endpoints.
 - Accent color picker lets users personalize the UI theme.
 - Tweaked error and not-found pages for compatibility with Next.js routing.
+- Added confetti celebration on purchase success page.
+- Replaced "Authentication coming soon" message with real account instructions.
+- Tool pages now include product screenshots for better conversion.
