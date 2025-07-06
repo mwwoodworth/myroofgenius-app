@@ -2,6 +2,7 @@
 import { Play, Shield, Clock, DollarSign, Users } from 'lucide-react'
 import { useState } from 'react'
 import Link from 'next/link'
+import EmailSignupForm from '../../components/marketing/EmailSignupForm'
 
 export default function DemoPage() {
   const [activeDemo, setActiveDemo] = useState('estimation')
@@ -101,6 +102,9 @@ export default function DemoPage() {
               Start Your Free Trial →
             </Link>
           </div>
+        </div>
+        <div className="max-w-md mx-auto mt-12">
+          <EmailSignupForm />
         </div>
       </div>
     </div>
