@@ -7,3 +7,4 @@
 - Universal search endpoint and search bar added.
 - Developer portal API key endpoints.
 - Accent color picker lets users personalize the UI theme.
+- Tweaked error and not-found pages for compatibility with Next.js routing.
