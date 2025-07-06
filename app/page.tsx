@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import { Shield, ArrowRight, Play, CheckCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
