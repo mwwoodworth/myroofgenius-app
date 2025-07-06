@@ -22,6 +22,10 @@ npm test
 npm run build
 ```
 
+### Purchasing Tools
+All marketplace products use Stripe checkout. After payment you’ll receive a download link
+immediately on the success page and in your account dashboard.
+
 ### Theme Accent
 Pick a custom accent color from the Navbar color picker. Your choice is persisted in localStorage.
 

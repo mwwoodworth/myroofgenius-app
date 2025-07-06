@@ -1,10 +1,18 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function ChangeOrders() {
   return (
     <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
       <div className="max-w-2xl bg-white rounded-xl shadow p-8 text-center">
+        <Image
+          src="https://images.unsplash.com/photo-1581092613290-7e876675c352?w=800&h=450&fit=crop"
+          alt="Change order calculator screenshot"
+          width={800}
+          height={450}
+          className="rounded-lg mb-6"
+        />
         <h1 className="text-3xl font-bold mb-4">Change Order Calculator</h1>
         <p className="text-gray-600 mb-6">Price project changes fairly while protecting your margins.</p>
         <div className="space-y-2 mb-6 text-left">
