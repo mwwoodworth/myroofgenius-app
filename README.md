@@ -153,3 +153,4 @@ Legacy sprint docs can be archived by running `scripts/archive-preV1.sh`.
 - [QA Smoke Test Guide](docs/launch/production-qa-smoke-test.md)
 - [Launch Checklist](docs/launch/launch-checklist.md)
 - [Developer Portal Guide](docs/DEVELOPER_PORTAL.md)
+\n### Maintenance\n- Minor cleanup of error handling routes.
