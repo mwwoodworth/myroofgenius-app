@@ -47,7 +47,12 @@ export default function Navbar() {
 
   return (
     <>
-      <motion.nav className="fixed top-0 w-full flex items-center justify-between px-8 py-4 bg-[rgba(35,35,35,0.75)] backdrop-blur-xl border-b border-[rgba(255,255,255,0.07)] z-50">
+      <motion.nav
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: 'spring', stiffness: 70 }}
+        className="glass-navbar fixed top-0 w-full flex items-center justify-between px-8 py-4 z-50"
+      >
         <div className="text-accent text-2xl font-bold">MyRoofGenius</div>
         <div className="hidden md:flex gap-6">
           {links.map(({ href, label }) => (
@@ -80,7 +85,10 @@ export default function Navbar() {
               <a href="/login" className="text-sm font-medium hover:text-accent">
                 Sign In
               </a>
-              <a href="/signup" className="rounded-xl px-5 py-2 bg-accent text-white font-bold shadow-md hover:scale-105 transition">
+              <a
+                href="/signup"
+                className="rounded-xl px-5 py-2 bg-accent text-white font-bold shadow-md hover:scale-105 transition glow-btn animate-ripple"
+              >
                 Start Free Trial
               </a>
             </>
@@ -147,7 +155,7 @@ export default function Navbar() {
                 </a>
                 <a
                   href="/signup"
-                  className="block px-8 py-4 border-b border-[rgba(255,255,255,0.07)] hover:text-accent"
+                  className="block px-8 py-4 border-b border-[rgba(255,255,255,0.07)] hover:text-accent glow-btn animate-ripple"
                   onClick={() => setOpen(false)}
                 >
                   Start Free Trial

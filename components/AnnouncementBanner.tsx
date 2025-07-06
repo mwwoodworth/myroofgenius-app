@@ -30,7 +30,7 @@ export default function AnnouncementBanner() {
 
   if (!announcement) return null;
   return (
-    <div className="bg-blue-600 text-white text-center py-2 px-4 text-sm">
+    <div className="glass-navbar text-white text-center py-2 px-4 text-sm">
       {announcement.message}
     </div>
   );

@@ -20,11 +20,20 @@ module.exports = {
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
       },
+      keyframes: {
+        ripple: {
+          '0%': { transform: 'scale(0)', opacity: '0.6' },
+          '100%': { transform: 'scale(4)', opacity: '0' },
+        },
+      },
+      animation: {
+        ripple: 'ripple 0.6s linear',
+      },
     },
   },
   plugins: [
     require('@tailwindcss/forms'),
-    function ({ addUtilities }) {
+    function ({ addUtilities, addComponents, theme }) {
       addUtilities({
         '.glass': {
           'backdrop-filter': 'blur(12px)',
@@ -37,8 +46,36 @@ module.exports = {
         },
         '.glow-btn:hover': {
           'box-shadow': '0 0 12px rgba(255,255,255,0.9)'
+        },
+        '.glass-card': {
+          'backdrop-filter': 'blur(16px)',
+          background: 'rgba(255,255,255,0.1)',
+          border: '1px solid rgba(255,255,255,0.2)',
+          'box-shadow': '0 4px 30px rgba(0,0,0,0.1)'
+        },
+        '.glass-navbar': {
+          'backdrop-filter': 'blur(10px)',
+          background: 'rgba(35,35,35,0.75)',
+          border: '1px solid rgba(255,255,255,0.07)'
         }
       })
+
+      const rippleKeyframes = {
+        '.animate-ripple': {
+          position: 'relative',
+          overflow: 'hidden'
+        },
+        '.animate-ripple::after': {
+          content: "''",
+          position: 'absolute',
+          borderRadius: '9999px',
+          transform: 'scale(0)',
+          animation: 'ripple 0.6s linear',
+          background: theme('colors.accent'),
+          opacity: '0.4'
+        }
+      }
+      addComponents(rippleKeyframes)
     }
   ],
 }

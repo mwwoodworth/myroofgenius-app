@@ -52,11 +52,17 @@ export default function HomePage() {
             <FeaturedToolsCarousel />
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/get-started" className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors">
+            <Link
+              href="/get-started"
+              className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors glow-btn animate-ripple"
+            >
               {messages.home.startTrial}
               <ArrowRight className="ml-2 w-5 h-5" />
             </Link>
-            <Link href="/demo" className="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-lg font-semibold text-lg hover:bg-white/20 transition-colors">
+            <Link
+              href="/demo"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-lg font-semibold text-lg hover:bg-white/20 transition-colors glow-btn animate-ripple"
+            >
               <Play className="mr-2 w-5 h-5" />
               {messages.home.watchDemo}
             </Link>
