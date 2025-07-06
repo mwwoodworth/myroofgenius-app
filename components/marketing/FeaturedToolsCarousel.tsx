@@ -72,7 +72,7 @@ export default function FeaturedToolsCarousel() {
             }}
             onMouseLeave={() => setTilt({ x: 0, y: 0 })}
             style={{ rotateX: tilt.x, rotateY: tilt.y }}
-            className="absolute inset-0 glass-card"
+            className="absolute inset-0 glass-card backdrop-blur-lg bg-white/30 rounded-2xl shadow-2xl"
           >
             <Image src={tools[index].image} alt={tools[index].name} fill className="object-cover" />
             <div className="absolute inset-0 bg-slate-900/50 flex flex-col items-center justify-center text-center p-4">

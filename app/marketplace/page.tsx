@@ -182,7 +182,11 @@ export default function Marketplace() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-12">
+      <motion.section
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="bg-gradient-to-r from-blue-600 to-blue-800/80 text-white py-12 backdrop-blur-lg rounded-2xl shadow-2xl">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
@@ -202,7 +206,7 @@ export default function Marketplace() {
                 </div>
               </div>
             </div>
-            <div className="bg-white/10 backdrop-blur rounded-lg p-6 text-center">
+            <div className="bg-white/30 backdrop-blur-lg rounded-2xl shadow-2xl p-6 text-center">
               <p className="text-3xl font-bold">{products.length}</p>
               <p className="text-blue-100">Products Available</p>
             </div>
@@ -222,7 +226,7 @@ export default function Marketplace() {
             </div>
           </div>
         </div>
-      </section>
+        </motion.section>
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -560,7 +564,11 @@ export default function Marketplace() {
       </div>
 
       {/* Newsletter CTA */}
-      <section className="bg-blue-600 py-12 mt-16">
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="bg-blue-600/80 backdrop-blur-lg py-12 mt-16 rounded-2xl shadow-2xl">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
             Get Exclusive Deals & New Product Updates
@@ -582,7 +590,7 @@ export default function Marketplace() {
             </button>
           </form>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 }

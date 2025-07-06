@@ -12,6 +12,7 @@ import ErrorBoundary from '../components/ErrorBoundary';
 import CopilotWrapper from '../components/layout/CopilotWrapper';
 import dynamicImport from 'next/dynamic';
 const Starfield = dynamicImport(() => import('../components/Starfield'), { ssr: false });
+const MotionDiv = dynamicImport(() => import('framer-motion').then(m => m.motion.div), { ssr: false });
 import './lib/sentry';
 import { maintenanceMode, aiCopilotEnabled, arModeEnabled } from './lib/features';
 
@@ -47,7 +48,10 @@ export default function RootLayout({
         <LocaleProvider>
         <CurrencyProvider>
         <DocumentLang />
-        <div className="bg-bg min-h-screen text-text-primary font-inter">
+        <MotionDiv
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="bg-bg/60 backdrop-blur-lg glass rounded-2xl shadow-2xl min-h-screen text-text-primary font-inter">
           <AuthProvider>
           <RoleProvider>
             <ThemeProvider>
@@ -79,7 +83,7 @@ export default function RootLayout({
             </ThemeProvider>
           </RoleProvider>
           </AuthProvider>
-        </div>
+        </MotionDiv>
         </CurrencyProvider>
         </LocaleProvider>
       </body>
