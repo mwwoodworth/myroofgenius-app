@@ -29,6 +29,14 @@ immediately on the success page and in your account dashboard.
 ### Theme Accent
 Pick a custom accent color from the Navbar color picker. Your choice is persisted in localStorage.
 
+## ✨ Visual Overhaul 2025
+The UI now features cinematic glassmorphism and playful animations. Key updates include:
+- Glassy navigation bar and announcement banner
+- Ripple animated call-to-action buttons
+- Floating glass cards for testimonials and marketplace listings
+
+Screenshots of the refreshed interface are available in `/docs/screenshots/`.
+
 ## 📁 Project Structure
 
 ```

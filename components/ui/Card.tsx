@@ -4,9 +4,10 @@ import clsx from 'clsx';
 
 interface CardProps extends HTMLMotionProps<'div'> {
   hover?: boolean
+  glass?: boolean
 }
 
-export default function Card({ hover = true, className, ...props }: CardProps) {
+export default function Card({ hover = true, glass = false, className, ...props }: CardProps) {
   const motionProps = hover
     ? {
         whileHover: {
@@ -22,7 +23,7 @@ export default function Card({ hover = true, className, ...props }: CardProps) {
   return (
     <motion.div
       {...motionProps}
-      className={clsx('rounded-lg bg-bg-card p-6 min-h-[44px]', className)}
+      className={clsx('rounded-lg p-6 min-h-[44px]', glass ? 'glass-card' : 'bg-bg-card', className)}
       {...props}
     />
   );

@@ -9,7 +9,7 @@ interface TestimonialProps {
 
 export default function Testimonial({ quote, author, title }: TestimonialProps) {
   return (
-    <Card className="text-center space-y-4">
+    <Card glass className="text-center space-y-4">
       <p className="text-text-secondary text-sm">&quot;{quote}&quot;</p>
       <div>
         <p className="font-semibold text-text-primary">{author}</p>
