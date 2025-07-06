@@ -16,3 +16,4 @@
 - Demo page now offers free sample via email signup
 - Success page promotes bundle upgrade with animated banner
 - Cinematic glassmorphic navbar, cards, and CTAs with ripple animation
+- Typed hero headline effect and parallax tilt carousel

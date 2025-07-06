@@ -34,6 +34,7 @@ The UI now features cinematic glassmorphism and playful animations. Key updates 
 - Glassy navigation bar and announcement banner
 - Ripple animated call-to-action buttons
 - Floating glass cards for testimonials and marketplace listings
+- Typed hero headline and tilt-animated tool carousel
 
 Screenshots of the refreshed interface are available in `/docs/screenshots/`.
 

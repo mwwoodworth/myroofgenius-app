@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { Shield, ArrowRight, Play, CheckCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { AnimatedGradient, Hero3D } from '../components/ui'
+import { AnimatedGradient, Hero3D, TypingText } from '../components/ui'
 import FeaturedToolsCarousel from '../components/marketing/FeaturedToolsCarousel'
 import EmailSignupForm from '../components/marketing/EmailSignupForm'
 import ActiveUsersBadge from '../components/marketing/ActiveUsersBadge'
@@ -30,8 +30,7 @@ export default function HomePage() {
             transition={{ type: 'spring', stiffness: 80 }}
             className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
           >
-            Protect every project.
-            <span className="text-blue-400"> Grow every margin.</span>
+            <TypingText texts={["Protect every project.", "Grow every margin."]} className="text-blue-400" />
           </motion.h1>
           <ul className="text-slate-300 mb-8 space-y-2">
             <li className="flex items-start gap-2">
