@@ -15,7 +15,6 @@ function SpinningShape() {
   return (
     <mesh ref={ref}>
       <icosahedronGeometry args={[1, 0]} />
-      {/* @ts-expect-error three types */}
       <meshStandardMaterial color="#5E5CE6" />
     </mesh>
   );

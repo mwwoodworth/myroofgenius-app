@@ -12,10 +12,10 @@ import {
   Key
 } from 'lucide-react';
 import { ProtectionStatus } from '@/components/ui/protection-status';
-import dynamic from 'next/dynamic';
+import loadDynamic from 'next/dynamic';
 import EmptyState from '@/components/EmptyState';
 
-const Dashboard3D = dynamic(() => import('@/components/Dashboard3D'), { ssr: false });
+const Dashboard3D = loadDynamic(() => import('@/components/Dashboard3D'), { ssr: false });
 
 export const dynamic = 'force-dynamic';
 
