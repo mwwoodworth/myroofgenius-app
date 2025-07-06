@@ -38,6 +38,7 @@ const tools: Tool[] = [
 
 export default function FeaturedToolsCarousel() {
   const [index, setIndex] = useState(0)
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
   useEffect(() => {
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % tools.length)
@@ -62,7 +63,16 @@ export default function FeaturedToolsCarousel() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
-            className="absolute inset-0"
+            onMouseMove={(e) => {
+              const r = e.currentTarget.getBoundingClientRect()
+              setTilt({
+                x: ((e.clientY - r.top - r.height / 2) / r.height) * -10,
+                y: ((e.clientX - r.left - r.width / 2) / r.width) * 10,
+              })
+            }}
+            onMouseLeave={() => setTilt({ x: 0, y: 0 })}
+            style={{ rotateX: tilt.x, rotateY: tilt.y }}
+            className="absolute inset-0 glass-card"
           >
             <Image src={tools[index].image} alt={tools[index].name} fill className="object-cover" />
             <div className="absolute inset-0 bg-slate-900/50 flex flex-col items-center justify-center text-center p-4">

@@ -14,3 +14,4 @@ export { ToastProvider, useToast } from './Toast';
 export { default as Modal } from './Modal';
 export { PresenceProvider } from './PresenceProvider';
 export { default as PresenceAvatars } from './PresenceAvatars';
+export { default as TypingText } from './TypingText';
