@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { useConfetti } from '../../hooks/use-confetti';
+import UpgradeBanner from '../../components/marketing/UpgradeBanner';
 
 export default function SuccessPage() {
   const triggerConfetti = useConfetti();
@@ -11,6 +12,7 @@ export default function SuccessPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
+        <UpgradeBanner />
         <div className="text-center">
           <div className="mx-auto h-12 w-12 text-green-500">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
