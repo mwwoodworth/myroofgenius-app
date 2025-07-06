@@ -13,14 +13,18 @@ export const dynamic = 'force-dynamic'
 export default function HomePage() {
   const { messages } = useLocale();
   return (
-    <section className="relative overflow-hidden bg-slate-900 py-24">
+    <motion.section
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.6 }}
+      className="relative overflow-hidden bg-slate-900 py-24 backdrop-blur-lg bg-white/10 rounded-2xl shadow-2xl">
       <AnimatedGradient />
       <div className="absolute top-6 right-6">
         <ActiveUsersBadge />
       </div>
       <div className="container relative mx-auto px-4 max-w-6xl">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
+          <div className="inline-flex items-center space-x-2 bg-white/30 backdrop-blur-lg rounded-full shadow-2xl px-4 py-2 mb-8">
             <Shield className="w-5 h-5 text-green-400" />
             <span className="text-sm font-medium text-white">Trusted by 2,800+ contractors</span>
           </div>
@@ -53,14 +57,14 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
               href="/get-started"
-              className="inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors glow-btn animate-ripple"
+              className="inline-flex items-center justify-center px-8 py-4 bg-blue-600/80 backdrop-blur-lg text-white rounded-2xl shadow-2xl font-semibold text-lg hover:bg-blue-700 transition-colors glow-btn animate-ripple"
             >
               {messages.home.startTrial}
               <ArrowRight className="ml-2 w-5 h-5" />
             </Link>
             <Link
               href="/demo"
-              className="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-lg font-semibold text-lg hover:bg-white/20 transition-colors glow-btn animate-ripple"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white/30 backdrop-blur-lg text-white rounded-2xl shadow-2xl font-semibold text-lg hover:bg-white/20 transition-colors glow-btn animate-ripple"
             >
               <Play className="mr-2 w-5 h-5" />
               {messages.home.watchDemo}
@@ -85,6 +89,6 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-    </section>
+      </motion.section>
   )
 }

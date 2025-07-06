@@ -23,7 +23,7 @@ export default function Card({ hover = true, glass = false, className, ...props 
   return (
     <motion.div
       {...motionProps}
-      className={clsx('rounded-lg p-6 min-h-[44px]', glass ? 'glass-card' : 'bg-bg-card', className)}
+      className={clsx('rounded-2xl p-6 min-h-[44px]', glass ? 'glass-card backdrop-blur-lg bg-white/30 shadow-2xl' : 'bg-bg-card', className)}
       {...props}
     />
   );

@@ -32,7 +32,7 @@ export default function Modal({ open, onClose, children }: ModalProps) {
               });
             }}
             style={{ rotateX: pos.y * -10, rotateY: pos.x * 10 }}
-            className="relative w-full max-w-lg p-6 glass rounded-xl text-white shadow-2xl"
+            className="relative w-full max-w-lg p-6 glass bg-white/30 backdrop-blur-lg rounded-2xl text-white shadow-2xl"
           >
             <button
               onClick={onClose}

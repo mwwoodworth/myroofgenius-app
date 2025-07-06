@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import clsx from 'clsx'
 import Button from '../ui/Button'
 import Lottie from 'lottie-react'
 import successAnim from '../../public/empty-box.json'
@@ -21,7 +22,12 @@ export default function EmailSignupForm({className=""}:{className?:string}) {
     }
   }
   return (
-    <form onSubmit={submit} className={`space-y-4 ${className}`}>\
+    <motion.form
+      onSubmit={submit}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className={clsx('space-y-4 glass backdrop-blur-lg bg-white/30 rounded-2xl shadow-2xl p-6', className)}>
       {status==='success' ? (
         <motion.div initial={{opacity:0}} animate={{opacity:1}} className="flex flex-col items-center text-center">
           <Lottie animationData={successAnim} className="w-24 h-24" loop={false}/>
@@ -37,6 +43,6 @@ export default function EmailSignupForm({className=""}:{className?:string}) {
           {status==='error' && <p className="text-red-600 text-sm text-center">Something went wrong.</p>}
         </>
       )}
-    </form>
+    </motion.form>
   )
 }

@@ -51,7 +51,7 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 70 }}
-        className="glass-navbar fixed top-0 w-full flex items-center justify-between px-8 py-4 z-50"
+        className="glass-navbar rounded-2xl shadow-2xl fixed top-0 w-full flex items-center justify-between px-8 py-4 z-50"
       >
         <div className="text-accent text-2xl font-bold">MyRoofGenius</div>
         <div className="hidden md:flex gap-6">
@@ -104,7 +104,7 @@ export default function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="md:hidden bg-[rgba(35,35,35,0.9)] backdrop-blur-xl border-b border-[rgba(255,255,255,0.07)] fixed top-16 w-full z-40 overflow-hidden"
+            className="md:hidden bg-[rgba(35,35,35,0.9)] backdrop-blur-xl border-b border-[rgba(255,255,255,0.07)] rounded-b-2xl shadow-2xl fixed top-16 w-full z-40 overflow-hidden"
           >
             {links.map(({ href, label }) => (
               <a
