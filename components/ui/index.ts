@@ -12,3 +12,5 @@ export { default as AnimatedGradient } from './AnimatedGradient';
 export { default as Hero3D } from './Hero3D';
 export { ToastProvider, useToast } from './Toast';
 export { default as Modal } from './Modal';
+export { PresenceProvider } from './PresenceProvider';
+export { default as PresenceAvatars } from './PresenceAvatars';

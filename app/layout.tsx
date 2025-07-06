@@ -1,6 +1,6 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider, ToastProvider } from '../components/ui';
+import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider, ToastProvider, PresenceProvider } from '../components/ui';
 import type { ReactNode } from 'react';
 import { AuthProvider } from '../src/context/AuthContext';
 import { LocaleProvider } from '../src/context/LocaleContext';
@@ -52,27 +52,29 @@ export default function RootLayout({
           <RoleProvider>
             <ThemeProvider>
               <ToastProvider>
-              {arModeEnabled ? (
-                <ARModeProvider>
-                  <Navbar />
-                  <AnnouncementBanner />
-                  <RoleSwitcher />
-                  <ErrorBoundary>
-                    {children}
-                  </ErrorBoundary>
-                  {aiCopilotEnabled && <CopilotWrapper />}
-                </ARModeProvider>
-              ) : (
-                <>
-                  <Navbar />
-                  <AnnouncementBanner />
-                  <RoleSwitcher />
-                  <ErrorBoundary>
-                    {children}
-                  </ErrorBoundary>
-                  {aiCopilotEnabled && <CopilotWrapper />}
-                </>
-              )}
+                <PresenceProvider room="global">
+                {arModeEnabled ? (
+                  <ARModeProvider>
+                    <Navbar />
+                    <AnnouncementBanner />
+                    <RoleSwitcher />
+                    <ErrorBoundary>
+                      {children}
+                    </ErrorBoundary>
+                    {aiCopilotEnabled && <CopilotWrapper />}
+                  </ARModeProvider>
+                ) : (
+                  <>
+                    <Navbar />
+                    <AnnouncementBanner />
+                    <RoleSwitcher />
+                    <ErrorBoundary>
+                      {children}
+                    </ErrorBoundary>
+                    {aiCopilotEnabled && <CopilotWrapper />}
+                  </>
+                )}
+                </PresenceProvider>
               </ToastProvider>
             </ThemeProvider>
           </RoleProvider>
