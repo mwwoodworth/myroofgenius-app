@@ -14,7 +14,6 @@ const CRITICAL_CACHE = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('[ServiceWorker] Caching critical resources');
       return cache.addAll(CRITICAL_CACHE);
     })
   );

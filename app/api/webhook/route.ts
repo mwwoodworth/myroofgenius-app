@@ -76,7 +76,6 @@ export async function POST(req: Request) {
       .eq('idempotency_key', idempotencyKey)
       .maybeSingle();
     if (existing) {
-      console.log('Duplicate webhook via idempotency key');
       return NextResponse.json({ received: true });
     }
   }
@@ -103,7 +102,6 @@ export async function POST(req: Request) {
         .neq('id', correlationId)
         .maybeSingle();
       if (existing) {
-        console.log('Duplicate webhook received, skipping');
         return NextResponse.json({ received: true });
       }
 
@@ -113,7 +111,6 @@ export async function POST(req: Request) {
         .eq('id', session.metadata?.order_id || '')
         .single();
       if (order?.status === 'completed') {
-        console.log('Order already completed');
         return NextResponse.json({ received: true });
       }
 
@@ -122,7 +119,7 @@ export async function POST(req: Request) {
       const expiresAt = new Date();
       expiresAt.setDate(expiresAt.getDate() + 7);
 
-      const { error: updateError } = (await withRetry(async () =>
+      const { error: updateError } = await withRetry(async () =>
         supabase
           .from('orders')
           .update({
@@ -130,16 +127,15 @@ export async function POST(req: Request) {
             stripe_session_id: session.id,
             payment_intent: session.payment_intent as string,
           })
-        .eq('id', session.metadata?.order_id || '')
-          .throwOnError()
-      )) as any;
+          .eq('id', session.metadata?.order_id || '')
+      );
 
       if (updateError) {
         console.error('Order update failed:', updateError);
         throw updateError;
       }
 
-      const { error: downloadError } = (await withRetry(async () =>
+      const { error: downloadError } = await withRetry(async () =>
         supabase
           .from('downloads')
           .insert({
@@ -149,8 +145,7 @@ export async function POST(req: Request) {
             token: downloadToken,
             expires_at: expiresAt.toISOString(),
           })
-          .throwOnError()
-      )) as any;
+      );
 
       if (downloadError) {
         // rollback order status
@@ -167,7 +162,7 @@ export async function POST(req: Request) {
 
       // Send confirmation email (non-blocking)
       try {
-        console.log('Sending confirmation email for', session.metadata?.order_id);
+        // Optionally integrate with email service
       } catch (emailErr) {
         await withRetry(async () =>
           supabase
@@ -181,7 +176,7 @@ export async function POST(req: Request) {
         console.error('Email send failed, queued for retry', emailErr);
       }
 
-      console.log('Order completed:', session.metadata?.order_id, 'correlation', correlationId);
+
 
     } catch (error) {
       console.error('Webhook processing error:', error);

@@ -1,14 +1,20 @@
-import { NextResponse } from 'next/server'
-import { ComplianceEngine } from '@/lib/compliance/engine'
+import { NextResponse } from 'next/server';
+import { ComplianceEngine } from '@/lib/compliance/engine';
 
-async function saveComplianceReport(report: any) {
+interface Project {
+  location?: { state?: string };
+  windRating?: number;
+  [key: string]: unknown;
+}
+
+async function saveComplianceReport(_report: unknown) {
   // placeholder for persistence logic
-  console.log('Saving compliance report', report.projectId)
 }
 
 export async function POST(request: Request) {
-  const project = await request.json()
-  const engine = new ComplianceEngine()
+  try {
+    const project = (await request.json()) as Project;
+    const engine = new ComplianceEngine();
 
   if (project.location?.state === 'FL') {
     engine.registerCheck({
@@ -25,7 +31,11 @@ export async function POST(request: Request) {
     })
   }
 
-  const report = await engine.runComplianceCheck(project)
-  await saveComplianceReport(report)
-  return NextResponse.json(report)
+    const report = await engine.runComplianceCheck(project);
+    await saveComplianceReport(report);
+    return NextResponse.json(report);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Operation failed';
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 }

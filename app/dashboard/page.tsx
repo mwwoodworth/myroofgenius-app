@@ -503,7 +503,11 @@ export default async function Dashboard() {
                   <div className="space-y-3">
                     {data.favorites.map((fav: any) => (
                       <div key={fav.product_id} className="flex items-center gap-3">
-                        <img src={fav.products?.image_url || ''} alt="" className="w-8 h-8 rounded" />
+                        <img
+                          src={fav.products?.image_url || ''}
+                          alt={fav.products?.name || 'Favorite product'}
+                          className="w-8 h-8 rounded"
+                        />
                         <div className="flex-1">
                           <p className="text-sm font-medium">
                             {fav.products?.name}
