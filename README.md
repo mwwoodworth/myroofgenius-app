@@ -22,6 +22,11 @@ npm test
 npm run build
 ```
 
+### Build Stability 2025
+- Added `pages/_app.tsx` with `SessionProvider` to share NextAuth sessions.
+- Verified Stripe webhook handler and Supabase auth helpers.
+- `npm run build`, `npm run lint`, and tests all pass.
+
 ### Purchasing Tools
 All marketplace products use Stripe checkout. After payment you’ll receive a download link
 immediately on the success page and in your account dashboard.
