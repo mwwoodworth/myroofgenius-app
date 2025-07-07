@@ -3,7 +3,7 @@
 ## Date: 2025-06-16
 
 ### Vercel Project: myroofgenius-app
-- Domains: `myroofgenius.com` ✅, `www.myroofgenius.com` ❌ (CNAME record missing; pending DNS update).
+- Domains: `myroofgenius.com` ✅, `www.myroofgenius.com` ✅ (CNAME record added).
 - Environment variables added:
   - `NEXT_PUBLIC_SUPABASE_URL`
   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
