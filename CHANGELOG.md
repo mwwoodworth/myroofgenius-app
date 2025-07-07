@@ -18,3 +18,4 @@
 - Cinematic glassmorphic navbar, cards, and CTAs with ripple animation
 - Typed hero headline effect and parallax tilt carousel
 - Marketplace JS error resolved and forms now validate emails
+- Build restored with SessionProvider; all lint/tests pass

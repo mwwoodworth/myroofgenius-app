@@ -1,9 +1,9 @@
-Build failed due to ESLint errors:
+Build errors have been resolved. The following issues were fixed:
 
-- app/api/webhook/route.ts: trailing spaces and unexpected `any` usage
-- app/success/page.tsx: unused `searchParams` parameter and trailing spaces
-- components/Dashboard3D.tsx and EstimatorAR.tsx: requires `@ts-expect-error` instead of `@ts-ignore`
-- components/ui/Button.tsx and Card.tsx: unexpected `any` types
-- components/CopilotPanel.tsx: multiple `any` usages
+- app/api/webhook/route.ts: removed trailing spaces and replaced `any` casts.
+- app/success/page.tsx: removed unused parameters and whitespace.
+- components/Dashboard3D.tsx and EstimatorAR.tsx: replaced `@ts-ignore` with `@ts-expect-error`.
+- components/ui/Button.tsx and Card.tsx: typed generic props instead of `any`.
+- components/CopilotPanel.tsx: cleaned up `any` usages.
 
-See /tmp/build.log for full output.
+`npm run build` and `npm run lint` now pass.
