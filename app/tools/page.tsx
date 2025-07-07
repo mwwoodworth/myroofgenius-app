@@ -1,6 +1,8 @@
 'use client'
 import { Calculator, FileSpreadsheet, Layers, TrendingUp, DollarSign, Clock } from 'lucide-react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
+import Card from '@/components/ui/Card'
 
 export default function ToolsPage() {
   const tools = [
@@ -100,7 +102,10 @@ export default function ToolsPage() {
 
 function ToolCard({ name, description, features, link, icon, saveTime }) {
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6 hover:shadow-xl transition-all">
+    <Card
+      glass
+      className="bg-white/30 backdrop-blur-lg shadow-xl border border-white/20 p-6"
+    >
       <div className="flex items-start justify-between mb-4">
         <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
           {icon}
@@ -113,16 +118,22 @@ function ToolCard({ name, description, features, link, icon, saveTime }) {
       <p className="text-slate-600 mb-4">{description}</p>
       <ul className="space-y-2 mb-6">
         {features.map((feature, i) => (
-          <li key={i} className="flex items-center text-sm text-slate-700">
+          <motion.li
+            key={i}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.05 }}
+            className="flex items-center text-sm text-slate-700"
+          >
             <span className="text-green-500 mr-2">✓</span>
             {feature}
-          </li>
+          </motion.li>
         ))}
       </ul>
       <Link href={link} className="block text-center py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold">
         Open Tool →
       </Link>
-    </div>
+    </Card>
   )
 }
 
