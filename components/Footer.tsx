@@ -1,11 +1,10 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Github, Twitter } from 'lucide-react'
+import { Github } from 'lucide-react'
 
 export default function Footer() {
   const icons = [
-    { href: 'https://github.com/myroofgenius', Icon: Github },
-    { href: 'https://twitter.com/myroofgenius', Icon: Twitter },
+    { href: 'https://github.com/mwwoodworth/myroofgenius-app', Icon: Github },
   ]
   return (
     <motion.footer

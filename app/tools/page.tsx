@@ -3,7 +3,6 @@ import { Calculator, FileSpreadsheet, Layers, TrendingUp, DollarSign, Clock } fr
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Card from '@/components/ui/Card'
-
 export default function ToolsPage() {
   const tools = [
     {

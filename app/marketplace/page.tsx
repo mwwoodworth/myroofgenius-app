@@ -480,12 +480,14 @@ export default function Marketplace() {
                       {/* Features */}
                       <div className="mb-4">
                         <ul className="text-xs text-gray-500 space-y-1">
-                          {product.features.split(',').slice(0, 3).map((feature, idx) => (
-                            <li key={idx} className="flex items-center gap-1">
-                              <span className="text-green-500">✓</span>
-                              {feature.trim()}
-                            </li>
-                          ))}
+                          {(product.features ? product.features.split(',') : [])
+                            .slice(0, 3)
+                            .map((feature, idx) => (
+                              <li key={idx} className="flex items-center gap-1">
+                                <span className="text-green-500">✓</span>
+                                {feature.trim()}
+                              </li>
+                            ))}
                         </ul>
                       </div>
 
