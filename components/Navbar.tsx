@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import type { User } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from 'framer-motion';
+import AnimatedGradient from './ui/AnimatedGradient';
 import { Menu, X } from 'lucide-react';
 import { ThemeToggle, AccentColorPicker } from './ui';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -51,14 +52,20 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 70 }}
-        className="glass-navbar rounded-2xl shadow-2xl fixed top-0 w-full flex items-center justify-between px-8 py-4 z-50"
+        className="glass-navbar rounded-2xl shadow-2xl fixed top-0 w-full flex items-center justify-between px-8 py-4 z-50 overflow-hidden"
       >
+        <AnimatedGradient />
         <div className="text-accent text-2xl font-bold">MyRoofGenius</div>
         <div className="hidden md:flex gap-6">
           {links.map(({ href, label }) => (
-            <a key={href} href={href} className="hover:text-accent transition">
+            <motion.a
+              key={href}
+              href={href}
+              whileHover={{ scale: 1.1 }}
+              className="hover:text-accent transition"
+            >
               {label}
-            </a>
+            </motion.a>
           ))}
         </div>
         <div className="hidden md:flex items-center gap-4">
@@ -76,7 +83,7 @@ export default function Navbar() {
               <a href="/dashboard" className="text-sm font-medium hover:text-accent">
                 Dashboard
               </a>
-              <button onClick={handleSignOut} className="rounded-xl px-5 py-2 border border-accent text-accent hover:bg-accent hover:text-white transition">
+              <button onClick={handleSignOut} className="rounded-xl px-5 py-2 border border-accent text-accent hover:bg-accent hover:text-white transition glow-btn animate-ripple">
                 Sign Out
               </button>
             </>
@@ -85,12 +92,13 @@ export default function Navbar() {
               <a href="/login" className="text-sm font-medium hover:text-accent">
                 Sign In
               </a>
-              <a
+              <motion.a
                 href="/signup"
-                className="rounded-xl px-5 py-2 bg-accent text-white font-bold shadow-md hover:scale-105 transition glow-btn animate-ripple"
+                whileHover={{ scale: 1.05 }}
+                className="rounded-xl px-5 py-2 bg-accent text-white font-bold shadow-md transition glow-btn animate-ripple"
               >
                 Start Free Trial
-              </a>
+              </motion.a>
             </>
           )}
         </div>
@@ -106,15 +114,17 @@ export default function Navbar() {
             exit={{ height: 0, opacity: 0 }}
             className="md:hidden bg-[rgba(35,35,35,0.9)] backdrop-blur-xl border-b border-[rgba(255,255,255,0.07)] rounded-b-2xl shadow-2xl fixed top-16 w-full z-40 overflow-hidden"
           >
+            <AnimatedGradient />
             {links.map(({ href, label }) => (
-              <a
+              <motion.a
                 key={href}
                 href={href}
+                whileTap={{ scale: 0.95 }}
                 className="block px-8 py-4 border-b border-[rgba(255,255,255,0.07)] hover:text-accent"
                 onClick={() => setOpen(false)}
               >
                 {label}
-              </a>
+              </motion.a>
             ))}
             {user?.user_metadata?.role === 'admin' && (
               <a
@@ -153,13 +163,14 @@ export default function Navbar() {
                 >
                   Sign In
                 </a>
-                <a
+                <motion.a
                   href="/signup"
+                  whileTap={{ scale: 0.95 }}
                   className="block px-8 py-4 border-b border-[rgba(255,255,255,0.07)] hover:text-accent glow-btn animate-ripple"
                   onClick={() => setOpen(false)}
                 >
                   Start Free Trial
-                </a>
+                </motion.a>
               </>
             )}
             <div className="p-4 space-y-2">

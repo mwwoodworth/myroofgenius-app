@@ -104,6 +104,9 @@ function ToolCard({ name, description, features, link, icon, saveTime }) {
   return (
     <Card
       glass
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       className="bg-white/30 backdrop-blur-lg shadow-xl border border-white/20 p-6"
     >
       <div className="flex items-start justify-between mb-4">

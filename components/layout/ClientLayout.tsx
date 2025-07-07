@@ -10,6 +10,7 @@ import AnnouncementBanner from '../AnnouncementBanner';
 import ErrorBoundary from '../ErrorBoundary';
 import CopilotWrapper from './CopilotWrapper';
 import AnimatedLayout from './AnimatedLayout';
+import Footer from '../Footer';
 import { aiCopilotEnabled, arModeEnabled } from '../../app/lib/features';
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
@@ -30,6 +31,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
                         <RoleSwitcher />
                         <ErrorBoundary>{children}</ErrorBoundary>
                         {aiCopilotEnabled && <CopilotWrapper />}
+                        <Footer />
                       </ARModeProvider>
                     ) : (
                       <>
@@ -38,6 +40,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
                         <RoleSwitcher />
                         <ErrorBoundary>{children}</ErrorBoundary>
                         {aiCopilotEnabled && <CopilotWrapper />}
+                        <Footer />
                       </>
                     )}
                   </PresenceProvider>

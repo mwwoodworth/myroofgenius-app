@@ -17,6 +17,7 @@ export default function Card({ hover = true, glass = false, className, ...props 
           boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
           transition: { type: 'spring' as const, stiffness: 200, damping: 15 },
         },
+        whileTap: { scale: 0.97 },
         style: { perspective: 1000 },
       }
     : {};
