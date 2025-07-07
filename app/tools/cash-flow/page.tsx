@@ -20,7 +20,10 @@ export default function CashFlow() {
           <p>✓ Weather delay impacts</p>
           <p>✓ Multi-project view</p>
         </div>
-        <Link href="/signup" className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">Create Free Account</Link>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link href="/demo" className="px-6 py-3 bg-gray-200 rounded-lg font-semibold hover:bg-gray-300 text-gray-800">Try Demo</Link>
+          <Link href="/signup" className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">Create Free Account</Link>
+        </div>
       </div>
     </div>
   )

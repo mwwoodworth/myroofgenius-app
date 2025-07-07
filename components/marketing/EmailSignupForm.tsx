@@ -12,6 +12,11 @@ export default function EmailSignupForm({className=""}:{className?:string}) {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      setStatus('error')
+      return
+    }
     setStatus('loading')
     try {
       const res = await fetch('/api/subscribe', {method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({email})})
@@ -40,7 +45,7 @@ export default function EmailSignupForm({className=""}:{className?:string}) {
             {status==='loading' ? 'Submitting...' : 'Get Free Sample'}
           </Button>
           <p className="text-xs text-gray-500 text-center">We respect your privacy. Unsubscribe anytime.</p>
-          {status==='error' && <p className="text-red-600 text-sm text-center">Something went wrong.</p>}
+          {status==='error' && <p className="text-red-600 text-sm text-center">Enter a valid email to receive the sample.</p>}
         </>
       )}
     </motion.form>

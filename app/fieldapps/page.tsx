@@ -4,6 +4,7 @@ import Button from '../../components/ui/Button';
 
 export const dynamic = 'force-dynamic';
 
+
 export default function FieldApps() {
   const apps = [
     {
@@ -35,7 +36,7 @@ export default function FieldApps() {
               <h3 className="text-xl font-semibold mb-2">{app.title}</h3>
               <p className="text-text-secondary mb-4">{app.description}</p>
             </div>
-            <Button onClick={() => window.open(app.url, '_blank')}>Open App</Button>
+            <Button onClick={() => window.open(app.url, '_blank')}>Try Demo</Button>
           </Card>
         ))}
       </div>
