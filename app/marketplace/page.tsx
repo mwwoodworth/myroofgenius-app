@@ -9,6 +9,7 @@ import { Search, Filter, Star, ShoppingCart, Eye } from 'lucide-react';
 import ProductCarousel from '../../components/marketplace/ProductCarousel';
 import ContractorGrid from '../../components/marketplace/ContractorGrid';
 import { Product as RecommendedProduct, Contractor } from '../../types/marketplace';
+import Testimonials from '../../components/marketing/Testimonials';
 
 const categories = [
   { id: 'all', name: 'All Products', icon: '🏠' },
@@ -564,6 +565,8 @@ export default function Marketplace() {
           </main>
         </div>
       </div>
+
+      <Testimonials className="bg-gray-50" />
 
       {/* Newsletter CTA */}
       <motion.section
