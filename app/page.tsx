@@ -6,6 +6,7 @@ const MotionLink = motion(Link)
 import { AnimatedGradient, Hero3D, TypingText } from '../components/ui'
 import FeaturedToolsCarousel from '../components/marketing/FeaturedToolsCarousel'
 import EmailSignupForm from '../components/marketing/EmailSignupForm'
+import Testimonials from '../components/marketing/Testimonials'
 import ActiveUsersBadge from '../components/marketing/ActiveUsersBadge'
 import { useLocale } from '../src/context/LocaleContext'
 
@@ -14,6 +15,7 @@ export const dynamic = 'force-dynamic'
 export default function HomePage() {
   const { messages } = useLocale();
   return (
+    <>
     <motion.section
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -87,11 +89,13 @@ export default function HomePage() {
               <span className="text-slate-300">99.9% Uptime</span>
             </div>
           </div>
-          <div className="mt-12 max-w-md">
-            <EmailSignupForm />
-          </div>
-        </div>
+      <div className="mt-12 max-w-md">
+        <EmailSignupForm />
       </div>
-      </motion.section>
+    </div>
+  </div>
+  </motion.section>
+  <Testimonials className="bg-gray-50" />
+  </>
   )
 }

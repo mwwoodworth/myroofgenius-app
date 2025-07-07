@@ -10,17 +10,17 @@ export default function FieldApps() {
     {
       title: 'Smart Field Inspection',
       description: 'Capture photos, annotate issues, and auto-log GPS/metadata.',
-      url: 'https://claude.ai/inspection'
+      url: null
     },
     {
       title: 'On-Site Proposal Generator',
       description: 'Instantly draft proposals and estimates from your phone.',
-      url: 'https://claude.ai/proposal'
+      url: null
     },
     {
       title: 'Real-Time Punchlist Dashboard',
       description: 'Track project tasks collaboratively with AI suggestions.',
-      url: 'https://claude.ai/punchlist'
+      url: null
     }
   ];
   return (
@@ -36,7 +36,11 @@ export default function FieldApps() {
               <h3 className="text-xl font-semibold mb-2">{app.title}</h3>
               <p className="text-text-secondary mb-4">{app.description}</p>
             </div>
-            <Button onClick={() => window.open(app.url, '_blank')}>Try Demo</Button>
+            {app.url ? (
+              <Button onClick={() => window.open(app.url!, '_blank')}>Try Demo</Button>
+            ) : (
+              <Button disabled className="bg-gray-300 text-gray-600 cursor-not-allowed">Coming Soon</Button>
+            )}
           </Card>
         ))}
       </div>
