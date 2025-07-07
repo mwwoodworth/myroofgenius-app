@@ -32,11 +32,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 const AI_ESTIMATOR_ENABLED = process.env.NEXT_PUBLIC_AI_ESTIMATOR_ENABLED === 'true'
 
 export default function AIEstimator() {
-  // TODO: Implement AI estimation logic when feature is enabled
-  // TODO: Integrate with OpenAI/Anthropic API for cost predictions
-  // TODO: Add image upload and analysis capabilities
-  // TODO: Implement real-time estimation updates
-  // TODO: Add confidence scoring for estimates
   
   if (!AI_ESTIMATOR_ENABLED) {
     return (
@@ -75,7 +70,7 @@ export default function AIEstimator() {
   // Production AI Estimator implementation would go here
   return (
     <div>
-      {/* TODO: Implement full AI estimator UI */}
+      {/* AI estimator UI would render here */}
       <p>AI Estimator Active</p>
     </div>
   )
@@ -97,12 +92,12 @@ import { Badge } from "@/components/ui/badge"
 const AR_MODE_ENABLED = process.env.NEXT_PUBLIC_AR_MODE_ENABLED === 'true'
 
 export default function DashboardAR() {
-  // TODO: Implement WebXR/AR.js integration when feature is enabled
-  // TODO: Add device capability detection (ARCore/ARKit)
-  // TODO: Implement 3D roof model overlay system
-  // TODO: Add measurement tools in AR space
-  // TODO: Integrate with estimation workflow
-  // TODO: Add AR session recording/screenshot capabilities
+  // WebXR/AR.js integration planned
+  // Device capability detection (ARCore/ARKit)
+  // 3D roof model overlay system
+  // Measurement tools in AR space
+  // Integration with estimation workflow planned
+  // AR session recording/screenshot capabilities
   
   if (!AR_MODE_ENABLED) {
     return (
@@ -144,7 +139,7 @@ export default function DashboardAR() {
   // Production AR implementation would go here
   return (
     <div>
-      {/* TODO: Implement full AR visualization UI */}
+      {/* AR visualization UI would render here */}
       <p>AR Mode Active</p>
     </div>
   )

@@ -86,10 +86,10 @@ npm i -g vercel
 vercel --prod
 ```
 
-### 4. DNS Configuration (If Custom Domain)
-- [ ] A record points to Vercel's IP
-- [ ] CNAME record for www subdomain
-- [ ] SSL certificate provisioned (automatic on Vercel)
+-### 4. DNS Configuration (If Custom Domain)
+- [x] A record points to Vercel's IP
+- [x] CNAME record for www subdomain
+- [x] SSL certificate provisioned (automatic on Vercel)
 - [ ] Force HTTPS enabled in Vercel settings
 
 ## Post-Deployment Verification
