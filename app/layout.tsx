@@ -1,20 +1,12 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider, ToastProvider, PresenceProvider } from '../components/ui';
 import type { ReactNode } from 'react';
-import { AuthProvider } from '../src/context/AuthContext';
-import { LocaleProvider } from '../src/context/LocaleContext';
-import { CurrencyProvider } from '../src/context/CurrencyContext';
-import DocumentLang from '../components/DocumentLang';
-import Navbar from '../components/Navbar';
-import AnnouncementBanner from '../components/AnnouncementBanner';
-import ErrorBoundary from '../components/ErrorBoundary';
-import CopilotWrapper from '../components/layout/CopilotWrapper';
 import dynamicImport from 'next/dynamic';
-const Starfield = dynamicImport(() => import('../components/Starfield'), { ssr: false });
-import AnimatedLayout from '../components/layout/AnimatedLayout';
 import './lib/sentry';
-import { maintenanceMode, aiCopilotEnabled, arModeEnabled } from './lib/features';
+import { maintenanceMode } from './lib/features';
+
+const Starfield = dynamicImport(() => import('../components/Starfield'), { ssr: false });
+const ClientLayout = dynamicImport(() => import('../components/layout/ClientLayout'), { ssr: false });
 
 export const dynamic = 'force-dynamic';
 
@@ -45,44 +37,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={inter.className}>
         <Starfield />
-        <LocaleProvider>
-        <CurrencyProvider>
-        <DocumentLang />
-        <AnimatedLayout>
-          <AuthProvider>
-          <RoleProvider>
-            <ThemeProvider>
-              <ToastProvider>
-                <PresenceProvider room="global">
-                {arModeEnabled ? (
-                  <ARModeProvider>
-                    <Navbar />
-                    <AnnouncementBanner />
-                    <RoleSwitcher />
-                    <ErrorBoundary>
-                      {children}
-                    </ErrorBoundary>
-                    {aiCopilotEnabled && <CopilotWrapper />}
-                  </ARModeProvider>
-                ) : (
-                  <>
-                    <Navbar />
-                    <AnnouncementBanner />
-                    <RoleSwitcher />
-                    <ErrorBoundary>
-                      {children}
-                    </ErrorBoundary>
-                    {aiCopilotEnabled && <CopilotWrapper />}
-                  </>
-                )}
-                </PresenceProvider>
-              </ToastProvider>
-            </ThemeProvider>
-          </RoleProvider>
-          </AuthProvider>
-        </AnimatedLayout>
-        </CurrencyProvider>
-        </LocaleProvider>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
