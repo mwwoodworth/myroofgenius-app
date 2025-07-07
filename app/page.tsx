@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { Shield, ArrowRight, Play, CheckCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
+const MotionLink = motion(Link)
 import { AnimatedGradient, Hero3D, TypingText } from '../components/ui'
 import FeaturedToolsCarousel from '../components/marketing/FeaturedToolsCarousel'
 import EmailSignupForm from '../components/marketing/EmailSignupForm'
@@ -55,20 +56,22 @@ export default function HomePage() {
             <FeaturedToolsCarousel />
           </div>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link
+            <MotionLink
               href="/get-started"
-              className="inline-flex items-center justify-center px-8 py-4 bg-blue-600/80 backdrop-blur-lg text-white rounded-2xl shadow-2xl font-semibold text-lg hover:bg-blue-700 transition-colors glow-btn animate-ripple"
+              whileHover={{ scale: 1.05 }}
+              className="inline-flex items-center justify-center px-8 py-4 bg-blue-600/80 backdrop-blur-lg text-white rounded-2xl shadow-2xl font-semibold text-lg transition-colors glow-btn animate-ripple"
             >
               {messages.home.startTrial}
               <ArrowRight className="ml-2 w-5 h-5" />
-            </Link>
-            <Link
+            </MotionLink>
+            <MotionLink
               href="/demo"
-              className="inline-flex items-center justify-center px-8 py-4 bg-white/30 backdrop-blur-lg text-white rounded-2xl shadow-2xl font-semibold text-lg hover:bg-white/20 transition-colors glow-btn animate-ripple"
+              whileHover={{ scale: 1.05 }}
+              className="inline-flex items-center justify-center px-8 py-4 bg-white/30 backdrop-blur-lg text-white rounded-2xl shadow-2xl font-semibold text-lg transition-colors glow-btn animate-ripple"
             >
               <Play className="mr-2 w-5 h-5" />
               {messages.home.watchDemo}
-            </Link>
+            </MotionLink>
           </div>
           <div className="mt-12 flex flex-wrap gap-8">
             <div className="flex items-center space-x-3">
