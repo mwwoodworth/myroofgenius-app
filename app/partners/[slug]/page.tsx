@@ -6,8 +6,16 @@ export const dynamic = 'force-dynamic';
 
 interface Params { params: { slug: string } }
 
+interface Partner {
+  slug: string;
+  name: string;
+  description: string;
+  logo: string;
+  offer: string;
+}
+
 export default function PartnerPage({ params: { slug } }: Params) {
-  const partner = (partners as any[]).find(p => p.slug === slug);
+  const partner = (partners as Partner[]).find(p => p.slug === slug);
   if (!partner) return <div className="p-4">Partner not found</div>;
   return (
     <div className="max-w-2xl mx-auto p-6 space-y-4">

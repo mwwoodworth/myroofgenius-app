@@ -39,7 +39,7 @@ export default function FieldApps() {
             {app.url ? (
               <Button onClick={() => window.open(app.url!, '_blank')}>Try Demo</Button>
             ) : (
-              <Button disabled className="bg-gray-300 text-gray-600 cursor-not-allowed">Coming Soon</Button>
+              <Button disabled className="bg-gray-300 text-gray-600 cursor-not-allowed">Launching Q3 2025</Button>
             )}
           </Card>
         ))}

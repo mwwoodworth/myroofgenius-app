@@ -1,6 +1,7 @@
 import { createServerSupabaseClient, getUser } from '@/lib/supabase-auth-helpers';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   DollarSign,
   Package,
@@ -19,7 +20,13 @@ const Dashboard3D = loadDynamic(() => import('@/components/Dashboard3D'), { ssr:
 
 export const dynamic = 'force-dynamic';
 
-const profileCache = new Map<string, { data: any; timestamp: number }>();
+interface UserProfile {
+  full_name?: string;
+  company_name?: string;
+  is_admin?: boolean;
+}
+
+const profileCache = new Map<string, { data: UserProfile; timestamp: number }>();
 
 async function fetchProfile(supabase: ReturnType<typeof createServerSupabaseClient>, userId: string) {
   const cached = profileCache.get(userId);
@@ -438,7 +445,7 @@ export default async function Dashboard() {
                 <p className="text-gray-600 text-sm">No licenses issued</p>
               ) : (
                 <div className="space-y-2">
-                  {data.licenses.map((lic: any) => (
+                  {data.licenses.map((lic: { id: string; license_key: string }) => (
                     <div key={lic.id} className="flex items-center gap-2 text-sm">
                       <Key className="w-4 h-4 text-gray-400" />
                       <span className="font-mono break-all">{lic.license_key}</span>
@@ -501,11 +508,13 @@ export default async function Dashboard() {
                   <p className="text-gray-600 text-sm">No favorites yet</p>
                 ) : (
                   <div className="space-y-3">
-                    {data.favorites.map((fav: any) => (
+                    {(data.favorites as { product_id: string; products?: { image_url?: string; name?: string; price?: number } }[]).map((fav) => (
                       <div key={fav.product_id} className="flex items-center gap-3">
-                        <img
+                        <Image
                           src={fav.products?.image_url || ''}
                           alt={fav.products?.name || 'Favorite product'}
+                          width={32}
+                          height={32}
                           className="w-8 h-8 rounded"
                         />
                         <div className="flex-1">

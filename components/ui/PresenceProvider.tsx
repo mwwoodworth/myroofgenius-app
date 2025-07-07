@@ -1,7 +1,7 @@
 'use client';
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import type { User } from '@supabase/supabase-js';
+import type { RealtimeChannel } from '@supabase/supabase-js';
 
 export interface PresenceUser {
   id: string;
@@ -17,7 +17,7 @@ export function PresenceProvider({ room, children }: { room: string; children: R
 
   useEffect(() => {
     let mounted = true;
-    let channel: any;
+    let channel: RealtimeChannel;
 
     async function setup() {
       const {

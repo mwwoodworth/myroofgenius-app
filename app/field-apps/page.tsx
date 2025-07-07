@@ -1,5 +1,5 @@
 'use client'
-import { Shield, Download, Wifi, WifiOff, Camera, Mic, FileText, AlertTriangle } from 'lucide-react'
+import { Shield, WifiOff, Camera, FileText, AlertTriangle } from 'lucide-react'
 import Link from 'next/link'
 
 export default function FieldAppsPage() {
@@ -15,7 +15,7 @@ export default function FieldAppsPage() {
             Field Apps: Your Mobile Command Center
           </h1>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            When you're on a roof at 7 AM with a decision to make, you need systems 
+            When you&apos;re on a roof at 7 AM with a decision to make, you need systems
             that work with one bar of signal and gloves on. Built for real conditions, 
             not ideal ones.
           </p>

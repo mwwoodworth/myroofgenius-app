@@ -4,11 +4,11 @@ import { createClient } from '@supabase/supabase-js';
 
 export async function POST(request: NextRequest) {
   try {
-    const { analysis, address, roofImageUrl: _roofImageUrl, recommendations } = await request.json();
+    const { analysis, address, recommendations } = await request.json();
 
     const pdf = await PDFDocument.create();
     const page = pdf.addPage();
-    const { width: _width, height } = page.getSize();
+    const { height } = page.getSize();
     const font = await pdf.embedFont(StandardFonts.Helvetica);
 
     page.drawText('Roof Analysis Report', {

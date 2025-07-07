@@ -1,4 +1,4 @@
-import { Shield, AlertTriangle, XCircle, CheckCircle, Loader2 } from 'lucide-react'
+import { AlertTriangle, XCircle, CheckCircle, Loader2 } from 'lucide-react'
 import clsx from 'clsx'
 
 interface ProtectionStatusProps {

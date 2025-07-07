@@ -126,7 +126,7 @@ export default function Marketplace() {
     }
     const supabase = createClient(url, key);
 
-    const { data, error: _error } = await supabase
+    const { data } = await supabase
       .from('products')
       .select('*')
       .eq('is_active', true)

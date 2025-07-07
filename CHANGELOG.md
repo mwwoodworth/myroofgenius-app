@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v1.0.0 - 2025-07-07
 - Sitewide announcement banner with Supabase-backed announcements.
 - License key management and PDF invoice generation for orders.
 - Partner API endpoint for tenant product queries.

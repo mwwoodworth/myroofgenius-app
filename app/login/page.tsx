@@ -35,8 +35,8 @@ export default function LoginPage() {
     setError(null);
     try {
       await signIn(provider);
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Authentication error');
     }
   };
 
@@ -99,7 +99,7 @@ export default function LoginPage() {
           </button>
         </form>
         <p className="text-center text-sm">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Link href="/signup" className="text-accent underline">
             Sign up
           </Link>

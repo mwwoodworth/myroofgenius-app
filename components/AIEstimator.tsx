@@ -57,7 +57,7 @@ export default function AIEstimator() {
       };
       reader.readAsDataURL(file);
     }
-  }, []);
+  }, [triggerConfetti]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,

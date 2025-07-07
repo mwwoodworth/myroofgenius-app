@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import { Rnd } from 'react-rnd';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRole, PresenceProvider, PresenceAvatars } from './ui';
 import type { Role } from './ui/RoleProvider';
 
@@ -43,6 +43,7 @@ export default function CopilotPanel({
   initialPrompt?: string;
 }) {
   const [input, setInput] = useState('');
+  const inputRef = useRef('');
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [messages, setMessages] = useState<Msg[]>([]);
@@ -50,6 +51,9 @@ export default function CopilotPanel({
   const [saved, setSaved] = useState(false);
   const recognizer = useRef<SpeechRecognition | null>(null);
   const initialSent = useRef(false);
+  useEffect(() => {
+    inputRef.current = input;
+  }, [input]);
 
   const { role: userRole, setRole } = useRole();
 
@@ -105,19 +109,7 @@ export default function CopilotPanel({
     }
   }, [messages]);
 
-  useEffect(() => {
-    if (open && initialPrompt && !initialSent.current) {
-      initialSent.current = true;
-      send(initialPrompt);
-    }
-    if (!open) {
-      initialSent.current = false;
-    }
-  }, [open, initialPrompt]);
-
-  if (!open) return null;
-
-  const appendAssistant = (text: string) => {
+  const appendAssistant = useCallback((text: string) => {
     setMessages((m) => {
       const copy = [...m];
       const last = copy[copy.length - 1];
@@ -128,10 +120,10 @@ export default function CopilotPanel({
       }
       return copy.slice(-50);
     });
-  };
+  }, []);
 
-  const send = async (content?: string) => {
-    const msg = content ?? input;
+  const send = useCallback(async (content?: string) => {
+    const msg = content ?? inputRef.current;
     if (!msg) return;
     setInput('');
     setLoading(true);
@@ -176,7 +168,19 @@ export default function CopilotPanel({
     } finally {
       setLoading(false);
     }
-  };
+  }, [appendAssistant, sessionId]);
+
+  useEffect(() => {
+    if (open && initialPrompt && !initialSent.current) {
+      initialSent.current = true;
+      send(initialPrompt);
+    }
+    if (!open) {
+      initialSent.current = false;
+    }
+  }, [open, initialPrompt, send]);
+
+  if (!open) return null;
 
   const startVoice = () => {
     const Rec =

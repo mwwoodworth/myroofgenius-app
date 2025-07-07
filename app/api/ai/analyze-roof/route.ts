@@ -56,7 +56,7 @@ async function analyzeWithLLM(file: File): Promise<AnalysisResult> {
     if (!match) throw new Error('no json');
     const json = JSON.parse(match[0]) as AnalysisResult;
     return json;
-  } catch (error: unknown) {
+  } catch {
     throw new Error('parse failed');
   }
 }
@@ -71,7 +71,7 @@ async function analyze(file: File): Promise<AnalysisResult> {
         body: formData,
       });
       if (res.ok) return res.json();
-    } catch (error: unknown) {
+    } catch {
       // ignore edge inference errors
     }
   }
@@ -93,8 +93,8 @@ export async function POST(request: NextRequest) {
   if (address && !file) {
     try {
       file = await fetchSatelliteImage(address);
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : 'Operation failed';
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Operation failed';
       console.error(`[AnalyzeRoof] address fetch failed: ${message}`);
       return NextResponse.json(
         { error: 'Unable to complete request. Please refresh and try again.' },
@@ -110,8 +110,8 @@ export async function POST(request: NextRequest) {
   try {
     const result = await analyze(file);
     return NextResponse.json(result);
-  } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Operation failed';
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Operation failed';
     console.error(`[AnalyzeRoof] analysis failed: ${message}`);
     return NextResponse.json(
       { error: 'Unable to complete request. Please refresh and try again.' },

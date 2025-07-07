@@ -115,7 +115,6 @@ export default function AdminDashboard() {
 }
 
 function OverviewTab({ stats }: { stats: DashboardStats }) {
-  const maxRevenue = stats.monthlyRevenue.length ? Math.max(...stats.monthlyRevenue.map((m) => m.revenue)) : 0;
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
