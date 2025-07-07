@@ -30,14 +30,14 @@ export async function GET(
       .from('orders')
       .select('id, amount, created_at, products(name), license_keys(license_key)')
       .eq('id', orderId)
-      .single();
+      .single<Order>();
     if (error || !order) {
       return NextResponse.json({ error: 'Order not found' }, { status: 404 });
     }
 
     const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage();
-  const { width, height } = page.getSize();
+  const { height } = page.getSize();
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
   const drawText = (text: string, y: number) => {

@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function IntegrationsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
@@ -42,7 +44,7 @@ function IntegrationCategory({ title, description, integrations }) {
       <div className="grid md:grid-cols-2 gap-6">
         {integrations.map((intg, i) => (
           <div key={i} className="bg-white rounded-lg shadow p-4 flex items-center space-x-4">
-            <img src={intg.icon} alt={intg.name} className="w-12 h-12" />
+            <Image src={intg.icon} alt={intg.name} width={48} height={48} className="w-12 h-12" />
             <div className="flex-1">
               <h3 className="font-semibold">{intg.name}</h3>
               <p className="text-sm text-slate-600">{intg.description}</p>

@@ -1,8 +1,15 @@
+interface Project {
+  id?: string
+  roofSlope?: number
+  location?: { climateZone?: number; state?: string }
+  [key: string]: unknown
+}
+
 interface ComplianceCheck {
   code: string
   description: string
   category: 'critical' | 'important' | 'recommended'
-  validator: (project: any) => ComplianceResult
+  validator: (project: Project) => ComplianceResult
 }
 
 interface ComplianceResult {
@@ -36,9 +43,9 @@ export class ComplianceEngine {
       description: 'Cool roof requirements for low-slope roofs',
       category: 'critical',
       validator: (project) => {
-        const slope = project.roofSlope
-        const location = project.location
-        if (slope < 2 && location.climateZone >= 4) {
+        const slope = project.roofSlope ?? 0
+        const location = project.location ?? {}
+        if (slope < 2 && (location.climateZone ?? 0) >= 4) {
           return {
             passed: false,
             message: 'Cool roof required for low-slope in this climate zone',
@@ -55,7 +62,7 @@ export class ComplianceEngine {
     })
   }
 
-  async runComplianceCheck(project: any): Promise<ComplianceReport> {
+  async runComplianceCheck(project: Project): Promise<ComplianceReport> {
     const results: (ComplianceResult & { code: string; category: string })[] = []
     const startTime = Date.now()
 
@@ -63,19 +70,21 @@ export class ComplianceEngine {
       try {
         const result = await check.validator(project)
         results.push({ code, category: check.category, ...result })
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const message =
+          error instanceof Error ? error.message : 'Unknown error';
         results.push({
           code,
           category: check.category,
           passed: false,
-          message: `Check failed: ${error.message}`,
+          message: `Check failed: ${message}`,
           recommendations: ['Manual review required']
         })
       }
     }
 
     return {
-      projectId: project.id,
+      projectId: project.id ?? '',
       timestamp: new Date().toISOString(),
       duration: Date.now() - startTime,
       passed: results.every(r => r.passed || r.category !== 'critical'),

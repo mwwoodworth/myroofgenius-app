@@ -1,5 +1,5 @@
 'use client'
-import { Calculator, FileSpreadsheet, Layers, TrendingUp, DollarSign, Clock } from 'lucide-react'
+import { Calculator, TrendingUp, DollarSign, Clock } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Card from '@/components/ui/Card'
@@ -60,8 +60,8 @@ export default function ToolsPage() {
             Professional Tools That Protect Your Business
           </h1>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Every calculation here was built from hard lessons. These aren't just tools – 
-            they're protection against the mistakes that sink projects.
+            Every calculation here was built from hard lessons. These aren&apos;t just tools –
+            they&apos;re protection against the mistakes that sink projects.
           </p>
         </div>
 

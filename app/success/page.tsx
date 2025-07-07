@@ -23,7 +23,7 @@ export default function SuccessPage() {
             Payment Successful!
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Thank you for your purchase. You'll receive a confirmation email shortly.
+            Thank you for your purchase. You&apos;ll receive a confirmation email shortly.
           </p>
         </div>
 

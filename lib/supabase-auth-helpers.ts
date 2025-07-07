@@ -1,9 +1,10 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import type { Session } from '@supabase/auth-js';
 import { cookies } from 'next/headers';
 import { cache } from 'react';
 
 interface CachedSession {
-  session: any | null;
+  session: Session | null;
   expiresAt: number;
 }
 

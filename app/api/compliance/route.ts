@@ -21,9 +21,9 @@ export async function POST(request: Request) {
       code: 'FL-HVHZ',
       description: 'High Velocity Hurricane Zone requirements',
       category: 'critical',
-      validator: (p) => {
+      validator: (p: Project & { windRating?: number }) => {
         return {
-          passed: p.windRating >= 150,
+          passed: (p.windRating ?? 0) >= 150,
           message: 'Project must meet HVHZ wind requirements',
           recommendations: ['Use enhanced fastening schedule', 'Require product approval']
         }
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     })
   }
 
-    const report = await engine.runComplianceCheck(project);
+    const report = await engine.runComplianceCheck(project as Project);
     await saveComplianceReport(report);
     return NextResponse.json(report);
   } catch (error: unknown) {
