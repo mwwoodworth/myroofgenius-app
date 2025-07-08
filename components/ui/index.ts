@@ -3,7 +3,7 @@ export { default as Card } from './Card';
 export { default as ThemeToggle } from './ThemeToggle';
 export { ThemeProvider, useTheme } from './ThemeProvider';
 export { RoleProvider, useRole } from './RoleProvider';
-export { default as RoleSwitcher } from './RoleSwitcher';
+export { default as ProfileDropdown } from '../ProfileDropdown';
 export { default as HotActions } from '../HotActions';
 export { ARModeProvider, useARMode } from './ARModeProvider';
 export { default as ARModeToggle } from './ARModeToggle';

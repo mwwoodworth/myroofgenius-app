@@ -306,4 +306,3 @@ export default function CopilotPanel({
     </PresenceProvider>
   );
 }
-export const RoleSwitcher = () => null;

@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.1.0 - 2025-07-08
+- Profile dropdown with role switcher replaces fixed RoleSwitcher.
+- Avatars now use external SVGs via DiceBear; no binary assets stored.
+- Removed local `default-avatar.png` references.
+
 ## v1.0.0 - 2025-07-07
 - Sitewide announcement banner with Supabase-backed announcements.
 - License key management and PDF invoice generation for orders.

@@ -1,6 +1,6 @@
 "use client";
 import { ReactNode } from "react";
-import { ThemeProvider, RoleProvider, RoleSwitcher, ARModeProvider, ToastProvider, PresenceProvider } from '../ui';
+import { ThemeProvider, RoleProvider, ARModeProvider, ToastProvider, PresenceProvider } from '../ui';
 import { AuthProvider } from '../../src/context/AuthContext';
 import { LocaleProvider } from '../../src/context/LocaleContext';
 import { CurrencyProvider } from '../../src/context/CurrencyContext';
@@ -28,7 +28,6 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
                       <ARModeProvider>
                         <Navbar />
                         <AnnouncementBanner />
-                        <RoleSwitcher />
                         <ErrorBoundary>{children}</ErrorBoundary>
                         {aiCopilotEnabled && <CopilotWrapper />}
                         <Footer />
@@ -37,7 +36,6 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
                       <>
                         <Navbar />
                         <AnnouncementBanner />
-                        <RoleSwitcher />
                         <ErrorBoundary>{children}</ErrorBoundary>
                         {aiCopilotEnabled && <CopilotWrapper />}
                         <Footer />

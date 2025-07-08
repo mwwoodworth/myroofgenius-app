@@ -34,6 +34,9 @@ immediately on the success page and in your account dashboard.
 ### Theme Accent
 Pick a custom accent color from the Navbar color picker. Your choice is persisted in localStorage.
 
+### Asset Policy
+No binary image files are stored in the repository. Avatars and icons use inline SVGs or remote URLs such as DiceBear avatars. When no custom avatar is available, a placeholder SVG is loaded from `https://avatars.dicebear.com`.
+
 ## ✨ Visual Overhaul 2025
 The UI now features cinematic glassmorphism and playful animations. Key updates include:
 - Glassy navigation bar and announcement banner
