@@ -6,7 +6,7 @@ import type { User } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimatedGradient from './ui/AnimatedGradient';
 import { Menu, X } from 'lucide-react';
-import { ThemeToggle, AccentColorPicker } from './ui';
+import { ThemeToggle, AccentColorPicker, ProfileDropdown } from './ui';
 import LanguageSwitcher from './LanguageSwitcher';
 import CurrencySwitcher from './CurrencySwitcher';
 
@@ -74,19 +74,7 @@ export default function Navbar() {
           <ThemeToggle />
           <AccentColorPicker />
           {user ? (
-            <>
-              {user.user_metadata?.role === 'admin' && (
-                <a href="/admin" className="text-sm font-medium hover:text-accent">
-                  Admin
-                </a>
-              )}
-              <a href="/dashboard" className="text-sm font-medium hover:text-accent">
-                Dashboard
-              </a>
-              <button onClick={handleSignOut} className="rounded-xl px-5 py-2 border border-accent text-accent hover:bg-accent hover:text-white transition glow-btn animate-ripple">
-                Sign Out
-              </button>
-            </>
+            <ProfileDropdown />
           ) : (
             <>
               <a href="/login" className="text-sm font-medium hover:text-accent">
