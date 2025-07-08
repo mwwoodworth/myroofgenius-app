@@ -5,7 +5,7 @@ import secrets
 import stripe
 import httpx
 import sentry_sdk
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from supabase import create_client, Client
 from .prompt_service import (
     fetch_prompt,
@@ -253,3 +253,41 @@ async def list_api_keys(user_id: str | None = None):
         .execute()
     )
     return {"keys": getattr(res, "data", [])}
+
+@app.get("/sitemap.xml")
+async def sitemap_xml():
+    base_url = os.getenv("NEXT_PUBLIC_SITE_URL", "https://myroofgenius.com")
+    pages = [
+        {"loc": f"{base_url}/", "changefreq": "daily", "priority": "1.0"},
+        {"loc": f"{base_url}/marketplace", "changefreq": "daily", "priority": "0.8"},
+        {"loc": f"{base_url}/blog", "changefreq": "weekly", "priority": "0.6"},
+    ]
+    if supabase_admin:
+        res = supabase_admin.table("products").select("id").eq("is_active", True).execute()
+        for row in getattr(res, "data", []) or []:
+            pages.append({
+                "loc": f"{base_url}/product/{row['id']}",
+                "changefreq": "weekly",
+                "priority": "0.7",
+            })
+    xml_parts = ["<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>"]
+    for page in pages:
+        xml_parts.append("  <url>")
+        xml_parts.append(f"    <loc>{page['loc']}</loc>")
+        xml_parts.append(f"    <changefreq>{page['changefreq']}</changefreq>")
+        xml_parts.append(f"    <priority>{page['priority']}</priority>")
+        xml_parts.append("  </url>")
+    xml_parts.append("</urlset>")
+    return Response("\n".join(xml_parts), media_type="application/xml")
+
+
+@app.get("/robots.txt")
+async def robots_txt():
+    base_url = os.getenv("NEXT_PUBLIC_SITE_URL", "https://myroofgenius.com")
+    lines = [
+        "User-agent: *",
+        "Disallow:",
+        f"Sitemap: {base_url}/sitemap.xml",
+    ]
+    return Response("\n".join(lines), media_type="text/plain")
+
