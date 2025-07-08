@@ -94,4 +94,24 @@
     left: 100%;
   }
 }
+
+.hero-headline {
+  min-height: 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-headline span {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+.hero-headline span.active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-headline span {
+    transition: none;
+  }
+}
 @import "./styles/futuristic.css";

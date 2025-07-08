@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Shield, ArrowRight, Play, CheckCircle } from 'lucide-react'
 import { motion } from 'framer-motion'
 const MotionLink = motion(Link)
-import { AnimatedGradient, Hero3D, TypingText } from '../components/ui'
+import { AnimatedGradient, Hero3D, HeroHeadline } from '../components/ui'
 import FeaturedToolsCarousel from '../components/marketing/FeaturedToolsCarousel'
 import EmailSignupForm from '../components/marketing/EmailSignupForm'
 import Testimonials from '../components/marketing/Testimonials'
@@ -37,7 +37,7 @@ export default function HomePage() {
             transition={{ type: 'spring', stiffness: 80 }}
             className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
           >
-            <TypingText texts={["Protect every project.", "Grow every margin."]} className="text-blue-400" />
+            <HeroHeadline texts={["Protect every project.", "Grow every margin."]} className="text-blue-400" />
           </motion.h1>
           <ul className="text-slate-300 mb-8 space-y-2">
             <li className="flex items-start gap-2">
