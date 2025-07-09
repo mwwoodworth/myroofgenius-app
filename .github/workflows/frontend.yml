@@ -1,0 +1,78 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository }}-frontend
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['20']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install deps
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --prefer-offline
+
+      - name: Lint
+        run: |
+          set -euo pipefail
+          npm run lint
+
+      - name: Security audit
+        run: |
+          set -euo pipefail
+          npm audit --audit-level=high --production
+
+      - name: Unit tests
+        run: |
+          set -euo pipefail
+          npm run test:ci
+
+      - name: Build
+        run: |
+          set -euo pipefail
+          npm run build
+
+      - name: Build & push Docker image
+        if: github.event_name != 'pull_request'
+        run: |
+          set -euo pipefail
+          docker build -t $IMAGE_NAME:${{ github.sha }} -f frontend/Dockerfile .
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+          docker push $IMAGE_NAME:${{ github.sha }}
+
+      - name: Deploy to Render (prod)
+        if: github.ref == 'refs/heads/main' && success()
+        run: |
+          set -euo pipefail
+          curl -X POST \
+            -H "Accept: application/json" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID_FRONTEND }}/deploys
+  preview:
+    if: github.event_name == 'pull_request'
+    needs: build-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render Preview
+        run: |
+          set -euo pipefail
+          curl -X POST \
+            -H "Accept: application/json" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID_FRONTEND }}/deploys?preview=true

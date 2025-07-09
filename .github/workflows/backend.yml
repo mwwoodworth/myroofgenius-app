@@ -1,0 +1,81 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository }}-backend
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml') }}
+
+      - name: Install deps
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry install --no-root
+
+      - name: Linters & type-checks
+        run: |
+          set -euo pipefail
+          poetry run ruff check .
+          poetry run mypy .
+
+      - name: Security audit
+        run: |
+          set -euo pipefail
+          poetry run pip-audit -l
+
+      - name: Unit tests
+        run: |
+          set -euo pipefail
+          poetry run pytest -q
+
+      - name: Build & push Docker image
+        if: github.event_name != 'pull_request'
+        run: |
+          set -euo pipefail
+          docker build -t $IMAGE_NAME:${{ github.sha }} -f backend/Dockerfile .
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+          docker push $IMAGE_NAME:${{ github.sha }}
+
+      - name: Deploy to Render (prod)
+        if: github.ref == 'refs/heads/main' && success()
+        run: |
+          set -euo pipefail
+          curl -X POST \
+            -H "Accept: application/json" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID_BACKEND }}/deploys
+  preview:
+    if: github.event_name == 'pull_request'
+    needs: build-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render Preview
+        run: |
+          set -euo pipefail
+          curl -X POST \
+            -H "Accept: application/json" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID_BACKEND }}/deploys?preview=true
