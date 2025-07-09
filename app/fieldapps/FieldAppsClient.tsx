@@ -26,7 +26,7 @@ export default function FieldAppsClient() {
       <p className="text-center text-text-secondary mb-12">
         Quick links to Claude-powered utilities for crews and partners.
       </p>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div className="card-grid max-w-6xl mx-auto">
         {apps.map((app) => (
           <Card key={app.title} className="flex flex-col justify-between">
             <div>

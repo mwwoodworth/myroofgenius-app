@@ -20,6 +20,10 @@ const Testimonials = dynamicImport(
   () => import("../components/marketing/Testimonials"),
   { ssr: false, loading: () => <div>Loading...</div> },
 );
+const TrustSection = dynamicImport(
+  () => import("../components/marketing/TrustSection"),
+  { ssr: false, loading: () => <div>Loading...</div> },
+);
 import ActiveUsersBadge from "../components/marketing/ActiveUsersBadge";
 import { useLocale } from "../src/context/LocaleContext";
 
@@ -135,6 +139,9 @@ export default function HomeClient() {
       </motion.section>
       <Suspense fallback={<Skeleton />}>
         <Testimonials className="bg-gray-50" />
+      </Suspense>
+      <Suspense fallback={<Skeleton />}>
+        <TrustSection />
       </Suspense>
     </>
   );

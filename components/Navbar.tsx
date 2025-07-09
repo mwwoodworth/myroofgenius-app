@@ -55,7 +55,14 @@ export default function Navbar() {
         className="glass-navbar bg-primary-900/90 rounded-2xl shadow-2xl fixed top-0 w-full flex items-center justify-between px-8 py-4 z-50 overflow-hidden"
       >
         <AnimatedGradient />
-        <div className="text-accent text-2xl font-bold">MyRoofGenius</div>
+        <div className="flex items-center gap-3">
+          <a href="/" className="flex items-center" aria-label="MyRoofGenius">
+            <img src="/assets/logo.svg" alt="MyRoofGenius logo" className="w-8 h-8" />
+          </a>
+          <p className="hidden sm:block text-sm text-white font-semibold">
+            Smart Roofing Solutions
+          </p>
+        </div>
         <div className="hidden md:flex gap-6">
           {links.map(({ href, label }) => (
             <motion.a

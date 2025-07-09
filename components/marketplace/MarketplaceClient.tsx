@@ -362,7 +362,7 @@ export default function MarketplaceClient({
             {filteredProducts.filter((p) => p.is_featured).length > 0 && (
               <div className="mb-8">
                 <h2 className="text-2xl font-bold mb-4">Featured Products</h2>
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="card-grid">
                   {filteredProducts
                     .filter((p) => p.is_featured)
                     .slice(0, 2)
@@ -370,7 +370,7 @@ export default function MarketplaceClient({
                       <motion.div
                         key={product.id}
                         whileHover={{ y: -4 }}
-                        className="bg-white rounded-lg shadow-md overflow-hidden group"
+                        className="card overflow-hidden group"
                       >
                         <div className="flex">
                           <div className="w-1/3 relative">
@@ -481,14 +481,14 @@ export default function MarketplaceClient({
                 </button>
               </div>
             ) : (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="card-grid">
                 {filteredProducts
                   .filter((p) => !p.is_featured)
                   .map((product) => (
                     <motion.div
                       key={product.id}
                       whileHover={{ y: -4 }}
-                      className="bg-white rounded-lg shadow-md overflow-hidden group"
+                      className="card overflow-hidden group"
                     >
                       <div className="aspect-w-16 aspect-h-9 relative">
                         <Image
