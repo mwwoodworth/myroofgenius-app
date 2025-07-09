@@ -580,6 +580,7 @@ export default function MarketplaceClient({
                               href={`/product/${product.id}`}
                               className="p-2 text-gray-600 hover:text-secondary-700"
                               title="View Details"
+                              aria-label="View details"
                             >
                               <Eye className="w-5 h-5" />
                             </Link>
@@ -587,6 +588,7 @@ export default function MarketplaceClient({
                               onClick={() => buyNow(product)}
                               className="p-2 bg-secondary-700 text-white rounded hover:bg-secondary-700/80"
                               title="Buy Now"
+                              aria-label="Buy now"
                             >
                               <ShoppingCart className="w-5 h-5" />
                             </button>
