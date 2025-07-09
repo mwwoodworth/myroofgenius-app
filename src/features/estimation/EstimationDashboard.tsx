@@ -45,7 +45,7 @@ export default function EstimationDashboard() {
             onChange={e => setBaseCost(parseFloat(e.target.value))}
           />
         </div>
-        <button onClick={runAnalysis} className="px-4 py-2 bg-blue-600 text-white rounded">Run Analysis</button>
+        <button onClick={runAnalysis} className="px-4 py-2 bg-secondary-700 text-white rounded">Run Analysis</button>
       </div>
       {risks.length > 0 && (
         <div className="mt-6 space-y-2">

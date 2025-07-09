@@ -88,7 +88,7 @@ export default function ToolsPage() {
         ))}
 
         {/* Integration Section */}
-        <div className="bg-blue-50 rounded-2xl p-8 mt-16">
+        <div className="bg-secondary-700/5 rounded-2xl p-8 mt-16">
           <h2 className="text-2xl font-bold mb-4">All Tools Work Together</h2>
           <p className="text-slate-700 mb-6">
             Your calculations flow seamlessly between tools. Estimate materials, 
@@ -116,10 +116,10 @@ function ToolCard({ name, description, features, link, icon, saveTime }) {
       className="bg-white/30 backdrop-blur-lg shadow-xl border border-white/20 p-6"
     >
       <div className="flex items-start justify-between mb-4">
-        <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+        <div className="w-12 h-12 bg-secondary-700/10 rounded-lg flex items-center justify-center">
           {icon}
         </div>
-        <span className="text-sm font-semibold text-green-600 bg-green-50 px-3 py-1 rounded-full">
+        <span className="text-sm font-semibold text-accent-emerald bg-accent-emerald/5 px-3 py-1 rounded-full">
           {saveTime}
         </span>
       </div>
@@ -134,12 +134,12 @@ function ToolCard({ name, description, features, link, icon, saveTime }) {
             transition={{ delay: i * 0.05 }}
             className="flex items-center text-sm text-slate-700"
           >
-            <span className="text-green-500 mr-2">✓</span>
+            <span className="text-accent-emerald mr-2">✓</span>
             {feature}
           </motion.li>
         ))}
       </ul>
-      <Link href={link} className="block text-center py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+      <Link href={link} className="block text-center py-2 px-4 bg-secondary-700 text-white rounded-lg hover:bg-secondary-700/80 transition-colors font-semibold">
         Open Tool →
       </Link>
     </Card>
@@ -149,7 +149,7 @@ function ToolCard({ name, description, features, link, icon, saveTime }) {
 function IntegrationBadge({ name }) {
   return (
     <span className="inline-flex items-center px-4 py-2 bg-white rounded-lg text-slate-700 font-medium">
-      <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+      <span className="w-2 h-2 bg-accent-emerald/50 rounded-full mr-2"></span>
       {name}
     </span>
   )

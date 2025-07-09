@@ -67,7 +67,7 @@ export default function DemoPage() {
               key={key}
               onClick={() => setActiveDemo(key)}
               className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                activeDemo === key ? 'bg-blue-600 text-white shadow-lg' : 'bg-white text-slate-700 border border-slate-200 hover:border-blue-200'
+                activeDemo === key ? 'bg-secondary-700 text-white shadow-lg' : 'bg-white text-slate-700 border border-slate-200 hover:border-secondary-700/20'
               }`}
             >
               {demo.title}
@@ -89,7 +89,7 @@ export default function DemoPage() {
             <div className="space-y-3">
               {demos[activeDemo].keyPoints.map((point, i) => (
                 <div key={i} className="flex items-center">
-                  <Shield className="w-5 h-5 text-green-500 mr-3" />
+                  <Shield className="w-5 h-5 text-accent-emerald mr-3" />
                   <span className="text-slate-700">{point}</span>
                 </div>
               ))}
@@ -97,7 +97,7 @@ export default function DemoPage() {
           </div>
         </div>
         {/* ROI Calculator */}
-        <div className="bg-blue-50 rounded-2xl p-8">
+        <div className="bg-secondary-700/5 rounded-2xl p-8">
           <h2 className="text-3xl font-bold text-center mb-8">Calculate Your Protection Value</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <ROIMetric icon={<Clock className="w-8 h-8" />} label="Time Saved" value="12 hours/week" description="On estimation and reporting" />
@@ -105,7 +105,7 @@ export default function DemoPage() {
             <ROIMetric icon={<Users className="w-8 h-8" />} label="Team Efficiency" value="+35%" description="With mobile tools" />
           </div>
           <div className="text-center mt-8">
-            <Link href="/get-started" className="inline-block px-8 py-4 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors">
+            <Link href="/get-started" className="inline-block px-8 py-4 bg-secondary-700 text-white rounded-lg font-semibold text-lg hover:bg-secondary-700/80 transition-colors">
               Start Your Free Trial →
             </Link>
           </div>
@@ -124,7 +124,7 @@ function ROIMetric({ icon, label, value, description }) {
       <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
         {icon}
       </div>
-      <div className="text-3xl font-bold text-blue-900 mb-2">{value}</div>
+      <div className="text-3xl font-bold text-secondary-700 mb-2">{value}</div>
       <div className="font-semibold text-slate-900 mb-1">{label}</div>
       <div className="text-sm text-slate-600">{description}</div>
     </div>

@@ -17,10 +17,10 @@ export function ProtectionStatus({ status, message, details, className }: Protec
   }
 
   const styles = {
-    protected: 'bg-green-50 text-green-900 border-green-200',
+    protected: 'bg-accent-emerald/5 text-accent-emerald border-accent-emerald/20',
     warning: 'bg-orange-50 text-orange-900 border-orange-200',
     danger: 'bg-red-50 text-red-900 border-red-200',
-    calculating: 'bg-blue-50 text-blue-900 border-blue-200'
+    calculating: 'bg-secondary-700/5 text-secondary-700 border-secondary-700/20'
   }
 
   return (

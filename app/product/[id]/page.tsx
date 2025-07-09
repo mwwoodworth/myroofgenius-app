@@ -127,7 +127,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
           {/* Product Info */}
           <div>
             <div className="mb-6">
-              <span className="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">
+              <span className="bg-secondary-700/10 text-secondary-700 text-sm px-3 py-1 rounded-full">
                 {product.category || 'Professional Tool'}
               </span>
             </div>
@@ -159,7 +159,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                     </span>
                   )}
                 </div>
-                <span className="text-green-600 font-semibold">You save ${((product.original_price || product.price) - product.price).toFixed(2)}</span>
+                <span className="text-accent-emerald font-semibold">You save ${((product.original_price || product.price) - product.price).toFixed(2)}</span>
               </div>
 
               <CheckoutButton
@@ -206,7 +206,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
               <ul className="space-y-2">
                 {features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-green-500 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-5 h-5 text-accent-emerald mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                     <span>{feature.trim()}</span>

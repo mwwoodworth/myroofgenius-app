@@ -22,8 +22,8 @@ export default function PartnerPage({ params: { slug } }: Params) {
       <Image src={partner.logo} alt={partner.name} width={120} height={120} />
       <h1 className="text-3xl font-bold">{partner.name}</h1>
       <p>{partner.description}</p>
-      <div className="p-4 bg-blue-100 rounded">{partner.offer}</div>
-      <Link href="/" className="text-blue-600 underline">Back to Home</Link>
+      <div className="p-4 bg-secondary-700/10 rounded">{partner.offer}</div>
+      <Link href="/" className="text-secondary-700 underline">Back to Home</Link>
     </div>
   );
 }

@@ -94,11 +94,11 @@ export default async function Blog() {
                 />
               </div>
               <div>
-                <span className="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">
+                <span className="bg-secondary-700/10 text-secondary-700 text-sm px-3 py-1 rounded-full">
                   Featured Article
                 </span>
                 <h2 className="text-3xl font-bold mt-4 mb-4">
-                  <Link href={`/blog/${posts[0].slug}`} className="hover:text-blue-600">
+                  <Link href={`/blog/${posts[0].slug}`} className="hover:text-secondary-700">
                     {posts[0].title}
                   </Link>
                 </h2>
@@ -135,11 +135,11 @@ export default async function Blog() {
                   />
                 </Link>
                 <div className="p-6">
-                  <span className="text-blue-600 text-sm font-semibold">
+                  <span className="text-secondary-700 text-sm font-semibold">
                     {post.category}
                   </span>
                   <h3 className="text-xl font-semibold mt-2 mb-3">
-                    <Link href={`/blog/${post.slug}`} className="hover:text-blue-600">
+                    <Link href={`/blog/${post.slug}`} className="hover:text-secondary-700">
                       {post.title}
                     </Link>
                   </h3>
@@ -159,22 +159,21 @@ export default async function Blog() {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="bg-blue-600 py-12">
+      <section className="bg-secondary-700 py-12">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
             Get Weekly Industry Updates
           </h2>
-          <p className="text-blue-100 mb-6">
+          <p className="text-secondary-700/20 mb-6">
             Join 2,800+ contractors receiving actionable insights every Tuesday
           </p>
           <Link
             href="/#newsletter"
-            className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-gray-100 font-semibold"
+            className="inline-block bg-white text-secondary-700 px-6 py-3 rounded-lg hover:bg-gray-100 font-semibold"
           >
             Subscribe Now
           </Link>
         </div>
       </section>
     </div>
-  );
-}
+  );}

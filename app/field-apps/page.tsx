@@ -15,8 +15,8 @@ export default function FieldAppsPage() {
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         {/* Hero Section - Why This Matters */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 rounded-full mb-6">
-            <Shield className="w-10 h-10 text-blue-600" />
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-secondary-700/10 rounded-full mb-6">
+            <Shield className="w-10 h-10 text-secondary-700" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
             Field Apps: Your Mobile Command Center
@@ -33,15 +33,15 @@ export default function FieldAppsPage() {
           <h2 className="text-2xl font-semibold mb-8 text-center">What Our Field Apps Protect</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <WifiOff className="w-8 h-8 text-green-600" />
+              <div className="w-16 h-16 bg-accent-emerald/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <WifiOff className="w-8 h-8 text-accent-emerald" />
               </div>
               <h3 className="font-semibold text-lg mb-2">Lost Work Prevention</h3>
               <p className="text-slate-600">Offline-first architecture. Every photo, note, and measurement saves locally first.</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <AlertTriangle className="w-8 h-8 text-blue-600" />
+              <div className="w-16 h-16 bg-secondary-700/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <AlertTriangle className="w-8 h-8 text-secondary-700" />
               </div>
               <h3 className="font-semibold text-lg mb-2">Mistake Prevention</h3>
               <p className="text-slate-600">Real-time validation catches errors before they become expensive problems.</p>
@@ -119,8 +119,8 @@ export default function FieldAppsPage() {
 
 function FieldAppCard({ title, icon, description, features, status, downloadLink, color }) {
   const colorClasses = {
-    blue: 'bg-blue-600 hover:bg-blue-700',
-    green: 'bg-green-600 hover:bg-green-700',
+    blue: 'bg-secondary-700 hover:bg-secondary-700/80',
+    green: 'bg-accent-emerald hover:bg-accent-emerald/80',
     purple: 'bg-purple-600 hover:bg-purple-700'
   }
   return (
@@ -133,7 +133,7 @@ function FieldAppCard({ title, icon, description, features, status, downloadLink
       <ul className="space-y-3 mb-8">
         {features.map((feature, i) => (
           <li key={i} className="flex items-start">
-            <span className="text-green-500 mr-2">✓</span>
+            <span className="text-accent-emerald mr-2">✓</span>
             <span className="text-slate-700">{feature}</span>
           </li>
         ))}

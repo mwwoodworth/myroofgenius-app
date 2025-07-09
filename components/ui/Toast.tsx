@@ -41,12 +41,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               className="flex items-center gap-2 px-4 py-2 rounded-lg glass text-white shadow-xl"
             >
               {t.type === "success" && (
-                <CheckCircle className="w-4 h-4 text-green-400" />
+                <CheckCircle className="w-4 h-4 text-accent-emerald/60" />
               )}
               {t.type === "error" && (
                 <XCircle className="w-4 h-4 text-red-400" />
               )}
-              {t.type === "info" && <Info className="w-4 h-4 text-blue-400" />}
+              {t.type === "info" && <Info className="w-4 h-4 text-secondary-700/60" />}
               <span>{t.message}</span>
             </motion.div>
           ))}

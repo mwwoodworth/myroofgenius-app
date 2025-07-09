@@ -95,7 +95,7 @@ export default function AdminDashboard() {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-4 py-2 font-medium capitalize ${
-                activeTab === tab ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-600 hover:text-gray-900'
+                activeTab === tab ? 'text-secondary-700 border-b-2 border-secondary-700' : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               {tab}
@@ -148,8 +148,8 @@ function OverviewTab({ stats }: { stats: DashboardStats }) {
 
 function StatCard({ title, value, icon, color }: { title: string; value: number | string; icon: JSX.Element; color: string }) {
   const colorClasses: Record<string, string> = {
-    blue: 'bg-blue-100 text-blue-600',
-    green: 'bg-green-100 text-green-600',
+    blue: 'bg-secondary-700/10 text-secondary-700',
+    green: 'bg-accent-emerald/20 text-accent-emerald',
     purple: 'bg-purple-100 text-purple-600',
     orange: 'bg-orange-100 text-orange-600',
     red: 'bg-red-100 text-red-600'
@@ -219,7 +219,7 @@ function OrdersTab() {
                 <td className="px-6 py-2">{order.products?.name || '—'}</td>
                 <td className="px-6 py-2">${order.amount.toFixed(2)}</td>
                 <td className="px-6 py-2">
-                  <span className={`px-2 py-1 text-xs rounded ${order.status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>{order.status}</span>
+                  <span className={`px-2 py-1 text-xs rounded ${order.status === 'completed' ? 'bg-accent-emerald/20 text-accent-emerald' : 'bg-yellow-100 text-yellow-800'}`}>{order.status}</span>
                 </td>
                 <td className="px-6 py-2">{new Date(order.created_at).toLocaleDateString()}</td>
               </tr>
@@ -262,7 +262,7 @@ function ProductsTab() {
     <div>
       <div className="mb-6 flex justify-between items-center">
         <h2 className="text-xl font-semibold">Products</h2>
-        <button onClick={() => setShowAdd(true)} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Add Product</button>
+        <button onClick={() => setShowAdd(true)} className="px-4 py-2 bg-secondary-700 text-white rounded-lg hover:bg-secondary-700/80">Add Product</button>
       </div>
       <div className="bg-white rounded-lg shadow overflow-x-auto">
         <table className="w-full text-sm text-left">
@@ -290,10 +290,10 @@ function ProductsTab() {
                 <td className="px-6 py-3">{product.category}</td>
                 <td className="px-6 py-3">${product.price.toFixed(2)}</td>
                 <td className="px-6 py-3">
-                  <span className={`px-2 py-1 text-xs rounded ${product.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>{product.is_active ? 'Active' : 'Inactive'}</span>
+                  <span className={`px-2 py-1 text-xs rounded ${product.is_active ? 'bg-accent-emerald/20 text-accent-emerald' : 'bg-gray-100 text-gray-800'}`}>{product.is_active ? 'Active' : 'Inactive'}</span>
                 </td>
                 <td className="px-6 py-3">
-                  <button className="text-blue-600 hover:underline mr-3">Edit</button>
+                  <button className="text-secondary-700 hover:underline mr-3">Edit</button>
                   <button className="text-red-600 hover:underline">Delete</button>
                 </td>
               </tr>
@@ -366,7 +366,7 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
           </div>
           <div className="flex justify-end gap-4 mt-6">
             <button type="button" onClick={onClose} className="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button>
-            <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Add Product</button>
+            <button type="submit" className="px-4 py-2 bg-secondary-700 text-white rounded-lg hover:bg-secondary-700/80">Add Product</button>
           </div>
         </form>
     </Modal>
@@ -434,7 +434,7 @@ function UsersTab() {
                   {user.is_admin ? (
                     <button onClick={() => toggleAdmin(user.user_id, true)} className="text-red-600 hover:underline">Revoke Admin</button>
                   ) : (
-                    <button onClick={() => toggleAdmin(user.user_id, false)} className="text-blue-600 hover:underline">Make Admin</button>
+                    <button onClick={() => toggleAdmin(user.user_id, false)} className="text-secondary-700 hover:underline">Make Admin</button>
                   )}
                 </td>
               </tr>
@@ -452,12 +452,12 @@ function AnalyticsTab({ stats }: { stats: DashboardStats }) {
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-        <BarChart3 className="w-5 h-5 text-blue-600" /> Revenue (Last {data.length} Months)
+        <BarChart3 className="w-5 h-5 text-secondary-700" /> Revenue (Last {data.length} Months)
       </h2>
       {data.length > 0 ? (
         <div className="flex items-end space-x-3 h-56 px-2">
           {data.map((m) => (
-            <div key={m.month} className="relative bg-blue-500" style={{ height: `${maxRevenue ? (m.revenue / maxRevenue) * 100 : 0}%`, width: '16px' }} title={`${m.month}: $${m.revenue.toFixed(2)}` }>
+            <div key={m.month} className="relative bg-secondary-700/50" style={{ height: `${maxRevenue ? (m.revenue / maxRevenue) * 100 : 0}%`, width: '16px' }} title={`${m.month}: $${m.revenue.toFixed(2)}` }>
               <span className="absolute bottom-0 text-xs text-white text-center w-full" style={{ transform: 'translateY(100%) rotate(-45deg)' }}>{m.month.slice(2)}</span>
             </div>
           ))}
@@ -543,13 +543,13 @@ function SettingsTab() {
         <p>Checking system health...</p>
       ) : health ? (
         <div>
-          <p className={`font-medium mb-4 ${health.status === 'healthy' ? 'text-green-600' : health.status === 'degraded' ? 'text-yellow-600' : 'text-red-600'}`}>Overall Status: {health.status.charAt(0).toUpperCase() + health.status.slice(1)}</p>
+          <p className={`font-medium mb-4 ${health.status === 'healthy' ? 'text-accent-emerald' : health.status === 'degraded' ? 'text-yellow-600' : 'text-red-600'}`}>Overall Status: {health.status.charAt(0).toUpperCase() + health.status.slice(1)}</p>
           <ul>
-            <li>Database: <span className={health.services.database === 'healthy' ? 'text-green-600' : 'text-red-600'}>{health.services.database}</span></li>
-            <li>Storage: <span className={health.services.storage === 'healthy' ? 'text-green-600' : 'text-red-600'}>{health.services.storage}</span></li>
-            <li>Stripe: <span className={health.services.stripe === 'healthy' ? 'text-green-600' : 'text-red-600'}>{health.services.stripe}</span></li>
-            <li>OpenAI: <span className={health.services.openai === 'healthy' ? 'text-green-600' : 'text-red-600'}>{health.services.openai}</span></li>
-            <li>Email: <span className={health.services.email === 'healthy' ? 'text-green-600' : 'text-red-600'}>{health.services.email}</span></li>
+            <li>Database: <span className={health.services.database === 'healthy' ? 'text-accent-emerald' : 'text-red-600'}>{health.services.database}</span></li>
+            <li>Storage: <span className={health.services.storage === 'healthy' ? 'text-accent-emerald' : 'text-red-600'}>{health.services.storage}</span></li>
+            <li>Stripe: <span className={health.services.stripe === 'healthy' ? 'text-accent-emerald' : 'text-red-600'}>{health.services.stripe}</span></li>
+            <li>OpenAI: <span className={health.services.openai === 'healthy' ? 'text-accent-emerald' : 'text-red-600'}>{health.services.openai}</span></li>
+            <li>Email: <span className={health.services.email === 'healthy' ? 'text-accent-emerald' : 'text-red-600'}>{health.services.email}</span></li>
           </ul>
         </div>
       ) : (

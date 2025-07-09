@@ -25,7 +25,7 @@ export default function MaterialCalculator() {
         </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button onClick={() => setShowDemo(true)} className="px-6 py-3 bg-gray-200 rounded-lg font-semibold hover:bg-gray-300 text-gray-800">Try Demo</button>
-          <Link href="/signup" className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700">Create Free Account</Link>
+          <Link href="/signup" className="px-6 py-3 bg-secondary-700 text-white rounded-lg font-semibold hover:bg-secondary-700/80">Create Free Account</Link>
         </div>
         <ToolDemoModal open={showDemo} onClose={() => setShowDemo(false)} title="Material Calculator" />
       </div>

@@ -216,7 +216,7 @@ export default function MarketplaceClient({
               <h1 className="text-4xl font-bold mb-4">
                 Shop Digital Roofing Templates &amp; Tools
               </h1>
-              <p className="text-xl text-blue-100">
+              <p className="text-xl text-secondary-700/20">
                 Save hours on every project with battle-tested resources used by
                 2,800+ contractors
               </p>
@@ -234,7 +234,7 @@ export default function MarketplaceClient({
             </div>
             <div className="bg-white/30 backdrop-blur-lg rounded-2xl shadow-2xl p-6 text-center">
               <p className="text-3xl font-bold">{products.length}</p>
-              <p className="text-blue-100">Products Available</p>
+              <p className="text-secondary-700/20">Products Available</p>
             </div>
           </div>
 
@@ -275,7 +275,7 @@ export default function MarketplaceClient({
                       w-full text-left px-3 py-2 rounded-lg transition
                       ${
                         selectedCategory === category.id
-                          ? "bg-blue-50 text-blue-600 font-medium"
+                          ? "bg-secondary-700/5 text-secondary-700 font-medium"
                           : "hover:bg-gray-50"
                       }
                     `}
@@ -372,7 +372,7 @@ export default function MarketplaceClient({
                               className="w-full h-full object-cover"
                             />
                             {product.is_new && (
-                              <span className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
+                              <span className="absolute top-2 left-2 bg-accent-emerald text-white text-xs px-2 py-1 rounded">
                                 NEW
                               </span>
                             )}
@@ -388,7 +388,7 @@ export default function MarketplaceClient({
                             )}
                           </div>
                           <div className="flex-1 p-6">
-                            <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-600 transition">
+                            <h3 className="text-xl font-semibold mb-2 group-hover:text-secondary-700 transition">
                               {product.name}
                             </h3>
                             <p className="text-gray-600 text-sm mb-4 line-clamp-2">
@@ -434,7 +434,7 @@ export default function MarketplaceClient({
                                 </Link>
                                 <button
                                   onClick={() => buyNow(product)}
-                                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                                  className="px-4 py-2 bg-secondary-700 text-white rounded-lg hover:bg-secondary-700/80"
                                 >
                                   Buy Now
                                 </button>
@@ -451,7 +451,7 @@ export default function MarketplaceClient({
             {/* Regular Products Grid */}
             {loading ? (
               <div className="text-center py-12">
-                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-secondary-700"></div>
                 <p className="mt-4 text-gray-600">Loading products...</p>
               </div>
             ) : filteredProducts.length === 0 ? (
@@ -465,7 +465,7 @@ export default function MarketplaceClient({
                     setSearchTerm("");
                     setPriceRange([0, 500]);
                   }}
-                  className="text-blue-600 hover:underline"
+                  className="text-secondary-700 hover:underline"
                 >
                   Clear all filters
                 </button>
@@ -489,7 +489,7 @@ export default function MarketplaceClient({
                           className="w-full h-48 object-cover group-hover:scale-105 transition duration-300"
                         />
                         {product.is_new && (
-                          <span className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
+                          <span className="absolute top-2 left-2 bg-accent-emerald text-white text-xs px-2 py-1 rounded">
                             NEW
                           </span>
                         )}
@@ -507,7 +507,7 @@ export default function MarketplaceClient({
                       </div>
                       <div className="p-6">
                         <div className="flex items-start justify-between mb-2">
-                          <h3 className="text-lg font-semibold group-hover:text-blue-600 transition">
+                          <h3 className="text-lg font-semibold group-hover:text-secondary-700 transition">
                             {product.name}
                           </h3>
                           <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
@@ -534,7 +534,7 @@ export default function MarketplaceClient({
                                   key={idx}
                                   className="flex items-center gap-1"
                                 >
-                                  <span className="text-green-500">✓</span>
+                                  <span className="text-accent-emerald">✓</span>
                                   {feature.trim()}
                                 </li>
                               ))}
@@ -578,14 +578,14 @@ export default function MarketplaceClient({
                           <div className="flex gap-2">
                             <Link
                               href={`/product/${product.id}`}
-                              className="p-2 text-gray-600 hover:text-blue-600"
+                              className="p-2 text-gray-600 hover:text-secondary-700"
                               title="View Details"
                             >
                               <Eye className="w-5 h-5" />
                             </Link>
                             <button
                               onClick={() => buyNow(product)}
-                              className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                              className="p-2 bg-secondary-700 text-white rounded hover:bg-secondary-700/80"
                               title="Buy Now"
                             >
                               <ShoppingCart className="w-5 h-5" />
@@ -627,13 +627,13 @@ export default function MarketplaceClient({
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="bg-blue-600/80 backdrop-blur-lg py-12 mt-16 rounded-2xl shadow-2xl"
+        className="bg-secondary-700/80 backdrop-blur-lg py-12 mt-16 rounded-2xl shadow-2xl"
       >
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
             Get Exclusive Deals & New Product Updates
           </h2>
-          <p className="text-blue-100 mb-6">
+          <p className="text-secondary-700/20 mb-6">
             Join 2,800+ contractors receiving weekly deals and industry insights
           </p>
           <form className="max-w-md mx-auto flex gap-4">
@@ -644,7 +644,7 @@ export default function MarketplaceClient({
             />
             <button
               type="submit"
-              className="px-6 py-3 bg-white text-blue-600 rounded-lg hover:bg-gray-100 font-semibold"
+              className="px-6 py-3 bg-white text-secondary-700 rounded-lg hover:bg-gray-100 font-semibold"
             >
               Subscribe
             </button>

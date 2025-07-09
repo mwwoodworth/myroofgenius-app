@@ -60,7 +60,7 @@ export default function HomePage() {
               Instant AI estimates
             </li>
             <li className="flex items-start gap-2">
-              <CheckCircle className="w-5 h-5 text-accent-emerald" />
+              <CheckCircle className="w-5 h-5 text-accent-pink" />
               Error-proof templates
             </li>
             <li className="flex items-start gap-2">
@@ -86,7 +86,7 @@ export default function HomePage() {
             <MotionLink
               href="/demo"
               whileHover={{ scale: 1.05 }}
-              className="inline-flex items-center justify-center px-8 py-4 border border-accent-emerald text-accent-emerald rounded-2xl shadow-2xl font-semibold text-lg transition-colors"
+              className="inline-flex items-center justify-center px-8 py-4 border border-accent-emerald text-accent-emerald hover:text-accent-pink hover:border-accent-pink rounded-2xl shadow-2xl font-semibold text-lg transition-colors"
             >
               <Play className="mr-2 w-5 h-5" />
               {messages.home.watchDemo}
