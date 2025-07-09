@@ -17,3 +17,5 @@ export { default as PresenceAvatars } from './PresenceAvatars';
 export { default as TypingText } from './TypingText';
 export { default as Analytics } from '../Analytics';
 export { default as HeroHeadline } from './HeroHeadline';
+export { default as Skeleton } from './Skeleton';
+export { default as LazyImage } from './LazyImage';

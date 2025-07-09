@@ -5,6 +5,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import type { User } from '@supabase/supabase-js';
 import { ChevronDown } from 'lucide-react';
 import { useRole, type Role } from './ui/RoleProvider';
+import LazyImage from './ui/LazyImage';
 
 export default function ProfileDropdown() {
   const supabase = createClientComponentClient();
@@ -51,8 +52,9 @@ export default function ProfileDropdown() {
       <button
         onClick={() => setOpen(!open)}
         className="flex items-center gap-1 focus:outline-none"
+        aria-label="User menu"
       >
-        <img src={avatarUrl} alt="avatar" className="w-8 h-8 rounded-full border" />
+        <LazyImage src={avatarUrl} alt="avatar" className="w-8 h-8 rounded-full border" />
         <ChevronDown className="w-4 h-4" />
       </button>
       {open && (
