@@ -1,6 +1,7 @@
 "use client";
-import { ReactNode, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Fragment, ReactNode, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { motion } from "framer-motion";
 
 interface ModalProps {
   open: boolean;
@@ -11,19 +12,33 @@ interface ModalProps {
 export default function Modal({ open, onClose, children }: ModalProps) {
   const [pos, setPos] = useState({ x: 0, y: 0 });
   return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+    <Transition appear show={open} as={Fragment}>
+      <Dialog
+        as="div"
+        className="fixed inset-0 z-50 flex items-center justify-center"
+        onClose={onClose}
+      >
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-200"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-150"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
+        </Transition.Child>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-200"
+          enterFrom="opacity-0 scale-95"
+          enterTo="opacity-100 scale-100"
+          leave="ease-in duration-150"
+          leaveFrom="opacity-100 scale-100"
+          leaveTo="opacity-0 scale-95"
         >
           <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
             onMouseMove={(e) => {
               const r = e.currentTarget.getBoundingClientRect();
               setPos({
@@ -36,14 +51,15 @@ export default function Modal({ open, onClose, children }: ModalProps) {
           >
             <button
               onClick={onClose}
+              aria-label="Close modal"
               className="absolute top-3 right-3 text-xl leading-none"
             >
               &times;
             </button>
             {children}
           </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </Transition.Child>
+      </Dialog>
+    </Transition>
   );
 }

@@ -22,7 +22,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
           href="#main-content"
           className="sr-only focus:not-sr-only absolute top-0 left-0 z-50 bg-white text-black p-2"
         >
-          Skip to main content
+          Skip to Content
         </a>
         <AnimatedLayout>
           <AuthProvider>

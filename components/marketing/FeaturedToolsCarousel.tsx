@@ -53,6 +53,7 @@ export default function FeaturedToolsCarousel() {
           <button
             key={t.id}
             onClick={() => setIndex(i)}
+            aria-label={`Go to slide ${i + 1}`}
             className={`w-2 h-2 rounded-full ${i === index ? 'bg-secondary-700 w-3' : 'bg-gray-300'}`}
           />
         ))}

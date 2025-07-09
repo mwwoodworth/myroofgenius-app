@@ -19,15 +19,17 @@
     "postinstall": "if [ \"$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD\" != \"1\" ]; then npm run playwright:install; fi",
     "validate:env": "tsx scripts/validate-env.ts",
     "postbuild": "next-sitemap",
-    "lighthouse:seo": "node scripts/lighthouse-seo.js"
+    "lighthouse:seo": "node scripts/lighthouse-seo.js",
+    "a11y": "tsx scripts/a11y.ts"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.4",
     "@react-three/drei": "^9.88.0",
     "@react-three/fiber": "^8.15.0",
     "@sentry/nextjs": "^7.90.0",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
-    "@supabase/supabase-js": "^2.50.1",
     "@supabase/auth-js": "^2.70.0",
+    "@supabase/supabase-js": "^2.50.1",
     "@tailwindcss/forms": "^0.5.7",
     "autoprefixer": "^10.4.21",
     "canvas-confetti": "^1.9.2",
@@ -51,6 +53,8 @@
     "three": "^0.159.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@jest/globals": "^30.0.3",
     "@next/bundle-analyzer": "^13.1.1",
     "@playwright/test": "^1.38.0",
     "@testing-library/jest-dom": "^6.6.3",
@@ -59,7 +63,6 @@
     "@types/node": "^20.19.4",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",
-    "@jest/globals": "^30.0.3",
     "@typescript-eslint/eslint-plugin": "^8.35.0",
     "@typescript-eslint/parser": "^8.35.0",
     "eslint": "^8.57.1",
@@ -71,15 +74,15 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^30.0.3",
     "jest-environment-jsdom": "^30.0.2",
+    "lighthouse": "^12.7.1",
     "lint-staged": "^15.2.0",
     "msw": "^2.10.2",
+    "next-sitemap": "^4.2.3",
     "prettier": "^3.6.2",
     "start-server-and-test": "^2.0.12",
     "ts-jest": "^29.4.0",
     "tsx": "^4.20.3",
-    "typescript": "^5.8.3",
-    "lighthouse": "^12.7.1",
-    "next-sitemap": "^4.2.3"
+    "typescript": "^5.8.3"
   },
   "husky": {
     "hooks": {
