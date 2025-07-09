@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect, useState, useCallback } from "react";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Search, Filter, Star, ShoppingCart, Eye } from "lucide-react";
 import ProductCarousel from "../../components/marketplace/ProductCarousel";
 import ContractorGrid from "../../components/marketplace/ContractorGrid";

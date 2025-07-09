@@ -18,6 +18,12 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
     <LocaleProvider>
       <CurrencyProvider>
         <DocumentLang />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only absolute top-0 left-0 z-50 bg-white text-black p-2"
+        >
+          Skip to main content
+        </a>
         <AnimatedLayout>
           <AuthProvider>
             <RoleProvider>
@@ -28,7 +34,9 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
                       <ARModeProvider>
                         <Navbar />
                         <AnnouncementBanner />
-                        <ErrorBoundary>{children}</ErrorBoundary>
+                        <main id="main-content" tabIndex={-1} className="outline-none">
+                          <ErrorBoundary>{children}</ErrorBoundary>
+                        </main>
                         {aiCopilotEnabled && <CopilotWrapper />}
                         <Footer />
                       </ARModeProvider>
@@ -36,7 +44,9 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
                       <>
                         <Navbar />
                         <AnnouncementBanner />
-                        <ErrorBoundary>{children}</ErrorBoundary>
+                        <main id="main-content" tabIndex={-1} className="outline-none">
+                          <ErrorBoundary>{children}</ErrorBoundary>
+                        </main>
                         {aiCopilotEnabled && <CopilotWrapper />}
                         <Footer />
                       </>

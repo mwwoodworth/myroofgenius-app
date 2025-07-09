@@ -1,6 +1,13 @@
 import RemoteModelViewer from '../../components/RemoteModelViewer';
 
-export const metadata = { title: 'AR Demo' };
+export const metadata = {
+  title: 'AR Roofing Model Demo | MyRoofGenius',
+  description: 'Interact with a 3D roofing model in your space using WebXR.',
+  openGraph: {
+    title: 'AR Roofing Model Demo | MyRoofGenius',
+    description: 'Interact with a 3D roofing model in your space using WebXR.'
+  }
+};
 
 export default function ARDemoPage() {
   const modelUrl = 'https://modelviewer.dev/shared-assets/models/Astronaut.glb';

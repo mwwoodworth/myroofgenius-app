@@ -13,6 +13,22 @@ export async function generateStaticParams() {
   return [];
 }
 
+export const revalidate = 3600;
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const product = await getProduct(params.id);
+  if (!product) return {};
+  const desc = product.description || 'Roofing resource from MyRoofGenius';
+  return {
+    title: `${product.name} | MyRoofGenius`,
+    description: desc,
+    openGraph: {
+      title: `${product.name} | MyRoofGenius`,
+      description: desc
+    }
+  };
+}
+
 async function getProduct(id: string) {
   // Handle missing env vars gracefully
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
@@ -65,6 +81,24 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Product',
+            name: product.name,
+            description: product.description,
+            image: product.image_url,
+            offers: {
+              '@type': 'Offer',
+              price: product.price,
+              priceCurrency: 'USD',
+              availability: 'http://schema.org/InStock'
+            }
+          })
+        }}
+      />
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="mb-8 text-sm">
