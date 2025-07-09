@@ -1,5 +1,5 @@
 'use client'
-import { Calculator, TrendingUp, DollarSign, Clock } from 'lucide-react'
+import { Calculator, TrendingUp, DollarSign, Clock, Camera } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Card from '@/components/ui/Card'
@@ -25,6 +25,14 @@ export default function ToolsClient() {
           link: '/tools/labor-estimator',
           icon: <Clock className="w-6 h-6" />,
           saveTime: 'Prevents 2-3 day overruns'
+        },
+        {
+          name: 'Photo Analyzer',
+          description: 'Instant roof insights from a single photo',
+          features: ['Damage detection', 'Pitch calculation', 'Material ID'],
+          link: '/tools/photo-analyzer',
+          icon: <Camera className="w-6 h-6" />,
+          saveTime: 'Get results in seconds'
         }
       ]
     },

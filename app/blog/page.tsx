@@ -129,9 +129,9 @@ export default async function Blog() {
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-2xl font-bold mb-8">Recent Articles</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="card-grid">
             {posts.slice(1).map((post) => (
-              <article key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+              <article key={post.id} className="card hover:shadow-lg transition">
                 <Link href={`/blog/${post.slug}`}>
                   <Image
                     src={post.image_url}

@@ -8,12 +8,27 @@
     @apply bg-bg text-text-primary font-inter;
   }
 
+  body,
+  header,
+  footer,
+  .btn-green,
+  .banner {
+    background-color: var(--color-bg) !important;
+    color: var(--color-text) !important;
+  }
+
   :root {
     --accent: 94 92 230;
     --clr-primary-900: 13 27 42;
     --clr-secondary-700: 63 28 112;
     --clr-accent-emerald: 0 196 107;
     --clr-accent-pink: 255 126 179;
+    /* Brand Palette */
+    --color-primary: #006A4E;
+    --color-secondary: #F5A623;
+    --color-bg: #F4F4F4;
+    --color-text: #333333;
+    --color-white: #FFFFFF;
     /* Protection Status Colors */
     --color-protected: 34 197 94;
     --color-warning: 251 146 60;
@@ -134,4 +149,69 @@
 }
 .dark .prose pre {
   @apply bg-slate-800 text-slate-100;
+}
+
+/* Action Buttons */
+.button-primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+.button-primary:hover,
+.button-primary:focus {
+  background: var(--color-secondary);
+  outline: 2px solid var(--color-white);
+}
+
+.button-secondary {
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+}
+.button-secondary:hover,
+.button-secondary:focus {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px dashed var(--color-secondary);
+  outline-offset: 2px;
+}
+
+/* Upload Card */
+.upload-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-primary);
+  padding: 1.5rem;
+  text-align: center;
+  margin: 2rem auto;
+  max-width: 400px;
+}
+
+/* Card Layout */
+.card-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-bg);
+  padding: 1rem;
+}
+
+/* Trust Section */
+.trust {
+  background: var(--color-bg);
+  padding: 2rem 1rem;
+  text-align: center;
+}
+.trust blockquote {
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+.badges img {
+  max-height: 60px;
+  margin: 0 0.5rem;
 }
