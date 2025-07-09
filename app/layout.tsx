@@ -12,6 +12,7 @@ const ClientLayout = dynamicImport(() => import('../components/layout/ClientLayo
 export const dynamic = 'force-dynamic';
 
 const inter = Inter({ subsets: ['latin'] });
+const theme = inter.className;
 
 export const metadata = {
   title: 'MyRoofGenius - Smart Roofing Solutions',
@@ -23,23 +24,20 @@ export default function RootLayout({
 }: {
   children: ReactNode
 }) {
-  if (maintenanceMode) {
-    return (
-      <html lang="en">
-        <body className={inter.className}>
+  return (
+    <html lang="en" className={theme}>
+      <body>
+        {maintenanceMode ? (
           <div className="min-h-screen flex items-center justify-center">
             <p>Site is under maintenance. Please check back soon.</p>
           </div>
-        </body>
-      </html>
-    );
-  }
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Starfield />
-        <ClientLayout>{children}</ClientLayout>
-        <Analytics />
+        ) : (
+          <>
+            <Starfield />
+            <ClientLayout>{children}</ClientLayout>
+            <Analytics />
+          </>
+        )}
       </body>
     </html>
   );
