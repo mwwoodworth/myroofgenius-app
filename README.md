@@ -39,7 +39,7 @@ Pick a custom accent color from the Navbar color picker. Your choice is persiste
 
 ### Asset Policy
 
-No binary image files are stored in the repository. Avatars and icons use inline SVGs or remote URLs such as DiceBear avatars. When no custom avatar is available, a placeholder SVG is loaded from `https://avatars.dicebear.com`.
+No binary assets (images or 3D models) are checked into this repo. All icons and avatars use inline SVG or remote URLs (e.g. DiceBear). Any product screenshots, AR models or icons must be hosted on a CDN or placeholder service. Local uploads should save to Supabase Storage or another remote provider.
 
 ## ✨ Visual Overhaul 2025
 

@@ -7,8 +7,7 @@ const CRITICAL_CACHE = [
   '/dashboard',
   '/field/report',
   '/estimate/new',
-  '/manifest.json',
-  '/icons/icon-192x192.png'
+  '/manifest.json'
 ];
 
 self.addEventListener('install', event => {
@@ -86,8 +85,8 @@ self.addEventListener('push', event => {
   const data = event.data?.json() || {};
   const options = {
     body: data.body || 'Important update from MyRoofGenius',
-    icon: '/icons/icon-192x192.png',
-    badge: '/icons/badge-72x72.png',
+    icon: 'https://via.placeholder.com/192',
+    badge: 'https://via.placeholder.com/72',
     vibrate: [200, 100, 200],
     data: { url: data.url || '/', priority: data.priority || 'normal' },
     actions: [

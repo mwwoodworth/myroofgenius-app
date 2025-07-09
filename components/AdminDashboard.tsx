@@ -2,6 +2,7 @@
 export const dynamic = 'force-dynamic';
 import { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Users, Package, DollarSign, FileText, Settings as SettingsIcon, BarChart3 } from 'lucide-react';
 import Image from 'next/image';
 import { useLocale } from '../src/context/LocaleContext';
@@ -67,7 +68,8 @@ export default function AdminDashboard() {
   }, [isAdmin]);
 
   async function loadDashboardData() {
-    const res = await fetch('/api/admin/stats');
+    const { data: { user } } = await createClientComponentClient().auth.getUser();
+    const res = await fetch(`/api/admin/stats?user_id=${user?.id}`);
     if (res.ok) {
       const data = await res.json();
       setStats(data);
@@ -88,7 +90,7 @@ export default function AdminDashboard() {
 
       <div className="max-w-7xl mx-auto px-4 py-4">
         <nav className="flex space-x-8">
-          {['overview', 'orders', 'products', 'users', 'analytics', 'settings'].map((tab) => (
+          {['overview', 'orders', 'products', 'users', 'analytics', 'ai', 'settings'].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -108,6 +110,7 @@ export default function AdminDashboard() {
         {activeTab === 'products' && <ProductsTab />}
         {activeTab === 'users' && <UsersTab />}
         {activeTab === 'analytics' && <AnalyticsTab stats={stats} />}
+        {activeTab === 'ai' && <AITab />}
         {activeTab === 'settings' && <SettingsTab />}
       </div>
     </div>
@@ -182,7 +185,8 @@ function OrdersTab() {
   }, []);
 
   async function loadOrders() {
-    const res = await fetch('/api/admin/orders');
+    const { data: { user } } = await createClientComponentClient().auth.getUser();
+    const res = await fetch(`/api/admin/orders?user_id=${user?.id}`);
     if (res.ok) {
       const json = await res.json();
       setOrders(json.orders || []);
@@ -246,7 +250,8 @@ function ProductsTab() {
   }, []);
 
   async function loadProducts() {
-    const res = await fetch('/api/admin/products');
+    const { data: { user } } = await createClientComponentClient().auth.getUser();
+    const res = await fetch(`/api/admin/products?user_id=${user?.id}`);
     if (res.ok) {
       const json = await res.json();
       setProducts(json.products || []);
@@ -307,7 +312,8 @@ function AddProductModal({ onClose }: { onClose: () => void }) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const res = await fetch('/api/admin/products', {
+    const { data: { user } } = await createClientComponentClient().auth.getUser();
+    const res = await fetch(`/api/admin/products?user_id=${user?.id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
@@ -382,7 +388,8 @@ function UsersTab() {
   useEffect(() => { loadUsers(); }, []);
 
   async function loadUsers() {
-    const res = await fetch('/api/admin/users');
+    const { data: { user } } = await createClientComponentClient().auth.getUser();
+    const res = await fetch(`/api/admin/users?user_id=${user?.id}`);
     if (res.ok) {
       const json = await res.json();
       setUsers(json.users || []);
@@ -391,7 +398,8 @@ function UsersTab() {
   }
 
   async function toggleAdmin(userId: string, currentStatus: boolean) {
-    await fetch('/api/admin/users', {
+    const { data: { user } } = await createClientComponentClient().auth.getUser();
+    await fetch(`/api/admin/users?user_id=${user?.id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: userId, is_admin: !currentStatus })
@@ -456,6 +464,54 @@ function AnalyticsTab({ stats }: { stats: DashboardStats }) {
         </div>
       ) : (
         <p className="text-gray-500">Not enough data to display analytics.</p>
+      )}
+    </div>
+  );
+}
+
+function AITab() {
+  const [logs, setLogs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadLogs() {
+      const { data: { user } } = await createClientComponentClient().auth.getUser();
+      const res = await fetch(`/api/admin/copilot-logs?user_id=${user?.id}`);
+      if (res.ok) {
+        const json = await res.json();
+        setLogs(json.logs || []);
+      }
+      setLoading(false);
+    }
+    loadLogs();
+  }, []);
+
+  return (
+    <div className="bg-white rounded-lg shadow p-6 overflow-x-auto">
+      <h2 className="text-xl font-semibold mb-4">Copilot Activity</h2>
+      {loading ? (
+        <p>Loading logs...</p>
+      ) : (
+        <table className="w-full text-sm text-left">
+          <thead className="bg-gray-50 text-gray-700 uppercase">
+            <tr>
+              <th className="px-4 py-3">Time</th>
+              <th className="px-4 py-3">User</th>
+              <th className="px-4 py-3">Role</th>
+              <th className="px-4 py-3">Message</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {logs.map((log: any) => (
+              <tr key={log.id}>
+                <td className="px-4 py-2">{new Date(log.created_at).toLocaleString()}</td>
+                <td className="px-4 py-2">{log.user_id || '—'}</td>
+                <td className="px-4 py-2">{log.role}</td>
+                <td className="px-4 py-2 max-w-xs whitespace-pre-wrap">{log.message}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );

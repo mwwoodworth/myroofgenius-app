@@ -4,6 +4,7 @@ export interface Product {
   category: 'materials' | 'tools' | 'services'
   price: number
   rating: number
+  image_url?: string
   compatibilityScore?: number
   aiRecommendationReason?: string
   vendor: {
