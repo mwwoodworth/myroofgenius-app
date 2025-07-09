@@ -25,7 +25,7 @@ export default function ToolDemoModal({ open, onClose, title }: { open: boolean;
             placeholder="Enter a sample value"
             className="w-full px-3 py-2 rounded text-gray-900"
           />
-          <button onClick={run} className="px-4 py-2 bg-blue-600 text-white rounded">
+          <button onClick={run} className="px-4 py-2 bg-secondary-700 text-white rounded">
             See Result
           </button>
         </div>
@@ -34,7 +34,7 @@ export default function ToolDemoModal({ open, onClose, title }: { open: boolean;
           <p className="text-lg">Estimated result: <strong>{result}</strong></p>
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-blue-600 text-white rounded"
+            className="px-4 py-2 bg-secondary-700 text-white rounded"
           >
             Create Free Account
           </button>

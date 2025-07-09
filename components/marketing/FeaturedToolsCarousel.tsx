@@ -53,7 +53,7 @@ export default function FeaturedToolsCarousel() {
           <button
             key={t.id}
             onClick={() => setIndex(i)}
-            className={`w-2 h-2 rounded-full ${i === index ? 'bg-blue-600 w-3' : 'bg-gray-300'}`}
+            className={`w-2 h-2 rounded-full ${i === index ? 'bg-secondary-700 w-3' : 'bg-gray-300'}`}
           />
         ))}
       </div>
@@ -64,6 +64,8 @@ export default function FeaturedToolsCarousel() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             onMouseMove={(e) => {
               const r = e.currentTarget.getBoundingClientRect()
               setTilt({

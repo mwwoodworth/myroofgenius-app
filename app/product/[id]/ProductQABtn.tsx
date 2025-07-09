@@ -8,7 +8,7 @@ export default function ProductQABtn({ name, description }: { name: string; desc
   return (
     <>
       <button
-        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+        className="mt-4 px-4 py-2 bg-secondary-700 text-white rounded-lg hover:bg-secondary-700/80"
         onClick={() => setOpen(true)}
       >
         AI Copilot Q&A

@@ -49,12 +49,11 @@ export default async function Account() {
         <div className="mt-8 text-center">
           <a
             href="/marketplace"
-            className="text-blue-600 hover:underline font-semibold"
+            className="text-secondary-700 hover:underline font-semibold"
           >
             Continue Shopping
           </a>
         </div>
       </div>
     </div>
-  );
-}
+  );}

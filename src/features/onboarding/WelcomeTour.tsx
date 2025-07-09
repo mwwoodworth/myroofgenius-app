@@ -17,9 +17,9 @@ export default function WelcomeTour() {
     <div className="p-6 bg-white/10 rounded">
       <p className="mb-4">{steps[step]}</p>
       {step < steps.length - 1 ? (
-        <button className="px-4 py-2 bg-blue-600 text-white rounded" onClick={() => setStep(step + 1)}>Next</button>
+        <button className="px-4 py-2 bg-secondary-700 text-white rounded" onClick={() => setStep(step + 1)}>Next</button>
       ) : (
-        <button className="px-4 py-2 bg-green-600 text-white rounded" onClick={() => setStep(0)}>Finish</button>
+        <button className="px-4 py-2 bg-accent-emerald text-white rounded" onClick={() => setStep(0)}>Finish</button>
       )}
     </div>
   );

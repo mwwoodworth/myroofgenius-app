@@ -49,7 +49,7 @@ function IntegrationCategory({ title, description, integrations }) {
               <h3 className="font-semibold">{intg.name}</h3>
               <p className="text-sm text-slate-600">{intg.description}</p>
             </div>
-            <span className="text-sm text-green-600 font-medium">{intg.status}</span>
+            <span className="text-sm text-accent-emerald font-medium">{intg.status}</span>
           </div>
         ))}
       </div>

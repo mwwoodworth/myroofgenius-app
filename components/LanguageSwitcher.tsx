@@ -19,7 +19,7 @@ export default function LanguageSwitcher() {
           whileTap={{ scale: 0.95 }}
           onClick={() => setLocale(l)}
           className={`px-2 py-1 rounded ${
-            locale === l ? 'bg-blue-600 text-white' : 'bg-gray-100'
+            locale === l ? 'bg-secondary-700 text-white' : 'bg-gray-100'
           }`}
         >
           {l.toUpperCase()}

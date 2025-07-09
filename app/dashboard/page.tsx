@@ -212,7 +212,7 @@ export default async function Dashboard() {
             <div className="flex gap-4">
               <Link
                 href="/estimator"
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="px-4 py-2 bg-secondary-700 text-white rounded-lg hover:bg-secondary-700/80"
               >
                 New Estimate
               </Link>
@@ -238,8 +238,8 @@ export default async function Dashboard() {
                   ${data.stats.totalSpent.toFixed(2)}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                <DollarSign className="w-6 h-6 text-green-600" />
+              <div className="w-12 h-12 bg-accent-emerald/20 rounded-full flex items-center justify-center">
+                <DollarSign className="w-6 h-6 text-accent-emerald" />
               </div>
             </div>
           </div>
@@ -250,8 +250,8 @@ export default async function Dashboard() {
                 <p className="text-sm font-medium text-gray-600">Total Orders</p>
                 <p className="text-2xl font-bold mt-1">{data.stats.totalOrders}</p>
               </div>
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <Package className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 bg-secondary-700/10 rounded-full flex items-center justify-center">
+                <Package className="w-6 h-6 text-secondary-700" />
               </div>
             </div>
           </div>
@@ -329,7 +329,7 @@ export default async function Dashboard() {
                   <h2 className="text-xl font-semibold">Recent Orders</h2>
                   <Link
                     href="/orders"
-                    className="text-sm text-blue-600 hover:underline"
+                    className="text-sm text-secondary-700 hover:underline"
                   >
                     View all
                   </Link>
@@ -338,7 +338,7 @@ export default async function Dashboard() {
               <div className="p-6">
                 {data.orders.length === 0 ? (
                   <EmptyState message="No orders yet.">
-                    <Link href="/marketplace" className="text-blue-600 hover:underline">
+                    <Link href="/marketplace" className="text-secondary-700 hover:underline">
                       Browse marketplace
                     </Link>
                   </EmptyState>
@@ -360,7 +360,7 @@ export default async function Dashboard() {
                           <span className={`
                             text-sm px-2 py-1 rounded
                             ${order.status === 'completed'
-                              ? 'bg-green-100 text-green-800'
+                              ? 'bg-accent-emerald/20 text-accent-emerald'
                               : 'bg-yellow-100 text-yellow-800'
                             }
                           `}>
@@ -389,7 +389,7 @@ export default async function Dashboard() {
                     {data.charts.monthlySpending.map((month, idx) => (
                       <div key={idx} className="flex-1 flex flex-col items-center">
                         <div
-                          className="w-full max-w-12 bg-blue-500 rounded-t"
+                          className="w-full max-w-12 bg-secondary-700/50 rounded-t"
                           style={{
                             height: `${((month.amount as number) / Math.max(...data.charts.monthlySpending.map(m => m.amount as number)) * 100) || 10}%`
                           }}
@@ -465,7 +465,7 @@ export default async function Dashboard() {
                 {data.analyses.length === 0 ? (
                   <p className="text-gray-600 text-sm">
                     No analyses yet.
-                    <Link href="/estimator" className="text-blue-600 hover:underline ml-1">
+                    <Link href="/estimator" className="text-secondary-700 hover:underline ml-1">
                       Try AI estimator
                     </Link>
                   </p>
@@ -487,7 +487,7 @@ export default async function Dashboard() {
                         </div>
                         <Link
                           href={`/analysis/${analysis.id}`}
-                          className="text-xs text-blue-600 hover:underline"
+                          className="text-xs text-secondary-700 hover:underline"
                         >
                           View
                         </Link>
@@ -546,7 +546,7 @@ export default async function Dashboard() {
                           w-2 h-2 rounded-full mt-1.5
                           ${ticket.status === 'open' ? 'bg-red-500' :
                             ticket.status === 'in_progress' ? 'bg-yellow-500' :
-                            'bg-green-500'}
+                            'bg-accent-emerald'}
                         `} />
                         <div className="flex-1">
                           <p className="text-sm font-medium line-clamp-1">
@@ -558,7 +558,7 @@ export default async function Dashboard() {
                         </div>
                         <Link
                           href={`/support/${ticket.id}`}
-                          className="text-xs text-blue-600 hover:underline"
+                          className="text-xs text-secondary-700 hover:underline"
                         >
                           View
                         </Link>
@@ -576,12 +576,12 @@ export default async function Dashboard() {
           <div className="mt-8 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-8 text-white">
             <div className="max-w-3xl">
               <h3 className="text-2xl font-bold mb-2">Upgrade to Pro</h3>
-              <p className="text-blue-100 mb-4">
+              <p className="text-secondary-700/20 mb-4">
                 Get unlimited AI analyses, priority support, and exclusive templates
               </p>
               <Link
                 href="/pricing"
-                className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-gray-100 font-semibold"
+                className="inline-block bg-white text-secondary-700 px-6 py-3 rounded-lg hover:bg-gray-100 font-semibold"
               >
                 View Plans
               </Link>

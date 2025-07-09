@@ -266,8 +266,8 @@ export default function CopilotPanel({
             animate={{ opacity: 1, y: 0 }}
             className={
               m.role === 'user'
-                ? 'text-right text-blue-200'
-                : 'text-green-200'
+                ? 'text-right text-secondary-700/40'
+                : 'text-accent-emerald/40'
             }
           >
             {m.content}

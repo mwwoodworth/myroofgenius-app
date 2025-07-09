@@ -35,7 +35,7 @@ export default function ProductCarousel({
             <button
               key={idx}
               onClick={() => setCurrentIndex(idx)}
-              className={`w-2 h-2 rounded-full ${idx === currentIndex ? 'bg-blue-500 w-4' : 'bg-gray-400'}`}
+              className={`w-2 h-2 rounded-full ${idx === currentIndex ? 'bg-secondary-700/50 w-4' : 'bg-gray-400'}`}
             />
           ))}
         </div>
@@ -45,7 +45,15 @@ export default function ProductCarousel({
           {isLoading ? (
             <motion.div key="loading" className="absolute inset-0 flex items-center justify-center" />
           ) : (
-            <motion.div key={currentIndex} initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -100 }} className="absolute inset-0">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="absolute inset-0"
+            >
               <GlassPanel className="h-full p-6">
                 {products[currentIndex]?.name}
               </GlassPanel>

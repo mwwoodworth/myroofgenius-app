@@ -36,7 +36,7 @@ export default function EmailSignupForm({className=""}:{className?:string}) {
       {status==='success' ? (
         <motion.div initial={{opacity:0}} animate={{opacity:1}} className="flex flex-col items-center text-center">
           <Lottie animationData={successAnim} className="w-24 h-24" loop={false}/>
-          <p className="text-green-600 font-semibold">Check your inbox!</p>
+          <p className="text-accent-emerald font-semibold">Check your inbox!</p>
         </motion.div>
       ) : (
         <>

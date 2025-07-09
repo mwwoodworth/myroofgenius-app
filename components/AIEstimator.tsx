@@ -229,7 +229,7 @@ export default function AIEstimator() {
                 className={`
                   border-2 border-dashed rounded-lg p-8 text-center cursor-pointer
                   transition-colors duration-200
-                  ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'}
+                  ${isDragActive ? 'border-secondary-700 bg-secondary-700/5' : 'border-gray-300 hover:border-gray-400'}
                 `}
               >
                 <input {...getInputProps()} />
@@ -327,7 +327,7 @@ export default function AIEstimator() {
             className="text-center py-12"
           >
             <div className="inline-flex items-center justify-center w-16 h-16 mb-6">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-secondary-700"></div>
             </div>
             <h3 className="text-xl font-semibold mb-2">Analyzing Your Roof...</h3>
             <p className="text-gray-600">Our AI is examining the image for:</p>
@@ -386,8 +386,8 @@ export default function AIEstimator() {
                 <div className={`mt-1 h-2 rounded-full bg-gray-200`}>
                   <div
                     className={`h-full rounded-full ${
-                      result.condition === 'excellent' ? 'bg-green-500' :
-                        result.condition === 'good' ? 'bg-blue-500' :
+                      result.condition === 'excellent' ? 'bg-accent-emerald' :
+                        result.condition === 'good' ? 'bg-secondary-700/50' :
                         result.condition === 'fair' ? 'bg-yellow-500' :
                         'bg-red-500'
                     }`}
@@ -421,7 +421,7 @@ export default function AIEstimator() {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="border rounded-lg p-6">
                 <h3 className="font-semibold mb-4 flex items-center gap-2">
-                  <span className="text-blue-600">🔧</span> Repair Estimate
+                  <span className="text-secondary-700">🔧</span> Repair Estimate
                 </h3>
                 <p className="text-3xl font-bold mb-2">
                   ${result.repair_cost_estimate[0].toLocaleString()} -
@@ -433,7 +433,7 @@ export default function AIEstimator() {
               </div>
               <div className="border rounded-lg p-6">
                 <h3 className="font-semibold mb-4 flex items-center gap-2">
-                  <span className="text-green-600">🏠</span> Replacement Estimate
+                  <span className="text-accent-emerald">🏠</span> Replacement Estimate
                 </h3>
                 <p className="text-3xl font-bold mb-2">
                   ${result.replacement_cost_estimate[0].toLocaleString()} -
@@ -461,7 +461,7 @@ export default function AIEstimator() {
                         mt-1 w-2 h-2 rounded-full
                         ${damage.severity === 'severe' ? 'bg-red-500' :
                           damage.severity === 'moderate' ? 'bg-yellow-500' :
-                          'bg-blue-500'}
+                          'bg-secondary-700/50'}
                       `} />
                       <div className="flex-1">
                         <p className="font-medium">{damage.type}</p>
@@ -482,7 +482,7 @@ export default function AIEstimator() {
               <ul className="space-y-2">
                 {result.recommendations.map((rec, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
+                    <CheckCircle className="w-5 h-5 text-accent-emerald mt-0.5" />
                     <span className="text-gray-700">{rec}</span>
                   </li>
                 ))}
@@ -508,7 +508,7 @@ export default function AIEstimator() {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center py-12"
           >
-            <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+            <CheckCircle className="w-16 h-16 text-accent-emerald mx-auto mb-4" />
             <h3 className="text-2xl font-bold mb-2">Report Ready!</h3>
             <p className="text-gray-600 mb-6">
               Your comprehensive roof analysis report has been generated.
@@ -517,7 +517,7 @@ export default function AIEstimator() {
               <a
                 href={reportUrl}
                 download
-                className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="inline-flex items-center justify-center px-6 py-3 bg-secondary-700 text-white rounded-lg hover:bg-secondary-700/80"
               >
                 <Download className="w-5 h-5 mr-2" />
                 Download Report

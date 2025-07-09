@@ -42,7 +42,7 @@ const staticContent = {
       <h3>5. Unforeseen Deck Type Transitions</h3>
       <p>Commercial buildings constructed in phases or with additions often have different deck types that weren't accounted for in initial inspections. These transitions require specialized detailing, different fastening systems, and additional material accommodations that increase labor costs and material requirements.</p>
       
-      <div class="bg-blue-50 p-6 rounded-lg my-8">
+      <div class="bg-secondary-700/5 p-6 rounded-lg my-8">
         <h4 class="text-xl font-semibold mb-3">Pro Tip: Pre-Project Inspection</h4>
         <p>Invest in comprehensive pre-project inspections including core samples and infrared scans. The $2,000-5,000 investment typically saves 10x in avoided surprises.</p>
       </div>
@@ -127,7 +127,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
           </p>
           <Link
             href="/marketplace"
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
+            className="inline-block bg-secondary-700 text-white px-6 py-3 rounded-lg hover:bg-secondary-700/80"
           >
             Browse Our Tools
           </Link>
@@ -141,12 +141,11 @@ export default async function BlogPost({ params }: { params: { slug: string } })
             <p className="text-gray-600 text-sm mb-2">
               Founder of MyRoofGenius with 15+ years in commercial roofing operations and technology implementation.
             </p>
-            <Link href="/about" className="text-blue-600 text-sm hover:underline">
+            <Link href="/about" className="text-secondary-700 text-sm hover:underline">
               More articles by {post.author}
             </Link>
           </div>
         </div>
       </article>
     </div>
-  );
-}
+  );}
