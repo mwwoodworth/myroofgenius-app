@@ -1,11 +1,12 @@
-'use client'
-import Link from 'next/link'
-import Image from 'next/image'
-import { useState } from 'react'
-import ToolDemoModal from '../../../components/marketing/ToolDemoModal'
+"use client";
+import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+import ToolDemoModal from "../../../components/marketing/ToolDemoModal";
+import CopilotQuickButton from "../../../components/CopilotQuickButton";
 
 export default function LaborEstimator() {
-  const [showDemo, setShowDemo] = useState(false)
+  const [showDemo, setShowDemo] = useState(false);
   return (
     <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
       <div className="max-w-2xl bg-white rounded-xl shadow p-8 text-center">
@@ -17,18 +18,35 @@ export default function LaborEstimator() {
           className="rounded-lg mb-6"
         />
         <h1 className="text-3xl font-bold mb-4">Labor Hour Estimator</h1>
-        <p className="text-gray-600 mb-6">Calculate accurate crew sizes based on real productivity data.</p>
+        <p className="text-gray-600 mb-6">
+          Calculate accurate crew sizes based on real productivity data.
+        </p>
         <div className="space-y-2 mb-6 text-left">
           <p>✓ Weather impact factors</p>
           <p>✓ Crew skill adjustments</p>
           <p>✓ Overtime calculations</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button onClick={() => setShowDemo(true)} className="px-6 py-3 bg-gray-200 rounded-lg font-semibold hover:bg-gray-300 text-gray-800">Try Demo</button>
-          <Link href="/signup" className="px-6 py-3 bg-secondary-700 text-white rounded-lg font-semibold hover:bg-secondary-700/80">Create Free Account</Link>
+          <button
+            onClick={() => setShowDemo(true)}
+            className="px-6 py-3 bg-gray-200 rounded-lg font-semibold hover:bg-gray-300 text-gray-800"
+          >
+            Try Demo
+          </button>
+          <Link
+            href="/signup"
+            className="px-6 py-3 bg-secondary-700 text-white rounded-lg font-semibold hover:bg-secondary-700/80"
+          >
+            Create Free Account
+          </Link>
+          <CopilotQuickButton prompt="Help me estimate labor hours" />
         </div>
-        <ToolDemoModal open={showDemo} onClose={() => setShowDemo(false)} title="Labor Hour Estimator" />
+        <ToolDemoModal
+          open={showDemo}
+          onClose={() => setShowDemo(false)}
+          title="Labor Hour Estimator"
+        />
       </div>
     </div>
-  )
+  );
 }
