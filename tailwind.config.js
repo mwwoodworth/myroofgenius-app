@@ -23,9 +23,9 @@ module.exports = {
       },
       backgroundImage: {
         'brand-gradient':
-          'linear-gradient(135deg,#0d1b2a 0%,#3f1c70 50%,#00c46b 100%)',
+          'linear-gradient(135deg,#1a223f 0%,#364489 50%,#8276c5 100%)',
         'brand-gradient-alt':
-          'linear-gradient(135deg,#3f1c70 0%,#ff7eb3 45%,#0d1b2a 100%)',
+          'linear-gradient(135deg,#364489 0%,#5256a4 45%,#1a223f 100%)',
       },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
@@ -76,7 +76,7 @@ module.exports = {
         },
         '.bg-gradient-animated': {
           background:
-            'linear-gradient(130deg, #28a745, #6c63ff, #e5b3c9, #8B5CF6, #005f9e, #28a745)',
+            'linear-gradient(130deg,#1a223f,#2e396d,#5256a4,#8276c5,#2e396d,#1a223f)',
           backgroundSize: '700% 700%',
           animation: 'gradientShift 22s ease-in-out infinite'
         }
