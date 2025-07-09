@@ -66,9 +66,9 @@ module.exports = {
         },
         '.bg-gradient-animated': {
           background:
-            'linear-gradient(130deg, #0f0c29, #302b63, #24243e, #005f9e, #28a745)',
-          backgroundSize: '500% 500%',
-          animation: 'gradientShift 20s ease infinite'
+            'linear-gradient(130deg, #28a745, #6c63ff, #e5b3c9, #8B5CF6, #005f9e, #28a745)',
+          backgroundSize: '700% 700%',
+          animation: 'gradientShift 22s ease-in-out infinite'
         }
       })
 
