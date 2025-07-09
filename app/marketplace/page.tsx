@@ -165,10 +165,17 @@ export default function Marketplace() {
 
   const buyNow = async (product: Product) => {
     try {
+      const {
+        data: { user }
+      } = await createClientComponentClient().auth.getUser();
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ price_id: product.price_id, product_id: product.id })
+        body: JSON.stringify({
+          price_id: product.price_id,
+          product_id: product.id,
+          user_id: user?.id
+        })
       });
       const data = await res.json();
       if (data.url) {

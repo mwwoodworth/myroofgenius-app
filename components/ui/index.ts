@@ -15,4 +15,5 @@ export { default as Modal } from './Modal';
 export { PresenceProvider } from './PresenceProvider';
 export { default as PresenceAvatars } from './PresenceAvatars';
 export { default as TypingText } from './TypingText';
+export { default as Analytics } from '../Analytics';
 export { default as HeroHeadline } from './HeroHeadline';
