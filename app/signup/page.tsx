@@ -1,14 +1,16 @@
-'use client';
-import { useState } from 'react';
-import Link from 'next/link';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+"use client";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useConfetti } from "../../hooks/use-confetti";
 
 export default function SignupPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const triggerConfetti = useConfetti();
   const supabase = createClientComponentClient();
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -16,19 +18,23 @@ export default function SignupPage() {
     setError(null);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setError('Please enter a valid email address.');
+      setError("Please enter a valid email address.");
       return;
     }
     setLoading(true);
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback` }
+      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
     });
-    if (error) setError('Could not create account. Please check your details.');
+    if (error) setError("Could not create account. Please check your details.");
     else setSuccess(true);
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (success) triggerConfetti();
+  }, [success, triggerConfetti]);
 
   if (success) {
     return (
@@ -66,11 +72,11 @@ export default function SignupPage() {
             disabled={loading}
             className="w-full bg-accent text-white py-2 rounded"
           >
-            {loading ? 'Creating account...' : 'Create account'}
+            {loading ? "Creating account..." : "Create account"}
           </button>
         </form>
         <p className="text-center text-sm">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <Link href="/login" className="text-accent underline">
             Sign in
           </Link>
