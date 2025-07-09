@@ -1,4 +1,3 @@
-'use client'
 import { Shield, WifiOff, Camera, FileText, AlertTriangle } from 'lucide-react'
 import Link from 'next/link'
 import { buildMeta } from '../../lib/metadata'
@@ -23,7 +22,7 @@ export default function FieldAppsPage() {
           </h1>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
             When you&apos;re on a roof at 7 AM with a decision to make, you need systems
-            that work with one bar of signal and gloves on. Built for real conditions, 
+            that work with one bar of signal and gloves on. Built for real conditions,
             not ideal ones.
           </p>
         </div>
@@ -40,107 +39,29 @@ export default function FieldAppsPage() {
               <p className="text-slate-600">Offline-first architecture. Every photo, note, and measurement saves locally first.</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-secondary-700/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <AlertTriangle className="w-8 h-8 text-secondary-700" />
+              <div className="w-16 h-16 bg-accent-emerald/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Camera className="w-8 h-8 text-accent-emerald" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">Mistake Prevention</h3>
-              <p className="text-slate-600">Real-time validation catches errors before they become expensive problems.</p>
+              <h3 className="font-semibold text-lg mb-2">Proof of Work</h3>
+              <p className="text-slate-600">Photos and notes automatically attach to the job record, even without service.</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FileText className="w-8 h-8 text-purple-600" />
+              <div className="w-16 h-16 bg-accent-emerald/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <FileText className="w-8 h-8 text-accent-emerald" />
               </div>
-              <h3 className="font-semibold text-lg mb-2">Documentation Shield</h3>
-              <p className="text-slate-600">Timestamped, GPS-tagged evidence protects you from disputes.</p>
+              <h3 className="font-semibold text-lg mb-2">Simplified Reporting</h3>
+              <p className="text-slate-600">Generate clean reports from the field with one tap, gloves on.</p>
             </div>
           </div>
         </div>
 
-        {/* Field Apps Grid */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <FieldAppCard
-            title="Roof Inspector Pro"
-            icon={<Camera className="w-8 h-8" />}
-            description="Capture, annotate, and sync inspection data even offline"
-            features={[
-              'Voice-to-text notes with gloves on',
-              'Photo annotation and measurement tools',
-              'Automatic weather condition logging',
-              'Instant report generation'
-            ]}
-            status="Download Now"
-            downloadLink="/download/roof-inspector"
-            color="blue"
-          />
-          <FieldAppCard
-            title="Daily Reporter"
-            icon={<FileText className="w-8 h-8" />}
-            description="Never lose another day's progress to paperwork"
-            features={[
-              'One-tap daily report creation',
-              'Automatic weather integration',
-              'Crew time tracking',
-              'Photo documentation with captions'
-            ]}
-            status="Download Now"
-            downloadLink="/download/daily-reporter"
-            color="green"
-          />
-        </div>
-
-        {/* Technical Specifications */}
-        <div className="bg-slate-50 rounded-2xl p-8">
-          <h2 className="text-2xl font-semibold mb-6">Built for Field Reality</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <h3 className="font-semibold mb-4">Minimum Requirements</h3>
-              <ul className="space-y-2 text-slate-600">
-                <li>• iOS 14+ or Android 9+</li>
-                <li>• 100MB storage for offline data</li>
-                <li>• Camera access for documentation</li>
-                <li>• Location services for GPS tagging</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Field-Tested Features</h3>
-              <ul className="space-y-2 text-slate-600">
-                <li>• Works on 2G/Edge connections</li>
-                <li>• 7-day offline capability</li>
-                <li>• Glove-friendly interface</li>
-                <li>• High-contrast mode for bright sun</li>
-              </ul>
-            </div>
-          </div>
+        {/* Warning Section */}
+        <div className="bg-secondary-700/5 rounded-2xl p-8 text-center">
+          <AlertTriangle className="w-10 h-10 text-secondary-700 mx-auto mb-4" />
+          <p className="text-lg text-slate-700 mb-6">Data loss from spotty connections costs roofers millions each year. Our offline apps keep your records safe.</p>
+          <Link href="/get-started" className="inline-block bg-secondary-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-secondary-700/80 transition-colors">Start Protecting Your Jobs</Link>
         </div>
       </div>
-    </div>
-  )
-}
-
-function FieldAppCard({ title, icon, description, features, status, downloadLink, color }) {
-  const colorClasses = {
-    blue: 'bg-secondary-700 hover:bg-secondary-700/80',
-    green: 'bg-accent-emerald hover:bg-accent-emerald/80',
-    purple: 'bg-purple-600 hover:bg-purple-700'
-  }
-  return (
-    <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-8 hover:shadow-xl transition-shadow">
-      <div className={`w-16 h-16 bg-${color}-100 rounded-full flex items-center justify-center mb-6`}>
-        {icon}
-      </div>
-      <h3 className="text-2xl font-bold mb-3">{title}</h3>
-      <p className="text-slate-600 mb-6">{description}</p>
-      <ul className="space-y-3 mb-8">
-        {features.map((feature, i) => (
-          <li key={i} className="flex items-start">
-            <span className="text-accent-emerald mr-2">✓</span>
-            <span className="text-slate-700">{feature}</span>
-          </li>
-        ))}
-      </ul>
-      <Link href={downloadLink} className={`block text-center py-3 px-6 rounded-lg text-white font-semibold transition-colors ${colorClasses[color]}`}>
-        {status}
-      </Link>
     </div>
   )
 }
