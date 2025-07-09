@@ -1,5 +1,12 @@
 'use client'
 import Link from 'next/link'
+import { buildMeta } from '../../lib/metadata'
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: 'Get Started | MyRoofGenius',
+    description: 'Create your free account to access professional roofing tools.'
+  })
 
 export default function GetStarted() {
   return (

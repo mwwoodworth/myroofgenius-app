@@ -3,6 +3,13 @@ import { Calculator, TrendingUp, DollarSign, Clock } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Card from '@/components/ui/Card'
+import { buildMeta } from '../../lib/metadata'
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: 'Roofing Tools | MyRoofGenius',
+    description: 'Professional calculators and financial tools for roofers.'
+  })
 export default function ToolsPage() {
   const tools = [
     {

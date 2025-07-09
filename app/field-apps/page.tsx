@@ -1,6 +1,13 @@
 'use client'
 import { Shield, WifiOff, Camera, FileText, AlertTriangle } from 'lucide-react'
 import Link from 'next/link'
+import { buildMeta } from '../../lib/metadata'
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: 'Field Apps | MyRoofGenius',
+    description: 'Offline-capable mobile tools for crews on site.'
+  })
 
 export default function FieldAppsPage() {
   return (

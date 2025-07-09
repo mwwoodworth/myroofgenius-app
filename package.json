@@ -17,7 +17,9 @@
     "analyze": "ANALYZE=true next build",
     "playwright:install": "playwright install --with-deps chromium firefox webkit",
     "postinstall": "if [ \"$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD\" != \"1\" ]; then npm run playwright:install; fi",
-    "validate:env": "tsx scripts/validate-env.ts"
+    "validate:env": "tsx scripts/validate-env.ts",
+    "postbuild": "next-sitemap",
+    "lighthouse:seo": "node scripts/lighthouse-seo.js"
   },
   "dependencies": {
     "@react-three/drei": "^9.88.0",
@@ -75,7 +77,9 @@
     "start-server-and-test": "^2.0.12",
     "ts-jest": "^29.4.0",
     "tsx": "^4.20.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "lighthouse": "^12.7.1",
+    "next-sitemap": "^4.2.3"
   },
   "husky": {
     "hooks": {

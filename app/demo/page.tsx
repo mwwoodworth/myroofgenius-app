@@ -3,6 +3,13 @@ import { Play, Shield, Clock, DollarSign, Users } from 'lucide-react'
 import { useState } from 'react'
 import Link from 'next/link'
 import EmailSignupForm from '../../components/marketing/EmailSignupForm'
+import { buildMeta } from '../../lib/metadata'
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: 'Demo | MyRoofGenius',
+    description: 'Watch demos of our estimation and compliance tools in action.'
+  })
 
 export default function DemoPage() {
   const [activeDemo, setActiveDemo] = useState('estimation')
