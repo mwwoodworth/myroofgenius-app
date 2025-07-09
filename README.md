@@ -23,22 +23,28 @@ npm run build
 ```
 
 ### Build Stability 2025
+
 - Added `pages/_app.tsx` with `SessionProvider` to share NextAuth sessions.
 - Verified Stripe webhook handler and Supabase auth helpers.
 - `npm run build`, `npm run lint`, and tests all pass.
 
 ### Purchasing Tools
+
 All marketplace products use Stripe checkout. After payment you’ll receive a download link
 immediately on the success page and in your account dashboard.
 
 ### Theme Accent
+
 Pick a custom accent color from the Navbar color picker. Your choice is persisted in localStorage.
 
 ### Asset Policy
+
 No binary image files are stored in the repository. Avatars and icons use inline SVGs or remote URLs such as DiceBear avatars. When no custom avatar is available, a placeholder SVG is loaded from `https://avatars.dicebear.com`.
 
 ## ✨ Visual Overhaul 2025
+
 The UI now features cinematic glassmorphism and playful animations. Key updates include:
+
 - Glassy navigation bar and announcement banner
 - Ripple animated call-to-action buttons
 - Floating glass cards for testimonials and marketplace listings
@@ -75,24 +81,28 @@ myroofgenius/
 ## 🔧 Development Guidelines
 
 ### Code Style
+
 - Use TypeScript for all new components
 - Follow ESLint configuration
 - Write tests for critical paths
 - Document complex logic
 
 ### Git Workflow
+
 1. Create feature branch from `main`
 2. Prefix commits: `feat:`, `fix:`, `docs:`, `refactor:`
 3. Open PR with description and screenshots
 4. Require approval before merge
 
 ### Testing Strategy
+
 - Unit tests for utilities and hooks
 - Integration tests for features
 - E2E tests for critical user paths
 - Minimum 80% coverage for new code
 
 ## 📊 Performance Targets
+
 - Initial load: < 3s on 3G
 - Time to interactive: < 5s
 - Lighthouse score: > 90
@@ -103,16 +113,19 @@ myroofgenius/
 ### Common Issues
 
 **Build fails with memory error**
+
 ```bash
 NODE_OPTIONS=--max_old_space_size=4096 npm run build
 ```
 
 **WebSocket connection issues**
+
 - Check `.env.local` for correct WS_URL
 - Ensure backend is running
 - Check browser console for errors
 
 **Test suite hanging**
+
 ```bash
 npm run test -- --detectOpenHandles
 ```
@@ -122,60 +135,82 @@ npm run test -- --detectOpenHandles
 Proprietary - MyRoofGenius © 2025
 
 ---
+
 Legacy sprint docs can be archived by running `scripts/archive-preV1.sh`.
 
 ## Critical Launch Tasks (Sprint Archive)
 
 - [x] [Future Sprint Template.md](sprints\/archive\/Future Sprint Template.md)
 - [x] [Master Sprint Index.md](sprints\/archive\/Master Sprint Index.md)
-- [x] [MyRoofGenius_App_Sprints.md](sprints\/archive\/MyRoofGenius_App_Sprints.md)
+- [x] [MyRoofGenius_App_Sprints.md](sprints/archive/MyRoofGenius_App_Sprints.md)
 - [x] [Sprint 06 — Marketplace_AI Recommendat.md](sprints\/archive\/Sprint 06 — Marketplace_AI Recommendat.md)
 - [x] [Sprint 07 — Field Apps Integration.md](sprints\/archive\/Sprint 07 — Field Apps Integration.md)
 - [x] [Sprint 08 — Claude Tools Integration.md](sprints\/archive\/Sprint 08 — Claude Tools Integration.md)
 - [x] [Sprint 09 — Navigation & Documentation.md](sprints\/archive\/Sprint 09 — Navigation & Documentation.md)
 - [x] [Sprint 10 — Error Tracking_Monitoring.md](sprints\/archive\/Sprint 10 — Error Tracking_Monitoring.md)
 - [x] [Sprint 11 — Performance_Analytics.md](sprints\/archive\/Sprint 11 — Performance_Analytics.md)
-- [x] [configure-feature-flags.md](sprints\/archive\/configure-feature-flags.md)
-- [x] [content-documentation.md](sprints\/archive\/content-documentation.md)
-- [x] [fix-homepage-tagline-test.md](sprints\/archive\/fix-homepage-tagline-test.md)
-- [x] [future-roadmap.md](sprints\/archive\/future-roadmap.md)
-- [x] [implement-admin-route.md](sprints\/archive\/implement-admin-route.md)
-- [x] [implement-auth-ui.md](sprints\/archive\/implement-auth-ui.md)
-- [x] [implement-stripe-webhook.md](sprints\/archive\/implement-stripe-webhook.md)
-- [x] [implementation-summary.md](sprints\/archive\/implementation-summary.md)
-- [x] [master-sprint-plan.md](sprints\/archive\/master-sprint-plan.md)
-- [x] [project-context.md](sprints\/archive\/project-context.md)
-- [x] [quantum_leap_context.md](sprints\/archive\/quantum_leap_context.md)
-- [x] [remove-legacy-redirects.md](sprints\/archive\/remove-legacy-redirects.md)
-- [x] [session-state.md](sprints\/archive\/session-state.md)
-- [x] [sprint-001-homepage.md](sprints\/archive\/sprint-001-homepage.md)
-- [x] [sprint-002-estimation.md](sprints\/archive\/sprint-002-estimation.md)
-- [x] [sprint-003-cost-driver.md](sprints\/archive\/sprint-003-cost-driver.md)
-- [x] [sprint-004-persona-landing.md](sprints\/archive\/sprint-004-persona-landing.md)
-- [x] [sprint-005-dashboard-mvp.md](sprints\/archive\/sprint-005-dashboard-mvp.md)
-- [x] [sprint-006-checklist-generator.md](sprints\/archive\/sprint-006-checklist-generator.md)
-- [x] [sprint-007-auth-onboarding.md](sprints\/archive\/sprint-007-auth-onboarding.md)
-- [x] [sprint-008-data-persistence.md](sprints\/archive\/sprint-008-data-persistence.md)
-- [x] [sprint-009-repo-hygiene.md](sprints\/archive\/sprint-009-repo-hygiene.md)
-- [x] [sprint-ai-copilot.md](sprints\/archive\/sprint-ai-copilot.md)
-- [x] [sprint-homepage.md](sprints\/archive\/sprint-homepage.md)
-- [x] [sprint-marketplace.md](sprints\/archive\/sprint-marketplace.md)
-- [x] [sprint-operator-logistics.md](sprints\/archive\/sprint-operator-logistics.md)
-- [x] [sprint01_glassmorphism.md](sprints\/archive\/sprint01_glassmorphism.md)
-- [x] [sprint02_ai_copilot.md](sprints\/archive\/sprint02_ai_copilot.md)
-- [x] [sprint03_ar_viewer.md](sprints\/archive\/sprint03_ar_viewer.md)
-- [x] [sprint04_smart_maps.md](sprints\/archive\/sprint04_smart_maps.md)
-- [x] [sprint05_ai_estimator.md](sprints\/archive\/sprint05_ai_estimator.md)
-- [x] [verify-environment-variables.md](sprints\/archive\/verify-environment-variables.md)
-- [x] [visual-design-prompts.md](sprints\/archive\/visual-design-prompts.md)
+- [x] [configure-feature-flags.md](sprints/archive/configure-feature-flags.md)
+- [x] [content-documentation.md](sprints/archive/content-documentation.md)
+- [x] [fix-homepage-tagline-test.md](sprints/archive/fix-homepage-tagline-test.md)
+- [x] [future-roadmap.md](sprints/archive/future-roadmap.md)
+- [x] [implement-admin-route.md](sprints/archive/implement-admin-route.md)
+- [x] [implement-auth-ui.md](sprints/archive/implement-auth-ui.md)
+- [x] [implement-stripe-webhook.md](sprints/archive/implement-stripe-webhook.md)
+- [x] [implementation-summary.md](sprints/archive/implementation-summary.md)
+- [x] [master-sprint-plan.md](sprints/archive/master-sprint-plan.md)
+- [x] [project-context.md](sprints/archive/project-context.md)
+- [x] [quantum_leap_context.md](sprints/archive/quantum_leap_context.md)
+- [x] [remove-legacy-redirects.md](sprints/archive/remove-legacy-redirects.md)
+- [x] [session-state.md](sprints/archive/session-state.md)
+- [x] [sprint-001-homepage.md](sprints/archive/sprint-001-homepage.md)
+- [x] [sprint-002-estimation.md](sprints/archive/sprint-002-estimation.md)
+- [x] [sprint-003-cost-driver.md](sprints/archive/sprint-003-cost-driver.md)
+- [x] [sprint-004-persona-landing.md](sprints/archive/sprint-004-persona-landing.md)
+- [x] [sprint-005-dashboard-mvp.md](sprints/archive/sprint-005-dashboard-mvp.md)
+- [x] [sprint-006-checklist-generator.md](sprints/archive/sprint-006-checklist-generator.md)
+- [x] [sprint-007-auth-onboarding.md](sprints/archive/sprint-007-auth-onboarding.md)
+- [x] [sprint-008-data-persistence.md](sprints/archive/sprint-008-data-persistence.md)
+- [x] [sprint-009-repo-hygiene.md](sprints/archive/sprint-009-repo-hygiene.md)
+- [x] [sprint-ai-copilot.md](sprints/archive/sprint-ai-copilot.md)
+- [x] [sprint-homepage.md](sprints/archive/sprint-homepage.md)
+- [x] [sprint-marketplace.md](sprints/archive/sprint-marketplace.md)
+- [x] [sprint-operator-logistics.md](sprints/archive/sprint-operator-logistics.md)
+- [x] [sprint01_glassmorphism.md](sprints/archive/sprint01_glassmorphism.md)
+- [x] [sprint02_ai_copilot.md](sprints/archive/sprint02_ai_copilot.md)
+- [x] [sprint03_ar_viewer.md](sprints/archive/sprint03_ar_viewer.md)
+- [x] [sprint04_smart_maps.md](sprints/archive/sprint04_smart_maps.md)
+- [x] [sprint05_ai_estimator.md](sprints/archive/sprint05_ai_estimator.md)
+- [x] [verify-environment-variables.md](sprints/archive/verify-environment-variables.md)
+- [x] [visual-design-prompts.md](sprints/archive/visual-design-prompts.md)
 
 ## Launch Process Documentation
+
 - [Deployment Checklist](docs/launch/production-deployment-checklist.md)
 - [QA Smoke Test Guide](docs/launch/production-qa-smoke-test.md)
 - [Launch Checklist](docs/launch/launch-checklist.md)
 - [Developer Portal Guide](docs/DEVELOPER_PORTAL.md)
 
 ### Maintenance
+
 - Minor cleanup of error handling routes.
 - Marketing refresh: new hero, tool carousel and email capture
 - Marketplace stability fixes and improved tool demos
+
+## Marketplace & Admin Setup
+
+### Adding Products
+
+1. Update the `products` table in Supabase or edit `scripts/seed.ts`.
+2. Each entry requires a `price_id` from Stripe plus name, description, price and category.
+
+### Stripe Configuration
+
+1. Create `.env.local` and add:
+   - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
+   - `STRIPE_SECRET_KEY`
+   - `STRIPE_WEBHOOK_SECRET`
+2. Use Stripe test mode for development.
+
+### Testing Checkout
+
+Run `npm run dev` and open `/marketplace`. Click **Buy Now** on any product to verify redirection to Stripe and back.
