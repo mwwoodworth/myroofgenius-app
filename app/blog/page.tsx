@@ -1,9 +1,16 @@
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 import Image from 'next/image';
+import { buildMeta } from '../../lib/metadata';
 
 // Add dynamic export to prevent static generation
 export const dynamic = 'force-dynamic';
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: 'Blog | MyRoofGenius',
+    description: 'Industry insights and best practices for roofing professionals.'
+  });
 
 async function getBlogPosts() {
   // Handle missing env vars gracefully

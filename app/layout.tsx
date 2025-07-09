@@ -26,6 +26,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={theme}>
+      <head>
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <meta name="theme-color" content="#0d1b2a" />
+        <link rel="icon" href="https://via.placeholder.com/192" sizes="192x192" />
+        <link rel="apple-touch-icon" href="https://via.placeholder.com/512" sizes="512x512" />
+        <link rel="icon" href="https://via.placeholder.com/1024" sizes="1024x1024" />
+      </head>
       <body>
         {maintenanceMode ? (
           <div className="min-h-screen flex items-center justify-center">
