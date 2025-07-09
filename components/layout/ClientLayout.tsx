@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { ThemeProvider, RoleProvider, ARModeProvider, ToastProvider, PresenceProvider } from '../ui';
 import { AuthProvider } from '../../src/context/AuthContext';
 import { LocaleProvider } from '../../src/context/LocaleContext';
@@ -14,6 +14,20 @@ import Footer from '../Footer';
 import { aiCopilotEnabled, arModeEnabled } from '../../app/lib/features';
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js");
+    }
+  }, []);
+
+  useEffect(() => {
+    const promptHandler = (e: any) => {
+      e.preventDefault();
+      e.prompt();
+    };
+    window.addEventListener("beforeinstallprompt", promptHandler);
+    return () => window.removeEventListener("beforeinstallprompt", promptHandler);
+  }, []);
   return (
     <LocaleProvider>
       <CurrencyProvider>
