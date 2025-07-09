@@ -25,9 +25,15 @@ module.exports = {
           '0%': { transform: 'scale(0)', opacity: '0.6' },
           '100%': { transform: 'scale(4)', opacity: '0' },
         },
+        gradientShift: {
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
+        },
       },
       animation: {
         ripple: 'ripple 0.6s linear',
+        gradientShift: 'gradientShift 20s ease infinite',
       },
     },
   },
@@ -57,6 +63,12 @@ module.exports = {
           'backdrop-filter': 'blur(10px)',
           background: 'rgba(35,35,35,0.75)',
           border: '1px solid rgba(255,255,255,0.07)'
+        },
+        '.bg-gradient-animated': {
+          background:
+            'linear-gradient(130deg, #0f0c29, #302b63, #24243e, #005f9e, #28a745)',
+          backgroundSize: '500% 500%',
+          animation: 'gradientShift 20s ease infinite'
         }
       })
 

@@ -1,7 +1,7 @@
 import dynamicImport from 'next/dynamic';
 import { estimatorEnabled } from '../lib/features';
 
-const Estimator = dynamicImport(() => import('../../components/AIEstimator'), { ssr: false });
+const Estimator = dynamicImport(() => import('../../components/SimpleEstimator'), { ssr: false });
 
 export const dynamic = 'force-dynamic';
 
