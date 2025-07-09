@@ -1,8 +1,15 @@
 'use client';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
+import { buildMeta } from '../../lib/metadata';
 
 export const dynamic = 'force-dynamic';
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: 'Field Apps | MyRoofGenius',
+    description: 'Quick links to Claude-powered utilities for crews and partners.'
+  });
 
 
 export default function FieldApps() {

@@ -7,6 +7,7 @@ import { AnimatedGradient, Hero3D, HeroHeadline, Skeleton } from '../components/
 import { Suspense } from 'react'
 import dynamicImport from 'next/dynamic'
 import EmailSignupForm from '../components/marketing/EmailSignupForm'
+import { buildMeta } from '../lib/metadata'
 const FeaturedToolsCarousel = dynamicImport(
   () => import('../components/marketing/FeaturedToolsCarousel'),
   { ssr: false, loading: () => <div>Loading...</div> }
@@ -19,6 +20,12 @@ import ActiveUsersBadge from '../components/marketing/ActiveUsersBadge'
 import { useLocale } from '../src/context/LocaleContext'
 
 export const dynamic = 'force-dynamic'
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: 'MyRoofGenius - Smart Roofing Solutions',
+    description: 'AI-powered roofing tools and marketplace for contractors.'
+  })
 
 export default function HomePage() {
   const { messages } = useLocale();
