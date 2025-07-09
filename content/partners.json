@@ -3,7 +3,7 @@
     "slug": "acme-roofing",
     "name": "ACME Roofing",
     "description": "Official partner of MyRoofGenius providing premium shingles.",
-    "logo": "/icons/icon-192x192.png",
+    "logo": "https://via.placeholder.com/192",
     "offer": "Get 10% off your first order with code ACME10"
   }
 ]
