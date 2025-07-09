@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   if (maintenanceMode) {
     return (
-      <html lang="en" className="dark">
+      <html lang="en">
         <body className={inter.className}>
           <div className="min-h-screen flex items-center justify-center">
             <p>Site is under maintenance. Please check back soon.</p>
@@ -35,7 +35,7 @@ export default function RootLayout({
     );
   }
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body className={inter.className}>
         <Starfield />
         <ClientLayout>{children}</ClientLayout>

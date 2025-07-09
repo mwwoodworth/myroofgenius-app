@@ -16,6 +16,16 @@ module.exports = {
           primary: '#F2F2F7',
           secondary: '#8E8E93',
         },
+        'primary-900': 'rgb(var(--clr-primary-900) / <alpha-value>)',
+        'secondary-700': 'rgb(var(--clr-secondary-700) / <alpha-value>)',
+        'accent-emerald': 'rgb(var(--clr-accent-emerald) / <alpha-value>)',
+        'accent-pink': 'rgb(var(--clr-accent-pink) / <alpha-value>)',
+      },
+      backgroundImage: {
+        'brand-gradient':
+          'linear-gradient(135deg,#0d1b2a 0%,#3f1c70 50%,#00c46b 100%)',
+        'brand-gradient-alt':
+          'linear-gradient(135deg,#3f1c70 0%,#ff7eb3 45%,#0d1b2a 100%)',
       },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],

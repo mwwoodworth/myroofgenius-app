@@ -17,13 +17,26 @@ const ThemeContext = createContext<ThemeCtx>({
 });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [theme, setTheme] = useState<Theme>(() =>
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light'
+  );
   const [accent, setAccent] = useState('#5e5ce6');
 
   useEffect(() => {
     // Load persisted theme from localStorage if available
     const stored = localStorage.getItem('theme') as Theme | null;
-    if (stored) setTheme(stored);
+    if (stored) {
+      setTheme(stored);
+    } else {
+      setTheme(
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light'
+      );
+    }
     const acc = localStorage.getItem('accent');
     if (acc) setAccent(acc);
   }, []);
@@ -31,9 +44,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof document === 'undefined') return;
     if (theme === 'dark') {
-      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
     } else {
-      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
     }
     // persist choice
     localStorage.setItem('theme', theme);

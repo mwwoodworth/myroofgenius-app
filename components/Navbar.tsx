@@ -52,7 +52,7 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 70 }}
-        className="glass-navbar rounded-2xl shadow-2xl fixed top-0 w-full flex items-center justify-between px-8 py-4 z-50 overflow-hidden"
+        className="glass-navbar bg-primary-900/90 rounded-2xl shadow-2xl fixed top-0 w-full flex items-center justify-between px-8 py-4 z-50 overflow-hidden"
       >
         <AnimatedGradient />
         <div className="text-accent text-2xl font-bold">MyRoofGenius</div>
@@ -83,14 +83,14 @@ export default function Navbar() {
               <motion.a
                 href="/signup"
                 whileHover={{ scale: 1.05 }}
-                className="rounded-xl px-5 py-2 bg-accent text-white font-bold shadow-md transition glow-btn animate-ripple"
+                className="rounded-xl px-5 py-2 bg-accent-emerald hover:bg-accent-emerald/80 text-white font-bold shadow-md transition glow-btn animate-ripple"
               >
                 Start Free Trial
               </motion.a>
             </>
           )}
         </div>
-        <button className="md:hidden" onClick={() => setOpen(!open)}>
+        <button className="md:hidden" aria-label="Toggle menu" onClick={() => setOpen(!open)}>
           {open ? <X /> : <Menu />}
         </button>
       </motion.nav>
@@ -154,7 +154,7 @@ export default function Navbar() {
                 <motion.a
                   href="/signup"
                   whileTap={{ scale: 0.95 }}
-                  className="block px-8 py-4 border-b border-[rgba(255,255,255,0.07)] hover:text-accent glow-btn animate-ripple"
+                  className="block px-8 py-4 border-b border-[rgba(255,255,255,0.07)] hover:bg-accent-emerald/80 bg-accent-emerald text-white glow-btn animate-ripple"
                   onClick={() => setOpen(false)}
                 >
                   Start Free Trial

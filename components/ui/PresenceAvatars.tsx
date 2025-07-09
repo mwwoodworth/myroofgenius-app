@@ -1,5 +1,6 @@
 'use client';
 import { usePresence } from './PresenceProvider';
+import LazyImage from './LazyImage';
 
 
 export default function PresenceAvatars() {
@@ -14,7 +15,7 @@ export default function PresenceAvatars() {
             u.name || 'U'
           )}.svg`;
         return (
-          <img
+          <LazyImage
             key={u.id}
             src={src}
             alt={u.name || 'User'}
