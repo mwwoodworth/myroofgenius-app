@@ -1,0 +1,29 @@
+services:
+  - name: myroofgenius-backend
+    type: web
+    runtime: docker
+    plan: free
+    repo: https://github.com/<owner>/<repo>
+    region: oregon
+    dockerContext: .
+    dockerfilePath: backend/Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_ENV
+        value: production
+    autoDeploy: false        # We trigger via Deploy Hook
+    previewsEnabled: true
+
+  - name: myroofgenius-frontend
+    type: web
+    runtime: docker
+    plan: free
+    repo: https://github.com/<owner>/<repo>
+    region: oregon
+    dockerContext: .
+    dockerfilePath: frontend/Dockerfile
+    autoDeploy: false
+    buildFilter:
+      paths:
+        - frontend/**
+    previewsEnabled: true
