@@ -31,12 +31,17 @@ export default function CheckoutButton({ priceId, productId }: CheckoutButtonPro
     setLoading(true);
 
     try {
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+
       const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           price_id: priceId,
-          product_id: productId
+          product_id: productId,
+          user_id: user?.id
         })
       });
 

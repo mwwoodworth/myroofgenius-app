@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import dynamicImport from 'next/dynamic';
 import './lib/sentry';
 import { maintenanceMode } from './lib/features';
+import { Analytics } from '../components/ui';
 
 const Starfield = dynamicImport(() => import('../components/Starfield'), { ssr: false });
 const ClientLayout = dynamicImport(() => import('../components/layout/ClientLayout'), { ssr: false });
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Starfield />
         <ClientLayout>{children}</ClientLayout>
+        <Analytics />
       </body>
     </html>
   );
