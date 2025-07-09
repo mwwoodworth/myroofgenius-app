@@ -54,7 +54,13 @@ export default function ProfileDropdown() {
         className="flex items-center gap-1 focus:outline-none"
         aria-label="User menu"
       >
-        <LazyImage src={avatarUrl} alt="avatar" className="w-8 h-8 rounded-full border" />
+        <LazyImage
+          src={avatarUrl}
+          alt="avatar"
+          width={32}
+          height={32}
+          className="w-8 h-8 rounded-full border"
+        />
         <ChevronDown className="w-4 h-4" />
       </button>
       {open && (

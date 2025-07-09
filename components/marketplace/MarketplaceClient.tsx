@@ -6,13 +6,23 @@ import { motion } from "framer-motion";
 import { useEffect, useState, useCallback } from "react";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Search, Filter, Star, ShoppingCart, Eye } from "lucide-react";
-import ProductCarousel from "../../components/marketplace/ProductCarousel";
-import ContractorGrid from "../../components/marketplace/ContractorGrid";
+import dynamicImport from "next/dynamic";
+const ProductCarousel = dynamicImport(
+  () => import("./ProductCarousel"),
+  { ssr: false }
+);
+const ContractorGrid = dynamicImport(
+  () => import("./ContractorGrid"),
+  { ssr: false }
+);
 import {
   Product as RecommendedProduct,
   Contractor,
 } from "../../types/marketplace";
-import Testimonials from "../../components/marketing/Testimonials";
+const Testimonials = dynamicImport(
+  () => import("../marketing/Testimonials"),
+  { ssr: false }
+);
 
 const categories = [
   { id: "all", name: "All Products", icon: "🏠" },

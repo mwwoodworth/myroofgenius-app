@@ -1,5 +1,6 @@
 'use client'
-interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {}
-export default function LazyImage(props: LazyImageProps) {
-  return <img loading="lazy" decoding="async" {...props} />
+import Image, { ImageProps } from 'next/image'
+
+export default function LazyImage(props: ImageProps) {
+  return <Image loading="lazy" {...props} />
 }
