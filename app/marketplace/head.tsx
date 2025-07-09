@@ -1,12 +1,27 @@
 export default function Head() {
   return (
     <>
-      <title>Marketplace - MyRoofGenius</title>
-      <meta name="description" content="Browse professional roofing tools and templates ready for instant download." />
-      <meta property="og:title" content="Marketplace - MyRoofGenius" />
-      <meta property="og:description" content="Browse professional roofing tools and templates ready for instant download." />
-      <meta name="twitter:title" content="Marketplace - MyRoofGenius" />
-      <meta name="twitter:description" content="Browse professional roofing tools and templates ready for instant download." />
+      <title>Roofing Templates Marketplace | MyRoofGenius</title>
+      <meta
+        name="description"
+        content="Shop digital roofing templates, checklists and tools from MyRoofGenius."
+      />
+      <meta
+        property="og:title"
+        content="Roofing Templates Marketplace | MyRoofGenius"
+      />
+      <meta
+        property="og:description"
+        content="Shop digital roofing templates, checklists and tools from MyRoofGenius."
+      />
+      <meta
+        name="twitter:title"
+        content="Roofing Templates Marketplace | MyRoofGenius"
+      />
+      <meta
+        name="twitter:description"
+        content="Shop digital roofing templates, checklists and tools from MyRoofGenius."
+      />
     </>
   );
 }
