@@ -1,6 +1,6 @@
-import { createClient } from '@supabase/supabase-js';
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import { createClient } from "@supabase/supabase-js";
+import { notFound } from "next/navigation";
+import Link from "next/link";
 
 // Add dynamic params export to handle dynamic routes
 export async function generateStaticParams() {
@@ -10,20 +10,23 @@ export async function generateStaticParams() {
 
 async function getBlogPost(slug: string) {
   // Handle missing env vars gracefully
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.warn('Supabase environment variables not configured');
+  if (
+    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  ) {
+    console.warn("Supabase environment variables not configured");
     return null;
   }
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   );
 
   const { data } = await supabase
-    .from('blog_posts')
-    .select('*')
-    .eq('slug', slug)
+    .from("blog_posts")
+    .select("*")
+    .eq("slug", slug)
     .single();
 
   return data;
@@ -31,7 +34,7 @@ async function getBlogPost(slug: string) {
 
 // Static content for demo
 const staticContent = {
-  'hidden-cost-drivers-commercial-roofing': `
+  "hidden-cost-drivers-commercial-roofing": `
     <div class="prose prose-lg max-w-none">
       <p class="lead">Commercial roofing projects frequently exceed initial budgets not because of poor estimation, but due to hidden cost drivers that remain unidentified during the planning phase. These concealed expenses can increase project costs by 15-35% and extend timelines by weeks or even months.</p>
       
@@ -75,10 +78,14 @@ const staticContent = {
       <h2>Take Control of Your Roofing Project</h2>
       <p>Understanding these hidden cost drivers is the first step to avoiding budget overruns. Our Quote-to-Close Kit provides comprehensive tools to identify and account for these factors before they impact your project.</p>
     </div>
-  `
+  `,
 };
 
-export default async function BlogPost({ params }: { params: { slug: string } }) {
+export default async function BlogPost({
+  params,
+}: {
+  params: { slug: string };
+}) {
   // Try to get from database first
   let post = await getBlogPost(params.slug);
 
@@ -86,12 +93,12 @@ export default async function BlogPost({ params }: { params: { slug: string } })
   if (!post && staticContent[params.slug as keyof typeof staticContent]) {
     post = {
       slug: params.slug,
-      title: '10 Hidden Cost Drivers in Commercial Roofing Projects',
+      title: "10 Hidden Cost Drivers in Commercial Roofing Projects",
       content: staticContent[params.slug as keyof typeof staticContent],
-      author: 'Mike Woodworth',
-      published_at: '2025-06-15',
-      category: 'Cost Management',
-      read_time: '8 min read'
+      author: "Mike Woodworth",
+      published_at: "2025-06-15",
+      category: "Cost Management",
+      read_time: "8 min read",
     };
   }
 
@@ -101,12 +108,36 @@ export default async function BlogPost({ params }: { params: { slug: string } })
 
   return (
     <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: post.title,
+            datePublished: post.published_at,
+            author: { "@type": "Person", name: post.author },
+            publisher: {
+              "@type": "Organization",
+              name: "MyRoofGenius",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://myroofgenius.com/logo.png",
+              },
+            },
+          }),
+        }}
+      />
       <article className="max-w-4xl mx-auto px-4 py-12">
         {/* Breadcrumb */}
         <nav className="mb-8 text-sm">
-          <Link href="/" className="text-gray-500 hover:text-gray-700">Home</Link>
+          <Link href="/" className="text-gray-500 hover:text-gray-700">
+            Home
+          </Link>
           <span className="mx-2 text-gray-400">/</span>
-          <Link href="/blog" className="text-gray-500 hover:text-gray-700">Blog</Link>
+          <Link href="/blog" className="text-gray-500 hover:text-gray-700">
+            Blog
+          </Link>
           <span className="mx-2 text-gray-400">/</span>
           <span className="text-gray-900">{post.category}</span>
         </nav>
@@ -131,9 +162,12 @@ export default async function BlogPost({ params }: { params: { slug: string } })
 
         {/* CTA Section */}
         <div className="mt-12 p-8 bg-gray-50 rounded-lg">
-          <h3 className="text-2xl font-bold mb-4">Ready to Avoid These Costly Mistakes?</h3>
+          <h3 className="text-2xl font-bold mb-4">
+            Ready to Avoid These Costly Mistakes?
+          </h3>
           <p className="text-gray-600 mb-6">
-            Download our comprehensive Quote-to-Close Kit and take control of your next roofing project.
+            Download our comprehensive Quote-to-Close Kit and take control of
+            your next roofing project.
           </p>
           <Link
             href="/marketplace"
@@ -149,13 +183,17 @@ export default async function BlogPost({ params }: { params: { slug: string } })
           <div>
             <h4 className="font-semibold mb-1">{post.author}</h4>
             <p className="text-gray-600 text-sm mb-2">
-              Founder of MyRoofGenius with 15+ years in commercial roofing operations and technology implementation.
+              Founder of MyRoofGenius with 15+ years in commercial roofing
+              operations and technology implementation.
             </p>
-            <Link href="/about" className="text-secondary-700 text-sm hover:underline">
+            <Link
+              href="/about"
+              className="text-secondary-700 text-sm hover:underline"
+            >
               More articles by {post.author}
             </Link>
           </div>
         </div>
       </article>
-    </div>
-  );}
+    </div>  );
+}

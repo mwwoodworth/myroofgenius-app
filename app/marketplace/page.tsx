@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export const generateMetadata = () =>
   buildMeta({
     title: "Marketplace | MyRoofGenius",
-    description: "Browse and purchase roofing calculators and templates."
+    description: "Browse and purchase roofing calculators and templates.",
   });
 
 export default async function MarketplacePage() {
@@ -19,5 +19,32 @@ export default async function MarketplacePage() {
     .eq("is_active", true)
     .order("created_at", { ascending: false });
 
-  return <MarketplaceClient initialProducts={data || []} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "MyRoofGenius",
+            url: "https://myroofgenius.com",
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: "Digital Roofing Tools Marketplace",
+            description: "Professional roofing calculators and templates",
+            brand: "MyRoofGenius",
+          }),
+        }}
+      />
+      <MarketplaceClient initialProducts={data || []} />
+    </>
+  );
 }

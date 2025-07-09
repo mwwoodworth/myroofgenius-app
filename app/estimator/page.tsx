@@ -1,9 +1,13 @@
-import dynamicImport from 'next/dynamic';
-import { estimatorEnabled } from '../lib/features';
+import dynamicImport from "next/dynamic";
+import { estimatorEnabled } from "../lib/features";
+import CopilotQuickButton from "../../components/CopilotQuickButton";
 
-const Estimator = dynamicImport(() => import('../../components/SimpleEstimator'), { ssr: false });
+const Estimator = dynamicImport(
+  () => import("../../components/SimpleEstimator"),
+  { ssr: false },
+);
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default function EstimatorPage() {
   if (!estimatorEnabled) {
@@ -14,8 +18,9 @@ export default function EstimatorPage() {
     );
   }
   return (
-    <div className="min-h-screen flex items-center justify-center p-8">
+    <div className="min-h-screen flex flex-col items-center justify-center p-8 space-y-4">
       <Estimator />
+      <CopilotQuickButton prompt="Estimate roofing materials" />
     </div>
   );
 }
