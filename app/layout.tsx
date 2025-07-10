@@ -1,5 +1,5 @@
 import './globals.css';
-import { Inter, Poppins, JetBrains_Mono } from 'next/font/google';
+import { Inter, EB_Garamond, JetBrains_Mono } from 'next/font/google';
 import type { ReactNode } from 'react';
 import dynamicImport from 'next/dynamic';
 import './lib/sentry';
@@ -12,14 +12,15 @@ const ClientLayout = dynamicImport(() => import('../components/layout/ClientLayo
 
 export const dynamic = 'force-dynamic';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-body' });
-const poppins = Poppins({
+const inter = Inter({ subsets: ['latin'], variable: '--font-body', display: 'swap' });
+const garamond = EB_Garamond({
   subsets: ['latin'],
   weight: ['400', '700'],
   variable: '--font-heading',
+  display: 'swap',
 });
 const jetbrains = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
-const theme = `${inter.variable} ${poppins.variable} ${jetbrains.variable}`;
+const theme = `${inter.variable} ${garamond.variable} ${jetbrains.variable}`;
 
 export const metadata = {
   title: 'MyRoofGenius - Smart Roofing Solutions',

@@ -6,6 +6,7 @@ import type { User } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimatedGradient from './ui/AnimatedGradient';
 import { Menu, X } from 'lucide-react';
+import Image from 'next/image';
 import { ThemeToggle, AccentColorPicker, ProfileDropdown } from './ui';
 import LanguageSwitcher from './LanguageSwitcher';
 import CurrencySwitcher from './CurrencySwitcher';
@@ -57,7 +58,13 @@ export default function Navbar() {
         <AnimatedGradient />
         <div className="flex items-center gap-3">
           <a href="/" className="flex items-center" aria-label="MyRoofGenius">
-            <img src="/assets/logo.svg" alt="MyRoofGenius logo" className="w-8 h-8" />
+            <Image
+              src="/assets/logo.svg"
+              alt="MyRoofGenius logo"
+              width={32}
+              height={32}
+              loading="lazy"
+            />
           </a>
           <p className="hidden sm:block text-sm text-white font-semibold">
             Smart Roofing Solutions
