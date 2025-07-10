@@ -21,7 +21,8 @@
     "validate:env": "tsx scripts/validate-env.ts",
     "postbuild": "next-sitemap",
     "lighthouse:seo": "node scripts/lighthouse-seo.js",
-    "a11y": "tsx scripts/a11y.ts"
+    "a11y": "tsx scripts/a11y.ts",
+    "slackbot:dev": "tsx slack-bot/index.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",
@@ -42,6 +43,7 @@
     "next": "14.2.30",
     "next-auth": "^4.24.11",
     "next-pwa": "^5.6.0",
+    "@slack/bolt": "^3.15.0",
     "node-fetch": "^3.3.2",
     "pdf-lib": "^1.17.1",
     "postcss": "^8.5.6",

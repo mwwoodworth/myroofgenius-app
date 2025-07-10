@@ -214,3 +214,7 @@ Legacy sprint docs can be archived by running `scripts/archive-preV1.sh`.
 ### Testing Checkout
 
 Run `npm run dev` and open `/marketplace`. Click **Buy Now** on any product to verify redirection to Stripe and back.
+
+## Vercel AI Bots Automation
+See [docs/vercel-ai-bots.md](docs/vercel-ai-bots.md) for deployment scripts and Make.com scenarios. Add future templates by editing `scripts/setup-vercel-ai-bots.sh`.
+

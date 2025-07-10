@@ -1,0 +1,25 @@
+{
+  "scenario": "vercel-ai-bots",
+  "modules": [
+    {
+      "name": "Vercel Webhook",
+      "event": "deployment-error"
+    },
+    {
+      "name": "AI Summary",
+      "action": "call-openai",
+      "input": "{{1.log}}"
+    },
+    {
+      "name": "Slack Alert",
+      "action": "post-message",
+      "channel": "{{env.SLACK_CHANNEL_ALERTS}}",
+      "text": "{{2.summary}}"
+    },
+    {
+      "name": "Create ClickUp Task",
+      "action": "create-task",
+      "text": "Deployment failed: {{2.summary}}"
+    }
+  ]
+}
