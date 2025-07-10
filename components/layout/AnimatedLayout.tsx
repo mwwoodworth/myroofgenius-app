@@ -8,7 +8,7 @@ export default function AnimatedLayout({ children }: { children: ReactNode }) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="bg-bg/60 backdrop-blur-lg glass rounded-2xl shadow-2xl min-h-screen text-text-primary font-inter relative overflow-hidden"
+      className="bg-bg/60 backdrop-blur-lg glass rounded-2xl shadow-2xl min-h-screen text-text-primary font-sans relative overflow-hidden"
     >
       <AnimatedGradient />
       {children}
