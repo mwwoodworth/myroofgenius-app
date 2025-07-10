@@ -237,3 +237,23 @@ button:focus-visible {
   max-height: 60px;
   margin: 0 0.5rem;
 }
+
+/* Hero star/galaxy background
+   Photo by Greg Rakozy on Unsplash (https://unsplash.com/photos/oMpAz-DN-9I) */
+.starfield {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 1px, transparent 1px),
+    url('https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=1600&q=80');
+  background-size: 3px 3px, cover;
+  background-position: 0 0, center;
+  opacity: 0.5;
+  animation: starfield-move 60s linear infinite;
+  z-index: -1;
+}
+
+@keyframes starfield-move {
+  from { background-position: 0 0, center; }
+  to { background-position: 1000px 1000px, center; }
+}
