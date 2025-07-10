@@ -11,12 +11,12 @@ const app = new App({
 });
 
 const channels = {
-  alerts: process.env.SLACK_CHANNEL_ALERTS,
-  aiCopilot: process.env.SLACK_CHANNEL_AI_COPILOT,
-  devFeed: process.env.SLACK_CHANNEL_DEV_FEED,
-  opsFeed: process.env.SLACK_CHANNEL_OPS_FEED,
-  salesEvents: process.env.SLACK_CHANNEL_SALES_EVENTS,
-  clickupFeed: process.env.SLACK_CHANNEL_CLICKUP_FEED,
+  alerts: process.env.SLACK_CHANNEL_ALERTS ?? '',
+  aiCopilot: process.env.SLACK_CHANNEL_AI_COPILOT ?? '',
+  devFeed: process.env.SLACK_CHANNEL_DEV_FEED ?? '',
+  opsFeed: process.env.SLACK_CHANNEL_OPS_FEED ?? '',
+  salesEvents: process.env.SLACK_CHANNEL_SALES_EVENTS ?? '',
+  clickupFeed: process.env.SLACK_CHANNEL_CLICKUP_FEED ?? '',
 };
 
 app.command('/vercel', async ({ command, ack, respond }) => {
@@ -41,7 +41,7 @@ receiver.router.post('/vercel/webhook', async (req, res) => {
   const payload = req.body as any;
   if (payload?.type === 'deployment-error') {
     await app.client.chat.postMessage({
-      token: process.env.SLACK_BOT_TOKEN,
+      token: process.env.SLACK_BOT_TOKEN ?? '',
       channel: channels.alerts,
       text: 'Build failed. AI summary pending.',
     });

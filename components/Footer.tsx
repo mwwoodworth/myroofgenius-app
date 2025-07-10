@@ -6,6 +6,11 @@ export default function Footer() {
   const icons = [
     { href: 'https://github.com/mwwoodworth/myroofgenius-app', Icon: Github },
   ]
+  const links = [
+    { href: '/privacy', label: 'Privacy Policy' },
+    { href: '/terms', label: 'Terms of Service' },
+    { href: '/contact', label: 'Contact' },
+  ]
   return (
     <motion.footer
       initial={{ opacity: 0, y: 20 }}
@@ -13,6 +18,13 @@ export default function Footer() {
       className="glass-navbar bg-primary-900 mt-12 rounded-t-2xl py-6 flex flex-col items-center gap-4 backdrop-blur-md"
     >
       <p className="text-white text-sm">©2025 MyRoofGenius • Smart Roofing Solutions</p>
+      <nav className="flex gap-6 text-sm text-white">
+        {links.map(({ href, label }) => (
+          <a key={href} href={href} className="hover:text-accent-pink">
+            {label}
+          </a>
+        ))}
+      </nav>
       <div className="flex gap-6">
         {icons.map(({ href, Icon }) => (
           <motion.a

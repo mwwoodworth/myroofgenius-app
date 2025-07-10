@@ -13,6 +13,7 @@ export function buildMeta({ title, description, image }: MetaInput): Metadata {
   return {
     title,
     description,
+    alternates: { canonical: baseUrl },
     openGraph: {
       title,
       description,

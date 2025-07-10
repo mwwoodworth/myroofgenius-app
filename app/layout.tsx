@@ -5,6 +5,7 @@ import dynamicImport from 'next/dynamic';
 import './lib/sentry';
 import { maintenanceMode } from './lib/features';
 import { Analytics } from '../components/ui';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react';
 
 const Starfield = dynamicImport(() => import('../components/Starfield'), { ssr: false });
 const ClientLayout = dynamicImport(() => import('../components/layout/ClientLayout'), { ssr: false });
@@ -43,6 +44,7 @@ export default function RootLayout({
             <Starfield />
             <ClientLayout>{children}</ClientLayout>
             <Analytics />
+            <VercelAnalytics />
           </>
         )}
       </body>

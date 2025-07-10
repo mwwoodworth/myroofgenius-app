@@ -45,21 +45,31 @@ export default function LoginPage() {
       <div className="w-full max-w-md space-y-6">
         <h1 className="text-3xl font-bold text-center">Sign in</h1>
         <form onSubmit={handleLogin} className="space-y-4">
-          {error && <p className="text-red-600 text-sm">{error}</p>}
+          {error && <p className="text-red-600 text-sm" id="login-error">{error}</p>}
+          <label htmlFor="login-email" className="sr-only">
+            Email
+          </label>
           <input
+            id="login-email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             required
+            aria-describedby="login-error"
             className="w-full border p-2 rounded"
           />
+          <label htmlFor="login-password" className="sr-only">
+            Password
+          </label>
           <input
+            id="login-password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             required
+            aria-describedby="login-error"
             className="w-full border p-2 rounded"
           />
           <button

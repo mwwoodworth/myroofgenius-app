@@ -49,22 +49,32 @@ export default function SignupPage() {
       <div className="w-full max-w-md space-y-6">
         <h1 className="text-3xl font-bold text-center">Create account</h1>
         <form onSubmit={handleSignup} className="space-y-4">
-          {error && <p className="text-red-600 text-sm">{error}</p>}
+          {error && <p className="text-red-600 text-sm" id="signup-error">{error}</p>}
+          <label htmlFor="signup-email" className="sr-only">
+            Email
+          </label>
           <input
+            id="signup-email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             required
+            aria-describedby="signup-error"
             className="w-full border p-2 rounded"
           />
+          <label htmlFor="signup-password" className="sr-only">
+            Password
+          </label>
           <input
+            id="signup-password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             required
             minLength={6}
+            aria-describedby="signup-error"
             className="w-full border p-2 rounded"
           />
           <button

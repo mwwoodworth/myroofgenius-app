@@ -7,10 +7,10 @@ interface ButtonProps extends HTMLMotionProps<'button'> {
   size?: 'sm' | 'md' | 'lg'
 }
 
-const base = 'inline-flex items-center justify-center rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 transition min-h-[44px] animate-ripple';
+const base = 'inline-flex items-center justify-center rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 transition min-h-[44px] shadow-sm hover:shadow-md animate-ripple';
 const variants = {
-  primary: 'bg-accent text-white hover:bg-accent/90',
-  secondary: 'border border-accent text-accent hover:bg-accent hover:text-white',
+  primary: 'bg-[var(--color-primary)] text-white hover:bg-[color-mix(in_srgb,var(--color-primary)_90%,white)]',
+  secondary: 'border border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white',
 };
 const sizes = {
   sm: 'px-3 py-1.5 text-sm',
