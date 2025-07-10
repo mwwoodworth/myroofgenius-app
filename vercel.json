@@ -6,12 +6,4 @@
     "app/api/ai/analyze-roof/route.ts": {
       "maxDuration": 60
     }
-  },
-  "crons": [
-    {
-      "path": "/api/cron/cleanup-expired-downloads",
-      "schedule": "0 2 * * *"
-    }
-  ],
-
-}
+  ,
