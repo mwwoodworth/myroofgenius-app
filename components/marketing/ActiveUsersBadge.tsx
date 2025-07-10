@@ -6,7 +6,7 @@ export default function ActiveUsersBadge() {
   if (users.length === 0) return null
   return (
     <span className="bg-white/10 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full">
-      {users.length} live users
+      {users.length} users online
     </span>
   )
 }

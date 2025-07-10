@@ -1,7 +1,7 @@
 {
   "name": "MyRoofGenius Field Command",
   "short_name": "RoofGenius",
-  "description": "Protection system for roofing professionals",
+  "description": "Offline access to MyRoofGenius tools and checklists",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0f172a",
