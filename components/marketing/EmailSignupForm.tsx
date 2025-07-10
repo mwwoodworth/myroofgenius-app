@@ -40,7 +40,17 @@ export default function EmailSignupForm({className=""}:{className?:string}) {
         </motion.div>
       ) : (
         <>
-          <input type="email" required value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com" className="w-full px-4 py-3 rounded-lg text-gray-900"/>
+          <label htmlFor="newsletter-email" className="sr-only">Email address</label>
+          <input
+            id="newsletter-email"
+            type="email"
+            required
+            value={email}
+            onChange={e=>setEmail(e.target.value)}
+            placeholder="you@example.com"
+            aria-invalid={status==='error'}
+            className="w-full px-4 py-3 rounded-lg text-gray-900"
+          />
           <Button type="submit" className="w-full" disabled={status==='loading'}>
             {status==='loading' ? 'Submitting...' : 'Get Free Sample'}
           </Button>

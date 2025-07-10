@@ -12,5 +12,6 @@
       "path": "/api/cron/cleanup-expired-downloads",
       "schedule": "0 2 * * *"
     }
-  ]
+  ],
+  "analytics": true
 }
