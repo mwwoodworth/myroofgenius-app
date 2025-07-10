@@ -13,7 +13,11 @@ const ClientLayout = dynamicImport(() => import('../components/layout/ClientLayo
 export const dynamic = 'force-dynamic';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-body' });
-const poppins = Poppins({ subsets: ['latin'], variable: '--font-heading' });
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-heading',
+});
 const jetbrains = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 const theme = `${inter.variable} ${poppins.variable} ${jetbrains.variable}`;
 
