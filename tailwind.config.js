@@ -5,16 +5,16 @@ module.exports = {
     extend: {
       colors: {
         bg: {
-          DEFAULT: "#121212",
+          DEFAULT: "var(--color-bg)",
           card: "#1C1C1E",
         },
-        accent: "rgb(var(--accent) / <alpha-value>)",
+        accent: "rgb(var(--clr-accent-orange) / <alpha-value>)",
         primary: "rgb(var(--clr-primary-900) / <alpha-value>)",
         secondary: "rgb(var(--clr-secondary-700) / <alpha-value>)",
         success: "rgb(var(--clr-accent-emerald) / <alpha-value>)",
         text: {
-          primary: "#F2F2F7",
-          secondary: "#8E8E93",
+          primary: "var(--color-text)",
+          secondary: "var(--color-neutral-500)",
         },
         "accent-emerald": "rgb(var(--clr-accent-emerald) / <alpha-value>)",
         "accent-pink": "rgb(var(--clr-accent-pink) / <alpha-value>)",
@@ -26,7 +26,9 @@ module.exports = {
           "linear-gradient(135deg,#364489 0%,#5256a4 45%,#1a223f 100%)",
       },
       fontFamily: {
-        inter: ["Inter", "sans-serif"],
+        sans: ["var(--font-body)", "system-ui", "sans-serif"],
+        heading: ["var(--font-heading)", "Inter", "sans-serif"],
+        mono: ["var(--font-mono)", "monospace"],
       },
       keyframes: {
         ripple: {

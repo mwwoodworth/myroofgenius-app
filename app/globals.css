@@ -4,7 +4,21 @@
 
 @layer base {
   body {
-    @apply bg-bg text-text-primary font-inter;
+    @apply bg-bg text-text-primary font-sans;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading, Poppins, Inter, sans-serif);
+  }
+
+  code,
+  pre {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
   }
 
   body,
@@ -17,18 +31,25 @@
   }
 
   :root {
-    /* Modern SaaS palette */
-    --accent: 26 115 232;
-    --clr-primary-900: 26 115 232;
-    --clr-secondary-700: 245 166 35;
-    --clr-accent-emerald: 52 199 89;
-    --clr-accent-pink: 26 115 232;
-    /* Brand Palette */
-    --color-primary: #1A73E8;
-    --color-secondary: #F5A623;
-    --color-bg: #FFFFFF;
-    --color-text: #0d1b2a;
+    /* Core brand colors */
+    --color-primary: #1A365D;
+    --color-secondary: #38A169;
+    --color-accent: #DD6B20;
+    --color-neutral-50: #F7FAFC;
+    --color-neutral-100: #EDF2F7;
+    --color-neutral-300: #CBD5E0;
+    --color-neutral-500: #718096;
+    --color-neutral-700: #2D3748;
+    --color-bg: var(--color-neutral-50);
+    --color-text: var(--color-neutral-700);
     --color-white: #ffffff;
+    /* RGB counterparts for Tailwind */
+    --clr-primary-900: 26 54 93;
+    --clr-secondary-700: 56 161 105;
+    --clr-accent-orange: 221 107 32;
+    --clr-accent-emerald: 52 199 89;
+    --clr-accent-pink: 100 108 255;
+    --accent: 221 107 32;
     /* Protection Status Colors */
     --color-protected: 34 197 94;
     --color-warning: 251 146 60;
@@ -47,10 +68,11 @@
 
   @supports not (color: oklch(0 0 0)) {
     :root {
-      --clr-primary-900: 13 27 42;
-      --clr-secondary-700: 81 56 238;
+      --clr-primary-900: 26 54 93;
+      --clr-secondary-700: 56 161 105;
       --clr-accent-emerald: 52 199 89;
       --clr-accent-pink: 100 108 255;
+      --accent: 221 107 32;
     }
   }
 

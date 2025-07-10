@@ -1,5 +1,5 @@
 import './globals.css';
-import { Inter } from 'next/font/google';
+import { Inter, Poppins, JetBrains_Mono } from 'next/font/google';
 import type { ReactNode } from 'react';
 import dynamicImport from 'next/dynamic';
 import './lib/sentry';
@@ -12,8 +12,10 @@ const ClientLayout = dynamicImport(() => import('../components/layout/ClientLayo
 
 export const dynamic = 'force-dynamic';
 
-const inter = Inter({ subsets: ['latin'] });
-const theme = inter.className;
+const inter = Inter({ subsets: ['latin'], variable: '--font-body' });
+const poppins = Poppins({ subsets: ['latin'], variable: '--font-heading' });
+const jetbrains = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
+const theme = `${inter.variable} ${poppins.variable} ${jetbrains.variable}`;
 
 export const metadata = {
   title: 'MyRoofGenius - Smart Roofing Solutions',
@@ -28,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={theme}>
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="manifest" href="/manifest.webmanifest" />
         <meta name="theme-color" content="#0d1b2a" />
         <link rel="icon" href="https://via.placeholder.com/192" sizes="192x192" />
