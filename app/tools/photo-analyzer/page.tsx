@@ -20,11 +20,30 @@ export default function PhotoAnalyzerPage() {
   };
 
   return (
-    <div className="upload-card">
-      <div className="icon" aria-hidden="true">📷</div>
-      <h2>Upload Your Roof Photo</h2>
-      <input type="file" id="roof-upload" onChange={handleUpload} />
-      <div id="upload-status" aria-live="polite">{status}</div>
+    <div className="upload-card" aria-labelledby="upload-label">
+      <div className="icon" aria-hidden="true">
+        📷
+      </div>
+      <h2 id="upload-label" className="text-xl font-semibold mb-2">
+        Upload Your Roof Photo
+      </h2>
+      <label htmlFor="roof-upload" className="sr-only">
+        Choose image
+      </label>
+      <input
+        type="file"
+        id="roof-upload"
+        accept="image/*"
+        onChange={handleUpload}
+        className="mt-2 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:ring-2 focus:ring-offset-2 focus:ring-accent-emerald"
+        aria-describedby="upload-desc"
+      />
+      <p id="upload-desc" className="text-sm text-gray-500 mt-2">
+        Drag and drop or select a roof image (JPG/PNG)
+      </p>
+      <div id="upload-status" aria-live="polite" className="mt-2">
+        {status}
+      </div>
     </div>
   );
 }

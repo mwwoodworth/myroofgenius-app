@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Link from "next/link";
 import { Shield, ArrowRight, Play, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
@@ -55,6 +55,20 @@ export default function HomeClient() {
           }),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "John Roofer",
+            jobTitle: "Founder",
+            image: "https://myroofgenius.com/avatar.png",
+            url: "https://myroofgenius.com",
+            worksFor: { "@type": "Organization", name: "MyRoofGenius" },
+          }),
+        }}
+      />
       <motion.section
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -69,15 +83,20 @@ export default function HomeClient() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center space-x-2 bg-white/30 backdrop-blur-lg rounded-full shadow-2xl px-4 py-2 mb-8">
               <Shield className="w-5 h-5 text-accent-emerald" />
-              <span className="text-sm font-medium text-white">Trusted by 2,800+ contractors</span>
+              <span className="text-sm font-medium text-white">
+                Trusted by 2,800+ contractors
+              </span>
             </div>
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ type: 'spring', stiffness: 80 }}
+              transition={{ type: "spring", stiffness: 80 }}
               className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
             >
-              <HeroHeadline texts={["Protect every project.", "Grow every margin."]} className="text-accent-pink" />
+              <HeroHeadline
+                texts={["Protect every project.", "Grow every margin."]}
+                className="text-accent-pink"
+              />
             </motion.h1>
             <ul className="text-slate-300 mb-8 space-y-2">
               <li className="flex items-start gap-2">

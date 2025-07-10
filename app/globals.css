@@ -13,16 +13,15 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-heading, 'EB Garamond', Inter, sans-serif);
+    font-family: var(--font-heading, "EB Garamond", Inter, sans-serif);
   }
 
   code,
   pre {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-family: var(--font-mono, "JetBrains Mono", monospace);
   }
 
   body,
-  header,
   footer,
   .btn-green,
   .banner {
@@ -238,3 +237,16 @@ button:focus-visible {
   margin: 0 0.5rem;
 }
 
+@keyframes star-pulse {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.animate-star-pulse {
+  animation: star-pulse 4s ease-in-out infinite;
+}

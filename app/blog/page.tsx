@@ -1,34 +1,38 @@
-import { createClient } from '@supabase/supabase-js';
-import Link from 'next/link';
-import Image from 'next/image';
-import { buildMeta } from '../../lib/metadata';
+import { createClient } from "@supabase/supabase-js";
+import Link from "next/link";
+import Image from "next/image";
+import { buildMeta } from "../../lib/metadata";
 
 // Add dynamic export to prevent static generation
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export const generateMetadata = () =>
   buildMeta({
-    title: 'Blog | MyRoofGenius',
-    description: 'Industry insights and best practices for roofing professionals.'
+    title: "Blog | MyRoofGenius",
+    description:
+      "Industry insights and best practices for roofing professionals.",
   });
 
 async function getBlogPosts() {
   // Handle missing env vars gracefully
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.warn('Supabase environment variables not configured');
+  if (
+    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  ) {
+    console.warn("Supabase environment variables not configured");
     return [];
   }
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   );
 
   const { data } = await supabase
-    .from('blog_posts')
-    .select('*')
-    .eq('published', true)
-    .order('published_at', { ascending: false });
+    .from("blog_posts")
+    .select("*")
+    .eq("published", true)
+    .order("published_at", { ascending: false });
 
   return data || [];
 }
@@ -36,38 +40,44 @@ async function getBlogPosts() {
 // Static blog posts for initial content
 const staticPosts = [
   {
-    id: '1',
-    slug: 'hidden-cost-drivers-commercial-roofing',
-    title: '10 Hidden Cost Drivers in Commercial Roofing Projects',
-    excerpt: 'Identify budget risks before they compromise your project. Learn about the concealed expenses that can increase project costs by 15-35%.',
-    author: 'Mike Woodworth',
-    published_at: '2025-06-15',
-    category: 'Cost Management',
-    read_time: '8 min read',
-    image_url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=400&fit=crop'
+    id: "1",
+    slug: "hidden-cost-drivers-commercial-roofing",
+    title: "10 Hidden Cost Drivers in Commercial Roofing Projects",
+    excerpt:
+      "Identify budget risks before they compromise your project. Learn about the concealed expenses that can increase project costs by 15-35%.",
+    author: "Mike Woodworth",
+    published_at: "2025-06-15",
+    category: "Cost Management",
+    read_time: "8 min read",
+    image_url:
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=400&fit=crop",
   },
   {
-    id: '2',
-    slug: 'cash-flow-management-roofing-contractors',
-    title: 'Cash Flow Management for Roofing Contractors',
-    excerpt: 'Master the art of project cash flow forecasting to maintain healthy margins and avoid costly financing.',
-    author: 'Mike Woodworth',
-    published_at: '2025-06-10',
-    category: 'Financial Management',
-    read_time: '6 min read',
-    image_url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=400&fit=crop'
+    id: "2",
+    slug: "cash-flow-management-roofing-contractors",
+    title: "Cash Flow Management for Roofing Contractors",
+    excerpt:
+      "Master the art of project cash flow forecasting to maintain healthy margins and avoid costly financing.",
+    author: "Mike Woodworth",
+    published_at: "2025-06-10",
+    category: "Financial Management",
+    read_time: "6 min read",
+    image_url:
+      "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=400&fit=crop",
   },
   {
-    id: '3',
-    slug: 'colorado-roofing-compliance-guide',
-    title: 'Colorado Roofing Compliance: What You Need to Know',
-    excerpt: 'Navigate Class 4 impact requirements, snow load calculations, and local building codes with confidence.',
-    author: 'Sarah Chen',
-    published_at: '2025-06-05',
-    category: 'Compliance',
-    read_time: '10 min read',
-    image_url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=400&fit=crop'
-  }
+    id: "3",
+    slug: "colorado-roofing-compliance-guide",
+    title: "Colorado Roofing Compliance: What You Need to Know",
+    excerpt:
+      "Navigate Class 4 impact requirements, snow load calculations, and local building codes with confidence.",
+    author: "Sarah Chen",
+    published_at: "2025-06-05",
+    category: "Compliance",
+    read_time: "10 min read",
+    image_url:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=400&fit=crop",
+  },
 ];
 
 export default async function Blog() {
@@ -79,9 +89,12 @@ export default async function Blog() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Industry Insights & Best Practices</h1>
+          <h1 className="text-4xl font-bold mb-4">
+            Industry Insights & Best Practices
+          </h1>
           <p className="text-xl text-gray-300">
-            Expert guidance on estimation, project management, and growing your roofing business
+            Expert guidance on estimation, project management, and growing your
+            roofing business
           </p>
         </div>
       </section>
@@ -98,6 +111,7 @@ export default async function Blog() {
                   width={800}
                   height={600}
                   className="rounded-lg shadow-lg w-full"
+                  loading="lazy"
                 />
               </div>
               <div>
@@ -105,17 +119,20 @@ export default async function Blog() {
                   Featured Article
                 </span>
                 <h2 className="text-3xl font-bold mt-4 mb-4">
-                  <Link href={`/blog/${posts[0].slug}`} className="hover:text-secondary-700">
+                  <Link
+                    href={`/blog/${posts[0].slug}`}
+                    className="hover:text-secondary-700"
+                  >
                     {posts[0].title}
                   </Link>
                 </h2>
-                <p className="text-gray-600 mb-6 text-lg">
-                  {posts[0].excerpt}
-                </p>
+                <p className="text-gray-600 mb-6 text-lg">{posts[0].excerpt}</p>
                 <div className="flex items-center gap-4 text-sm text-gray-500">
                   <span>{posts[0].author}</span>
                   <span>•</span>
-                  <span>{new Date(posts[0].published_at).toLocaleDateString()}</span>
+                  <span>
+                    {new Date(posts[0].published_at).toLocaleDateString()}
+                  </span>
                   <span>•</span>
                   <span>{posts[0].read_time}</span>
                 </div>
@@ -131,7 +148,10 @@ export default async function Blog() {
           <h2 className="text-2xl font-bold mb-8">Recent Articles</h2>
           <div className="card-grid">
             {posts.slice(1).map((post) => (
-              <article key={post.id} className="card hover:shadow-lg transition">
+              <article
+                key={post.id}
+                className="card hover:shadow-lg transition"
+              >
                 <Link href={`/blog/${post.slug}`}>
                   <Image
                     src={post.image_url}
@@ -139,6 +159,7 @@ export default async function Blog() {
                     width={400}
                     height={192}
                     className="w-full h-48 object-cover"
+                    loading="lazy"
                   />
                 </Link>
                 <div className="p-6">
@@ -146,13 +167,14 @@ export default async function Blog() {
                     {post.category}
                   </span>
                   <h3 className="text-xl font-semibold mt-2 mb-3">
-                    <Link href={`/blog/${post.slug}`} className="hover:text-secondary-700">
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="hover:text-secondary-700"
+                    >
                       {post.title}
                     </Link>
                   </h3>
-                  <p className="text-gray-600 mb-4">
-                    {post.excerpt}
-                  </p>
+                  <p className="text-gray-600 mb-4">{post.excerpt}</p>
                   <div className="flex items-center gap-4 text-sm text-gray-500">
                     <span>{post.author}</span>
                     <span>•</span>
@@ -183,4 +205,5 @@ export default async function Blog() {
         </div>
       </section>
     </div>
-  );}
+  );
+}
