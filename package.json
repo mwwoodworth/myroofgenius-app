@@ -78,6 +78,7 @@
     "husky": "^8.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^30.0.3",
+    "jest-axe": "^10.0.0",
     "jest-environment-jsdom": "^30.0.2",
     "lighthouse": "^12.7.1",
     "lint-staged": "^15.2.0",

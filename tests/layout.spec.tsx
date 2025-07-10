@@ -7,7 +7,7 @@ jest.mock('../app/lib/sentry', () => ({}));
 jest.mock('@vercel/analytics/react', () => ({ Analytics: () => null }));
 jest.mock('next/font/google', () => ({
   Inter: () => ({ className: 'font', variable: '--font-body' }),
-  Poppins: () => ({ className: 'font', variable: '--font-heading' }),
+  EB_Garamond: () => ({ className: 'font', variable: '--font-heading' }),
   JetBrains_Mono: () => ({ className: 'font', variable: '--font-mono' }),
 }));
 jest.mock('next/dynamic', () => () => () => null);

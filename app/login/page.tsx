@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [magicSent, setMagicSent] = useState(false);
   const router = useRouter();
   const supabase = createClientComponentClient();
 
@@ -31,6 +32,23 @@ export default function LoginPage() {
     setLoading(false);
   };
 
+  const handleMagic = async () => {
+    setError(null);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+    });
+    if (error) setError('Could not send magic link.');
+    else setMagicSent(true);
+    setLoading(false);
+  };
+
   const handleProvider = async (provider: string) => {
     setError(null);
     try {
@@ -46,6 +64,11 @@ export default function LoginPage() {
         <h1 className="text-3xl font-bold text-center">Sign in</h1>
         <form onSubmit={handleLogin} className="space-y-4">
           {error && <p className="text-red-600 text-sm" id="login-error">{error}</p>}
+          {magicSent && (
+            <p className="text-green-600 text-sm" role="status">
+              Check your email for a login link.
+            </p>
+          )}
           <label htmlFor="login-email" className="sr-only">
             Email
           </label>
@@ -78,6 +101,14 @@ export default function LoginPage() {
             className="w-full bg-accent text-white py-2 rounded"
           >
             {loading ? 'Signing in...' : 'Sign in'}
+          </button>
+          <button
+            type="button"
+            onClick={handleMagic}
+            disabled={loading}
+            className="w-full border border-gray-300 py-2 rounded text-gray-700 mt-2"
+          >
+            Send magic link
           </button>
           <button
             type="button"
