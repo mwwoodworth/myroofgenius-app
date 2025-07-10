@@ -21,4 +21,3 @@ export { default as Skeleton } from "./Skeleton";
 export { default as LazyImage } from "./LazyImage";
 export { default as Drawer } from "./Drawer";
 export { default as StreamingText } from "./StreamingText";
-export { default as Starfield } from "./Starfield";
