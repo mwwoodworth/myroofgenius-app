@@ -75,10 +75,9 @@ module.exports = {
           border: "1px solid rgba(255,255,255,0.07)",
         },
         ".bg-gradient-animated": {
-          background:
-            "linear-gradient(130deg,#1a223f,#2e396d,#5256a4,#8276c5,#2e396d,#1a223f)",
-          backgroundSize: "700% 700%",
-          animation: "gradientShift 22s ease-in-out infinite",
+          background: "linear-gradient(120deg,#1e3a8a,#9333ea,#3730a3)",
+          backgroundSize: "600% 600%",
+          animation: "gradientShift 20s ease-in-out infinite",
         },
       });
 
