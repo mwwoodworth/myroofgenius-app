@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   body {
     @apply bg-bg text-text-primary font-inter;
@@ -18,17 +17,18 @@
   }
 
   :root {
-    --accent: 82 118 197;
-    --clr-primary-900: 26 34 63;
-    --clr-secondary-700: 54 68 137;
-    --clr-accent-emerald: 0 196 107;
-    --clr-accent-pink: 130 118 197;
+    /* Modern SaaS palette */
+    --accent: 100 108 255;
+    --clr-primary-900: 13 27 42;
+    --clr-secondary-700: 81 56 238;
+    --clr-accent-emerald: 52 199 89;
+    --clr-accent-pink: 100 108 255;
     /* Brand Palette */
-    --color-primary: #1a223f;
-    --color-secondary: #5256a4;
+    --color-primary: #0d1b2a;
+    --color-secondary: #646cff;
     --color-bg: #121212;
-    --color-text: #F2F2F7;
-    --color-white: #FFFFFF;
+    --color-text: #f2f2f7;
+    --color-white: #ffffff;
     /* Protection Status Colors */
     --color-protected: 34 197 94;
     --color-warning: 251 146 60;
@@ -47,10 +47,10 @@
 
   @supports not (color: oklch(0 0 0)) {
     :root {
-      --clr-primary-900: 26 34 63;
-      --clr-secondary-700: 54 68 137;
-      --clr-accent-emerald: 0 196 107;
-      --clr-accent-pink: 130 118 197;
+      --clr-primary-900: 13 27 42;
+      --clr-secondary-700: 81 56 238;
+      --clr-accent-emerald: 52 199 89;
+      --clr-accent-pink: 100 108 255;
     }
   }
 
@@ -102,7 +102,7 @@
 }
 
 .calculating-protection::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
