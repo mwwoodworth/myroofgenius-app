@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "functions": {
     "app/api/webhook/route.ts": {
       "maxDuration": 60
@@ -6,4 +7,5 @@
     "app/api/ai/analyze-roof/route.ts": {
       "maxDuration": 60
     }
-  
+  }
+}
