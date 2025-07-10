@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 const MotionLink = motion(Link);
 import {
   AnimatedGradient,
+  Starfield,
   Hero3D,
   HeroHeadline,
   Skeleton,
@@ -61,6 +62,7 @@ export default function HomeClient() {
         transition={{ duration: 0.6 }}
         className="relative overflow-hidden bg-brand-gradient dark:bg-brand-gradient-alt py-24 backdrop-blur-lg rounded-2xl shadow-2xl"
       >
+        <Starfield />
         <AnimatedGradient />
         <div className="absolute top-6 right-6">
           <ActiveUsersBadge />

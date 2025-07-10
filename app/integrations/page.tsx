@@ -20,13 +20,15 @@ export default function IntegrationsPage() {
                 name: 'QuickBooks',
                 description: 'Automatic invoice sync, payment tracking, job costing',
                 status: 'active',
-                icon: '/integrations/quickbooks.svg'
+                // Icon from simple-icons CDN
+                icon: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/quickbooks.svg'
               },
               {
                 name: 'Stripe',
                 description: 'Payment processing with automatic reconciliation',
                 status: 'active',
-                icon: '/integrations/stripe.svg'
+                // Icon from simple-icons CDN
+                icon: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/stripe.svg'
               }
             ]}
           />
