@@ -50,7 +50,7 @@ The UI now features cinematic glassmorphism and playful animations. Key updates 
 - Floating glass cards for testimonials and marketplace listings
 - Typed hero headline and tilt-animated tool carousel
 
-Screenshots of the refreshed interface are available in `/docs/screenshots/`.
+All marketing copy has been polished for clarity and consistency across the site.
 
 ## 📁 Project Structure
 

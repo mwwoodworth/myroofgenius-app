@@ -1,6 +1,7 @@
 {
   "name": "MyRoofGenius",
   "short_name": "RoofGenius",
+  "description": "Access MyRoofGenius tools offline and on site.",
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#0d1b2a",
