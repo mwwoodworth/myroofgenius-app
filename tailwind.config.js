@@ -18,6 +18,11 @@ module.exports = {
         },
         "accent-emerald": "rgb(var(--clr-accent-emerald) / <alpha-value>)",
         "accent-pink": "rgb(var(--clr-accent-pink) / <alpha-value>)",
+        charcoalBlack: "#121212",
+        offWhite: "#F0F0F0",
+        neonGreen: "#00FF85",
+        electricBlue: "#1E90FF",
+        darkGray: "#444444",
       },
       backgroundImage: {
         "brand-gradient":
@@ -26,8 +31,8 @@ module.exports = {
           "linear-gradient(135deg,#364489 0%,#5256a4 45%,#1a223f 100%)",
       },
       fontFamily: {
-        sans: ["var(--font-body)", "system-ui", "sans-serif"],
-        heading: ["var(--font-heading)", "Inter", "sans-serif"],
+        sans: ["Inter", "sans-serif"],
+        display: ["Anton", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
       },
       keyframes: {
