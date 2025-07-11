@@ -12,7 +12,7 @@ interface ThemeCtx {
 const ThemeContext = createContext<ThemeCtx>({
   theme: 'dark',
   toggle: () => {},
-  accent: '#5276c5',
+  accent: '#4299e1', /* primary token */
   setAccent: () => {}
 });
 
@@ -23,7 +23,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       ? 'dark'
       : 'light'
   );
-  const [accent, setAccent] = useState('#5276c5');
+  const [accent, setAccent] = useState('#4299e1'); /* primary token */
 
   useEffect(() => {
     // Load persisted theme from localStorage if available

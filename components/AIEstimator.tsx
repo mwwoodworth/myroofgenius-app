@@ -236,7 +236,7 @@ export default function AIEstimator() {
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="123 Main St, Denver, CO 80202"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent" /* replaced blue-500 with accent token */
               />
             </div>
 

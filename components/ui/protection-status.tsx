@@ -18,7 +18,7 @@ export function ProtectionStatus({ status, message, details, className }: Protec
 
   const styles = {
     protected: 'bg-accent-emerald/5 text-accent-emerald border-accent-emerald/20',
-    warning: 'bg-orange-50 text-orange-900 border-orange-200',
+    warning: 'bg-warning/10 text-warning border-warning/50', /* replaced orange classes with warning token */
     danger: 'bg-red-50 text-red-900 border-red-200',
     calculating: 'bg-secondary-700/5 text-secondary-700 border-secondary-700/20'
   }

@@ -29,7 +29,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <motion.button
-      whileHover={{ scale: 1.05, boxShadow: "0 0 16px #5E5CE6" }}
+      whileHover={{ scale: 1.05, boxShadow: "0 0 16px var(--color-primary)" }} /* replaced hex with primary token */
       whileTap={{ scale: 0.95 }}
       className={clsx(base, variants[variant], sizes[size], className)}
       {...props}
