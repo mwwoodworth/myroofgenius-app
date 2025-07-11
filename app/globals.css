@@ -41,6 +41,9 @@
     --color-bg: var(--color-neutral-50);
     --color-text: var(--color-neutral-700);
     --color-white: #ffffff;
+    --header-bg: #000;
+    --gradient-start: #005f73;
+    --gradient-end: #6b21a8;
     /* RGB counterparts for Tailwind */
     --clr-primary-900: 0 95 158;
     --clr-secondary-700: 131 151 136;
