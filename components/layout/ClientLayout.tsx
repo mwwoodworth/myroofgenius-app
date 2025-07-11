@@ -1,17 +1,23 @@
 "use client";
 import { ReactNode, useEffect } from "react";
-import { ThemeProvider, RoleProvider, ARModeProvider, ToastProvider, PresenceProvider } from '../ui';
-import { AuthProvider } from '../../src/context/AuthContext';
-import { LocaleProvider } from '../../src/context/LocaleContext';
-import { CurrencyProvider } from '../../src/context/CurrencyContext';
-import DocumentLang from '../DocumentLang';
-import Navbar from '../Navbar';
-import AnnouncementBanner from '../AnnouncementBanner';
-import ErrorBoundary from '../ErrorBoundary';
-import CopilotWrapper from './CopilotWrapper';
-import AnimatedLayout from './AnimatedLayout';
-import Footer from '../Footer';
-import { aiCopilotEnabled, arModeEnabled } from '../../app/lib/features';
+import {
+  ThemeProvider,
+  RoleProvider,
+  ARModeProvider,
+  ToastProvider,
+  PresenceProvider,
+} from "../ui";
+import { AuthProvider } from "../../src/context/AuthContext";
+import { LocaleProvider } from "../../src/context/LocaleContext";
+import { CurrencyProvider } from "../../src/context/CurrencyContext";
+import DocumentLang from "../DocumentLang";
+import NavBar from "../NavBar";
+import AnnouncementBanner from "../AnnouncementBanner";
+import ErrorBoundary from "../ErrorBoundary";
+import CopilotWrapper from "./CopilotWrapper";
+import AnimatedLayout from "./AnimatedLayout";
+import Footer from "../Footer";
+import { aiCopilotEnabled, arModeEnabled } from "../../app/lib/features";
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
@@ -26,7 +32,8 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
       e.prompt();
     };
     window.addEventListener("beforeinstallprompt", promptHandler);
-    return () => window.removeEventListener("beforeinstallprompt", promptHandler);
+    return () =>
+      window.removeEventListener("beforeinstallprompt", promptHandler);
   }, []);
   return (
     <LocaleProvider>
@@ -46,9 +53,13 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
                   <PresenceProvider room="global">
                     {arModeEnabled ? (
                       <ARModeProvider>
-                        <Navbar />
+                        <NavBar />
                         <AnnouncementBanner />
-                        <main id="main-content" tabIndex={-1} className="outline-none">
+                        <main
+                          id="main-content"
+                          tabIndex={-1}
+                          className="outline-none"
+                        >
                           <ErrorBoundary>{children}</ErrorBoundary>
                         </main>
                         {aiCopilotEnabled && <CopilotWrapper />}
@@ -56,9 +67,13 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
                       </ARModeProvider>
                     ) : (
                       <>
-                        <Navbar />
+                        <NavBar />
                         <AnnouncementBanner />
-                        <main id="main-content" tabIndex={-1} className="outline-none">
+                        <main
+                          id="main-content"
+                          tabIndex={-1}
+                          className="outline-none"
+                        >
                           <ErrorBoundary>{children}</ErrorBoundary>
                         </main>
                         {aiCopilotEnabled && <CopilotWrapper />}
