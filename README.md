@@ -68,6 +68,9 @@ myroofgenius/
 └── sprints/           # Sprint documentation
     └── v1/            # Current sprint docs
 ```
+## 🎨 Design System
+
+Reusable components live in the `design-system/` directory. Import tokens and atoms from there for all new pages.
 
 ## 🛠️ Technology Stack
 
