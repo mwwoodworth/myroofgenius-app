@@ -42,10 +42,10 @@
     --color-text: var(--color-neutral-700);
     --color-white: #ffffff;
     /* RGB counterparts for Tailwind */
-    --clr-primary-900: 0 95 115;
+    --clr-primary-900: 0 95 158;
     --clr-secondary-700: 131 151 136;
     --clr-accent-orange: 217 119 6;
-    --clr-accent-emerald: 52 199 89;
+    --clr-accent-emerald: 40 167 69;
     --clr-accent-pink: 100 108 255;
     --accent: 217 119 6;
     /* Protection Status Colors */
@@ -66,9 +66,9 @@
 
   @supports not (color: oklch(0 0 0)) {
     :root {
-      --clr-primary-900: 0 95 115;
+      --clr-primary-900: 0 95 158;
       --clr-secondary-700: 131 151 136;
-      --clr-accent-emerald: 52 199 89;
+      --clr-accent-emerald: 40 167 69;
       --clr-accent-pink: 100 108 255;
       --accent: 217 119 6;
     }

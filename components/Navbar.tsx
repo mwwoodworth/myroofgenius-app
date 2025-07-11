@@ -53,7 +53,7 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 70 }}
-        className="bg-black rounded-2xl shadow-2xl fixed top-0 w-full flex items-center justify-between px-8 py-4 z-50"
+        className="glass-navbar rounded-2xl shadow-2xl fixed top-0 w-full flex items-center justify-between px-8 py-4 z-50 text-white"
       >
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center" aria-label="MyRoofGenius">
