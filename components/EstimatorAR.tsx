@@ -11,7 +11,14 @@ export default function EstimatorAR() {
           {/* Placeholder plane representing roof model */}
           <mesh rotation={[-0.5, 0.2, 0]}>
             <planeGeometry args={[3, 3]} />
-            <meshStandardMaterial color="orange" />
+          {(() => {
+            const c = typeof window !== 'undefined'
+              ? getComputedStyle(document.documentElement)
+                  .getPropertyValue('--color-warning')
+                  .trim() || '#ecc94b'
+              : '#ecc94b';
+            return <meshStandardMaterial color={c} />;
+          })()} /* uses warning token */
           </mesh>
           <ambientLight intensity={0.5} />
         </Suspense>

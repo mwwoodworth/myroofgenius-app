@@ -13,8 +13,8 @@ export default function GoogleReviews(props: React.SVGProps<SVGSVGElement>) {
       aria-label="Google Reviews"
       {...props}
     >
-      <rect width="100" height="32" rx="4" fill="#fff" stroke="#e5e7eb" />
-      <g fill="#fbbc04" transform="translate(10 6) scale(0.8)">
+      <rect width="100" height="32" rx="4" fill="var(--color-white)" stroke="var(--color-cloud-100)" />
+      <g fill="var(--color-warning)" transform="translate(10 6) scale(0.8)">
         {Array.from({ length: 5 }).map((_, i) => (
           <g key={i} transform={`translate(${i * 20},0)`}>
             {star}

@@ -12,10 +12,16 @@ function SpinningShape() {
       ref.current.rotation.x += 0.005;
     }
   });
+  const color =
+    typeof window !== 'undefined'
+      ? getComputedStyle(document.documentElement)
+          .getPropertyValue('--color-primary')
+          .trim() || '#4299e1'
+      : '#4299e1';
   return (
     <mesh ref={ref}>
       <icosahedronGeometry args={[1, 0]} />
-      <meshStandardMaterial color="#5E5CE6" />
+      <meshStandardMaterial color={color} /> {/* uses primary token */}
     </mesh>
   );
 }

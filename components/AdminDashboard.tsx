@@ -124,7 +124,7 @@ function OverviewTab({ stats }: { stats: DashboardStats }) {
         <StatCard title="Total Users" value={stats.totalUsers} icon={<Users className="w-6 h-6" />} color="blue" />
         <StatCard title="Total Orders" value={stats.totalOrders} icon={<Package className="w-6 h-6" />} color="green" />
         <StatCard title="Revenue" value={`$${stats.totalRevenue.toFixed(2)}`} icon={<DollarSign className="w-6 h-6" />} color="purple" />
-        <StatCard title="Active Products" value={stats.activeProducts} icon={<FileText className="w-6 h-6" />} color="orange" />
+        <StatCard title="Active Products" value={stats.activeProducts} icon={<FileText className="w-6 h-6" />} color="warning" /> /* replaced orange with warning token */
         <StatCard title="Pending Tickets" value={stats.pendingTickets} icon={<SettingsIcon className="w-6 h-6" />} color="red" />
       </div>
       <div className="bg-white rounded-lg shadow p-6">
@@ -135,7 +135,7 @@ function OverviewTab({ stats }: { stats: DashboardStats }) {
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip />
-              <Line type="monotone" dataKey="revenue" stroke="#3b82f6" />
+              <Line type="monotone" dataKey="revenue" stroke="var(--color-primary)" /> /* replaced hex with primary token */
             </LineChart>
           </ResponsiveContainer>
         ) : (
@@ -151,7 +151,7 @@ function StatCard({ title, value, icon, color }: { title: string; value: number 
     blue: 'bg-secondary-700/10 text-secondary-700',
     green: 'bg-accent-emerald/20 text-accent-emerald',
     purple: 'bg-purple-100 text-purple-600',
-    orange: 'bg-orange-100 text-orange-600',
+    warning: 'bg-warning/20 text-warning', /* replaced orange classes with warning token */
     red: 'bg-red-100 text-red-600'
   };
   return (
@@ -219,7 +219,7 @@ function OrdersTab() {
                 <td className="px-6 py-2">{order.products?.name || '—'}</td>
                 <td className="px-6 py-2">${order.amount.toFixed(2)}</td>
                 <td className="px-6 py-2">
-                  <span className={`px-2 py-1 text-xs rounded ${order.status === 'completed' ? 'bg-accent-emerald/20 text-accent-emerald' : 'bg-yellow-100 text-yellow-800'}`}>{order.status}</span>
+                  <span className={`px-2 py-1 text-xs rounded ${order.status === 'completed' ? 'bg-accent-emerald/20 text-accent-emerald' : 'bg-warning/20 text-warning'}`}>{order.status}</span> /* replaced yellow classes with warning token */
                 </td>
                 <td className="px-6 py-2">{new Date(order.created_at).toLocaleDateString()}</td>
               </tr>
@@ -543,7 +543,7 @@ function SettingsTab() {
         <p>Checking system health...</p>
       ) : health ? (
         <div>
-          <p className={`font-medium mb-4 ${health.status === 'healthy' ? 'text-accent-emerald' : health.status === 'degraded' ? 'text-yellow-600' : 'text-red-600'}`}>Overall Status: {health.status.charAt(0).toUpperCase() + health.status.slice(1)}</p>
+          <p className={`font-medium mb-4 ${health.status === 'healthy' ? 'text-accent-emerald' : health.status === 'degraded' ? 'text-warning' : 'text-red-600'}`}>Overall Status: {health.status.charAt(0).toUpperCase() + health.status.slice(1)}</p> /* replaced yellow-600 with warning token */
           <ul>
             <li>Database: <span className={health.services.database === 'healthy' ? 'text-accent-emerald' : 'text-red-600'}>{health.services.database}</span></li>
             <li>Storage: <span className={health.services.storage === 'healthy' ? 'text-accent-emerald' : 'text-red-600'}>{health.services.storage}</span></li>

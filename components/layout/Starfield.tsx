@@ -27,7 +27,7 @@ export default function Starfield() {
           left: 0;
           width: 6em;
           height: 2px;
-          color: #F0F0F0;
+          color: var(--color-cloud-100); /* replaced hex with cloud-100 token */
           background: linear-gradient(45deg, currentColor, transparent);
           border-radius: 50%;
           filter: drop-shadow(0 0 6px currentColor);

@@ -39,7 +39,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="manifest" href="/manifest.webmanifest" />
-        <meta name="theme-color" content="#0d1b2a" />
+        <meta name="theme-color" content="#0a192f" /> {/* navy-900 token */}
         <link
           rel="icon"
           href="https://via.placeholder.com/192"

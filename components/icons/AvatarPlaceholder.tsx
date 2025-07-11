@@ -13,9 +13,9 @@ export default function AvatarPlaceholder(
       aria-hidden="true"
       {...props}
     >
-      <circle cx="20" cy="20" r="20" fill="#e5e7eb" />
-      <circle cx="20" cy="15" r="6" fill="#9ca3af" />
-      <path d="M10 32c2-6 18-6 20 0" fill="#9ca3af" />
+      <circle cx="20" cy="20" r="20" fill="var(--color-cloud-100)" />
+      <circle cx="20" cy="15" r="6" fill="var(--color-slate-700)" />
+      <path d="M10 32c2-6 18-6 20 0" fill="var(--color-slate-700)" />
     </svg>
   );
 }
