@@ -55,6 +55,99 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           href="https://via.placeholder.com/1024"
           sizes="1024x1024"
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'MyRoofGenius',
+              url: 'https://myroofgenius.com',
+              logo: 'https://myroofgenius.com/logo.png',
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'LocalBusiness',
+              name: 'MyRoofGenius Roofing Services',
+              image: 'https://myroofgenius.com/logo.png',
+              telephone: '+1-555-555-5555',
+              priceRange: '$$',
+              areaServed: ['Denver', 'Boulder', 'Colorado Springs'],
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: '100 Main St',
+                addressLocality: 'Denver',
+                addressRegion: 'CO',
+                postalCode: '80202',
+                addressCountry: 'US',
+              },
+              url: 'https://myroofgenius.com',
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Service',
+              serviceType: 'Roof Inspection',
+              provider: { '@type': 'LocalBusiness', name: 'MyRoofGenius' },
+              areaServed: ['Denver', 'Boulder', 'Colorado Springs'],
+              offers: {
+                '@type': 'Offer',
+                price: '0',
+                priceCurrency: 'USD',
+              },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Review',
+              author: 'Jane Contractor',
+              datePublished: '2024-01-02',
+              reviewRating: { '@type': 'Rating', ratingValue: '5' },
+              reviewBody:
+                'The roof report was extremely accurate and saved us hours.',
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: [
+                {
+                  '@type': 'Question',
+                  name: 'Can I use the tools offline?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Yes, our PWA works offline for field crews.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'Do you offer certifications?',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'Yes, we are GAF certified and OSHA compliant.',
+                  },
+                },
+              ],
+            }),
+          }}
+        />
       </head>
       <body>
         {maintenanceMode ? (
