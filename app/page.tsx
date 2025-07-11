@@ -1,7 +1,7 @@
 import NavBar from "../components/NavBar";
 import TrustBar from "../components/TrustBar";
 import TestimonialCard from "../components/TestimonialCard";
-import Button from "../components/ui/Button";
+import Button from "../components/Button";
 
 export const dynamic = "force-dynamic";
 
@@ -18,15 +18,18 @@ export default function HomePage() {
         <h1 className="text-4xl md:text-5xl font-bold max-w-2xl">
           Protect Your Margins with 98.7% Accurate Measurements in 30 Seconds
         </h1>
-        <Button as="a" href="/get-started" className="mx-auto">
+        <Button
+          as="a"
+          href="/get-started"
+          variant="primary"
+          size="lg"
+          className="mx-auto"
+        >
           Start Free Analysis
         </Button>
-        <a
-          href="/demo"
-          className="text-accent underline focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-        >
+        <Button as="a" href="/demo" variant="ghost" size="lg">
           Watch a 2-min Demo
-        </a>
+        </Button>
       </section>
       <TrustBar />
       <section className="py-12 px-4 max-w-6xl mx-auto">

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import ResultCard from "./ResultCard";
-import Button from "./ui/Button";
+import Button from "./Button";
 
 export default function SimpleEstimator() {
   const [size, setSize] = useState("");
@@ -37,7 +37,9 @@ export default function SimpleEstimator() {
     <div className="max-w-md w-full space-y-4">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block mb-1 text-sm font-medium">Roof Size (sq ft)</label>
+          <label className="block mb-1 text-sm font-medium">
+            Roof Size (sq ft)
+          </label>
           <input
             type="number"
             required

@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useConfetti } from "../../hooks/use-confetti";
+import Button from "../../components/Button";
+import Form from "../../components/Form";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
@@ -48,43 +50,35 @@ export default function SignupPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="w-full max-w-md space-y-6">
         <h1 className="text-3xl font-bold text-center">Create account</h1>
-        <form onSubmit={handleSignup} className="space-y-4">
-          {error && <p className="text-red-600 text-sm" id="signup-error">{error}</p>}
-          <label htmlFor="signup-email" className="sr-only">
-            Email
-          </label>
-          <input
+        <Form onSubmit={handleSignup} className="space-y-4">
+          {error && (
+            <p className="text-red-600 text-sm" id="signup-error">
+              {error}
+            </p>
+          )}
+          <Form.Input
+            label="Email"
             id="signup-email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
             required
-            aria-describedby="signup-error"
-            className="w-full border p-2 rounded"
+            error={error || undefined}
           />
-          <label htmlFor="signup-password" className="sr-only">
-            Password
-          </label>
-          <input
+          <Form.Input
+            label="Password"
             id="signup-password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
             required
             minLength={6}
-            aria-describedby="signup-error"
-            className="w-full border p-2 rounded"
+            error={error || undefined}
           />
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-accent text-white py-2 rounded"
-          >
+          <Button type="submit" disabled={loading} className="w-full">
             {loading ? "Creating account..." : "Create account"}
-          </button>
-        </form>
+          </Button>
+        </Form>
         <p className="text-center text-sm">
           Already have an account?{" "}
           <Link href="/login" className="text-accent underline">
