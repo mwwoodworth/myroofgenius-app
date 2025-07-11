@@ -6,6 +6,8 @@ const CRITICAL_CACHE = [
   '/offline.html',
   '/dashboard',
   '/field/report',
+  '/field-apps',
+  '/tools',
   '/estimate/new',
   '/manifest.json'
 ];

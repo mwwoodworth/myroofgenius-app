@@ -192,7 +192,7 @@
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px dashed var(--color-primary);
+  outline: 2px solid #3b82f6; /* Accent-Blue-500 */
   outline-offset: 2px;
 }
 
