@@ -17,7 +17,7 @@
     "analyze": "ANALYZE=true next build",
     "check-bundle": "tsx scripts/check-bundle.ts",
     "playwright:install": "playwright install --with-deps chromium firefox webkit",
-    "postinstall": "if [ \"$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD\" != \"1\" ]; then npm run playwright:install; fi",
+    "postinstall": "if [ \"$CI\" != \"true\" ] && [ \"$PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD\" != \"1\" ]; then npm run playwright:install; fi",
     "validate:env": "tsx scripts/validate-env.ts",
     "postbuild": "next-sitemap",
     "lighthouse:seo": "node scripts/lighthouse-seo.js",
