@@ -80,9 +80,9 @@ module.exports = {
           border: "1px solid rgba(255,255,255,0.07)",
         },
         ".bg-gradient-animated": {
-          background: "linear-gradient(120deg,#1e3a8a,#9333ea,#3730a3)",
-          backgroundSize: "600% 600%",
-          animation: "gradientShift 20s ease-in-out infinite",
+          background: "linear-gradient(130deg,#0f0c29,#302b63,#24243e,#005f9e,#28a745)",
+          backgroundSize: "500% 500%",
+          animation: "gradientShift 20s ease infinite",
         },
       });
 
