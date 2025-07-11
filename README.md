@@ -24,7 +24,7 @@ npm run build
 
 ### Build Stability 2025
 
-- Added `pages/_app.tsx` with `SessionProvider` to share NextAuth sessions.
+- Migrated fully to the Next.js **App Router**. The homepage now lives at `app/page.tsx`.
 - Verified Stripe webhook handler and Supabase auth helpers.
 - `npm run build`, `npm run lint`, and tests all pass.
 
