@@ -218,3 +218,8 @@ Run `npm run dev` and open `/marketplace`. Click **Buy Now** on any product to v
 ## Vercel AI Bots Automation
 See [docs/vercel-ai-bots.md](docs/vercel-ai-bots.md) for deployment scripts and Make.com scenarios. Add future templates by editing `scripts/setup-vercel-ai-bots.sh`.
 
+
+## JetBrains-inspired Style Library
+
+The `public/styles/jetbrains-interactive.css` file contains an optional style library inspired by JetBrains' interactive website. It includes keyframes and utility classes for a starry header and a subtle color-cycling background. Import this file into your pages to experiment with more dynamic visuals.
+
