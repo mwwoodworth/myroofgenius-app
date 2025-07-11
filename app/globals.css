@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-bg text-text-primary font-sans;
+    @apply bg-gradient-animated text-text-primary font-sans;
   }
 
   h1,
@@ -21,7 +21,6 @@
     font-family: var(--font-mono, "JetBrains Mono", monospace);
   }
 
-  body,
   footer,
   .btn-green,
   .banner {

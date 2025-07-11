@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import type { User } from '@supabase/supabase-js';
 import { motion, AnimatePresence } from 'framer-motion';
-import AnimatedGradient from './ui/AnimatedGradient';
+import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import { ThemeToggle, AccentColorPicker, ProfileDropdown } from './ui';
@@ -53,11 +53,10 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', stiffness: 70 }}
-        className="glass-navbar bg-primary-900/90 rounded-2xl shadow-2xl fixed top-0 w-full flex items-center justify-between px-8 py-4 z-50 overflow-hidden"
+        className="bg-black rounded-2xl shadow-2xl fixed top-0 w-full flex items-center justify-between px-8 py-4 z-50"
       >
-        <AnimatedGradient />
         <div className="flex items-center gap-3">
-          <a href="/" className="flex items-center" aria-label="MyRoofGenius">
+          <Link href="/" className="flex items-center" aria-label="MyRoofGenius">
             <Image
               src="/assets/logo.svg"
               alt="MyRoofGenius logo"
@@ -65,7 +64,7 @@ export default function Navbar() {
               height={32}
               loading="lazy"
             />
-          </a>
+          </Link>
           <p className="hidden sm:block text-sm text-white font-semibold">
             Smart Roofing Solutions
           </p>
@@ -110,13 +109,12 @@ export default function Navbar() {
       </motion.nav>
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="md:hidden bg-[rgba(35,35,35,0.9)] backdrop-blur-xl border-b border-[rgba(255,255,255,0.07)] rounded-b-2xl shadow-2xl fixed top-16 w-full z-40 overflow-hidden"
-          >
-            <AnimatedGradient />
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="md:hidden bg-black backdrop-blur-xl rounded-b-2xl shadow-2xl fixed top-16 w-full z-40 overflow-hidden"
+            >
             {links.map(({ href, label }) => (
               <motion.a
                 key={href}
