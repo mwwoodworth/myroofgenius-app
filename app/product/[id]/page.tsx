@@ -102,9 +102,9 @@ export default async function ProductPage({ params }: { params: { id: string } }
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="mb-8 text-sm">
-          <Link href="/" className="text-gray-500 hover:text-gray-700">Home</Link>
+          <Link href="/" className="text-text-secondary hover:text-gray-700">Home</Link>
           <span className="mx-2 text-gray-400">/</span>
-          <Link href="/marketplace" className="text-gray-500 hover:text-gray-700">Marketplace</Link>
+          <Link href="/marketplace" className="text-text-secondary hover:text-gray-700">Marketplace</Link>
           <span className="mx-2 text-gray-400">/</span>
           <span className="text-gray-900">{product.name}</span>
         </nav>
@@ -154,7 +154,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                 <div>
                   <span className="text-4xl font-bold">${product.price}</span>
                   {product.original_price && (
-                    <span className="text-xl text-gray-500 line-through ml-3">
+                    <span className="text-xl text-text-secondary line-through ml-3">
                       ${product.original_price}
                     </span>
                   )}
@@ -231,7 +231,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                 &quot;This tool paid for itself on the first project. Found $8,000 in hidden costs I would have missed.&quot;
               </p>
               <p className="font-semibold">Mike R. - Denver, CO</p>
-              <p className="text-sm text-gray-500">Verified Purchase</p>
+              <p className="text-sm text-text-secondary">Verified Purchase</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow">
               <div className="flex text-yellow-400 mb-2">
@@ -243,7 +243,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                 &quot;Finally, someone who understands commercial roofing. This is exactly what I&apos;ve been looking for.&quot;
               </p>
               <p className="font-semibold">Sarah T. - Colorado Springs</p>
-              <p className="text-sm text-gray-500">Verified Purchase</p>
+              <p className="text-sm text-text-secondary">Verified Purchase</p>
             </div>
           </div>
         </section>

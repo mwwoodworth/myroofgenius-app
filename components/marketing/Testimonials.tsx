@@ -45,7 +45,7 @@ export default function Testimonials({ className = '' }: { className?: string })
           >
             <p className="mb-4">&ldquo;{t.quote}&rdquo;</p>
             <p className="font-semibold">{t.name}</p>
-            <p className="text-sm text-gray-500">{t.role}</p>
+            <p className="text-sm text-text-secondary">{t.role}</p>
           </motion.div>
         ))}
       </div>

@@ -237,7 +237,7 @@ export default function AIEstimator() {
                 <p className="font-semibold mb-2">
                   {isDragActive ? 'Drop the photo here' : 'Drag & drop a roof photo'}
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-text-secondary">
                   or click to select from your device
                 </p>
                 <p className="text-xs text-gray-400 mt-2">
@@ -251,7 +251,7 @@ export default function AIEstimator() {
                   <>
                     <Camera className="w-12 h-12 mx-auto mb-4 text-gray-400" />
                     <p className="font-semibold mb-2">Take a Photo</p>
-                    <p className="text-sm text-gray-500 mb-4">
+                    <p className="text-sm text-text-secondary mb-4">
                       Use your device camera for instant capture
                     </p>
                     <Button onClick={startCamera} variant="secondary" size="sm">
@@ -331,7 +331,7 @@ export default function AIEstimator() {
             </div>
             <h3 className="text-xl font-semibold mb-2">Analyzing Your Roof...</h3>
             <p className="text-gray-600">Our AI is examining the image for:</p>
-            <ul className="mt-4 space-y-2 text-sm text-gray-500">
+            <ul className="mt-4 space-y-2 text-sm text-text-secondary">
               <li>✓ Roof dimensions and square footage</li>
               <li>✓ Material type and condition</li>
               <li>✓ Visible damage or wear</li>
@@ -362,7 +362,7 @@ export default function AIEstimator() {
                   {result.square_feet?.toLocaleString()}
                 </p>
                 {typeof result.confidence_scores?.area_measurement === 'number' && (
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-text-secondary">
                     {(result.confidence_scores.area_measurement * 100).toFixed(0)}% confidence
                   </p>
                 )}
@@ -373,7 +373,7 @@ export default function AIEstimator() {
                   {result.material || 'Unknown'}
                 </p>
                 {typeof result.confidence_scores?.material_identification === 'number' && (
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-text-secondary">
                     {(result.confidence_scores.material_identification * 100).toFixed(0)}% confidence
                   </p>
                 )}
@@ -413,7 +413,7 @@ export default function AIEstimator() {
                 <p className="text-2xl font-bold">
                   {result.estimated_remaining_life?.toLocaleString()}
                 </p>
-                <p className="text-xs text-gray-500">years estimated</p>
+                <p className="text-xs text-text-secondary">years estimated</p>
               </div>
             </div>
 
@@ -450,7 +450,7 @@ export default function AIEstimator() {
               <div className="border rounded-lg p-6">
                 <h3 className="font-semibold mb-2">Identified Issues</h3>
                 {typeof result.confidence_scores?.damage_assessment === 'number' && (
-                  <p className="text-xs text-gray-500 mb-4">
+                  <p className="text-xs text-text-secondary mb-4">
                     {(result.confidence_scores.damage_assessment * 100).toFixed(0)}% confidence
                   </p>
                 )}

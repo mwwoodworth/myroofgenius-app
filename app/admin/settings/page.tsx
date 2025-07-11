@@ -62,10 +62,10 @@ export default function AdminSettings() {
             onChange={e => toggle(flag.key, e.target.checked)}
           />
           <span className="font-medium">{flag.label}</span>
-          <span className="text-sm text-gray-500">{flag.description}</span>
+          <span className="text-sm text-text-secondary">{flag.description}</span>
         </label>
       ))}
-      <p className="text-sm text-gray-500">
+      <p className="text-sm text-text-secondary">
         Changes apply on next page load and are stored in localStorage.
       </p>
     </div>

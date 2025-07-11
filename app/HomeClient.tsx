@@ -73,7 +73,7 @@ export default function HomeClient() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}
-        className="relative overflow-hidden bg-brand-gradient dark:bg-brand-gradient-alt py-24 backdrop-blur-lg rounded-2xl shadow-2xl"
+        className="relative overflow-hidden bg-black/20 py-24 backdrop-blur-lg rounded-2xl shadow-2xl"
       >
         <AnimatedGradient />
         <div className="absolute top-6 right-6">
@@ -82,7 +82,7 @@ export default function HomeClient() {
         <div className="container relative mx-auto px-4 max-w-6xl">
           <div className="max-w-3xl">
             <div className="inline-flex items-center space-x-2 bg-white/30 backdrop-blur-lg rounded-full shadow-2xl px-4 py-2 mb-8">
-              <Shield className="w-5 h-5 text-accent-emerald" />
+              <Shield className="w-5 h-5 text-primary" />
               <span className="text-sm font-medium text-white">
                 Trusted by 2,800+ contractors
               </span>
@@ -95,21 +95,21 @@ export default function HomeClient() {
             >
               <HeroHeadline
                 texts={["Protect every project.", "Grow every margin."]}
-                className="text-accent-pink"
+                className="text-accent"
               />
             </motion.h1>
             <ul className="text-slate-300 mb-8 space-y-2">
               <li className="flex items-start gap-2">
-                <CheckCircle className="w-5 h-5 text-accent-emerald" />
-                Instant AI estimates
+                <CheckCircle className="w-5 h-5 text-primary" />
+              Instant AI estimates
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle className="w-5 h-5 text-accent-pink" />
-                Error-proof templates
+                <CheckCircle className="w-5 h-5 text-accent" />
+              Error-proof templates
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle className="w-5 h-5 text-accent-emerald" />
-                Mobile field tools
+                <CheckCircle className="w-5 h-5 text-primary" />
+              Mobile field tools
               </li>
             </ul>
             <Hero3D />
@@ -122,7 +122,7 @@ export default function HomeClient() {
               <MotionLink
                 href="/get-started"
                 whileHover={{ scale: 1.05 }}
-                className="inline-flex items-center justify-center px-8 py-4 bg-accent-emerald hover:bg-accent-emerald/80 text-white rounded-2xl shadow-2xl font-semibold text-lg transition-colors glow-btn animate-ripple"
+                className="inline-flex items-center justify-center px-8 py-4 bg-accent hover:bg-accent/80 text-white rounded-2xl shadow-2xl font-semibold text-lg transition-colors glow-btn animate-ripple"
               >
                 {messages.home.startTrial}
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -130,7 +130,7 @@ export default function HomeClient() {
               <MotionLink
                 href="/demo"
                 whileHover={{ scale: 1.05 }}
-                className="inline-flex items-center justify-center px-8 py-4 border border-accent-emerald text-accent-emerald hover:text-accent-pink hover:border-accent-pink rounded-2xl shadow-2xl font-semibold text-lg transition-colors"
+                className="inline-flex items-center justify-center px-8 py-4 border border-primary text-primary hover:bg-primary hover:text-white rounded-2xl shadow-2xl font-semibold text-lg transition-colors"
               >
                 <Play className="mr-2 w-5 h-5" />
                 {messages.home.watchDemo}
@@ -157,7 +157,7 @@ export default function HomeClient() {
         </div>
       </motion.section>
       <Suspense fallback={<Skeleton />}>
-        <Testimonials className="bg-gray-50" />
+        <Testimonials className="bg-bg" />
       </Suspense>
       <Suspense fallback={<Skeleton />}>
         <TrustSection />

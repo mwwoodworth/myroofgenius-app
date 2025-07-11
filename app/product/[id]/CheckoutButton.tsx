@@ -69,7 +69,7 @@ export default function CheckoutButton({ priceId, productId }: CheckoutButtonPro
         {loading ? 'Processing...' : 'Buy Now'}
       </button>
       {error && <p className="text-sm text-red-600">{error}</p>}
-      <p className="flex items-center justify-center text-xs text-gray-500 gap-1">
+      <p className="flex items-center justify-center text-xs text-text-secondary gap-1">
         <Lock className="w-4 h-4" /> Secure checkout powered by Stripe
       </p>
     </div>

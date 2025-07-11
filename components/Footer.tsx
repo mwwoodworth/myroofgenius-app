@@ -15,12 +15,12 @@ export default function Footer() {
     <motion.footer
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-navbar bg-primary-900 mt-12 rounded-t-2xl py-6 flex flex-col items-center gap-4 backdrop-blur-md"
+      className="glass-navbar bg-primary mt-12 rounded-t-2xl py-6 flex flex-col items-center gap-4 backdrop-blur-md"
     >
       <p className="text-white text-sm">©2025 MyRoofGenius • Smart Roofing Solutions</p>
       <nav className="flex gap-6 text-sm text-white">
         {links.map(({ href, label }) => (
-          <a key={href} href={href} className="hover:text-accent-pink">
+          <a key={href} href={href} className="hover:text-accent">
             {label}
           </a>
         ))}
@@ -32,7 +32,7 @@ export default function Footer() {
             href={href}
             whileHover={{ scale: 1.2, rotate: 5 }}
             aria-label="GitHub"
-            className="text-white hover:text-accent-pink glow-btn animate-ripple rounded-full p-2"
+            className="text-white hover:text-accent glow-btn animate-ripple rounded-full p-2"
           >
             <Icon className="w-5 h-5" />
           </motion.a>

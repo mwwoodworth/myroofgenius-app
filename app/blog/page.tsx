@@ -127,7 +127,7 @@ export default async function Blog() {
                   </Link>
                 </h2>
                 <p className="text-gray-600 mb-6 text-lg">{posts[0].excerpt}</p>
-                <div className="flex items-center gap-4 text-sm text-gray-500">
+                <div className="flex items-center gap-4 text-sm text-text-secondary">
                   <span>{posts[0].author}</span>
                   <span>•</span>
                   <span>
@@ -175,7 +175,7 @@ export default async function Blog() {
                     </Link>
                   </h3>
                   <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                  <div className="flex items-center gap-4 text-sm text-gray-500">
+                  <div className="flex items-center gap-4 text-sm text-text-secondary">
                     <span>{post.author}</span>
                     <span>•</span>
                     <span>{post.read_time}</span>

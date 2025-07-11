@@ -68,7 +68,7 @@ export default function ToolsClient() {
           <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
             Professional Tools That Protect Your Business
           </h1>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
             Every calculation here was built from hard lessons. These aren&apos;t just tools –
             they&apos;re protection against the mistakes that sink projects.
           </p>
@@ -79,7 +79,7 @@ export default function ToolsClient() {
           <div key={idx} className="mb-16">
             <div className="mb-8">
               <h2 className="text-3xl font-bold text-slate-900 mb-3">{category.category}</h2>
-              <p className="text-lg text-slate-600">{category.description}</p>
+              <p className="text-lg text-text-secondary">{category.description}</p>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
               {category.tools.map((tool, toolIdx) => (
@@ -90,7 +90,7 @@ export default function ToolsClient() {
         ))}
 
         {/* Integration Section */}
-        <div className="bg-secondary-700/5 rounded-2xl p-8 mt-16">
+        <div className="bg-secondary/5 rounded-2xl p-8 mt-16">
           <h2 className="text-2xl font-bold mb-4">All Tools Work Together</h2>
           <p className="text-slate-700 mb-6">
             Your calculations flow seamlessly between tools. Estimate materials,
@@ -126,7 +126,7 @@ function ToolCard({ name, description, features, link, icon, saveTime }) {
         </span>
       </div>
       <h3 className="text-xl font-bold mb-2">{name}</h3>
-      <p className="text-slate-600 mb-4">{description}</p>
+      <p className="text-text-secondary mb-4">{description}</p>
       <ul className="space-y-2 mb-6">
         {features.map((feature, i) => (
           <motion.li
