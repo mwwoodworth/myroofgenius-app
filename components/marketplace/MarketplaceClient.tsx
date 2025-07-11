@@ -420,7 +420,7 @@ export default function MarketplaceClient({
                                   ({product.reviews_count})
                                 </span>
                               </div>
-                              <span className="text-sm text-gray-500">
+                              <span className="text-sm text-text-secondary">
                                 {product.sales_count} sold
                               </span>
                             </div>
@@ -430,7 +430,7 @@ export default function MarketplaceClient({
                                   ${product.price}
                                 </span>
                                 {product.original_price && (
-                                  <span className="text-gray-500 line-through ml-2">
+                                  <span className="text-text-secondary line-through ml-2">
                                     ${product.original_price}
                                   </span>
                                 )}
@@ -520,7 +520,7 @@ export default function MarketplaceClient({
                           <h3 className="text-lg font-semibold group-hover:text-secondary-700 transition">
                             {product.name}
                           </h3>
-                          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                          <span className="text-xs text-text-secondary bg-gray-100 px-2 py-1 rounded">
                             {
                               categories.find((c) => c.id === product.category)
                                 ?.name
@@ -533,7 +533,7 @@ export default function MarketplaceClient({
 
                         {/* Features */}
                         <div className="mb-4">
-                          <ul className="text-xs text-gray-500 space-y-1">
+                          <ul className="text-xs text-text-secondary space-y-1">
                             {(product.features
                               ? product.features.split(",")
                               : []
@@ -568,7 +568,7 @@ export default function MarketplaceClient({
                               {product.rating.toFixed(1)}
                             </span>
                           </div>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-text-secondary">
                             {product.sales_count} sold
                           </span>
                         </div>
@@ -580,7 +580,7 @@ export default function MarketplaceClient({
                               ${product.price}
                             </span>
                             {product.original_price && (
-                              <span className="text-sm text-gray-500 line-through ml-2">
+                              <span className="text-sm text-text-secondary line-through ml-2">
                                 ${product.original_price}
                               </span>
                             )}

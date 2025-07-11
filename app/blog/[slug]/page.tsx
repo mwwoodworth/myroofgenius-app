@@ -131,11 +131,11 @@ export default async function BlogPost({
       <article className="max-w-4xl mx-auto px-4 py-12">
         {/* Breadcrumb */}
         <nav className="mb-8 text-sm">
-          <Link href="/" className="text-gray-500 hover:text-gray-700">
+          <Link href="/" className="text-text-secondary hover:text-gray-700">
             Home
           </Link>
           <span className="mx-2 text-gray-400">/</span>
-          <Link href="/blog" className="text-gray-500 hover:text-gray-700">
+          <Link href="/blog" className="text-text-secondary hover:text-gray-700">
             Blog
           </Link>
           <span className="mx-2 text-gray-400">/</span>

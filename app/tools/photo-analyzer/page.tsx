@@ -38,7 +38,7 @@ export default function PhotoAnalyzerPage() {
         className="mt-2 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:ring-2 focus:ring-offset-2 focus:ring-accent-emerald"
         aria-describedby="upload-desc"
       />
-      <p id="upload-desc" className="text-sm text-gray-500 mt-2">
+      <p id="upload-desc" className="text-sm text-text-secondary mt-2">
         Drag and drop or select a roof image (JPG/PNG)
       </p>
       <div id="upload-status" aria-live="polite" className="mt-2">

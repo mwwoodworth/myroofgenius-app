@@ -54,7 +54,7 @@ export default function EmailSignupForm({className=""}:{className?:string}) {
           <Button type="submit" className="w-full" disabled={status==='loading'}>
             {status==='loading' ? 'Submitting...' : 'Get Free Sample'}
           </Button>
-          <p className="text-xs text-gray-500 text-center">We respect your privacy. Unsubscribe anytime.</p>
+          <p className="text-xs text-text-secondary text-center">We respect your privacy. Unsubscribe anytime.</p>
           {status==='error' && <p className="text-red-600 text-sm text-center">Enter a valid email to receive the sample.</p>}
         </>
       )}

@@ -139,7 +139,7 @@ function OverviewTab({ stats }: { stats: DashboardStats }) {
             </LineChart>
           </ResponsiveContainer>
         ) : (
-          <p className="text-gray-500">No revenue data available.</p>
+          <p className="text-text-secondary">No revenue data available.</p>
         )}
       </div>
     </div>
@@ -283,7 +283,7 @@ function ProductsTab() {
                     <Image src={product.image_url} alt={product.name} width={40} height={40} className="w-10 h-10 rounded object-cover mr-3" />
                     <div>
                       <p className="font-medium">{product.name}</p>
-                      <p className="text-xs text-gray-500">{product.description?.slice(0, 50)}...</p>
+                      <p className="text-xs text-text-secondary">{product.description?.slice(0, 50)}...</p>
                     </div>
                   </div>
                 </td>
@@ -463,7 +463,7 @@ function AnalyticsTab({ stats }: { stats: DashboardStats }) {
           ))}
         </div>
       ) : (
-        <p className="text-gray-500">Not enough data to display analytics.</p>
+        <p className="text-text-secondary">Not enough data to display analytics.</p>
       )}
     </div>
   );

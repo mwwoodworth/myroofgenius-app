@@ -424,7 +424,7 @@ export default async function Dashboard() {
                         <p className="text-sm font-medium truncate">
                           {download.product_files?.file_name}
                         </p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-text-secondary">
                           {new Date(download.created_at).toLocaleDateString()}
                         </p>
                       </div>
@@ -478,7 +478,7 @@ export default async function Dashboard() {
                           <p className="text-sm font-medium">
                             {analysis.analysis_type} Analysis
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-text-secondary">
                             {new Date(analysis.created_at).toLocaleDateString()}
                           </p>
                           <p className="text-xs text-gray-600 mt-1">
@@ -521,7 +521,7 @@ export default async function Dashboard() {
                           <p className="text-sm font-medium">
                             {fav.products?.name}
                           </p>
-                          <p className="text-xs text-gray-500">${fav.products?.price?.toFixed(2)}</p>
+                          <p className="text-xs text-text-secondary">${fav.products?.price?.toFixed(2)}</p>
                         </div>
                       </div>
                     ))}
@@ -552,7 +552,7 @@ export default async function Dashboard() {
                           <p className="text-sm font-medium line-clamp-1">
                             {ticket.subject}
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-text-secondary">
                             {ticket.status} • {new Date(ticket.created_at).toLocaleDateString()}
                           </p>
                         </div>

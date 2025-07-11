@@ -96,7 +96,7 @@ export default function Navbar() {
               <motion.a
                 href="/signup"
                 whileHover={{ scale: 1.05 }}
-                className="rounded-xl px-5 py-2 bg-accent-emerald hover:bg-accent-emerald/80 text-white font-bold shadow-md transition glow-btn animate-ripple"
+                className="rounded-xl px-5 py-2 bg-accent hover:bg-accent/80 text-white font-bold shadow-md transition glow-btn animate-ripple"
               >
                 Start Free Trial
               </motion.a>
@@ -166,7 +166,7 @@ export default function Navbar() {
                 <motion.a
                   href="/signup"
                   whileTap={{ scale: 0.95 }}
-                  className="block px-8 py-4 border-b border-[rgba(255,255,255,0.07)] hover:bg-accent-emerald/80 bg-accent-emerald text-white glow-btn animate-ripple"
+                  className="block px-8 py-4 border-b border-[rgba(255,255,255,0.07)] hover:bg-accent/80 bg-accent text-white glow-btn animate-ripple"
                   onClick={() => setOpen(false)}
                 >
                   Start Free Trial

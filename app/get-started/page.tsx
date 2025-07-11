@@ -14,7 +14,7 @@ export default function GetStarted() {
         <h1 className="text-4xl font-bold text-slate-900 mb-4">Start Your Free Trial</h1>
         <p className="text-lg text-slate-700 mb-6">Create your account to access professional roofing calculators and templates.</p>
         <Link href="/signup" className="inline-block bg-secondary-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-secondary-700/80 transition-colors">Create Account</Link>
-        <p className="mt-4 text-sm text-slate-600">Already have an account? <Link href="/login" className="text-secondary-700 underline">Sign in</Link></p>
+        <p className="mt-4 text-sm text-text-secondary">Already have an account? <Link href="/login" className="text-secondary-700 underline">Sign in</Link></p>
       </div>
     </div>
   )

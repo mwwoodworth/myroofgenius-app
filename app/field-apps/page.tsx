@@ -20,7 +20,7 @@ export default function FieldAppsPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
             Field Apps: Your Mobile Command Center
           </h1>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
             When you&apos;re on a roof at 7 AM with a decision to make, you need systems
             that work with one bar of signal and gloves on. Built for real conditions,
             not ideal ones.
@@ -36,21 +36,21 @@ export default function FieldAppsPage() {
                 <WifiOff className="w-8 h-8 text-accent-emerald" />
               </div>
               <h3 className="font-semibold text-lg mb-2">Lost Work Prevention</h3>
-              <p className="text-slate-600">Offline-first architecture. Every photo, note, and measurement saves locally first.</p>
+              <p className="text-text-secondary">Offline-first architecture. Every photo, note, and measurement saves locally first.</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-accent-emerald/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Camera className="w-8 h-8 text-accent-emerald" />
               </div>
               <h3 className="font-semibold text-lg mb-2">Proof of Work</h3>
-              <p className="text-slate-600">Photos and notes automatically attach to the job record, even without service.</p>
+              <p className="text-text-secondary">Photos and notes automatically attach to the job record, even without service.</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-accent-emerald/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <FileText className="w-8 h-8 text-accent-emerald" />
               </div>
               <h3 className="font-semibold text-lg mb-2">Simplified Reporting</h3>
-              <p className="text-slate-600">Generate clean reports from the field with one tap, gloves on.</p>
+              <p className="text-text-secondary">Generate clean reports from the field with one tap, gloves on.</p>
             </div>
           </div>
         </div>
