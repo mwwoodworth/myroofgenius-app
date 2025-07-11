@@ -1,0 +1,38 @@
+/* JetBrains-inspired style library for dynamic visuals */
+
+/* Star pulse animation for starry header */
+@keyframes star-pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+}
+
+/* Container for starry header */
+.starry-header {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg,#000000,#0A1628);
+  height: 200px;
+}
+
+/* Individual star style */
+.starry-header .star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: star-pulse 4s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Color cycle animation for the main body */
+@keyframes color-cycle {
+  0% { background-color: hsl(210,60%,45%); }
+  50% { background-color: hsl(230,60%,45%); }
+  100% { background-color: hsl(210,60%,45%); }
+}
+
+.color-changing-body {
+  animation: color-cycle 40s cubic-bezier(0.4,0,0.2,1) infinite;
+}
