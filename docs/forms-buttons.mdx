@@ -1,0 +1,27 @@
+# Forms, Buttons & CTA System
+
+This document demonstrates usage of the shared `Form` and `Button` components.
+
+```tsx
+import Form from "../components/Form";
+import Button from "../components/Button";
+```
+
+## Buttons
+
+```tsx
+<Button variant="primary">Primary CTA</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="ghost">Ghost Action</Button>
+<Button variant="destructive">Delete</Button>
+```
+
+## Form Fields
+
+```tsx
+<Form>
+  <Form.Input label="Email" name="email" />
+  <Form.Input label="Password" type="password" name="password" />
+  <Button type="submit">Submit</Button>
+</Form>
+```
