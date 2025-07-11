@@ -76,11 +76,12 @@ module.exports = {
         },
         ".glass-navbar": {
           "backdrop-filter": "blur(10px)",
-          background: "rgba(35,35,35,0.75)",
+          background: "var(--header-bg)",
+          opacity: "0.75",
           border: "1px solid rgba(255,255,255,0.07)",
         },
         ".bg-gradient-animated": {
-          background: "linear-gradient(130deg,#0f0c29,#302b63,#24243e,#005f9e,#28a745)",
+          background: "linear-gradient(130deg,var(--gradient-start),var(--gradient-end))",
           backgroundSize: "500% 500%",
           animation: "gradientShift 20s ease infinite",
         },
