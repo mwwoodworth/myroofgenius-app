@@ -3,7 +3,7 @@
 This document captures key components and infrastructure for MyRoofGenius.
 
 ## SEO Endpoints
-The backend exposes dynamic SEO routes via FastAPI:
+The FastAPI backend exposes dynamic SEO routes. The frontend rewrites these paths to the backend:
 
 - **GET `/sitemap.xml`** – Generates a sitemap including active product pages from Supabase.
 - **GET `/robots.txt`** – Points crawlers to the sitemap and disallows nothing.
@@ -21,7 +21,7 @@ The Next.js app proxies most functionality through API routes backed by Supabase
 
 ## Deployment
 
-The repository deploys to Vercel. FastAPI runs as a separate backend service. Environment variables from `.env.example` must be configured in both environments. After pushing to `main`, Vercel automatically builds and deploys the Next.js frontend.
+The repository deploys to Vercel. FastAPI now lives in a separate repository. Configure `NEXT_PUBLIC_API_BASE_URL` in Vercel to point to the backend service. After pushing to `main`, Vercel automatically builds and deploys the Next.js frontend.
 
 For local development:
 

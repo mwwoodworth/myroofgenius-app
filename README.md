@@ -120,8 +120,8 @@ NODE_OPTIONS=--max_old_space_size=4096 npm run build
 
 **WebSocket connection issues**
 
-- Check `.env.local` for correct WS_URL
-- Ensure backend is running
+- Check `.env.local` for correct `NEXT_PUBLIC_WS_URL`
+- Verify the URL points to the FastAPI service
 - Check browser console for errors
 
 **Test suite hanging**
