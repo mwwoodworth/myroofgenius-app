@@ -13,7 +13,7 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-heading, "EB Garamond", Inter, sans-serif);
+    font-family: var(--font-body, Inter, sans-serif);
   }
 
   code,
@@ -29,62 +29,52 @@
   }
 
   :root {
-    /* Core brand colors */
-    --color-primary: #005f73;
-    --color-secondary: #839788;
-    --color-accent: #d97706;
-    --color-neutral-50: #f8f7f2;
-    --color-neutral-100: #ede9dd;
-    --color-neutral-300: #d6d2c4;
-    --color-neutral-500: #839788;
-    --color-neutral-700: #262626;
-    --color-bg: var(--color-neutral-50);
-    --color-text: var(--color-neutral-700);
+    /* Color Palette */
+    --color-primary: #4299e1;
+    --color-success: #48bb78;
+    --color-warning: #ecc94b;
+    --color-danger: #f56565;
+    --color-navy-900: #0a192f;
+    --color-slate-700: #4a5568;
+    --color-cloud-100: #f7fafc;
     --color-white: #ffffff;
-    --header-bg: #000;
-    --gradient-start: #005f73;
-    --gradient-end: #6b21a8;
+    --color-bg: var(--color-cloud-100);
+    --color-text: var(--color-slate-700);
+    --header-bg: var(--color-navy-900);
+
     /* RGB counterparts for Tailwind */
-    --clr-primary-900: 0 95 158;
-    --clr-secondary-700: 131 151 136;
-    --clr-accent-orange: 217 119 6;
-    --clr-accent-emerald: 40 167 69;
-    --clr-accent-pink: 100 108 255;
-    --accent: 217 119 6;
-    /* Protection Status Colors */
-    --color-protected: 34 197 94;
-    --color-warning: 251 146 60;
-    --color-danger: 239 68 68;
-    --color-calculating: 59 130 246;
+    --clr-primary-500: 66 153 225;
+    --clr-success-500: 72 187 120;
+    --clr-warning-500: 236 201 75;
+    --clr-danger-500: 245 101 101;
 
     /* Field-Ready Spacing */
-    --spacing-touch-target: 44px;
+    --spacing-touch-target: 48px;
     --spacing-field-padding: 16px;
 
     /* Protective Shadows */
-    --shadow-protected: 0 0 0 3px rgba(34, 197, 94, 0.1);
-    --shadow-warning: 0 0 0 3px rgba(251, 146, 60, 0.1);
-    --shadow-danger: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    --shadow-success: 0 0 0 3px rgba(72, 187, 120, 0.1);
+    --shadow-warning: 0 0 0 3px rgba(236, 201, 75, 0.1);
+    --shadow-danger: 0 0 0 3px rgba(245, 101, 101, 0.1);
   }
 
   .dark :root {
-    --color-bg: #121212;
-    --color-text: #ede9dd;
+    --color-bg: #0a192f;
+    --color-text: #f7fafc;
   }
 
   @supports not (color: oklch(0 0 0)) {
     :root {
-      --clr-primary-900: 0 95 158;
-      --clr-secondary-700: 131 151 136;
-      --clr-accent-emerald: 40 167 69;
-      --clr-accent-pink: 100 108 255;
-      --accent: 217 119 6;
+      --clr-primary-500: 66 153 225;
+      --clr-success-500: 72 187 120;
+      --clr-warning-500: 236 201 75;
+      --clr-danger-500: 245 101 101;
     }
   }
 
   @media (prefers-contrast: high) {
     :root {
-      --color-protected: 21 128 61;
+      --color-success: 21 128 61;
       --color-warning: 234 88 12;
       --color-danger: 185 28 28;
     }
@@ -93,8 +83,8 @@
 
 /* Protection State Classes */
 .protection-active {
-  box-shadow: var(--shadow-protected);
-  border-color: rgb(var(--color-protected));
+  box-shadow: var(--shadow-success);
+  border-color: rgb(var(--color-success));
 }
 
 .protection-warning {
@@ -186,7 +176,7 @@
 }
 .button-primary:hover,
 .button-primary:focus {
-  background: var(--color-secondary);
+  background: color-mix(in srgb, var(--color-primary) 90%, white);
   outline: 2px solid var(--color-white);
 }
 
@@ -202,7 +192,7 @@
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px dashed var(--color-secondary);
+  outline: 2px dashed var(--color-primary);
   outline-offset: 2px;
 }
 

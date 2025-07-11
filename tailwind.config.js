@@ -6,103 +6,52 @@ module.exports = {
       colors: {
         bg: {
           DEFAULT: "var(--color-bg)",
-          card: "#1C1C1E",
+          card: "var(--color-white)",
         },
-        accent: "rgb(var(--clr-accent-orange) / <alpha-value>)",
-        primary: "rgb(var(--clr-primary-900) / <alpha-value>)",
-        secondary: "rgb(var(--clr-secondary-700) / <alpha-value>)",
-        success: "rgb(var(--clr-accent-emerald) / <alpha-value>)",
+        primary: "rgb(var(--clr-primary-500) / <alpha-value>)",
+        accent: "rgb(var(--clr-primary-500) / <alpha-value>)",
+        secondary: "#4A5568",
+        success: "rgb(var(--clr-success-500) / <alpha-value>)",
+        warning: "rgb(var(--clr-warning-500) / <alpha-value>)",
+        danger: "rgb(var(--clr-danger-500) / <alpha-value>)",
         text: {
           primary: "var(--color-text)",
-          secondary: "var(--color-neutral-500)",
+          secondary: "#6B7280",
         },
-        "accent-emerald": "rgb(var(--clr-accent-emerald) / <alpha-value>)",
-        "accent-pink": "rgb(var(--clr-accent-pink) / <alpha-value>)",
-        charcoalBlack: "#121212",
-        offWhite: "#F0F0F0",
-        neonGreen: "#00FF85",
-        electricBlue: "#1E90FF",
-        darkGray: "#444444",
-      },
-      backgroundImage: {
-        "brand-gradient":
-          "linear-gradient(135deg,#1a223f 0%,#364489 50%,#8276c5 100%)",
-        "brand-gradient-alt":
-          "linear-gradient(135deg,#364489 0%,#5256a4 45%,#1a223f 100%)",
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        display: ["Anton", "sans-serif"],
+        sans: ["var(--font-body)", "Inter", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
       },
-      keyframes: {
-        ripple: {
-          "0%": { transform: "scale(0)", opacity: "0.6" },
-          "100%": { transform: "scale(4)", opacity: "0" },
-        },
-        gradientShift: {
-          "0%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" },
-          "100%": { backgroundPosition: "0% 50%" },
-        },
+      fontSize: {
+        h1: ["48px", { lineHeight: "1.2", fontWeight: "700" }],
+        h2: ["36px", { lineHeight: "1.3", fontWeight: "700" }],
+        h3: ["24px", { lineHeight: "1.4", fontWeight: "600" }],
+        base: ["16px", { lineHeight: "1.5", fontWeight: "400" }],
+        sm: ["14px", { lineHeight: "1.5", fontWeight: "400" }],
+        label: ["14px", { lineHeight: "1.5", fontWeight: "500" }],
+        caption: ["12px", { lineHeight: "1.5", fontWeight: "400" }],
       },
-      animation: {
-        ripple: "ripple 0.6s linear",
-        gradientShift: "gradientShift 20s ease infinite",
+      spacing: {
+        0: "0px",
+        1: "0.5rem",
+        2: "1rem",
+        3: "1.5rem",
+        4: "2rem",
+        5: "2.5rem",
+        6: "3rem",
+        7: "3.5rem",
+        8: "4rem",
+        9: "4.5rem",
+        10: "5rem",
+        11: "5.5rem",
+        12: "6rem",
+      },
+      borderRadius: {
+        DEFAULT: "0.5rem",
+        lg: "1rem",
       },
     },
   },
-  plugins: [
-    require("@tailwindcss/forms"),
-    function ({ addUtilities, addComponents, theme }) {
-      addUtilities({
-        ".glass": {
-          "backdrop-filter": "blur(12px)",
-          background: "rgba(255,255,255,0.08)",
-          border: "1px solid rgba(255,255,255,0.15)",
-        },
-        ".glow-btn": {
-          transition: "all 0.3s ease",
-          "box-shadow": "0 0 8px rgba(255,255,255,0.6)",
-        },
-        ".glow-btn:hover": {
-          "box-shadow": "0 0 12px rgba(255,255,255,0.9)",
-        },
-        ".glass-card": {
-          "backdrop-filter": "blur(16px)",
-          background: "rgba(255,255,255,0.1)",
-          border: "1px solid rgba(255,255,255,0.2)",
-          "box-shadow": "0 4px 30px rgba(0,0,0,0.1)",
-        },
-        ".glass-navbar": {
-          "backdrop-filter": "blur(10px)",
-          background: "var(--header-bg)",
-          opacity: "0.75",
-          border: "1px solid rgba(255,255,255,0.07)",
-        },
-        ".bg-gradient-animated": {
-          background: "linear-gradient(130deg,var(--gradient-start),var(--gradient-end))",
-          backgroundSize: "500% 500%",
-          animation: "gradientShift 20s ease infinite",
-        },
-      });
-
-      const rippleKeyframes = {
-        ".animate-ripple": {
-          position: "relative",
-          overflow: "hidden",
-        },
-        ".animate-ripple::after": {
-          content: "''",
-          position: "absolute",
-          borderRadius: "9999px",
-          transform: "scale(0)",
-          animation: "ripple 0.6s linear",
-          background: theme("colors.accent"),
-          opacity: "0.4",
-        },
-      };
-      addComponents(rippleKeyframes);
-    },
-  ],
+  plugins: [require("@tailwindcss/forms")],
 };
