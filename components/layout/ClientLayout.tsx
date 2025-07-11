@@ -58,7 +58,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
                         <main
                           id="main-content"
                           tabIndex={-1}
-                          className="outline-none"
+                          className="outline-none pb-24"
                         >
                           <ErrorBoundary>{children}</ErrorBoundary>
                         </main>
@@ -72,7 +72,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
                         <main
                           id="main-content"
                           tabIndex={-1}
-                          className="outline-none"
+                          className="outline-none pb-24"
                         >
                           <ErrorBoundary>{children}</ErrorBoundary>
                         </main>

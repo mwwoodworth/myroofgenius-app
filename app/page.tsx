@@ -14,7 +14,7 @@ export default function HomePage() {
   return (
     <>
       <NavBar />
-      <section className="flex flex-col items-center text-center py-16 px-4 space-y-6 bg-bg-card">
+      <section className="flex flex-col items-center text-center py-16 px-4 space-y-6 bg-bg-card mb-8 md:mb-12">
         <h1 className="text-4xl md:text-5xl font-bold max-w-2xl">
           Protect Your Margins with 98.7% Accurate Measurements in 30 Seconds
         </h1>
