@@ -5,9 +5,7 @@ import Stripe from 'stripe';
 export async function GET() {
   const checks: Record<string, boolean> = {
     database: false,
-    stripe: false,
-    email: false,
-    ai: false
+    stripe: false
   };
 
   try {
@@ -33,9 +31,6 @@ export async function GET() {
         checks.stripe = false;
       }
     }
-
-    checks.email = !!process.env.RESEND_API_KEY;
-    checks.ai = !!process.env.OPENAI_API_KEY;
 
     const allOk = Object.values(checks).every(Boolean);
     return NextResponse.json({ checks, ok: allOk }, { status: allOk ? 200 : 503 });

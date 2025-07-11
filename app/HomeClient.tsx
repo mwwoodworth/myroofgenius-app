@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 const MotionLink = motion(Link);
 import {
   AnimatedGradient,
-  Hero3D,
   HeroHeadline,
   Skeleton,
 } from "../components/ui";
@@ -24,6 +23,10 @@ const TrustSection = dynamicImport(
   () => import("../components/marketing/TrustSection"),
   { ssr: false, loading: () => <div>Loading...</div> },
 );
+const Hero3D = dynamicImport(() => import("../components/ui/Hero3D"), {
+  ssr: false,
+  loading: () => <div className="h-64" />,
+});
 import ActiveUsersBadge from "../components/marketing/ActiveUsersBadge";
 import { useLocale } from "../src/context/LocaleContext";
 

@@ -1,14 +1,12 @@
 # MyRoofGenius Deployment Guide
 
-This guide outlines how to deploy the MyRoofGenius application, including the database, backend services, and frontend.
+This guide outlines how to deploy the MyRoofGenius frontend and connect it to the external FastAPI backend.
 
 ## Prerequisites
 
 - **Node.js 18+** and npm installed.
 - **Supabase** account (for database, auth, and storage).
 - **Stripe** account (for payment processing).
-- **OpenAI API key** (for AI features).
-- **Resend API key** (for sending emails).
 - **Vercel** account (for deploying the Next.js app, recommended).
 
 ## 1. Clone Repository & Install
@@ -38,13 +36,9 @@ Ensure storage buckets `product-files`, `roof-images`, and `reports` exist. Conf
 
 Create products and prices in Stripe that match the seed data or update the database with the correct price IDs. Set up a webhook pointing to `https://<your-domain>/api/webhook` and copy the signing secret to `.env.local`.
 
-## 4. Email Sending
+## 4. Connect Backend Service
 
-Sign up for Resend (or another email provider) and get an API key. Set `RESEND_API_KEY` in `.env.local`. Verify your sending domain if necessary.
-
-## 5. OpenAI API Setup
-
-Ensure you have an OpenAI API key with access to GPT‑4. Add `OPENAI_API_KEY` in `.env.local`.
+The FastAPI backend handles AI features and transactional emails. Deploy the backend separately and note its public URL. Set `NEXT_PUBLIC_API_BASE_URL` in `.env.local` to this URL so the frontend can reach it.
 
 ## 6. Vercel Deployment
 
@@ -59,7 +53,7 @@ Set `REDIS_URL` to your Redis instance for caching and API throttling. Adjust
 
 - Sign up and log in.
 - Purchase a product in Stripe test mode and verify download links and confirmation email.
-- Test the AI estimator and Copilot features.
+- Verify AI-powered features through the backend service.
 - Log in with an admin account to access `/admin` and verify dashboards.
 
 ## 9. Monitoring & Maintenance

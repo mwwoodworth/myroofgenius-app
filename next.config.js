@@ -66,6 +66,18 @@ const nextConfig = {
       }
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: `${process.env.NEXT_PUBLIC_API_BASE_URL}/sitemap.xml`,
+      },
+      {
+        source: '/robots.txt',
+        destination: `${process.env.NEXT_PUBLIC_API_BASE_URL}/robots.txt`,
+      },
+    ];
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
