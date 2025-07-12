@@ -8,7 +8,7 @@ import { PresenceProvider, PresenceAvatars } from './ui';
 export default function Dashboard3D() {
   return (
     <PresenceProvider room="dashboard">
-    <div className="relative h-64 w-full bg-gray-900 text-white rounded-xl">
+    <div className="relative h-64 w-full bg-[var(--color-navy-900)] text-white rounded-xl">
       <PresenceAvatars />
       <Canvas camera={{ position: [3, 3, 3] }}>
         <Suspense fallback={null}>
@@ -16,12 +16,28 @@ export default function Dashboard3D() {
             {/* base */}
             <mesh position={[0, 0.5, 0]}>
               <boxGeometry args={[2, 1, 2]} />
-              <meshStandardMaterial color="#6b7280" />
+              <meshStandardMaterial
+                color={
+                  typeof window !== 'undefined'
+                    ? getComputedStyle(document.documentElement)
+                        .getPropertyValue('--color-slate-700')
+                        .trim() || '#6b7280'
+                    : '#6b7280'
+                }
+              />
             </mesh>
             {/* roof */}
             <mesh rotation={[0, 0, Math.PI / 4]} position={[0, 1.2, 0]}>
               <coneGeometry args={[1.6, 1, 4]} />
-              <meshStandardMaterial color="#9ca3af" />
+              <meshStandardMaterial
+                color={
+                  typeof window !== 'undefined'
+                    ? getComputedStyle(document.documentElement)
+                        .getPropertyValue('--color-text-secondary')
+                        .trim() || '#9ca3af'
+                    : '#9ca3af'
+                }
+              />
             </mesh>
           </group>
           <ambientLight intensity={0.5} />

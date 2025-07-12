@@ -32,7 +32,7 @@ export default function Card({
       className={clsx(
         "rounded-2xl p-6 min-h-[48px]",
         glass
-          ? "glass-card backdrop-blur-lg bg-white/30 shadow-2xl"
+          ? "glass-card backdrop-blur-lg bg-[var(--color-white)/0.3] shadow-2xl"
           : "bg-bg-card",
         className,
       )}

@@ -90,21 +90,21 @@ export default async function BlogPost({ params }: { params: { slug: string } })
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-bg">
       <article className="max-w-4xl mx-auto px-4 py-12">
         {/* Breadcrumb */}
         <nav className="mb-8 text-sm">
-          <Link href="/" className="text-text-secondary hover:text-gray-700">Home</Link>
-          <span className="mx-2 text-gray-400">/</span>
-          <Link href="/blog" className="text-text-secondary hover:text-gray-700">Blog</Link>
-          <span className="mx-2 text-gray-400">/</span>
-          <span className="text-gray-900">{post.category}</span>
+          <Link href="/" className="text-text-secondary hover:text-text-primary">Home</Link>
+          <span className="mx-2 text-text-secondary">/</span>
+          <Link href="/blog" className="text-text-secondary hover:text-text-primary">Blog</Link>
+          <span className="mx-2 text-text-secondary">/</span>
+          <span className="text-text-primary">{post.category}</span>
         </nav>
 
         {/* Article Header */}
         <header className="mb-8">
           <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-          <div className="flex items-center gap-4 text-gray-600">
+          <div className="flex items-center gap-4 text-text-secondary">
             <span className="font-medium">{post.author}</span>
             <span>•</span>
             <time>{new Date(post.published_at).toLocaleDateString()}</time>
@@ -120,9 +120,9 @@ export default async function BlogPost({ params }: { params: { slug: string } })
         />
 
         {/* CTA Section */}
-        <div className="mt-12 p-8 bg-gray-50 rounded-lg">
+        <div className="mt-12 p-8 bg-bg-card rounded-lg">
           <h3 className="text-2xl font-bold mb-4">Ready to Avoid These Costly Mistakes?</h3>
-          <p className="text-gray-600 mb-6">
+          <p className="text-text-secondary mb-6">
             Download our comprehensive Quote-to-Close Kit and take control of your next roofing project.
           </p>
           <Link
@@ -134,11 +134,11 @@ export default async function BlogPost({ params }: { params: { slug: string } })
         </div>
 
         {/* Author Bio */}
-        <div className="mt-12 p-6 bg-gray-50 rounded-lg flex gap-4">
-          <div className="w-20 h-20 bg-gray-300 rounded-full flex-shrink-0"></div>
+        <div className="mt-12 p-6 bg-bg-card rounded-lg flex gap-4">
+          <div className="w-20 h-20 bg-secondary/20 rounded-full flex-shrink-0"></div>
           <div>
             <h4 className="font-semibold mb-1">{post.author}</h4>
-            <p className="text-gray-600 text-sm mb-2">
+            <p className="text-text-secondary text-sm mb-2">
               Founder of MyRoofGenius with 15+ years in commercial roofing operations and technology implementation.
             </p>
             <Link href="/about" className="text-secondary-700 text-sm hover:underline">

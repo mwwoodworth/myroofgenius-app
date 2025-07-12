@@ -6,7 +6,7 @@ import SslLock from "./icons/SslLock";
 
 export default function TrustBar() {
   return (
-    <div className="bg-bg py-4 border-y border-gray-200">
+    <div className="bg-bg py-4 border-y border-secondary/20">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 px-4">
         <div className="flex items-center space-x-4">
           <GafBadge className="h-8" />

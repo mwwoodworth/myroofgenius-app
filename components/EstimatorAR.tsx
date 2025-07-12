@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 
 export default function EstimatorAR() {
   return (
-    <div className="h-64 w-full bg-gray-900 text-white rounded-xl mt-4">
+    <div className="h-64 w-full bg-[var(--color-navy-900)] text-white rounded-xl mt-4">
       <Canvas>
         <Suspense fallback={null}>
           {/* Placeholder plane representing roof model */}
