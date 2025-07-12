@@ -1,17 +1,29 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X, Shield, FilePlus } from "lucide-react";
 import Button from "./Button";
+import ThemeToggle from "./ui/ThemeToggle";
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const handle = () => setScrolled(window.scrollY > 30);
+    handle();
+    window.addEventListener("scroll", handle);
+    return () => window.removeEventListener("scroll", handle);
+  }, []);
   const links = [
     { href: "/analysis", label: "Instant Roof Analysis", icon: Shield },
     { href: "/proposal", label: "Create Field Proposal", icon: FilePlus },
   ];
   return (
-    <header className="sticky top-0 z-50 bg-bg/80 backdrop-blur-lg">
+    <header
+      className={`sticky top-0 z-50 backdrop-blur-lg transition-colors ${
+        scrolled ? "bg-bg/80" : "bg-bg/40"
+      }`}
+    >
       <nav className="max-w-6xl mx-auto flex items-center justify-between p-4">
         <Link href="/" className="font-bold text-lg" aria-label="MyRoofGenius">
           MyRoofGenius
@@ -31,13 +43,16 @@ export default function NavBar() {
             Start Free Analysis
           </Button>
         </div>
-        <button
-          className="md:hidden p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-          aria-label="Toggle menu"
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <X /> : <Menu />}
-        </button>
+        <div className="flex items-center space-x-2">
+          <ThemeToggle />
+          <button
+            className="md:hidden p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            aria-label="Toggle menu"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <X /> : <Menu />}
+          </button>
+        </div>
       </nav>
       {open && (
         <div className="md:hidden bg-bg border-t border-gray-200">
@@ -54,8 +69,9 @@ export default function NavBar() {
               </Link>
             ))}
           </div>
-          <div className="p-4 sticky bottom-0 bg-bg border-t border-gray-200">
-            <Button as="a" href="/get-started" className="w-full">
+          <div className="p-4 sticky bottom-0 bg-bg border-t border-gray-200 flex items-center justify-between">
+            <ThemeToggle />
+            <Button as="a" href="/get-started" className="w-full ml-2">
               Start Free Analysis
             </Button>
           </div>

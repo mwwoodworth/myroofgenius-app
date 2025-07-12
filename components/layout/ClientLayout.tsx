@@ -12,6 +12,7 @@ import { LocaleProvider } from "../../src/context/LocaleContext";
 import { CurrencyProvider } from "../../src/context/CurrencyContext";
 import DocumentLang from "../DocumentLang";
 import NavBar from "../NavBar";
+import Breadcrumbs from "../Breadcrumbs";
 import AnnouncementBanner from "../AnnouncementBanner";
 import ErrorBoundary from "../ErrorBoundary";
 import CopilotWrapper from "./CopilotWrapper";
@@ -54,6 +55,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
                     {arModeEnabled ? (
                       <ARModeProvider>
                         <NavBar />
+                        <Breadcrumbs />
                         <AnnouncementBanner />
                         <main
                           id="main-content"
@@ -68,6 +70,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
                     ) : (
                       <>
                         <NavBar />
+                        <Breadcrumbs />
                         <AnnouncementBanner />
                         <main
                           id="main-content"
