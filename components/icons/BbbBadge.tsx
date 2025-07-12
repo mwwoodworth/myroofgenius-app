@@ -10,7 +10,7 @@ export default function BbbBadge(props: React.SVGProps<SVGSVGElement>) {
       aria-label="BBB A+"
       {...props}
     >
-      <rect width="80" height="32" rx="4" fill="var(--color-primary)" /> /* replaced hex with primary token */
+      <rect width="80" height="32" rx="4" fill="var(--color-primary)" />{/* replaced hex with primary token */}
       <text
         x="40"
         y="21"

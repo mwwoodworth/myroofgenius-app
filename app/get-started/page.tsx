@@ -11,7 +11,7 @@ export const generateMetadata = () =>
 
 export default function GetStarted() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[var(--color-cloud-100)] to-white flex items-center justify-center p-8"> /* replaced blue-50 with cloud-100 token */
+    <div className="min-h-screen bg-gradient-to-b from-[var(--color-cloud-100)] to-white flex items-center justify-center p-8">{/* replaced blue-50 with cloud-100 token */}
       <div className="max-w-xl text-center">
         <h1 className="text-4xl font-bold text-slate-900 mb-4">
           Start Your Free Trial
