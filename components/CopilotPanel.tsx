@@ -144,7 +144,7 @@ export default function CopilotPanel({
         }).catch(() => {});
       }
       try {
-        const res = await fetch("/api/copilot/stub", {
+        const res = await fetch("/api/copilot", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: msg, sessionId }),
