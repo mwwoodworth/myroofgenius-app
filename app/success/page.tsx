@@ -1,8 +1,15 @@
-'use client'
-import Link from 'next/link';
-import { useEffect } from 'react';
-import { useConfetti } from '../../hooks/use-confetti';
-import UpgradeBanner from '../../components/marketing/UpgradeBanner';
+"use client";
+import Link from "next/link";
+import { useEffect } from "react";
+import { useConfetti } from "../../hooks/use-confetti";
+import UpgradeBanner from "../../components/marketing/UpgradeBanner";
+import { buildMeta } from "../../lib/metadata";
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: "Payment Successful | MyRoofGenius",
+    description: "Thank you for your purchase. Access your download now.",
+  });
 
 export default function SuccessPage() {
   const triggerConfetti = useConfetti();
@@ -16,14 +23,20 @@ export default function SuccessPage() {
         <div className="text-center">
           <div className="mx-auto h-12 w-12 text-accent-emerald">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
             </svg>
           </div>
           <h2 className="mt-6 text-3xl font-extrabold text-text-primary">
             Payment Successful!
           </h2>
           <p className="mt-2 text-sm text-text-secondary">
-            Thank you for your purchase. You&apos;ll receive a confirmation email shortly.
+            Thank you for your purchase. You&apos;ll receive a confirmation
+            email shortly.
           </p>
         </div>
 

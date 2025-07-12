@@ -1,4 +1,11 @@
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
+import { buildMeta } from "../../lib/metadata";
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: "Payment Cancelled | MyRoofGenius",
+    description: "Your payment was cancelled. Return to the marketplace.",
+  });
 
 export default function Cancel() {
   return (

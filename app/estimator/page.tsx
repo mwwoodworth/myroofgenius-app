@@ -1,6 +1,7 @@
 import dynamicImport from "next/dynamic";
 import { estimatorEnabled } from "../lib/features";
 import { PagePrompt } from "../../components/ui";
+import { buildMeta } from "../../lib/metadata";
 
 const Estimator = dynamicImport(
   () => import("../../components/SimpleEstimator"),
@@ -8,6 +9,12 @@ const Estimator = dynamicImport(
 );
 
 export const dynamic = "force-dynamic";
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: "Estimator | MyRoofGenius",
+    description: "Estimate roofing materials with AI assistance.",
+  });
 
 export default function EstimatorPage() {
   if (!estimatorEnabled) {

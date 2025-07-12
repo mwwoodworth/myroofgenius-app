@@ -4,6 +4,13 @@ import Uploader from "../../components/Uploader";
 import ConfidenceScore from "../../components/ConfidenceScore";
 import ProposalPreview from "../../components/ProposalPreview";
 import ProgressBar from "../../components/ProgressBar";
+import { buildMeta } from "../../lib/metadata";
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: "Roof Analysis Tools | MyRoofGenius",
+    description: "Upload photos and generate AI-powered roof reports.",
+  });
 
 interface Finding {
   id: string;

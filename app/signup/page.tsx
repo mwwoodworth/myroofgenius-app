@@ -5,6 +5,13 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useConfetti } from "../../hooks/use-confetti";
 import Button from "../../components/Button";
 import Form from "../../components/Form";
+import { buildMeta } from "../../lib/metadata";
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: "Sign Up | MyRoofGenius",
+    description: "Create your account to start using AI roofing tools.",
+  });
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");

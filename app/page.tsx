@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "MyRoofGenius - Smart Roofing Solutions",
-  description: "AI-powered roofing tools and marketplace for contractors.",
+  description: "AI roofing calculators, field tools, and compliance resources.",
 };
 
 export default function HomePage() {

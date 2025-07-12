@@ -6,6 +6,13 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { signIn } from "next-auth/react";
 import Button from "../../components/Button";
 import Form from "../../components/Form";
+import { buildMeta } from "../../lib/metadata";
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: "Login | MyRoofGenius",
+    description: "Access your MyRoofGenius account and tools.",
+  });
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");

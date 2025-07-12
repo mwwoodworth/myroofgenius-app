@@ -1,18 +1,28 @@
-import { createClient } from '@supabase/supabase-js';
-import EmptyState from '@/components/EmptyState';
+import { createClient } from "@supabase/supabase-js";
+import EmptyState from "@/components/EmptyState";
+import { buildMeta } from "../../lib/metadata";
 
 // Add dynamic export to prevent static generation
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: "Account | MyRoofGenius",
+    description: "View your purchase history and profile settings.",
+  });
 
 async function getOrders() {
   // Handle missing env vars gracefully
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  if (
+    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  ) {
     return [];
   }
 
   createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   );
 
   // For now, return empty array - add auth later
@@ -32,9 +42,7 @@ export default async function Account() {
           {orders.length === 0 ? (
             <EmptyState message="No orders yet." />
           ) : (
-            <div className="space-y-4">
-              {/* Order list would go here */}
-            </div>
+            <div className="space-y-4">{/* Order list would go here */}</div>
           )}
         </div>
 
@@ -56,4 +64,5 @@ export default async function Account() {
         </div>
       </div>
     </div>
-  );}
+  );
+}
