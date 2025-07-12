@@ -28,7 +28,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const promptHandler = (e: any) => {
+    const promptHandler = (e: Event & { prompt: () => void }) => {
       e.preventDefault();
       e.prompt();
     };

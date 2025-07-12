@@ -10,7 +10,7 @@ export async function GET() {
       <defs>
         <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="var(--color-primary)" />
-          <stop offset="100%" stopColor="color-mix(in srgb,var(--color-primary) 80%, white)" /> /* replaced hex with primary token */
+          <stop offset="100%" stopColor="color-mix(in srgb,var(--color-primary) 80%, white)" />{/* replaced hex with primary token */}
         </linearGradient>
       </defs>
       <rect width="1200" height="630" rx="40" fill="url(#g)" />

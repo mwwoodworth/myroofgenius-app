@@ -7,6 +7,7 @@ import { Users, Package, DollarSign, FileText, Settings as SettingsIcon, BarChar
 import Image from 'next/image';
 import { useLocale } from '../src/context/LocaleContext';
 import { useRouter } from 'next/navigation';
+import type { CopilotLogEntry } from '../src/services/copilotLogger';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { Modal, useToast } from './ui';
 
@@ -124,7 +125,7 @@ function OverviewTab({ stats }: { stats: DashboardStats }) {
         <StatCard title="Total Users" value={stats.totalUsers} icon={<Users className="w-6 h-6" />} color="blue" />
         <StatCard title="Total Orders" value={stats.totalOrders} icon={<Package className="w-6 h-6" />} color="green" />
         <StatCard title="Revenue" value={`$${stats.totalRevenue.toFixed(2)}`} icon={<DollarSign className="w-6 h-6" />} color="purple" />
-        <StatCard title="Active Products" value={stats.activeProducts} icon={<FileText className="w-6 h-6" />} color="warning" /> /* replaced orange with warning token */
+        <StatCard title="Active Products" value={stats.activeProducts} icon={<FileText className="w-6 h-6" />} color="warning" />{/* replaced orange with warning token */}
         <StatCard title="Pending Tickets" value={stats.pendingTickets} icon={<SettingsIcon className="w-6 h-6" />} color="red" />
       </div>
       <div className="bg-white rounded-lg shadow p-6">
@@ -135,7 +136,7 @@ function OverviewTab({ stats }: { stats: DashboardStats }) {
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip />
-              <Line type="monotone" dataKey="revenue" stroke="var(--color-primary)" /> /* replaced hex with primary token */
+              <Line type="monotone" dataKey="revenue" stroke="var(--color-primary)" />{/* replaced hex with primary token */}
             </LineChart>
           </ResponsiveContainer>
         ) : (
@@ -219,7 +220,7 @@ function OrdersTab() {
                 <td className="px-6 py-2">{order.products?.name || '—'}</td>
                 <td className="px-6 py-2">${order.amount.toFixed(2)}</td>
                 <td className="px-6 py-2">
-                  <span className={`px-2 py-1 text-xs rounded ${order.status === 'completed' ? 'bg-accent-emerald/20 text-accent-emerald' : 'bg-warning/20 text-warning'}`}>{order.status}</span> /* replaced yellow classes with warning token */
+                  <span className={`px-2 py-1 text-xs rounded ${order.status === 'completed' ? 'bg-accent-emerald/20 text-accent-emerald' : 'bg-warning/20 text-warning'}`}>{order.status}</span>{/* replaced yellow classes with warning token */}
                 </td>
                 <td className="px-6 py-2">{new Date(order.created_at).toLocaleDateString()}</td>
               </tr>
@@ -470,7 +471,7 @@ function AnalyticsTab({ stats }: { stats: DashboardStats }) {
 }
 
 function AITab() {
-  const [logs, setLogs] = useState<any[]>([]);
+  const [logs, setLogs] = useState<CopilotLogEntry[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -502,9 +503,9 @@ function AITab() {
             </tr>
           </thead>
           <tbody className="divide-y divide-secondary/20">
-            {logs.map((log: any) => (
-              <tr key={log.id}>
-                <td className="px-4 py-2">{new Date(log.created_at).toLocaleString()}</td>
+              {logs.map((log: CopilotLogEntry) => (
+                <tr key={log.id}>
+                  <td className="px-4 py-2">{log.created_at ? new Date(log.created_at).toLocaleString() : ''}</td>
                 <td className="px-4 py-2">{log.user_id || '—'}</td>
                 <td className="px-4 py-2">{log.role}</td>
                 <td className="px-4 py-2 max-w-xs whitespace-pre-wrap">{log.message}</td>
@@ -543,7 +544,7 @@ function SettingsTab() {
         <p>Checking system health...</p>
       ) : health ? (
         <div>
-          <p className={`font-medium mb-4 ${health.status === 'healthy' ? 'text-accent-emerald' : health.status === 'degraded' ? 'text-warning' : 'text-red-600'}`}>Overall Status: {health.status.charAt(0).toUpperCase() + health.status.slice(1)}</p> /* replaced yellow-600 with warning token */
+          <p className={`font-medium mb-4 ${health.status === 'healthy' ? 'text-accent-emerald' : health.status === 'degraded' ? 'text-warning' : 'text-red-600'}`}>Overall Status: {health.status.charAt(0).toUpperCase() + health.status.slice(1)}</p>{/* replaced yellow-600 with warning token */}
           <ul>
             <li>Database: <span className={health.services.database === 'healthy' ? 'text-accent-emerald' : 'text-red-600'}>{health.services.database}</span></li>
             <li>Storage: <span className={health.services.storage === 'healthy' ? 'text-accent-emerald' : 'text-red-600'}>{health.services.storage}</span></li>
