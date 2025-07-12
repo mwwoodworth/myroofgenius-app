@@ -30,9 +30,9 @@ export default function Card({
     <motion.div
       {...motionProps}
       className={clsx(
-        "rounded-2xl p-6 min-h-[48px]",
+        "rounded-2xl p-6 min-h-[48px] shadow-[0px_8px_32px_rgba(0,0,0,0.1)]",
         glass
-          ? "backdrop-blur-lg bg-white/5 border border-white/20 rounded-[14px] transition-transform hover:scale-105 hover:border-accent shadow-xl"
+          ? "glass border border-white/20 rounded-[14px] transition-transform hover:scale-105 hover:border-accent"
           : "bg-bg-card",
         className,
       )}
