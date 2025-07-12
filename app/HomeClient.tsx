@@ -79,6 +79,7 @@ export default function HomeClient() {
         transition={{ duration: 0.6 }}
         className="relative overflow-hidden bg-[var(--color-navy-900)] py-24 backdrop-blur-lg rounded-2xl shadow-2xl"
       >
+        <div className="hero-animated-bg absolute inset-0 -z-10" />
         <AnimatedGradient />
         <BackgroundCanvas />
         <div className="absolute top-6 right-6">
@@ -106,15 +107,15 @@ export default function HomeClient() {
             <ul className="text-slate-300 mb-8 space-y-2">
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-5 h-5 text-primary" />
-              Instant AI estimates
+                Instant AI estimates
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-5 h-5 text-accent" />
-              Error-proof templates
+                Error-proof templates
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-5 h-5 text-primary" />
-              Mobile field tools
+                Mobile field tools
               </li>
             </ul>
             <Hero3D />
@@ -126,7 +127,11 @@ export default function HomeClient() {
             <div className="flex flex-col sm:flex-row gap-4">
               <MotionLink
                 href="/get-started"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 0 16px var(--color-primary)",
+                }}
+                whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center justify-center px-8 py-4 bg-accent hover:bg-accent/80 text-white rounded-2xl shadow-2xl font-semibold text-lg transition-colors glow-btn animate-ripple"
               >
                 {messages.home.startTrial}
@@ -134,7 +139,11 @@ export default function HomeClient() {
               </MotionLink>
               <MotionLink
                 href="/demo"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 0 16px var(--color-primary)",
+                }}
+                whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center justify-center px-8 py-4 border border-primary text-primary hover:bg-primary hover:text-white rounded-2xl shadow-2xl font-semibold text-lg transition-colors"
               >
                 <Play className="mr-2 w-5 h-5" />

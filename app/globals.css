@@ -5,9 +5,9 @@
 @layer base {
   body {
     @apply font-sans;
-    background: linear-gradient(180deg,#0A0A0A,#1A1A1A);
-    color: #E0E0E0;
-    font-size: clamp(1rem,2.5vw,1.125rem);
+    background: linear-gradient(180deg, #0a0a0a, #1a1a1a);
+    color: #e0e0e0;
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
   }
 
   h1,
@@ -258,16 +258,66 @@ button:focus-visible {
   animation: star-pulse 4s ease-in-out infinite;
 }
 
-@keyframes pulse-slow {0%,100%{opacity:1}50%{opacity:.5}}
-.pulse-slow{animation:pulse-slow 3s ease-in-out infinite}
-
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+.pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
 
 /* Fluid headings */
-h1{font-size:clamp(2.25rem,5vw,3.5rem)}
-h2{font-size:clamp(1.75rem,4vw,2.5rem)}
-h3{font-size:clamp(1.5rem,3vw,2rem)}
+h1 {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+}
+h2 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
 
-h1,h2{font-weight:700;color:#fff}
-.glass,.glass-navbar{backdrop-filter:blur(10px);background:rgba(40,40,40,0.5);}
-section{padding:1.25rem 1rem;}
-@media(min-width:640px){section{padding:2rem 1.5rem;}}
+h1,
+h2 {
+  font-weight: 700;
+  color: #fff;
+}
+.glass,
+.glass-navbar {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+section {
+  padding: 1.25rem 1rem;
+}
+@media (min-width: 640px) {
+  section {
+    padding: 2rem 1.5rem;
+  }
+}
+@keyframes shimmer-bg {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.hero-animated-bg {
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-bg 8s ease-in-out infinite;
+}
