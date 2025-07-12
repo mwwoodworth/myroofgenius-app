@@ -318,8 +318,7 @@ export default async function Dashboard() {
                 </p>
               </div>
               <div className="w-12 h-12 bg-warning/20 rounded-full flex items-center justify-center">
-                {" "}
-                /* replaced orange with warning token */
+                {/* replaced orange with warning token */}
                 <FileText className="w-6 h-6 text-warning" />
               </div>
             </div>
@@ -676,8 +675,7 @@ export default async function Dashboard() {
         {/* Subscription Banner */}
         {data.profile?.subscription_tier === "free" && (
           <div className="mt-8 bg-gradient-to-r from-[var(--color-primary)] to-[color-mix(in_srgb,var(--color-primary)_80%,black)] rounded-lg p-8 text-white">
-            {" "}
-            /* use primary token gradient */
+            {/* use primary token gradient */}
             <div className="max-w-3xl">
               <h3 className="text-2xl font-bold mb-2">Upgrade to Pro</h3>
               <p className="text-secondary-700/20 mb-4">

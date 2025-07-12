@@ -4,12 +4,11 @@ import { useEffect } from 'react';
 interface RemoteModelViewerProps {
   src: string;
   iosSrc?: string;
-  alt?: string;
   ar?: boolean;
   className?: string;
 }
 
-export default function RemoteModelViewer({ src, iosSrc, alt, ar = true, className = '' }: RemoteModelViewerProps) {
+export default function RemoteModelViewer({ src, iosSrc, ar = true, className = '' }: RemoteModelViewerProps) {
   useEffect(() => {
     if (typeof window !== 'undefined' && !customElements.get('model-viewer')) {
       const script = document.createElement('script');
