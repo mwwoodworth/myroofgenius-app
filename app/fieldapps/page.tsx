@@ -5,9 +5,9 @@ export const dynamic = "force-dynamic";
 
 export const generateMetadata = () =>
   buildMeta({
-    title: "Field Apps | MyRoofGenius",
+    title: "Field Apps for Roofing Crews | MyRoofGenius",
     description:
-      "Quick links to Claude-powered utilities for crews and partners.",
+      "Offline-ready mobile apps for inspections, proposals and project punchlists.",
   });
 
 export default function FieldApps() {
@@ -33,6 +33,17 @@ export default function FieldApps() {
                 item: "https://myroofgenius.com/fieldapps",
               },
             ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            serviceType: "Field Applications",
+            provider: { "@type": "Organization", name: "MyRoofGenius" },
           }),
         }}
       />
