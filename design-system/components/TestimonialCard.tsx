@@ -18,7 +18,7 @@ export default function TestimonialCard({
   company,
 }: Props) {
   return (
-    <Card className="text-center">
+    <Card glass className="text-center">
       <AvatarPlaceholder className="mx-auto mb-4" />
       <p className="mb-4">&ldquo;{quote}&rdquo;</p>
       <p className="font-semibold flex items-center justify-center space-x-1">
