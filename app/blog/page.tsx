@@ -8,9 +8,9 @@ export const dynamic = "force-dynamic";
 
 export const generateMetadata = () =>
   buildMeta({
-    title: "Blog | MyRoofGenius",
+    title: "Roofing Insights & Tips | MyRoofGenius Blog",
     description:
-      "Industry insights and best practices for roofing professionals.",
+      "Strategies for estimation, project management and business growth in the roofing industry.",
   });
 
 async function getBlogPosts() {

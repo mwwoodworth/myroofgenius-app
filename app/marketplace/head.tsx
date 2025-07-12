@@ -4,7 +4,7 @@ export default function Head() {
       <title>Roofing Templates Marketplace | MyRoofGenius</title>
       <meta
         name="description"
-        content="Shop digital roofing templates, checklists and tools from MyRoofGenius."
+        content="Shop digital calculators, checklists and premium templates built for roofing contractors."
       />
       <meta
         property="og:title"
@@ -12,7 +12,7 @@ export default function Head() {
       />
       <meta
         property="og:description"
-        content="Shop digital roofing templates, checklists and tools from MyRoofGenius."
+        content="Shop digital calculators, checklists and premium templates built for roofing contractors."
       />
       <meta
         name="twitter:title"
@@ -20,7 +20,7 @@ export default function Head() {
       />
       <meta
         name="twitter:description"
-        content="Shop digital roofing templates, checklists and tools from MyRoofGenius."
+        content="Shop digital calculators, checklists and premium templates built for roofing contractors."
       />
     </>
   );

@@ -1,11 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
-import { notFound } from 'next/navigation';
-import CheckoutButton from './CheckoutButton';
-import ProductAIInfo from './ProductAIInfo';
-import ProductQABtn from './ProductQABtn';
-import Image from 'next/image';
-import Link from 'next/link';
-import { salesEnabled } from '../../lib/features';
+import { createClient } from "@supabase/supabase-js";
+import { notFound } from "next/navigation";
+import CheckoutButton from "./CheckoutButton";
+import ProductAIInfo from "./ProductAIInfo";
+import ProductQABtn from "./ProductQABtn";
+import Image from "next/image";
+import Link from "next/link";
+import { salesEnabled } from "../../lib/features";
 
 // Add dynamic params export to handle dynamic routes
 export async function generateStaticParams() {
@@ -18,39 +18,46 @@ export const revalidate = 3600;
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const product = await getProduct(params.id);
   if (!product) return {};
-  const desc = product.description || 'Roofing resource from MyRoofGenius';
+  const desc = product.description || "Roofing resource from MyRoofGenius";
   return {
     title: `${product.name} | MyRoofGenius`,
     description: desc,
     openGraph: {
       title: `${product.name} | MyRoofGenius`,
-      description: desc
-    }
+      description: desc,
+    },
   };
 }
 
 async function getProduct(id: string) {
   // Handle missing env vars gracefully
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.warn('Supabase environment variables not configured');
+  if (
+    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  ) {
+    console.warn("Supabase environment variables not configured");
     return null;
   }
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   );
 
   const { data } = await supabase
-    .from('products')
-    .select('*')
-    .eq('id', id)
+    .from("products")
+    .select("*")
+    .eq("id", id)
     .single();
 
   return data;
 }
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
+export default async function ProductPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   if (!salesEnabled) {
     return (
       <div className="min-h-screen flex items-center justify-center p-8">
@@ -65,18 +72,30 @@ export default async function ProductPage({ params }: { params: { id: string } }
   }
 
   // Mock data for demonstration - would come from product data
-  const features = product.features?.split(',') || [
-    'Instant download after purchase',
-    'Lifetime updates included',
-    'Email support for 90 days',
-    'Compatible with Excel 2016+',
-    'Works on Mac and PC'
+  const features = product.features?.split(",") || [
+    "Instant download after purchase",
+    "Lifetime updates included",
+    "Email support for 90 days",
+    "Compatible with Excel 2016+",
+    "Works on Mac and PC",
   ];
 
   const benefits = [
-    { icon: '⏰', title: 'Save 3+ Hours', desc: 'Per estimate with automated calculations' },
-    { icon: '💰', title: 'Increase Margins', desc: 'Catch hidden costs before they eat profits' },
-    { icon: '🎯', title: 'Win More Bids', desc: 'Professional proposals that stand out' },
+    {
+      icon: "⏰",
+      title: "Save 3+ Hours",
+      desc: "Per estimate with automated calculations",
+    },
+    {
+      icon: "💰",
+      title: "Increase Margins",
+      desc: "Catch hidden costs before they eat profits",
+    },
+    {
+      icon: "🎯",
+      title: "Win More Bids",
+      desc: "Professional proposals that stand out",
+    },
   ];
 
   return (
@@ -85,26 +104,60 @@ export default async function ProductPage({ params }: { params: { id: string } }
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Product',
+            "@context": "https://schema.org",
+            "@type": "Product",
             name: product.name,
             description: product.description,
             image: product.image_url,
             offers: {
-              '@type': 'Offer',
+              "@type": "Offer",
               price: product.price,
-              priceCurrency: 'USD',
-              availability: 'http://schema.org/InStock'
-            }
-          })
+              priceCurrency: "USD",
+              availability: "http://schema.org/InStock",
+            },
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "How do I access my purchase?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "You'll receive download links immediately after purchase and in your dashboard.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "What if I need help using the tool?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Every purchase includes email support and tutorials.",
+                },
+              },
+            ],
+          }),
         }}
       />
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="mb-8 text-sm">
-          <Link href="/" className="text-text-secondary hover:text-gray-700">Home</Link>
+          <Link href="/" className="text-text-secondary hover:text-gray-700">
+            Home
+          </Link>
           <span className="mx-2 text-gray-400">/</span>
-          <Link href="/marketplace" className="text-text-secondary hover:text-gray-700">Marketplace</Link>
+          <Link
+            href="/marketplace"
+            className="text-text-secondary hover:text-gray-700"
+          >
+            Marketplace
+          </Link>
           <span className="mx-2 text-gray-400">/</span>
           <span className="text-gray-900">{product.name}</span>
         </nav>
@@ -114,7 +167,10 @@ export default async function ProductPage({ params }: { params: { id: string } }
           <div>
             <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-4">
               <Image
-                src={product.image_url || 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&h=600&fit=crop'}
+                src={
+                  product.image_url ||
+                  "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&h=600&fit=crop"
+                }
                 alt={product.name}
                 width={800}
                 height={600}
@@ -128,7 +184,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
           <div>
             <div className="mb-6">
               <span className="bg-secondary-700/10 text-secondary-700 text-sm px-3 py-1 rounded-full">
-                {product.category || 'Professional Tool'}
+                {product.category || "Professional Tool"}
               </span>
             </div>
 
@@ -136,7 +192,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
             <div className="flex items-center gap-4 mb-6">
               <div className="flex text-yellow-400">
-                {'★★★★★'.split('').map((star, i) => (
+                {"★★★★★".split("").map((star, i) => (
                   <span key={i}>{star}</span>
                 ))}
               </div>
@@ -144,9 +200,14 @@ export default async function ProductPage({ params }: { params: { id: string } }
             </div>
 
             <p className="text-gray-600 mb-8 text-lg leading-relaxed">
-              {product.description || 'Professional-grade tool designed specifically for commercial roofing contractors. Battle-tested on hundreds of projects.'}
+              {product.description ||
+                "Professional-grade tool designed specifically for commercial roofing contractors. Battle-tested on hundreds of projects."}
             </p>
-            <ProductAIInfo id={product.id} name={product.name} description={product.description || ''} />
+            <ProductAIInfo
+              id={product.id}
+              name={product.name}
+              description={product.description || ""}
+            />
 
             {/* Price and CTA */}
             <div className="bg-gray-50 rounded-lg p-6 mb-8">
@@ -159,25 +220,49 @@ export default async function ProductPage({ params }: { params: { id: string } }
                     </span>
                   )}
                 </div>
-                <span className="text-accent-emerald font-semibold">You save ${((product.original_price || product.price) - product.price).toFixed(2)}</span>
+                <span className="text-accent-emerald font-semibold">
+                  You save $
+                  {(
+                    (product.original_price || product.price) - product.price
+                  ).toFixed(2)}
+                </span>
               </div>
 
               <CheckoutButton
                 priceId={product.price_id}
                 productId={product.id}
               />
-              <ProductQABtn name={product.name} description={product.description || ''} />
+              <ProductQABtn
+                name={product.name}
+                description={product.description || ""}
+              />
 
               <div className="mt-4 flex items-center justify-center gap-6 text-sm text-gray-600">
                 <span className="flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   30-Day Guarantee
                 </span>
                 <span className="flex items-center gap-1">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   Secure Checkout
                 </span>
@@ -186,7 +271,9 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
             {/* Benefits */}
             <div className="mb-8">
-              <h3 className="text-xl font-semibold mb-4">Why Contractors Choose This</h3>
+              <h3 className="text-xl font-semibold mb-4">
+                Why Contractors Choose This
+              </h3>
               <div className="space-y-3">
                 {benefits.map((benefit, idx) => (
                   <div key={idx} className="flex gap-4">
@@ -202,12 +289,22 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
             {/* Features */}
             <div className="mb-8">
-              <h3 className="text-xl font-semibold mb-4">What&apos;s Included</h3>
+              <h3 className="text-xl font-semibold mb-4">
+                What&apos;s Included
+              </h3>
               <ul className="space-y-2">
                 {features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <svg className="w-5 h-5 text-accent-emerald mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    <svg
+                      className="w-5 h-5 text-accent-emerald mt-0.5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     <span>{feature.trim()}</span>
                   </li>
@@ -223,24 +320,26 @@ export default async function ProductPage({ params }: { params: { id: string } }
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white p-6 rounded-lg shadow">
               <div className="flex text-yellow-400 mb-2">
-                {'★★★★★'.split('').map((star, i) => (
+                {"★★★★★".split("").map((star, i) => (
                   <span key={i}>{star}</span>
                 ))}
               </div>
               <p className="text-gray-600 mb-4">
-                &quot;This tool paid for itself on the first project. Found $8,000 in hidden costs I would have missed.&quot;
+                &quot;This tool paid for itself on the first project. Found
+                $8,000 in hidden costs I would have missed.&quot;
               </p>
               <p className="font-semibold">Mike R. - Denver, CO</p>
               <p className="text-sm text-text-secondary">Verified Purchase</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow">
               <div className="flex text-yellow-400 mb-2">
-                {'★★★★★'.split('').map((star, i) => (
+                {"★★★★★".split("").map((star, i) => (
                   <span key={i}>{star}</span>
                 ))}
               </div>
               <p className="text-gray-600 mb-4">
-                &quot;Finally, someone who understands commercial roofing. This is exactly what I&apos;ve been looking for.&quot;
+                &quot;Finally, someone who understands commercial roofing. This
+                is exactly what I&apos;ve been looking for.&quot;
               </p>
               <p className="font-semibold">Sarah T. - Colorado Springs</p>
               <p className="text-sm text-text-secondary">Verified Purchase</p>
@@ -250,24 +349,36 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
         {/* FAQ Section */}
         <section className="mt-16 border-t pt-16">
-          <h2 className="text-2xl font-bold mb-8">Frequently Asked Questions</h2>
+          <h2 className="text-2xl font-bold mb-8">
+            Frequently Asked Questions
+          </h2>
           <div className="space-y-6">
             <div>
-              <h3 className="font-semibold mb-2">How do I access my purchase?</h3>
-                <p className="text-gray-600">
-                  You&apos;ll receive an email with download links immediately after purchase. Files are also available in your account dashboard.
-                </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-2">What if I need help using the tool?</h3>
+              <h3 className="font-semibold mb-2">
+                How do I access my purchase?
+              </h3>
               <p className="text-gray-600">
-                Every purchase includes 90 days of email support. We also provide video tutorials and documentation.
+                You&apos;ll receive an email with download links immediately
+                after purchase. Files are also available in your account
+                dashboard.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-2">Is this compatible with my software?</h3>
+              <h3 className="font-semibold mb-2">
+                What if I need help using the tool?
+              </h3>
               <p className="text-gray-600">
-                Our tools work with Excel 2016 or newer (Mac and PC), Google Sheets, and most project management software.
+                Every purchase includes 90 days of email support. We also
+                provide video tutorials and documentation.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-2">
+                Is this compatible with my software?
+              </h3>
+              <p className="text-gray-600">
+                Our tools work with Excel 2016 or newer (Mac and PC), Google
+                Sheets, and most project management software.
               </p>
             </div>
           </div>

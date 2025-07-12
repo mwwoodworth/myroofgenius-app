@@ -7,8 +7,9 @@ export const dynamic = "force-dynamic";
 
 export const generateMetadata = () =>
   buildMeta({
-    title: "Marketplace | MyRoofGenius",
-    description: "Browse and purchase roofing calculators and templates.",
+    title: "Roofing Templates Marketplace | MyRoofGenius",
+    description:
+      "Shop digital calculators, checklists and premium templates built for roofing contractors.",
   });
 
 export default async function MarketplacePage() {
