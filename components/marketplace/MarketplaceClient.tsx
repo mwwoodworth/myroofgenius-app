@@ -218,7 +218,7 @@ export default function MarketplaceClient({
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-gradient-to-r from-[var(--color-primary)] to-[color-mix(in_srgb,var(--color-primary)_80%,black)] text-white py-12 backdrop-blur-lg rounded-2xl shadow-2xl" /* replaced blue gradient with primary token */
+        className="bg-gradient-to-r from-[var(--color-primary)] to-[color-mix(in_srgb,var(--color-primary)_80%,black)] text-white py-12 backdrop-blur-lg rounded-2xl shadow-2xl"
       >
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -321,7 +321,7 @@ export default function MarketplaceClient({
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent" /* replaced blue-500 with accent token */
+                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                 >
                   {sortOptions.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -392,7 +392,7 @@ export default function MarketplaceClient({
                               </span>
                             )}
                             {product.sales_count > 500 && (
-                              <span className="absolute bottom-2 left-2 bg-warning text-white text-xs px-2 py-1 rounded"> /* replaced orange with warning token */
+                              <span className="absolute bottom-2 left-2 bg-warning text-white text-xs px-2 py-1 rounded">
                                 BESTSELLER
                               </span>
                             )}
@@ -509,7 +509,7 @@ export default function MarketplaceClient({
                           </span>
                         )}
                         {product.sales_count > 500 && (
-                          <span className="absolute bottom-2 left-2 bg-warning text-white text-xs px-2 py-1 rounded"> /* replaced orange with warning token */
+                          <span className="absolute bottom-2 left-2 bg-warning text-white text-xs px-2 py-1 rounded">
                             BESTSELLER
                           </span>
                         )}

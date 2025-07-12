@@ -10,7 +10,7 @@ export default function GafBadge(props: React.SVGProps<SVGSVGElement>) {
       aria-label="GAF Master Elite"
       {...props}
     >
-      <rect width="80" height="32" rx="4" fill="var(--color-danger)" /> /* replaced hex with danger token */
+      <rect width="80" height="32" rx="4" fill="var(--color-danger)" />{/* replaced hex with danger token */}
       <text
         x="40"
         y="21"

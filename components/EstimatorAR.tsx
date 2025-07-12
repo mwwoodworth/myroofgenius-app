@@ -24,7 +24,7 @@ export default function EstimatorAR() {
                   .trim() || '#ecc94b'
               : '#ecc94b';
             return <meshStandardMaterial color={c} />;
-          })()} /* uses warning token */
+          })()}{/* uses warning token */}
           </mesh>
           <ambientLight intensity={0.5} />
         </Suspense>

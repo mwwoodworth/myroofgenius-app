@@ -1,5 +1,5 @@
 import { create } from "@storybook/theming";
-import tokens from "../tokens.json";
+import tokens from "./tokens.json";
 
 export default create({
   base: "light",

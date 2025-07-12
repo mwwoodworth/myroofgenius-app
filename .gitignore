@@ -9,6 +9,10 @@ coverage/
 # Ignore binary assets
 *.pdf
 *.png
+# Visual regression snapshots
+tests/visual/*.png
+.output/visual/
+.snapshots/
 *.xlsx
 *.docx
-\ntsconfig.tsbuildinfo
+tsconfig.tsbuildinfo
