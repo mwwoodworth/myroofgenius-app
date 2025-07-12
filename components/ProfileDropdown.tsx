@@ -64,7 +64,7 @@ export default function ProfileDropdown() {
         <ChevronDown className="w-4 h-4" />
       </button>
       {open && (
-        <div className="absolute right-0 mt-2 w-48 rounded-xl border border-gray-700 bg-bg-card p-3 glass-card z-50 space-y-2">
+        <div className="absolute right-0 mt-2 w-48 rounded-[14px] border border-white/20 bg-bg-card backdrop-blur-lg p-3 z-50 space-y-2">
           <select
             className="w-full rounded-md bg-bg-card border border-gray-700 p-2 text-sm"
             value={role}

@@ -11,7 +11,7 @@ export default function CurrencySwitcher() {
       onChange={(e) => setCurrency(e.target.value)}
       whileFocus={{ rotateX: -15 }}
       transition={{ type: 'spring', stiffness: 200 }}
-      className="border rounded px-2 py-1 text-sm bg-bg-card glass-card"
+      className="border rounded px-2 py-1 text-sm bg-bg-card backdrop-blur-lg bg-white/5 border-white/20 rounded-[14px] focus:outline-none"
     >
       {currencies.map((c) => (
         <option key={c} value={c}>
