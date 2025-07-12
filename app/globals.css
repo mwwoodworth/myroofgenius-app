@@ -4,7 +4,10 @@
 
 @layer base {
   body {
-    @apply bg-bg text-text-primary font-sans;
+    @apply font-sans;
+    background: linear-gradient(180deg,#0A0A0A,#1A1A1A);
+    color: #E0E0E0;
+    font-size: clamp(1rem,2.5vw,1.125rem);
   }
 
   h1,
@@ -102,7 +105,7 @@
   min-height: var(--spacing-touch-target);
   padding: var(--spacing-field-padding);
   font-weight: 600;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   transition: all 0.2s;
 }
 
@@ -264,3 +267,7 @@ h1{font-size:clamp(2.25rem,5vw,3.5rem)}
 h2{font-size:clamp(1.75rem,4vw,2.5rem)}
 h3{font-size:clamp(1.5rem,3vw,2rem)}
 
+h1,h2{font-weight:700;color:#fff}
+.glass,.glass-navbar{backdrop-filter:blur(10px);background:rgba(40,40,40,0.5);}
+section{padding:1.25rem 1rem;}
+@media(min-width:640px){section{padding:2rem 1.5rem;}}

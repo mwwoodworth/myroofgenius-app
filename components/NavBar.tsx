@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import Button from "./Button";
@@ -7,13 +7,6 @@ import ThemeToggle from "./ui/ThemeToggle";
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const handle = () => setScrolled(window.scrollY > 30);
-    handle();
-    window.addEventListener("scroll", handle);
-    return () => window.removeEventListener("scroll", handle);
-  }, []);
   const links = [
     { href: "/", label: "Home" },
     { href: "/tools", label: "Tools" },
@@ -22,11 +15,7 @@ export default function NavBar() {
     { href: "/blog", label: "Blog" },
   ];
   return (
-    <header
-      className={`sticky top-0 z-50 backdrop-blur-lg transition-colors ${
-        scrolled ? "bg-bg/80" : "bg-bg/40"
-      }`}
-    >
+    <header className="sticky top-0 z-50 glass-navbar">
       <nav className="max-w-6xl mx-auto flex items-center justify-between p-4">
         <Link href="/" className="font-bold text-lg" aria-label="MyRoofGenius">
           MyRoofGenius

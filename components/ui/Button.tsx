@@ -8,7 +8,7 @@ interface ButtonProps extends HTMLMotionProps<"button"> {
 }
 
 const base =
-  "inline-flex items-center justify-center rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 transition min-h-[48px] shadow-sm hover:shadow-md animate-ripple";
+  "inline-flex items-center justify-center rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 transition min-h-[48px] shadow-[0px_8px_32px_rgba(0,0,0,0.1)] hover:shadow-lg animate-ripple";
 const variants = {
   primary:
     "bg-[var(--color-primary)] text-white hover:bg-[color-mix(in_srgb,var(--color-primary)_90%,white)]",

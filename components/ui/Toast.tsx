@@ -38,7 +38,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               initial={{ rotateY: 90, opacity: 0 }}
               animate={{ rotateY: 0, opacity: 1 }}
               exit={{ rotateY: 90, opacity: 0 }}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg glass text-white shadow-xl"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg glass text-white shadow-[0px_8px_32px_rgba(0,0,0,0.1)]"
             >
               {t.type === "success" && (
                 <CheckCircle className="w-4 h-4 text-accent-emerald/60" />
