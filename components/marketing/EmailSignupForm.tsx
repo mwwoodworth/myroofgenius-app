@@ -43,7 +43,7 @@ export default function EmailSignupForm({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       className={clsx(
-        "space-y-4 glass backdrop-blur-lg bg-white/30 rounded-2xl shadow-2xl p-6",
+        "space-y-4 glass backdrop-blur-lg bg-cloud-100/30 dark:bg-slate-700/30 rounded-2xl shadow-2xl p-6",
         className,
       )}
     >

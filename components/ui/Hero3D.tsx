@@ -2,6 +2,7 @@
 /* eslint-disable react/no-unknown-property */
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import * as THREE from 'three';
 
 function SpinningShape() {
@@ -28,12 +29,17 @@ function SpinningShape() {
 
 export default function Hero3D() {
   return (
-    <div className="h-64 w-full">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      className="h-64 w-full bg-slate-700/20 rounded-xl"
+    >
       <Canvas camera={{ position: [0, 0, 4] }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[5, 5, 5]} />
         <SpinningShape />
       </Canvas>
-    </div>
+    </motion.div>
   );
 }

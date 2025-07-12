@@ -2,10 +2,16 @@
 /* eslint-disable react/no-unknown-property */
 import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
+import { motion } from 'framer-motion';
 
 export default function EstimatorAR() {
   return (
-    <div className="h-64 w-full bg-[var(--color-navy-900)] text-white rounded-xl mt-4">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      className="h-64 w-full bg-[var(--color-navy-900)] text-white rounded-xl mt-4"
+    >
       <Canvas>
         <Suspense fallback={null}>
           {/* Placeholder plane representing roof model */}
@@ -23,6 +29,6 @@ export default function EstimatorAR() {
           <ambientLight intensity={0.5} />
         </Suspense>
       </Canvas>
-    </div>
+    </motion.div>
   );
 }

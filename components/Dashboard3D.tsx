@@ -2,13 +2,19 @@
 /* eslint-disable react/no-unknown-property */
 import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
+import { motion } from 'framer-motion';
 import { OrbitControls } from '@react-three/drei';
 import { PresenceProvider, PresenceAvatars } from './ui';
 
 export default function Dashboard3D() {
   return (
     <PresenceProvider room="dashboard">
-    <div className="relative h-64 w-full bg-[var(--color-navy-900)] text-white rounded-xl">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      className="relative h-64 w-full bg-[var(--color-navy-900)] text-white rounded-xl"
+    >
       <PresenceAvatars />
       <Canvas camera={{ position: [3, 3, 3] }}>
         <Suspense fallback={null}>
@@ -45,7 +51,7 @@ export default function Dashboard3D() {
           <OrbitControls enablePan={false} />
         </Suspense>
       </Canvas>
-    </div>
+    </motion.div>
     </PresenceProvider>
   );
 }

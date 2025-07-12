@@ -41,7 +41,7 @@ export default function Testimonials({ className = '' }: { className?: string })
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.2 }}
-            className="bg-white rounded-xl shadow p-6"
+            className="bg-cloud-100 dark:bg-slate-700 rounded-xl shadow p-6"
           >
             <p className="mb-4">&ldquo;{t.quote}&rdquo;</p>
             <p className="font-semibold">{t.name}</p>
