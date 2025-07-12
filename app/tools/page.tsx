@@ -4,13 +4,6 @@ import Uploader from "../../components/Uploader";
 import ConfidenceScore from "../../components/ConfidenceScore";
 import ProposalPreview from "../../components/ProposalPreview";
 import ProgressBar from "../../components/ProgressBar";
-import { buildMeta } from "../../lib/metadata";
-
-export const generateMetadata = () =>
-  buildMeta({
-    title: "AI Roof Analysis | MyRoofGenius",
-    description: "Upload roof photos for instant AI-powered insights",
-  });
 
 interface Finding {
   id: string;
