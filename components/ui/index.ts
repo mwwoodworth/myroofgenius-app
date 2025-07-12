@@ -21,3 +21,6 @@ export { default as Skeleton } from "./Skeleton";
 export { default as LazyImage } from "./LazyImage";
 export { default as Drawer } from "./Drawer";
 export { default as StreamingText } from "./StreamingText";
+export { default as BackgroundCanvas } from "./BackgroundCanvas";
+export { default as ChatWidget } from "../ChatWidget";
+export { default as PagePrompt } from "../PagePrompt";

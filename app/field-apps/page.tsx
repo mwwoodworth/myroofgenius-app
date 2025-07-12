@@ -28,7 +28,7 @@ export default function FieldAppsPage() {
         </div>
 
         {/* What This Protects */}
-        <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8 mb-12">
+        <div className="bg-cloud-100 dark:bg-slate-700 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-600 p-8 mb-12">
           <h2 className="text-2xl font-semibold mb-8 text-center">What Our Field Apps Protect</h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">

@@ -3,13 +3,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import ToolDemoModal from "../../../components/marketing/ToolDemoModal";
-import CopilotQuickButton from "../../../components/CopilotQuickButton";
+import { PagePrompt } from "../../../components/ui";
 
 export default function MaterialCalculator() {
   const [showDemo, setShowDemo] = useState(false);
   return (
+    <>
+      <PagePrompt prompt="Material calculation help" />
     <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
-      <div className="max-w-2xl bg-white rounded-xl shadow p-8 text-center">
+      <div className="max-w-2xl bg-cloud-100 dark:bg-slate-700 rounded-xl shadow-lg p-8 text-center">
         <Image
           src="https://images.unsplash.com/photo-1581093458791-9c2ca846fb74?w=800&h=450&fit=crop"
           alt="Material calculator screenshot"
@@ -40,7 +42,6 @@ export default function MaterialCalculator() {
           >
             Create Free Account
           </Link>
-          <CopilotQuickButton prompt="Material calculation help" />
         </div>
         <ToolDemoModal
           open={showDemo}
@@ -49,5 +50,6 @@ export default function MaterialCalculator() {
         />
       </div>
     </div>
+    </>
   );
 }

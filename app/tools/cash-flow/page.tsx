@@ -3,13 +3,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import ToolDemoModal from "../../../components/marketing/ToolDemoModal";
-import CopilotQuickButton from "../../../components/CopilotQuickButton";
+import { PagePrompt } from "../../../components/ui";
 
 export default function CashFlow() {
   const [showDemo, setShowDemo] = useState(false);
   return (
+    <>
+      <PagePrompt prompt="Tips for cash flow forecasting" />
     <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
-      <div className="max-w-2xl bg-white rounded-xl shadow p-8 text-center">
+      <div className="max-w-2xl bg-cloud-100 dark:bg-slate-700 rounded-xl shadow-lg p-8 text-center">
         <Image
           src="https://images.unsplash.com/photo-1556740723-198c99fd4c79?w=800&h=450&fit=crop"
           alt="Cash flow forecaster screenshot"
@@ -39,7 +41,6 @@ export default function CashFlow() {
           >
             Create Free Account
           </Link>
-          <CopilotQuickButton prompt="Tips for cash flow forecasting" />
         </div>
         <ToolDemoModal
           open={showDemo}
@@ -48,5 +49,6 @@ export default function CashFlow() {
         />
       </div>
     </div>
+    </>
   );
 }

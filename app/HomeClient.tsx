@@ -7,6 +7,7 @@ import {
   AnimatedGradient,
   HeroHeadline,
   Skeleton,
+  BackgroundCanvas,
 } from "../components/ui";
 import { Suspense } from "react";
 import dynamicImport from "next/dynamic";
@@ -79,6 +80,7 @@ export default function HomeClient() {
         className="relative overflow-hidden bg-black/20 py-24 backdrop-blur-lg rounded-2xl shadow-2xl"
       >
         <AnimatedGradient />
+        <BackgroundCanvas />
         <div className="absolute top-6 right-6">
           <ActiveUsersBadge />
         </div>
@@ -94,11 +96,11 @@ export default function HomeClient() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ type: "spring", stiffness: 80 }}
-              className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
+              className="text-white font-extrabold text-4xl sm:text-5xl md:text-6xl mb-6 leading-tight"
             >
               <HeroHeadline
                 texts={["Protect every project.", "Grow every margin."]}
-                className="text-accent"
+                className="text-accent whitespace-pre-line"
               />
             </motion.h1>
             <ul className="text-slate-300 mb-8 space-y-2">

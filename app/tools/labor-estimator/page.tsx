@@ -3,13 +3,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import ToolDemoModal from "../../../components/marketing/ToolDemoModal";
-import CopilotQuickButton from "../../../components/CopilotQuickButton";
+import { PagePrompt } from "../../../components/ui";
 
 export default function LaborEstimator() {
   const [showDemo, setShowDemo] = useState(false);
   return (
+    <>
+      <PagePrompt prompt="Help me estimate labor hours" />
     <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
-      <div className="max-w-2xl bg-white rounded-xl shadow p-8 text-center">
+      <div className="max-w-2xl bg-cloud-100 dark:bg-slate-700 rounded-xl shadow-lg p-8 text-center">
         <Image
           src="https://images.unsplash.com/photo-1596075781084-bd077eef0722?w=800&h=450&fit=crop"
           alt="Labor estimator screenshot"
@@ -39,7 +41,6 @@ export default function LaborEstimator() {
           >
             Create Free Account
           </Link>
-          <CopilotQuickButton prompt="Help me estimate labor hours" />
         </div>
         <ToolDemoModal
           open={showDemo}
@@ -48,5 +49,6 @@ export default function LaborEstimator() {
         />
       </div>
     </div>
+    </>
   );
 }

@@ -33,7 +33,7 @@ export default function Hero3D() {
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      className="h-64 w-full bg-slate-700/20 rounded-xl"
+      className="h-64 w-full bg-slate-700/20 rounded-xl ring-2 ring-accent/40"
     >
       <Canvas camera={{ position: [0, 0, 4] }}>
         <ambientLight intensity={0.5} />
