@@ -22,7 +22,7 @@ export default function ChatWidget() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 rounded-full w-14 h-14 bg-accent text-white flex items-center justify-center shadow-lg hover:scale-110 transition animate-bounce"
+        className="fixed bottom-6 right-6 rounded-full w-14 h-14 bg-accent text-white flex items-center justify-center shadow-lg hover:scale-110 transition pulse-slow"
       >
         <MessageCircle className="w-6 h-6" />
         <span className="sr-only">Ask AI</span>
