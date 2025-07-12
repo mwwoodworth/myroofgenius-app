@@ -12,13 +12,13 @@ export default function OfflineIndicator({
 }: OfflineIndicatorProps) {
   return (
     <div
-      className="fixed top-4 right-4 flex items-center gap-2 text-sm"
+      className="fixed top-4 right-4 flex items-center gap-2 text-sm z-50"
       aria-live="polite"
     >
       {!online ? (
         <>
-          <CloudOff className="w-5 h-5 text-red-600" aria-hidden="true" />
-          <span className="text-red-600">Offline</span>
+          <CloudOff className="w-5 h-5 text-danger" aria-hidden="true" />
+          <span className="text-danger">Offline</span>
         </>
       ) : syncing ? (
         <>

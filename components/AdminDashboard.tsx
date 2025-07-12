@@ -81,8 +81,8 @@ export default function AdminDashboard() {
   if (loading) return <div className="p-4">Loading...</div>;
   if (!isAdmin) return <div className="p-4">Access Denied</div>;
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white shadow">
+    <div className="min-h-screen bg-bg">
+      <div className="bg-bg-card shadow">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <h1 className="text-3xl font-bold">{messages.adminDashboard}</h1>
         </div>
@@ -95,7 +95,7 @@ export default function AdminDashboard() {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-4 py-2 font-medium capitalize ${
-                activeTab === tab ? 'text-secondary-700 border-b-2 border-secondary-700' : 'text-gray-600 hover:text-gray-900'
+                activeTab === tab ? 'text-secondary-700 border-b-2 border-secondary-700' : 'text-text-secondary hover:text-text-primary'
               }`}
             >
               {tab}
@@ -158,7 +158,7 @@ function StatCard({ title, value, icon, color }: { title: string; value: number 
     <div className="bg-white rounded-lg shadow p-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-gray-600">{title}</p>
+          <p className="text-sm font-medium text-text-secondary">{title}</p>
           <p className="text-2xl font-bold mt-1">{value}</p>
         </div>
         <div className={`w-12 h-12 rounded-full flex items-center justify-center ${colorClasses[color]}`}>{icon}</div>
@@ -211,7 +211,7 @@ function OrdersTab() {
               <th className="px-6 py-3">Date</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-secondary/20">
             {orders.map(order => (
               <tr key={order.id}>
                 <td className="px-6 py-2">{order.id.slice(0, 8)}...</td>
@@ -275,7 +275,7 @@ function ProductsTab() {
               <th className="px-6 py-3">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-secondary/20">
             {products.map(product => (
               <tr key={product.id}>
                 <td className="px-6 py-3">
@@ -290,7 +290,7 @@ function ProductsTab() {
                 <td className="px-6 py-3">{product.category}</td>
                 <td className="px-6 py-3">${product.price.toFixed(2)}</td>
                 <td className="px-6 py-3">
-                  <span className={`px-2 py-1 text-xs rounded ${product.is_active ? 'bg-accent-emerald/20 text-accent-emerald' : 'bg-gray-100 text-gray-800'}`}>{product.is_active ? 'Active' : 'Inactive'}</span>
+                  <span className={`px-2 py-1 text-xs rounded ${product.is_active ? 'bg-accent-emerald/20 text-accent-emerald' : 'bg-secondary/20 text-text-secondary'}`}>{product.is_active ? 'Active' : 'Inactive'}</span>
                 </td>
                 <td className="px-6 py-3">
                   <button className="text-secondary-700 hover:underline mr-3">Edit</button>
@@ -423,7 +423,7 @@ function UsersTab() {
               <th className="px-4 py-3">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-secondary/20">
             {users.map(user => (
               <tr key={user.user_id}>
                 <td className="px-4 py-2">{user.full_name || '—'}</td>
@@ -501,7 +501,7 @@ function AITab() {
               <th className="px-4 py-3">Message</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-secondary/20">
             {logs.map((log: any) => (
               <tr key={log.id}>
                 <td className="px-4 py-2">{new Date(log.created_at).toLocaleString()}</td>

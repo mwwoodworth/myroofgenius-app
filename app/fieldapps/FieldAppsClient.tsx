@@ -127,11 +127,11 @@ export default function FieldAppsClient() {
       </div>
       {showQueue && (
         <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center"
+          className="fixed inset-0 bg-bg/80 flex items-center justify-center"
           role="dialog"
           aria-modal="true"
         >
-          <div className="bg-white p-6 rounded-lg max-w-sm w-full">
+          <div className="bg-bg-card p-6 rounded-lg max-w-sm w-full">
             <h2 className="text-xl font-bold mb-4">Offline Actions</h2>
             {queue.length === 0 ? (
               <p className="text-sm">No actions queued.</p>

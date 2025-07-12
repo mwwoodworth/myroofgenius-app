@@ -37,7 +37,7 @@ export const Input = React.forwardRef<
         aria-invalid={!!error}
         aria-describedby={errorId}
         className={clsx(
-          "block w-full rounded-md border border-gray-300 px-3 py-2 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent disabled:bg-gray-100",
+          "block w-full rounded-md border border-secondary/40 px-3 py-2 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent disabled:bg-bg-card",
           error &&
             "border-danger text-danger focus:ring-danger focus:border-danger",
           className,
@@ -69,7 +69,7 @@ export const Select = React.forwardRef<
         aria-invalid={!!error}
         aria-describedby={errorId}
         className={clsx(
-          "block w-full rounded-md border border-gray-300 px-3 py-2 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent disabled:bg-gray-100",
+          "block w-full rounded-md border border-secondary/40 px-3 py-2 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent disabled:bg-bg-card",
           error &&
             "border-danger text-danger focus:ring-danger focus:border-danger",
           className,
@@ -103,7 +103,7 @@ export const Textarea = React.forwardRef<
         aria-invalid={!!error}
         aria-describedby={errorId}
         className={clsx(
-          "block w-full rounded-md border border-gray-300 px-3 py-2 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent disabled:bg-gray-100",
+          "block w-full rounded-md border border-secondary/40 px-3 py-2 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent disabled:bg-bg-card",
           error &&
             "border-danger text-danger focus:ring-danger focus:border-danger",
           className,
@@ -136,7 +136,7 @@ export const Checkbox = React.forwardRef<
           aria-invalid={!!error}
           aria-describedby={errorId}
           className={clsx(
-            "rounded border-gray-300 text-accent focus:ring-accent disabled:bg-gray-100",
+            "rounded border-secondary/40 text-accent focus:ring-accent disabled:bg-bg-card",
             error && "border-danger text-danger focus:ring-danger",
             className,
           )}
@@ -172,7 +172,7 @@ export const Radio = React.forwardRef<
           aria-invalid={!!error}
           aria-describedby={errorId}
           className={clsx(
-            "border-gray-300 text-accent focus:ring-accent disabled:bg-gray-100",
+            "border-secondary/40 text-accent focus:ring-accent disabled:bg-bg-card",
             error && "border-danger text-danger focus:ring-danger",
             className,
           )}

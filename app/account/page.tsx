@@ -23,11 +23,11 @@ export default async function Account() {
   const orders = await getOrders();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-bg">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">My Account</h1>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-bg-card rounded-lg shadow p-6">
           <h2 className="text-xl font-semibold mb-4">Order History</h2>
           {orders.length === 0 ? (
             <EmptyState message="No orders yet." />
@@ -38,9 +38,9 @@ export default async function Account() {
           )}
         </div>
 
-        <div className="mt-6 bg-white rounded-lg shadow p-6">
+        <div className="mt-6 bg-bg-card rounded-lg shadow p-6">
           <h2 className="text-xl font-semibold mb-4">Account Settings</h2>
-          <p className="text-gray-600">
+          <p className="text-text-secondary">
             Update your email or password from the profile menu. Contact support
             if you need any help managing your subscription.
           </p>

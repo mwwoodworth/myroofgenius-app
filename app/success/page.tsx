@@ -10,8 +10,8 @@ export default function SuccessPage() {
     triggerConfetti();
   }, [triggerConfetti]);
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
+    <div className="min-h-screen flex items-center justify-center bg-bg">
+      <div className="max-w-md w-full space-y-8 p-8 bg-bg-card rounded-lg shadow">
         <UpgradeBanner />
         <div className="text-center">
           <div className="mx-auto h-12 w-12 text-accent-emerald">
@@ -19,10 +19,10 @@ export default function SuccessPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-3xl font-extrabold text-text-primary">
             Payment Successful!
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-text-secondary">
             Thank you for your purchase. You&apos;ll receive a confirmation email shortly.
           </p>
         </div>
@@ -36,7 +36,7 @@ export default function SuccessPage() {
           </Link>
           <Link
             href="/products"
-            className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+            className="w-full flex justify-center py-2 px-4 border border-secondary/30 rounded-md shadow-sm text-sm font-medium text-text-secondary bg-bg-card hover:bg-bg"
           >
             Browse More Products
           </Link>
