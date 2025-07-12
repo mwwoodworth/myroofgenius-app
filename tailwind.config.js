@@ -1,3 +1,5 @@
+const tokens = require("./design-system/tokens.json");
+
 module.exports = {
   darkMode: "class",
   content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
@@ -5,51 +7,63 @@ module.exports = {
     extend: {
       colors: {
         bg: {
-          DEFAULT: "var(--color-bg)",
-          card: "var(--color-white)",
+          DEFAULT: tokens.colors["color-bg-default"],
+          card: tokens.colors["color-bg-card"],
         },
-        primary: "rgb(var(--clr-primary-500) / <alpha-value>)",
-        accent: "rgb(var(--clr-primary-500) / <alpha-value>)",
-        secondary: "#4A5568",
-        success: "rgb(var(--clr-success-500) / <alpha-value>)",
-        warning: "rgb(var(--clr-warning-500) / <alpha-value>)",
-        danger: "rgb(var(--clr-danger-500) / <alpha-value>)",
+        primary: tokens.colors["color-primary-base"],
+        accent: tokens.colors["color-accent-base"],
+        secondary: tokens.colors["color-secondary-base"],
+        success: tokens.colors["color-success-base"],
+        warning: tokens.colors["color-warning-base"],
+        danger: tokens.colors["color-danger-base"],
         text: {
-          primary: "var(--color-text)",
-          secondary: "#6B7280",
+          primary: tokens.colors["color-text-primary"],
+          secondary: tokens.colors["color-text-secondary"],
         },
       },
       fontFamily: {
-        sans: ["var(--font-body)", "Inter", "sans-serif"],
-        mono: ["var(--font-mono)", "monospace"],
+        sans: tokens.fontFamily["font-family-sans"],
+        mono: tokens.fontFamily["font-family-mono"],
       },
       fontSize: {
-        h1: ["48px", { lineHeight: "1.2", fontWeight: "700" }],
-        h2: ["36px", { lineHeight: "1.3", fontWeight: "700" }],
-        h3: ["24px", { lineHeight: "1.4", fontWeight: "600" }],
-        base: ["16px", { lineHeight: "1.5", fontWeight: "400" }],
-        sm: ["14px", { lineHeight: "1.5", fontWeight: "400" }],
-        label: ["14px", { lineHeight: "1.5", fontWeight: "500" }],
-        caption: ["12px", { lineHeight: "1.5", fontWeight: "400" }],
+        h1: [
+          tokens.fontSize["font-size-h1"],
+          { lineHeight: "1.2", fontWeight: "700" },
+        ],
+        h2: [
+          tokens.fontSize["font-size-h2"],
+          { lineHeight: "1.3", fontWeight: "700" },
+        ],
+        h3: [
+          tokens.fontSize["font-size-h3"],
+          { lineHeight: "1.4", fontWeight: "600" },
+        ],
+        base: [
+          tokens.fontSize["font-size-base"],
+          { lineHeight: "1.5", fontWeight: "400" },
+        ],
+        sm: [
+          tokens.fontSize["font-size-sm"],
+          { lineHeight: "1.5", fontWeight: "400" },
+        ],
+        label: [
+          tokens.fontSize["font-size-label"],
+          { lineHeight: "1.5", fontWeight: "500" },
+        ],
+        caption: [
+          tokens.fontSize["font-size-caption"],
+          { lineHeight: "1.5", fontWeight: "400" },
+        ],
       },
-      spacing: {
-        0: "0px",
-        1: "0.5rem",
-        2: "1rem",
-        3: "1.5rem",
-        4: "2rem",
-        5: "2.5rem",
-        6: "3rem",
-        7: "3.5rem",
-        8: "4rem",
-        9: "4.5rem",
-        10: "5rem",
-        11: "5.5rem",
-        12: "6rem",
-      },
+      spacing: Object.fromEntries(
+        Object.entries(tokens.spacing).map(([k, v]) => [
+          k.replace("spacing-", ""),
+          v,
+        ]),
+      ),
       borderRadius: {
-        DEFAULT: "0.75rem",
-        lg: "1rem",
+        DEFAULT: tokens.radius["radius-DEFAULT"],
+        lg: tokens.radius["radius-lg"],
       },
     },
   },
