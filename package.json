@@ -23,7 +23,8 @@
     "postbuild": "next-sitemap",
     "lighthouse:seo": "node scripts/lighthouse-seo.js",
     "a11y": "tsx scripts/a11y.ts",
-    "slackbot:dev": "tsx slack-bot/index.ts"
+    "slackbot:dev": "tsx slack-bot/index.ts",
+    "sync:tokens": "node scripts/sync-design-tokens.js"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",
