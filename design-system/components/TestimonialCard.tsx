@@ -1,8 +1,8 @@
 import React from "react";
-import Card from "./ui/Card";
-import AvatarPlaceholder from "./icons/AvatarPlaceholder";
-import VerifiedBadge from "./icons/VerifiedBadge";
-import Star from "./icons/Star";
+import Card from "./Card";
+import AvatarPlaceholder from "../../components/icons/AvatarPlaceholder";
+import VerifiedBadge from "../../components/icons/VerifiedBadge";
+import Star from "../../components/icons/Star";
 
 interface Props {
   quote: string;

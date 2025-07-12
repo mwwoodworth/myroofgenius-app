@@ -1,7 +1,8 @@
 import resolveConfig from 'tailwindcss/resolveConfig';
+import type { Config } from 'tailwindcss';
 import tailwindConfig from '../tailwind.config.js';
 
-const fullConfig = resolveConfig(tailwindConfig);
+const fullConfig = resolveConfig(tailwindConfig as unknown as Config) as any;
 const { colors, spacing, fontSize, borderRadius } = fullConfig.theme.extend;
 
 export const designTokens = {
