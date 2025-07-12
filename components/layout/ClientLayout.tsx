@@ -1,5 +1,7 @@
 "use client";
 import { ReactNode, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
 import {
   ThemeProvider,
   RoleProvider,
@@ -36,6 +38,8 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
     return () =>
       window.removeEventListener("beforeinstallprompt", promptHandler);
   }, []);
+
+  const pathname = usePathname();
   return (
     <LocaleProvider>
       <CurrencyProvider>
@@ -46,49 +50,51 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
         >
           Skip to Content
         </a>
-        <AnimatedLayout>
-          <AuthProvider>
-            <RoleProvider>
-              <ThemeProvider>
-                <ToastProvider>
-                  <PresenceProvider room="global">
-                    {arModeEnabled ? (
-                      <ARModeProvider>
-                        <NavBar />
-                        <Breadcrumbs />
-                        <AnnouncementBanner />
-                        <main
-                          id="main-content"
-                          tabIndex={-1}
-                          className="outline-none pb-24"
-                        >
-                          <ErrorBoundary>{children}</ErrorBoundary>
-                        </main>
-                        {aiCopilotEnabled && <CopilotWrapper />}
-                        <Footer />
-                      </ARModeProvider>
-                    ) : (
-                      <>
-                        <NavBar />
-                        <Breadcrumbs />
-                        <AnnouncementBanner />
-                        <main
-                          id="main-content"
-                          tabIndex={-1}
-                          className="outline-none pb-24"
-                        >
-                          <ErrorBoundary>{children}</ErrorBoundary>
-                        </main>
-                        {aiCopilotEnabled && <CopilotWrapper />}
-                        <Footer />
-                      </>
-                    )}
-                  </PresenceProvider>
-                </ToastProvider>
-              </ThemeProvider>
-            </RoleProvider>
-          </AuthProvider>
-        </AnimatedLayout>
+        <AnimatePresence mode="wait">
+          <AnimatedLayout key={pathname}>
+            <AuthProvider>
+              <RoleProvider>
+                <ThemeProvider>
+                  <ToastProvider>
+                    <PresenceProvider room="global">
+                      {arModeEnabled ? (
+                        <ARModeProvider>
+                          <NavBar />
+                          <Breadcrumbs />
+                          <AnnouncementBanner />
+                          <main
+                            id="main-content"
+                            tabIndex={-1}
+                            className="outline-none pb-24"
+                          >
+                            <ErrorBoundary>{children}</ErrorBoundary>
+                          </main>
+                          {aiCopilotEnabled && <CopilotWrapper />}
+                          <Footer />
+                        </ARModeProvider>
+                      ) : (
+                        <>
+                          <NavBar />
+                          <Breadcrumbs />
+                          <AnnouncementBanner />
+                          <main
+                            id="main-content"
+                            tabIndex={-1}
+                            className="outline-none pb-24"
+                          >
+                            <ErrorBoundary>{children}</ErrorBoundary>
+                          </main>
+                          {aiCopilotEnabled && <CopilotWrapper />}
+                          <Footer />
+                        </>
+                      )}
+                    </PresenceProvider>
+                  </ToastProvider>
+                </ThemeProvider>
+              </RoleProvider>
+            </AuthProvider>
+          </AnimatedLayout>
+        </AnimatePresence>
       </CurrencyProvider>
     </LocaleProvider>
   );
