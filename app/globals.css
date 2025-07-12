@@ -153,6 +153,8 @@
 }
 .hero-headline span {
   position: absolute;
+  width: 100%;
+  white-space: pre-line;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
 }

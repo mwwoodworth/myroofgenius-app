@@ -115,7 +115,7 @@ function ToolCard({ name, description, features, link, icon, saveTime }) {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="bg-white/30 backdrop-blur-lg shadow-xl border border-white/20 p-6"
+      className="bg-cloud-100/30 dark:bg-slate-700/30 backdrop-blur-lg shadow-xl border border-white/20 p-6"
     >
       <div className="flex items-start justify-between mb-4">
         <div className="w-12 h-12 bg-secondary-700/10 rounded-lg flex items-center justify-center">
@@ -150,7 +150,7 @@ function ToolCard({ name, description, features, link, icon, saveTime }) {
 
 function IntegrationBadge({ name }) {
   return (
-    <span className="inline-flex items-center px-4 py-2 bg-white rounded-lg text-slate-700 font-medium">
+    <span className="inline-flex items-center px-4 py-2 bg-cloud-100 dark:bg-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-medium">
       <span className="w-2 h-2 bg-accent-emerald/50 rounded-full mr-2"></span>
       {name}
     </span>

@@ -1,6 +1,6 @@
 import dynamicImport from "next/dynamic";
 import { estimatorEnabled } from "../lib/features";
-import CopilotQuickButton from "../../components/CopilotQuickButton";
+import { PagePrompt } from "../../components/ui";
 
 const Estimator = dynamicImport(
   () => import("../../components/SimpleEstimator"),
@@ -18,9 +18,11 @@ export default function EstimatorPage() {
     );
   }
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8 space-y-4">
-      <Estimator />
-      <CopilotQuickButton prompt="Estimate roofing materials" />
-    </div>
+    <>
+      <PagePrompt prompt="Estimate roofing materials" />
+      <div className="min-h-screen flex flex-col items-center justify-center p-8 space-y-4">
+        <Estimator />
+      </div>
+    </>
   );
 }
