@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, Shield, FilePlus } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Button from "./Button";
 import ThemeToggle from "./ui/ThemeToggle";
 
@@ -15,8 +15,11 @@ export default function NavBar() {
     return () => window.removeEventListener("scroll", handle);
   }, []);
   const links = [
-    { href: "/analysis", label: "Instant Roof Analysis", icon: Shield },
-    { href: "/proposal", label: "Create Field Proposal", icon: FilePlus },
+    { href: "/", label: "Home" },
+    { href: "/tools", label: "Tools" },
+    { href: "/marketplace", label: "Marketplace" },
+    { href: "/fieldapps", label: "Field Apps" },
+    { href: "/blog", label: "Blog" },
   ];
   return (
     <header
@@ -29,18 +32,23 @@ export default function NavBar() {
           MyRoofGenius
         </Link>
         <div className="hidden md:flex items-center space-x-6">
-          {links.map(({ href, label, icon: Icon }) => (
+          {links.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className="flex items-center space-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
-              <Icon className="w-4 h-4" aria-hidden="true" />
-              <span>{label}</span>
+              {label}
             </Link>
           ))}
-          <Button as="a" href="/get-started" className="ml-4">
-            Start Free Analysis
+          <Link
+            href="/login"
+            className="focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          >
+            Login
+          </Link>
+          <Button as="a" href="/signup" className="ml-2">
+            Sign Up
           </Button>
         </div>
         <div className="flex items-center space-x-2">
@@ -57,23 +65,30 @@ export default function NavBar() {
       {open && (
         <div className="md:hidden bg-bg border-t border-gray-200">
           <div className="flex flex-col space-y-4 p-4">
-            {links.map(({ href, label, icon: Icon }) => (
+            {links.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className="flex items-center space-x-2 py-2"
+                className="py-2"
                 onClick={() => setOpen(false)}
               >
-                <Icon className="w-5 h-5" aria-hidden="true" />
-                <span>{label}</span>
+                {label}
               </Link>
             ))}
+            <Link href="/login" className="py-2" onClick={() => setOpen(false)}>
+              Login
+            </Link>
+            <Button
+              as="a"
+              href="/signup"
+              className="w-full"
+              onClick={() => setOpen(false)}
+            >
+              Sign Up
+            </Button>
           </div>
           <div className="p-4 sticky bottom-0 bg-bg border-t border-gray-200 flex items-center justify-between">
             <ThemeToggle />
-            <Button as="a" href="/get-started" className="w-full ml-2">
-              Start Free Analysis
-            </Button>
           </div>
         </div>
       )}
