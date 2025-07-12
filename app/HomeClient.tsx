@@ -77,7 +77,7 @@ export default function HomeClient() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}
-        className="relative overflow-hidden bg-black/20 py-24 backdrop-blur-lg rounded-2xl shadow-2xl"
+        className="relative overflow-hidden bg-[var(--color-navy-900)] py-24 backdrop-blur-lg rounded-2xl shadow-2xl"
       >
         <AnimatedGradient />
         <BackgroundCanvas />
@@ -96,7 +96,7 @@ export default function HomeClient() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ type: "spring", stiffness: 80 }}
-              className="text-white font-extrabold text-4xl sm:text-5xl md:text-6xl mb-6 leading-tight"
+              className="text-white font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6 leading-snug"
             >
               <HeroHeadline
                 texts={["Protect every project.", "Grow every margin."]}

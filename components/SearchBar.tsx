@@ -39,10 +39,10 @@ export default function SearchBar() {
         }}
         placeholder="Search..."
         whileFocus={{ scale: 1.05 }}
-        className="border px-3 py-2 rounded-xl glass-card w-full"
+        className="border px-3 py-2 rounded-[14px] backdrop-blur-lg bg-white/5 border-white/20 w-full"
       />
       {results.length > 0 && (
-        <ul className="absolute mt-1 w-full z-10 max-h-64 overflow-y-auto glass-card backdrop-blur-lg border border-white/20 rounded-xl">
+        <ul className="absolute mt-1 w-full z-10 max-h-64 overflow-y-auto backdrop-blur-lg bg-white/5 border border-white/20 rounded-[14px]">
           {results.map((r) => (
             <li key={r.id} className="px-3 py-2 hover:bg-white/20 text-sm">
               {r.name}

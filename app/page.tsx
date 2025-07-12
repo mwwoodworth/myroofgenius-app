@@ -1,5 +1,8 @@
 import NavBar from "../components/NavBar";
-import TrustBar from "../components/TrustBar";
+import dynamicImport from "next/dynamic";
+const TrustBar = dynamicImport(() => import("../components/TrustBar"), {
+  ssr: false,
+});
 import TestimonialCard from "../components/TestimonialCard";
 import Button from "../components/Button";
 
