@@ -94,7 +94,7 @@ export default function HomeClient() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ type: "spring", stiffness: 80 }}
-              className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
             >
               <HeroHeadline
                 texts={["Protect every project.", "Grow every margin."]}

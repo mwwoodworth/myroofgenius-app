@@ -142,9 +142,14 @@
 }
 
 .hero-headline {
-  min-height: 3.5rem;
   position: relative;
   overflow: hidden;
+  min-height: 4.5rem;
+}
+@media (min-width: 640px) {
+  .hero-headline {
+    min-height: 3.5rem;
+  }
 }
 .hero-headline span {
   position: absolute;
