@@ -2,11 +2,13 @@
 import { useState, useEffect } from "react";
 import CopilotPanel from "./CopilotPanel";
 import { Bot } from "lucide-react";
+import TypingText from "./ui/TypingText";
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [engine, setEngine] = useState("GPT");
   const [prompt, setPrompt] = useState("Need help analyzing?");
+  const [showIntro, setShowIntro] = useState(false);
   useEffect(() => {
     const saved = localStorage.getItem("aiEngine");
     if (saved) setEngine(saved);
@@ -14,19 +16,39 @@ export default function ChatWidget() {
     if (ins) setPrompt(ins);
     const pagePrompt = document.body.dataset.pagePrompt;
     if (pagePrompt) setPrompt(pagePrompt);
+    if (!localStorage.getItem("aiIntroShown")) {
+      setShowIntro(true);
+    }
   }, []);
   useEffect(() => {
     localStorage.setItem("aiEngine", engine);
   }, [engine]);
+
+  const handleOpen = () => {
+    setOpen(true);
+    localStorage.setItem("aiIntroShown", "true");
+    setShowIntro(false);
+  };
   return (
     <>
       <button
-        onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 rounded-full w-14 h-14 bg-accent text-white flex items-center justify-center shadow-lg hover:scale-110 transition pulse-slow"
+        onClick={handleOpen}
+        className="fixed bottom-6 right-6 rounded-full w-12 h-12 bg-accent text-white flex items-center justify-center shadow-md hover:scale-105 transition"
       >
-        <Bot className="w-6 h-6" />
+        <Bot className="w-5 h-5" />
         <span className="sr-only">Ask AI</span>
       </button>
+      {showIntro && (
+        <div className="fixed bottom-20 right-6 bg-bg-card rounded-lg shadow p-3">
+          <TypingText
+            texts={[
+              "Welcome to Genius AI! Ask me anything about roofing.",
+              'Try "Estimate material costs"',
+            ]}
+            className="text-sm text-text-primary"
+          />
+        </div>
+      )}
       {open && (
         <div className="fixed bottom-24 right-6 bg-bg-card rounded-lg shadow-md p-2 text-sm flex items-center gap-2">
           <span>{engine}</span>
