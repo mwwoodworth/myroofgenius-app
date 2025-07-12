@@ -15,6 +15,8 @@ function getClient(): SupabaseClient {
 }
 
 export interface CopilotLogEntry {
+  id?: number;
+  created_at?: string;
   session_id: string;
   user_id?: string;
   role: 'user' | 'assistant';

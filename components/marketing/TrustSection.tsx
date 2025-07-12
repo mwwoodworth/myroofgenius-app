@@ -5,7 +5,7 @@ export default function TrustSection() {
     <section className="trust">
       <h2>Trusted by Roofing Pros</h2>
       <blockquote>
-        "MyRoofGenius saved us $20k on project estimates!" – John, ABC Roofing
+        &quot;MyRoofGenius saved us $20k on project estimates!&quot; – John, ABC Roofing
       </blockquote>
       <div className="badges">
         <Image
