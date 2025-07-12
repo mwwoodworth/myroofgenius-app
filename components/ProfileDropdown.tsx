@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import type { User } from '@supabase/supabase-js';
@@ -63,8 +64,15 @@ export default function ProfileDropdown() {
         />
         <ChevronDown className="w-4 h-4" />
       </button>
-      {open && (
-        <div className="absolute right-0 mt-2 w-48 rounded-[14px] border border-white/20 bg-bg-card backdrop-blur-lg p-3 z-50 space-y-2">
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute right-0 mt-2 w-48 rounded-[14px] border border-white/20 bg-bg-card backdrop-blur-lg p-3 z-50 space-y-2"
+          >
           <select
             className="w-full rounded-md bg-bg-card border border-gray-700 p-2 text-sm"
             value={role}
@@ -88,8 +96,9 @@ export default function ProfileDropdown() {
           >
             Sign Out
           </button>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
