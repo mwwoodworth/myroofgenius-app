@@ -1,11 +1,28 @@
 import { createClient } from "@supabase/supabase-js";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { buildMeta } from "../../../lib/metadata";
 
 // Add dynamic params export to handle dynamic routes
 export async function generateStaticParams() {
   // Return empty array to disable static generation for dynamic routes
   return [];
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const post = await getBlogPost(params.slug);
+  const title = post?.title || "Blog Post";
+  const desc = post?.excerpt || "Roofing insights from MyRoofGenius";
+  const img = post?.image_url;
+  return buildMeta({
+    title: `${title} | MyRoofGenius`,
+    description: desc,
+    image: img,
+  });
 }
 
 async function getBlogPost(slug: string) {
@@ -135,7 +152,10 @@ export default async function BlogPost({
             Home
           </Link>
           <span className="mx-2 text-gray-400">/</span>
-          <Link href="/blog" className="text-text-secondary hover:text-gray-700">
+          <Link
+            href="/blog"
+            className="text-text-secondary hover:text-gray-700"
+          >
             Blog
           </Link>
           <span className="mx-2 text-gray-400">/</span>
@@ -195,5 +215,6 @@ export default async function BlogPost({
           </div>
         </div>
       </article>
-    </div>  );
+    </div>
+  );
 }

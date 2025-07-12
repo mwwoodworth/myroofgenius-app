@@ -111,7 +111,8 @@ export default async function Blog() {
                   width={800}
                   height={600}
                   className="rounded-lg shadow-lg w-full"
-                  loading="lazy"
+                  loading="eager"
+                  priority
                 />
               </div>
               <div>

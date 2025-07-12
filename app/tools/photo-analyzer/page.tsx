@@ -1,5 +1,12 @@
 "use client";
 import { useState } from "react";
+import { buildMeta } from "../../../lib/metadata";
+
+export const generateMetadata = () =>
+  buildMeta({
+    title: "Photo Analyzer | MyRoofGenius",
+    description: "Upload a roof photo to receive instant AI analysis.",
+  });
 
 export default function PhotoAnalyzerPage() {
   const [status, setStatus] = useState("");
