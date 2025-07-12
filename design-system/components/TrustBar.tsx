@@ -1,8 +1,8 @@
 import React from "react";
-import GafBadge from "./icons/GafBadge";
-import BbbBadge from "./icons/BbbBadge";
-import GoogleReviews from "./icons/GoogleReviews";
-import SslLock from "./icons/SslLock";
+import GafBadge from "../../components/icons/GafBadge";
+import BbbBadge from "../../components/icons/BbbBadge";
+import GoogleReviews from "../../components/icons/GoogleReviews";
+import SslLock from "../../components/icons/SslLock";
 
 export default function TrustBar() {
   return (
