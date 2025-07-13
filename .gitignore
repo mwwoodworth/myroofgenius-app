@@ -10,7 +10,7 @@ coverage/
 *.pdf
 *.png
 # Visual regression snapshots
-tests/visual/*.png
+tests/visual/**/*.png
 .output/visual/
 .snapshots/
 *.xlsx
