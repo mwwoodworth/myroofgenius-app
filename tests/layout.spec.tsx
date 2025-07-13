@@ -5,6 +5,10 @@ import { render } from '@testing-library/react';
 jest.mock('../components/ui', () => ({ Analytics: () => null }));
 jest.mock('../app/lib/sentry', () => ({}));
 jest.mock('@vercel/analytics/react', () => ({ Analytics: () => null }));
+jest.mock('../components/CopilotProvider', () => ({
+  __esModule: true,
+  default: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
 jest.mock('next/font/google', () => ({
   Inter: () => ({ className: 'font', variable: '--font-body' }),
   EB_Garamond: () => ({ className: 'font', variable: '--font-heading' }),
