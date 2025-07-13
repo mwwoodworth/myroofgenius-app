@@ -142,33 +142,36 @@ export default function MarketplaceClient({
   }, [filterAndSortProducts]);
 
   async function fetchProducts() {
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    if (!url || !key) {
+    try {
+      const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+      if (!url || !key) throw new Error("Missing Supabase config");
+
+      const supabase = createClient(url, key);
+      const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("is_active", true)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      if (data) {
+        const enrichedProducts = data.map((product: Product) => ({
+          ...product,
+          rating: 4.5 + Math.random() * 0.5,
+          reviews_count: Math.floor(Math.random() * 200) + 10,
+          sales_count: Math.floor(Math.random() * 1000) + 50,
+          is_featured: Math.random() > 0.7,
+          is_new: Math.random() > 0.8,
+        }));
+        setProducts(enrichedProducts);
+      }
+    } catch (err) {
+      console.error(err);
+      setProducts([]);
+    } finally {
       setLoading(false);
-      return;
     }
-    const supabase = createClient(url, key);
-
-    const { data } = await supabase
-      .from("products")
-      .select("*")
-      .eq("is_active", true)
-      .order("created_at", { ascending: false });
-
-    if (data) {
-      // Simulate additional product data for demo
-      const enrichedProducts = data.map((product: Product) => ({
-        ...product,
-        rating: 4.5 + Math.random() * 0.5,
-        reviews_count: Math.floor(Math.random() * 200) + 10,
-        sales_count: Math.floor(Math.random() * 1000) + 50,
-        is_featured: Math.random() > 0.7,
-        is_new: Math.random() > 0.8,
-      }));
-      setProducts(enrichedProducts);
-    }
-    setLoading(false);
   }
 
   async function fetchRecommendations() {
@@ -466,9 +469,7 @@ export default function MarketplaceClient({
               </div>
             ) : filteredProducts.length === 0 ? (
               <div className="text-center py-12 bg-white rounded-lg">
-                <p className="text-gray-600 mb-4">
-                  No products found matching your criteria.
-                </p>
+                <p className="text-gray-600 mb-4">No products found.</p>
                 <button
                   onClick={() => {
                     setSelectedCategory("all");
