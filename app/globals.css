@@ -202,7 +202,7 @@
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid #3b82f6; /* Accent-Blue-500 */
+  outline: 2px solid #4F9CF9;
   outline-offset: 2px;
 }
 
@@ -214,7 +214,7 @@ button:focus-visible {
   [role="button"],
   [tabindex]:not([tabindex="-1"])
 ):focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid #4F9CF9;
   outline-offset: 2px;
 }
 
@@ -258,7 +258,7 @@ button:focus-visible {
 
 /* Trust Section */
 .trust {
-  background: var(--color-bg);
+  @apply bg-gradient-to-b from-[#002D5B] to-[#001A33];
   padding: 2rem 1rem;
   text-align: center;
 }
@@ -274,28 +274,28 @@ button:focus-visible {
 @keyframes star-pulse {
   0%,
   100% {
-    opacity: 0.8;
+    opacity: 0.96;
   }
   50% {
-    opacity: 0.4;
+    opacity: 0.92;
   }
 }
 
 .animate-star-pulse {
-  animation: star-pulse 4s ease-in-out infinite;
+  animation: star-pulse 8s ease-in-out infinite;
 }
 
 @keyframes pulse-slow {
   0%,
   100% {
-    opacity: 1;
+    opacity: 0.96;
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.92;
   }
 }
 .pulse-slow {
-  animation: pulse-slow 3s ease-in-out infinite;
+  animation: pulse-slow 8s ease-in-out infinite;
 }
 
 /* Fluid headings */

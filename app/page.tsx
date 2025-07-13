@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <main className="relative z-0 overflow-hidden">
+    <main className="relative z-0 overflow-hidden pb-28 sm:pb-0">
       <HomeClient />
     </main>
   );
