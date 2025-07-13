@@ -61,14 +61,14 @@ export default function ToolsClient() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen bg-transparent text-slate-100">
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Professional Tools That Protect Your Business
           </h1>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
             Every calculation here was built from hard lessons. These aren&apos;t just tools –
             they&apos;re protection against the mistakes that sink projects.
           </p>
@@ -78,7 +78,7 @@ export default function ToolsClient() {
         {tools.map((category, idx) => (
           <div key={idx} className="mb-16">
             <div className="mb-8">
-              <h2 className="text-3xl font-bold text-slate-900 mb-3">{category.category}</h2>
+              <h2 className="text-3xl font-bold text-white mb-3">{category.category}</h2>
               <p className="text-lg text-text-secondary">{category.description}</p>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
@@ -92,7 +92,7 @@ export default function ToolsClient() {
         {/* Integration Section */}
         <div className="bg-secondary/5 rounded-2xl p-8 mt-16">
           <h2 className="text-2xl font-bold mb-4">All Tools Work Together</h2>
-          <p className="text-slate-700 mb-6">
+          <p className="text-slate-200 mb-6">
             Your calculations flow seamlessly between tools. Estimate materials,
             calculate labor, then see the cash flow impact – all connected, all protected.
           </p>
@@ -134,7 +134,7 @@ function ToolCard({ name, description, features, link, icon, saveTime }) {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.05 }}
-            className="flex items-center text-sm text-slate-700"
+            className="flex items-center text-sm text-slate-200"
           >
             <span className="text-accent-emerald mr-2">✓</span>
             {feature}
@@ -150,7 +150,7 @@ function ToolCard({ name, description, features, link, icon, saveTime }) {
 
 function IntegrationBadge({ name }) {
   return (
-    <span className="inline-flex items-center px-4 py-2 bg-cloud-100 dark:bg-slate-700 rounded-lg text-slate-700 dark:text-slate-200 font-medium">
+    <span className="inline-flex items-center px-4 py-2 bg-cloud-100/10 backdrop-blur-lg rounded-lg text-slate-200 font-medium">
       <span className="w-2 h-2 bg-accent-emerald/50 rounded-full mr-2"></span>
       {name}
     </span>
