@@ -5,7 +5,7 @@
 @layer base {
   body {
     @apply font-sans;
-    background: linear-gradient(180deg, #0a0a0a, #1a1a1a);
+    background: radial-gradient(circle at center, #101020, #000000);
     color: #e0e0e0;
     font-size: clamp(1rem, 2.5vw, 1.125rem);
   }
