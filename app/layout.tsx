@@ -7,13 +7,6 @@ import { maintenanceMode } from "./lib/features";
 import { Analytics } from "../components/ui";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 
-const Starfield = dynamicImport(() => import("../components/Starfield"), {
-  ssr: false,
-});
-const RippleBackground = dynamicImport(
-  () => import("../components/RippleBackground"),
-  { ssr: false },
-);
 const ClientLayout = dynamicImport(
   () => import("../components/layout/ClientLayout"),
   { ssr: false },
@@ -160,8 +153,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </div>
         ) : (
           <>
-            <Starfield />
-            <RippleBackground />
             <ClientLayout>{children}</ClientLayout>
             <Analytics />
             <VercelAnalytics />
