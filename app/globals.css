@@ -147,11 +147,11 @@
 .hero-headline {
   position: relative;
   overflow: hidden;
-  min-height: 4.5rem;
+  min-height: 6rem;
 }
 @media (min-width: 640px) {
   .hero-headline {
-    min-height: 3.5rem;
+    min-height: 4rem;
   }
 }
 .hero-headline span {

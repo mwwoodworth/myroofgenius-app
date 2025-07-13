@@ -11,7 +11,7 @@ export default function FieldAppsClient() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen bg-gradient-to-b from-slate-50 to-white"
+      className="min-h-screen bg-transparent text-slate-100"
     >
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         <motion.section
@@ -24,10 +24,10 @@ export default function FieldAppsClient() {
           <div className="inline-flex items-center justify-center w-20 h-20 bg-secondary-700/10 rounded-full mb-6">
             <Shield className="w-10 h-10 text-secondary-700" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Field Apps: Your Mobile Command Center
           </h1>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
             When you&apos;re on a roof at 7 AM with a decision to make, you need
             systems that work with one bar of signal and gloves on. Built for
             real conditions, not ideal ones.
@@ -51,7 +51,7 @@ export default function FieldAppsClient() {
               <h3 className="font-semibold text-lg mb-2">
                 Lost Work Prevention
               </h3>
-              <p className="text-text-secondary">
+              <p className="text-slate-300">
                 Offline-first architecture. Every photo, note, and measurement
                 saves locally first.
               </p>
@@ -61,7 +61,7 @@ export default function FieldAppsClient() {
                 <Camera className="w-8 h-8 text-accent-emerald" />
               </div>
               <h3 className="font-semibold text-lg mb-2">Proof of Work</h3>
-              <p className="text-text-secondary">
+              <p className="text-slate-300">
                 Photos and notes automatically attach to the job record, even
                 without service.
               </p>
@@ -73,7 +73,7 @@ export default function FieldAppsClient() {
               <h3 className="font-semibold text-lg mb-2">
                 Simplified Reporting
               </h3>
-              <p className="text-text-secondary">
+              <p className="text-slate-300">
                 Generate clean reports from the field with one tap, gloves on.
               </p>
             </div>
@@ -87,7 +87,7 @@ export default function FieldAppsClient() {
           className="bg-secondary-700/5 rounded-2xl p-8 text-center"
         >
           <AlertTriangle className="w-10 h-10 text-secondary-700 mx-auto mb-4" />
-          <p className="text-lg text-slate-700 mb-6">
+          <p className="text-lg text-slate-200 mb-6">
             Data loss from spotty connections costs roofers millions each year.
             Our offline apps keep your records safe.
           </p>

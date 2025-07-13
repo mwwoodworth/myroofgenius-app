@@ -21,7 +21,7 @@ export default function HeroHeadline({ texts, interval = 3000, className }: Hero
   }, [texts, interval])
 
   return (
-    <span className={clsx('hero-headline block min-h-[3.5rem] relative', className)}>
+    <span className={clsx('hero-headline block min-h-[6rem] relative', className)}>
       {texts.map((text, i) => (
         <span
           key={i}

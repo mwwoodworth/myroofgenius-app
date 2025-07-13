@@ -11,12 +11,12 @@ export const generateMetadata = () =>
 
 export default function GetStarted() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[var(--color-cloud-100)] to-white flex items-center justify-center p-8">{/* replaced blue-50 with cloud-100 token */}
+    <div className="min-h-screen bg-transparent text-slate-100 flex items-center justify-center p-8">
       <div className="max-w-xl text-center">
-        <h1 className="text-4xl font-bold text-slate-900 mb-4">
+        <h1 className="text-4xl font-bold text-white mb-4">
           Start Your Free Trial
         </h1>
-        <p className="text-lg text-slate-700 mb-6">
+        <p className="text-lg text-slate-300 mb-6">
           Create your account to access professional roofing calculators and
           templates.
         </p>

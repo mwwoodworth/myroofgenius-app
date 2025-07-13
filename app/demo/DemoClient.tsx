@@ -41,14 +41,14 @@ export default function DemoClient() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen bg-transparent text-slate-100">
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         {/* Hero */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             See Protection in Action
           </h1>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto">
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
             Watch how MyRoofGenius protects professionals from the failures
             that derail projects and destroy margins.
           </p>
@@ -60,7 +60,9 @@ export default function DemoClient() {
               key={key}
               onClick={() => setActiveDemo(key)}
               className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                activeDemo === key ? 'bg-secondary-700 text-white shadow-lg' : 'bg-white text-slate-700 border border-slate-200 hover:border-secondary-700/20'
+                activeDemo === key
+                  ? 'bg-secondary-700 text-white shadow-lg'
+                  : 'bg-white/10 text-slate-200 border border-white/20 hover:border-secondary-700/50'
               }`}
             >
               {demo.title}
@@ -68,7 +70,7 @@ export default function DemoClient() {
           ))}
         </div>
         {/* Active Demo Display */}
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-16">
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-xl overflow-hidden mb-16">
           <div className="aspect-video bg-slate-900 relative">
             <div className="absolute inset-0 flex items-center justify-center">
               <button className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
@@ -78,12 +80,12 @@ export default function DemoClient() {
           </div>
           <div className="p-8">
             <h2 className="text-2xl font-bold mb-3">{demos[activeDemo].title}</h2>
-            <p className="text-lg text-text-secondary mb-6">{demos[activeDemo].description}</p>
+            <p className="text-lg text-slate-300 mb-6">{demos[activeDemo].description}</p>
             <div className="space-y-3">
               {demos[activeDemo].keyPoints.map((point, i) => (
                 <div key={i} className="flex items-center">
                   <Shield className="w-5 h-5 text-accent-emerald mr-3" />
-                  <span className="text-slate-700">{point}</span>
+                  <span className="text-slate-200">{point}</span>
                 </div>
               ))}
             </div>
@@ -114,11 +116,11 @@ export default function DemoClient() {
 function ROIMetric({ icon, label, value, description }) {
   return (
     <div className="text-center">
-      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
         {icon}
       </div>
       <div className="text-3xl font-bold text-secondary-700 mb-2">{value}</div>
-      <div className="font-semibold text-slate-900 mb-1">{label}</div>
+      <div className="font-semibold text-slate-200 mb-1">{label}</div>
       <div className="text-sm text-text-secondary">{description}</div>
     </div>
   )

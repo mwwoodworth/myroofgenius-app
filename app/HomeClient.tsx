@@ -3,12 +3,7 @@ import Link from "next/link";
 import { Shield, ArrowRight, Play, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 const MotionLink = motion(Link);
-import {
-  AnimatedGradient,
-  HeroHeadline,
-  Skeleton,
-  BackgroundCanvas,
-} from "../components/ui";
+import { HeroHeadline, Skeleton } from "../components/ui";
 import { Suspense } from "react";
 import dynamicImport from "next/dynamic";
 import EmailSignupForm from "../components/marketing/EmailSignupForm";
@@ -77,11 +72,10 @@ export default function HomeClient() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6 }}
-        className="relative overflow-hidden bg-[var(--color-navy-900)] py-24 backdrop-blur-lg rounded-2xl shadow-2xl"
+        className="relative overflow-hidden py-24"
       >
         <div className="hero-animated-bg absolute inset-0 -z-10" />
-        <AnimatedGradient />
-        <BackgroundCanvas />
+        {/* Background effects removed for clean starfield */}
         <div className="absolute top-6 right-6">
           <ActiveUsersBadge />
         </div>
@@ -97,7 +91,7 @@ export default function HomeClient() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ type: "spring", stiffness: 80 }}
-              className="text-white font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6 leading-snug"
+              className="text-white drop-shadow-lg font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6 leading-snug"
             >
               <HeroHeadline
                 texts={["Protect every project.", "Grow every margin."]}
@@ -171,7 +165,7 @@ export default function HomeClient() {
         </div>
       </motion.section>
       <Suspense fallback={<Skeleton />}>
-        <Testimonials className="bg-bg" />
+        <Testimonials />
       </Suspense>
       <Suspense fallback={<Skeleton />}>
         <TrustSection />
