@@ -1,10 +1,7 @@
 "use client";
 import { useState } from "react";
-import {
-  CopilotKit,
-  CopilotSidebar,
-  CopilotChat,
-} from "@copilotkit/react-ui";
+import { CopilotKit } from "@copilotkit/react-core";
+import { CopilotSidebar, CopilotChat } from "@copilotkit/react-ui";
 import "@copilotkit/react-ui/styles.css";
 
 export default function CopilotQuickButton({ prompt }: { prompt?: string }) {
