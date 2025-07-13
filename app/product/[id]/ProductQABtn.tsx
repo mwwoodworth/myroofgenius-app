@@ -1,10 +1,7 @@
 'use client'
 import { useState, useRef } from 'react';
-import {
-  CopilotKit,
-  CopilotSidebar,
-  CopilotChat,
-} from '@copilotkit/react-ui';
+import { CopilotKit } from '@copilotkit/react-core';
+import { CopilotSidebar, CopilotChat } from '@copilotkit/react-ui';
 import '@copilotkit/react-ui/styles.css';
 
 export default function ProductQABtn({ name, description }: { name: string; description: string }) {

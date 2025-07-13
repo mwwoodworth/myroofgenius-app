@@ -1,0 +1,6 @@
+- [x] Metadata errors fixed
+- [x] Runtime crash patched
+- [x] Lint clean
+- [x] TypeScript clean
+- [x] Visual tests pass
+- [x] Live build ready
