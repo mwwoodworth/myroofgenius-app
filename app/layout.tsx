@@ -6,6 +6,7 @@ import "./lib/sentry";
 import { maintenanceMode } from "./lib/features";
 import { Analytics } from "../components/ui";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
+import CopilotProvider from "../components/CopilotProvider";
 
 const ClientLayout = dynamicImport(
   () => import("../components/layout/ClientLayout"),
@@ -147,17 +148,19 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
       <body>
-        {maintenanceMode ? (
-          <div className="min-h-screen flex items-center justify-center">
-            <p>Site is under maintenance. Please check back soon.</p>
-          </div>
-        ) : (
-          <>
-            <ClientLayout>{children}</ClientLayout>
-            <Analytics />
-            <VercelAnalytics />
-          </>
-        )}
+        <CopilotProvider>
+          {maintenanceMode ? (
+            <div className="min-h-screen flex items-center justify-center">
+              <p>Site is under maintenance. Please check back soon.</p>
+            </div>
+          ) : (
+            <>
+              <ClientLayout>{children}</ClientLayout>
+              <Analytics />
+              <VercelAnalytics />
+            </>
+          )}
+        </CopilotProvider>
       </body>
     </html>
   );
