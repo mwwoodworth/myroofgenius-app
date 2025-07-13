@@ -1,8 +1,8 @@
 import dynamicImport from "next/dynamic";
-const HomeClient = dynamicImport(() => import("./HomeClient"), { ssr: false });
 const GalaxyCanvas = dynamicImport(() => import("../components/GalaxyCanvas"), {
   ssr: false,
 });
+const HomeClient = dynamicImport(() => import("./HomeClient"), { ssr: false });
 
 export const dynamic = "force-dynamic";
 
@@ -14,9 +14,9 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <>
-      {typeof window !== "undefined" && <GalaxyCanvas />}
+    <main className="relative z-0 overflow-hidden">
+      <GalaxyCanvas />
       <HomeClient />
-    </>
+    </main>
   );
 }

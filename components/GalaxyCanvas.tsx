@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 
 export default function GalaxyCanvas() {
@@ -6,53 +8,41 @@ export default function GalaxyCanvas() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let width = canvas.offsetWidth;
-    let height = canvas.offsetHeight;
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    ctx.scale(dpr, dpr);
-
+    let animationId: number;
     const stars = Array.from({ length: 100 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      size: Math.random() * 2 + 0.5,
-      speed: Math.random() * 0.5 + 0.1,
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 1.5,
+      alpha: Math.random(),
+      speed: Math.random() * 0.2 + 0.1,
     }));
 
-    let raf: number;
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = "#fff";
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (const star of stars) {
-        star.y -= star.speed;
-        if (star.y < 0) star.y = height;
+        star.alpha += (Math.random() - 0.5) * 0.05;
+        star.alpha = Math.max(0, Math.min(1, star.alpha));
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
         ctx.fill();
       }
-      raf = requestAnimationFrame(render);
+      animationId = requestAnimationFrame(draw);
     };
 
-    render();
-
-    const handleResize = () => {
-      width = canvas.offsetWidth;
-      height = canvas.offsetHeight;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      ctx.scale(dpr, dpr);
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(raf);
-    };
+    draw();
+    return () => cancelAnimationFrame(animationId);
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full"
+      style={{ zIndex: -1 }}
+    />
+  );
 }
