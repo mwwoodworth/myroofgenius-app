@@ -348,12 +348,12 @@ section {
 }
 
 .hero-animated-bg {
-  background-image: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer-bg 8s ease-in-out infinite;
+  background: radial-gradient(circle at 60% 40%, #181a26 80%, #000 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }

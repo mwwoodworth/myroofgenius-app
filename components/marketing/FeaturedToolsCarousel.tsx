@@ -43,19 +43,22 @@ const tools: Tool[] = [
 export default function FeaturedToolsCarousel() {
   const [index, setIndex] = useState(0);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [isAnimating, setAnimating] = useState(false);
   useEffect(() => {
     const id = setInterval(() => {
-      setIndex((i) => (i + 1) % tools.length);
+      if (!isAnimating) {
+        setIndex((i) => (i + 1) % tools.length);
+      }
     }, 5000);
     return () => clearInterval(id);
-  }, []);
+  }, [isAnimating]);
   return (
     <div className="relative overflow-hidden">
       <div className="flex justify-center mb-4 gap-2">
         {tools.map((t, i) => (
           <button
             key={t.id}
-            onClick={() => setIndex(i)}
+            onClick={() => !isAnimating && setIndex(i)}
             aria-label={`Go to slide ${i + 1}`}
             className={`w-2 h-2 rounded-full ${i === index ? "bg-secondary-700 w-3" : "bg-gray-300"}`}
           />
@@ -70,6 +73,8 @@ export default function FeaturedToolsCarousel() {
             exit={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            onAnimationStart={() => setAnimating(true)}
+            onAnimationComplete={() => setAnimating(false)}
             onMouseMove={(e) => {
               const r = e.currentTarget.getBoundingClientRect();
               setTilt({

@@ -59,7 +59,7 @@ export default function DemoClient() {
             <button
               key={key}
               onClick={() => setActiveDemo(key)}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+              className={`px-6 py-3 rounded-lg font-semibold transition-colors transform ${
                 activeDemo === key
                   ? 'bg-secondary-700 text-white shadow-lg'
                   : 'bg-white/10 text-slate-200 border border-white/20 hover:border-secondary-700/50'
