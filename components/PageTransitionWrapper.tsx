@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
 
 interface PageTransitionWrapperProps {
@@ -17,12 +17,12 @@ const variants = {
  * Wraps pages with a simple fade/slide transition using Framer Motion.
  */
 const PageTransitionWrapper: React.FC<PageTransitionWrapperProps> = ({ children }) => {
-  const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
-        key={router.asPath}
+        key={pathname}
         variants={variants}
         initial="initial"
         animate="animate"

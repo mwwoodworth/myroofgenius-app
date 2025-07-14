@@ -1,5 +1,9 @@
 "use client";
 import { ReactNode, useEffect } from "react";
+
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+}
 import { AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import {
@@ -30,7 +34,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const promptHandler = (e: any) => {
+    const promptHandler = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
       e.prompt();
     };
