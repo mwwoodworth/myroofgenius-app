@@ -1,0 +1,8 @@
+### 3. `starfield_header.txt`
+```
+Add animated starfield background to the top header:
+- Visible only on desktop
+- Low opacity, slow pulse/stars drifting background
+- Use canvas, SVG, or CSS animation
+- Minimal performance impact
+Output: embedded or overlay code for `Header.tsx` or `StarfieldBackground.tsx`

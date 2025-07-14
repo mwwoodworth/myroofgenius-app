@@ -1,0 +1,13 @@
+## 📂 Codex Prompt Files (`/codex/prompts/`)
+
+### 1. `hero_section.txt`
+```
+Redesign the Hero section of the homepage:
+- Use a dark blue → tech purple gradient background
+- Add strong call-to-action headline with high contrast
+- Include a supporting subheadline
+- Add two buttons: “Try Demo” (primary), “View Tools” (secondary)
+- Include a smooth background glow animation using Framer Motion
+- Use Tailwind and shadcn/ui components
+- Ensure responsive on mobile
+Output: drop-in React/TSX code for `src/components/Hero.tsx`

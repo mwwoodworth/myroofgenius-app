@@ -1,0 +1,7 @@
+### 8. `seo_head_tags.txt`
+```
+Improve SEO head tags and social preview:
+- Add OpenGraph image, site title, description to head of each page
+- Add meta viewport, charset, and Twitter card tags
+- Use Next.js Head component
+Output: patch to all page-level files in `src/pages/`

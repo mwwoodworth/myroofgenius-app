@@ -1,0 +1,9 @@
+### 7. `layout_spacing_refactor.txt`
+```
+Refactor layout across homepage and tools page:
+- Normalize all padding to Tailwind `px-4 md:px-8`
+- Ensure consistent vertical spacing between sections
+- Add max-width wrappers (`max-w-7xl mx-auto`) to key containers
+- Improve mobile spacing
+Apply to: `Hero.tsx`, `Tools.tsx`, `Testimonials.tsx`, etc.
+Output: edits to existing components

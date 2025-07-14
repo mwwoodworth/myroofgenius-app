@@ -1,0 +1,9 @@
+### 4. `sticky_mobile_cta.txt`
+```
+Create a sticky mobile CTA banner:
+- Appears only on screens <768px
+- Fixed to bottom of viewport
+- Includes “Start Estimate” and “Browse Tools” buttons
+- Framer Motion slide-in on load
+- Use Tailwind classes
+Output: `src/components/StickyMobileCTA.tsx`

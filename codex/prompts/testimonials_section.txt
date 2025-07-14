@@ -1,0 +1,8 @@
+### 5. `testimonials_section.txt`
+```
+Add a testimonials + trust block:
+- Heading: "Trusted by roofing professionals everywhere"
+- 3–4 testimonial cards with motion fade-up
+- Row of grayscale logos with horizontal scroll animation
+- Use Tailwind grid/flex and Framer Motion
+Output: `src/components/Testimonials.tsx`

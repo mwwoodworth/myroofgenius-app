@@ -1,0 +1,8 @@
+### 2. `header_nav_scroll.txt`
+```
+Update the header/nav bar to:
+- Add gradient scroll color effect (dark to purple tint)
+- Animate background color on scroll (Framer Motion)
+- Add hover underline or glow FX to nav items
+- Use Tailwind and Framer Motion only
+Output: update `src/components/Header.tsx`

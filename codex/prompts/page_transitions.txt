@@ -1,0 +1,8 @@
+### 6. `page_transitions.txt`
+```
+Implement animated page transitions:
+- Wrap main layout with Framer Motion AnimatePresence
+- Animate pages with fade/slide in/out on route change
+- Add transition config to `src/pages/_app.tsx` or `Layout.tsx`
+- Use Tailwind-safe animations
+Output: `src/components/PageTransitionWrapper.tsx` + `_app.tsx` patch
