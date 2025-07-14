@@ -8,9 +8,16 @@ import { Analytics } from "../components/ui";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import CopilotProvider from "../components/CopilotProvider";
 
+// --- Add new imports for Codex-generated UI ---
+import Header from "../components/Header";
+import StickyMobileCTA from "../components/ui/StickyMobileCTA";
+import Starfield from "../components/Starfield";
+import PageTransitionWrapper from "../components/PageTransitionWrapper";
+// If you use TrustSection or Testimonials on every page, import here too
+
 const ClientLayout = dynamicImport(
   () => import("../components/layout/ClientLayout"),
-  { ssr: false },
+  { ssr: false }
 );
 
 export const dynamic = "force-dynamic";
@@ -35,24 +42,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={theme}>
       <head>
+        {/* SEO, OG, and PWA meta tags */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="manifest" href="/manifest.webmanifest" />
-        <meta name="theme-color" content="#0a192f" /> {/* navy-900 token */}
-        <link
-          rel="icon"
-          href="https://via.placeholder.com/192"
-          sizes="192x192"
-        />
-        <link
-          rel="apple-touch-icon"
-          href="https://via.placeholder.com/512"
-          sizes="512x512"
-        />
-        <link
-          rel="icon"
-          href="https://via.placeholder.com/1024"
-          sizes="1024x1024"
-        />
+        <meta name="theme-color" content="#0a192f" />
+        <link rel="icon" href="https://via.placeholder.com/192" sizes="192x192" />
+        <link rel="apple-touch-icon" href="https://via.placeholder.com/512" sizes="512x512" />
+        <link rel="icon" href="https://via.placeholder.com/1024" sizes="1024x1024" />
+        {/* --- JSON-LD and FAQ Structured Data (unchanged from your version) --- */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -155,7 +152,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </div>
           ) : (
             <>
-              <ClientLayout>{children}</ClientLayout>
+              {/* --- GLOBAL, PERSISTENT COMPONENTS --- */}
+              <Starfield />
+              <Header />
+              <main className="relative z-10 min-h-screen pt-20">
+                <PageTransitionWrapper>
+                  <ClientLayout>
+                    {children}
+                  </ClientLayout>
+                </PageTransitionWrapper>
+              </main>
+              <StickyMobileCTA />
               <Analytics />
               <VercelAnalytics />
             </>
