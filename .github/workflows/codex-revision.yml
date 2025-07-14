@@ -9,6 +9,7 @@ on:
 jobs:
   codex-update:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -18,13 +19,15 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install requirements (if needed)
+      - name: Install requirements
         run: |
-          pip install -r requirements.txt || true
+          pip install -r requirements.txt
 
       - name: Run Codex Revision Scripts
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           for prompt in codex/prompts/*.txt; do
-            echo "Running Codex with $prompt"
+            echo "⚙️  Running Codex with $prompt"
             python codex_runner.py --context codex/REVISION_CONTEXT.md --prompt "$prompt" --out ./src/components/
           done
