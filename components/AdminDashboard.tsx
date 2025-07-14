@@ -469,8 +469,16 @@ function AnalyticsTab({ stats }: { stats: DashboardStats }) {
   );
 }
 
+interface CopilotLog {
+  id: string;
+  created_at: string;
+  user_id?: string;
+  role: string;
+  message: string;
+}
+
 function AITab() {
-  const [logs, setLogs] = useState<any[]>([]);
+  const [logs, setLogs] = useState<CopilotLog[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -502,7 +510,7 @@ function AITab() {
             </tr>
           </thead>
           <tbody className="divide-y divide-secondary/20">
-            {logs.map((log: any) => (
+            {logs.map((log: CopilotLog) => (
               <tr key={log.id}>
                 <td className="px-4 py-2">{new Date(log.created_at).toLocaleString()}</td>
                 <td className="px-4 py-2">{log.user_id || '—'}</td>

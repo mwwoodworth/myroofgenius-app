@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import { useDropzone, FileRejection } from "react-dropzone";
 import ProgressBar from "./ProgressBar";
 
 interface UploadingFile {
@@ -15,7 +15,7 @@ interface UploaderProps {
 
 export default function Uploader({ onComplete }: UploaderProps) {
   const [files, setFiles] = useState<UploadingFile[]>([]);
-  const onDrop = useCallback((accepted: File[], rejected: any[]) => {
+  const onDrop = useCallback((accepted: File[], _rejected: FileRejection[]) => {
     const newFiles: UploadingFile[] = [];
     accepted.forEach((file) => {
       if (file.size > 10 * 1024 * 1024) {

@@ -133,7 +133,6 @@ export const Checkbox = React.forwardRef<
           type="checkbox"
           ref={ref}
           id={fieldId}
-          aria-invalid={!!error}
           aria-describedby={errorId}
           className={clsx(
             "rounded border-gray-300 text-accent focus:ring-accent disabled:bg-gray-100",
@@ -169,7 +168,6 @@ export const Radio = React.forwardRef<
           type="radio"
           ref={ref}
           id={fieldId}
-          aria-invalid={!!error}
           aria-describedby={errorId}
           className={clsx(
             "border-gray-300 text-accent focus:ring-accent disabled:bg-gray-100",
