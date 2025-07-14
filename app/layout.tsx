@@ -1,24 +1,10 @@
 import "./globals.css";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import type { ReactNode } from "react";
-import dynamicImport from "next/dynamic";
 import "./lib/sentry";
 import { maintenanceMode } from "./lib/features";
-import { Analytics } from "../components/ui";
-import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
-import CopilotProvider from "../components/CopilotProvider";
 
-// --- Add new imports for Codex-generated UI ---
-import Header from "../components/Header";
-import StickyMobileCTA from "../components/ui/StickyMobileCTA";
-import Starfield from "../components/Starfield";
-import PageTransitionWrapper from "../components/PageTransitionWrapper";
 // If you use TrustSection or Testimonials on every page, import here too
-
-const ClientLayout = dynamicImport(
-  () => import("../components/layout/ClientLayout"),
-  { ssr: false }
-);
 
 export const dynamic = "force-dynamic";
 
@@ -38,7 +24,15 @@ export const metadata = {
   description: "AI-powered roofing tools and marketplace",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const { default: CopilotProvider } = await import("../components/CopilotProvider");
+  const { default: Header } = await import("../components/Header");
+  const { default: StickyMobileCTA } = await import("../components/ui/StickyMobileCTA");
+  const { default: Starfield } = await import("../components/Starfield");
+  const { default: PageTransitionWrapper } = await import("../components/PageTransitionWrapper");
+  const { default: ClientLayout } = await import("../components/layout/ClientLayout");
+  const { default: Analytics } = await import("../components/Analytics");
+  const { Analytics: VercelAnalytics } = await import("@vercel/analytics/react");
   return (
     <html lang="en" className={theme}>
       <head>

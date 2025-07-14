@@ -1,4 +1,3 @@
-import ToolsPageClient from './ToolsPageClient'
 import { buildMeta } from '@/lib/metadata'
 
 export const generateMetadata = () =>
@@ -7,7 +6,8 @@ export const generateMetadata = () =>
     description: 'Estimate costs, analyze damage and generate proposals using our professional roofing tools.',
   })
 
-export default function ToolsPageWrapper() {
+export default async function ToolsPageWrapper() {
+  const { default: ToolsPageClient } = await import('./ToolsPageClient')
   return <ToolsPageClient />
 }
 

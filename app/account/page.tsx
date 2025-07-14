@@ -1,5 +1,4 @@
 import { createClient } from "@supabase/supabase-js";
-import EmptyState from "@/components/EmptyState";
 import { buildMeta } from "../../lib/metadata";
 
 // Add dynamic export to prevent static generation
@@ -30,6 +29,7 @@ async function getOrders() {
 }
 
 export default async function Account() {
+  const { default: EmptyState } = await import("@/components/EmptyState");
   const orders = await getOrders();
 
   return (

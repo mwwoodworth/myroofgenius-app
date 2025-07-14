@@ -633,6 +633,7 @@ export default function MarketplaceClient({
         </div>
       </div>
 
+      {/* @ts-ignore -- external component types may not allow className */}
       <Testimonials className="bg-gray-50" />
 
       {/* Newsletter CTA */}

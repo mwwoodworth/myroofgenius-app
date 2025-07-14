@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import AdminDashboard from "../../components/AdminDashboard";
 import { buildMeta } from "../../lib/metadata";
 
 export const dynamic = "force-dynamic";
@@ -26,5 +25,6 @@ export default async function AdminPage() {
   if (!profile?.is_admin) {
     redirect("/dashboard");
   }
+  const { default: AdminDashboard } = await import("../../components/AdminDashboard");
   return <AdminDashboard />;
 }

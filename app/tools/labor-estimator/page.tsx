@@ -1,4 +1,3 @@
-import LaborEstimatorClient from './LaborEstimatorClient'
 import { buildMeta } from '@/lib/metadata'
 
 export const generateMetadata = () =>
@@ -7,7 +6,8 @@ export const generateMetadata = () =>
     description: 'Calculate crew sizes using real productivity data.',
   })
 
-export default function LaborEstimatorPage() {
+export default async function LaborEstimatorPage() {
+  const { default: LaborEstimatorClient } = await import('./LaborEstimatorClient')
   return <LaborEstimatorClient />
 }
 

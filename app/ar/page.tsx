@@ -1,4 +1,3 @@
-import RemoteModelViewer from '../../components/RemoteModelViewer';
 import { buildMeta } from '../../lib/metadata';
 
 export const generateMetadata = () =>
@@ -7,7 +6,8 @@ export const generateMetadata = () =>
     description: 'Interact with a 3D roofing model in your space using WebXR.'
   });
 
-export default function ARDemoPage() {
+export default async function ARDemoPage() {
+  const { default: RemoteModelViewer } = await import('../../components/RemoteModelViewer');
   const modelUrl = 'https://modelviewer.dev/shared-assets/models/Astronaut.glb';
   const iosUrl = 'https://modelviewer.dev/shared-assets/models/Astronaut.usdz';
   return (

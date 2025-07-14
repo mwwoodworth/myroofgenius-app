@@ -1,12 +1,5 @@
-import dynamicImport from "next/dynamic";
 import { estimatorEnabled } from "../lib/features";
-import { PagePrompt } from "../../components/ui";
 import { buildMeta } from "../../lib/metadata";
-
-const Estimator = dynamicImport(
-  () => import("../../components/SimpleEstimator"),
-  { ssr: false },
-);
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +9,9 @@ export const generateMetadata = () =>
     description: "Estimate roofing materials with AI assistance.",
   });
 
-export default function EstimatorPage() {
+export default async function EstimatorPage() {
+  const { PagePrompt } = await import("../../components/ui");
+  const Estimator = (await import("../../components/SimpleEstimator")).default;
   if (!estimatorEnabled) {
     return (
       <div className="min-h-screen flex items-center justify-center p-8">

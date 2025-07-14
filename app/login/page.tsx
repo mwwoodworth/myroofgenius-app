@@ -1,4 +1,3 @@
-import LoginClient from './LoginClient'
 import { buildMeta } from '../../lib/metadata'
 
 export const generateMetadata = () =>
@@ -7,7 +6,8 @@ export const generateMetadata = () =>
     description: 'Access your MyRoofGenius account and tools.',
   })
 
-export default function LoginPageWrapper() {
+export default async function LoginPageWrapper() {
+  const { default: LoginClient } = await import('./LoginClient')
   return <LoginClient />
 }
 

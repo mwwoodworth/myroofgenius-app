@@ -1,4 +1,3 @@
-import SuccessClient from './SuccessClient'
 import { buildMeta } from '../../lib/metadata'
 
 export const generateMetadata = () =>
@@ -7,7 +6,8 @@ export const generateMetadata = () =>
     description: 'Thank you for your purchase. Access your download now.',
   })
 
-export default function SuccessPageWrapper() {
+export default async function SuccessPageWrapper() {
+  const { default: SuccessClient } = await import('./SuccessClient')
   return <SuccessClient />
 }
 
