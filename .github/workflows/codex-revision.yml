@@ -1,0 +1,30 @@
+name: Run Codex Site Revisions
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'codex/prompts/**'
+
+jobs:
+  codex-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install requirements (if needed)
+        run: |
+          pip install -r requirements.txt || true
+
+      - name: Run Codex Revision Scripts
+        run: |
+          for prompt in codex/prompts/*.txt; do
+            echo "Running Codex with $prompt"
+            python codex_runner.py --context codex/REVISION_CONTEXT.md --prompt "$prompt" --out ./src/components/
+          done
