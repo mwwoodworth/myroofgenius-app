@@ -76,7 +76,7 @@ def run_codex(context_path: pathlib.Path, prompt_path: pathlib.Path, out_dir: pa
     with out_path.open("w", encoding="utf‑8") as fh:
         fh.write(generated + "\n")
 
-    print(f"✅  Wrote output → {out_path.relative_to(pathlib.Path.cwd())}")
+    print(f"✅  Output written to: {str(out_path.resolve())}")
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run a single Codex prompt.")
