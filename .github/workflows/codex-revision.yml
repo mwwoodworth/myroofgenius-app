@@ -4,30 +4,42 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'codex/prompts/**'
+      - "codex/prompts/**"
 
 jobs:
   codex-update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Install requirements
+      - name: 📦 Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Codex Revision Scripts
+      - name: 🤖 Run Codex Revision Scripts
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           for prompt in codex/prompts/*.txt; do
-            echo "⚙️  Running Codex with $prompt"
-            python codex_runner.py --context codex/REVISION_CONTEXT.md --prompt "$prompt" --out ./src/components/
+            echo "────────────────────────────────────────"
+            echo "🧠  Processing $prompt"
+            python codex_runner.py \
+              --context codex/REVISION_CONTEXT.md \
+              --prompt  "$prompt" \
+              --out     ./src/components/
           done
+
+      # Optional: auto-commit generated files
+      # - name: 🚀 Commit & push generated files
+      #   uses: stefanzweifel/git-auto-commit-action@v5
+      #   with:
+      #     commit_message: "chore: update components via Codex"
+      #     file_pattern: "src/components/*"
