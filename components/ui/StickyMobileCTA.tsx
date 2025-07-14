@@ -1,40 +1,43 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect, useState } from 'react';
+'use client';
 
-/**
- * StickyMobileCTA
- * Renders a sticky call-to‑action bar on mobile (<768px) with two primary buttons.
- */
-const StickyMobileCTA: React.FC = () => {
-  const [isMobile, setIsMobile] = useState(false);
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+
+export default function StickyMobileCTA() {
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const checkViewport = () => setIsMobile(window.innerWidth < 768);
-    checkViewport();
-    window.addEventListener('resize', checkViewport);
-    return () => window.removeEventListener('resize', checkViewport);
+    const update = () => setShow(window.innerWidth < 768);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
-
-  if (!isMobile) return null;
 
   return (
     <AnimatePresence>
-      <motion.div
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        exit={{ y: 100 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className="fixed bottom-0 inset-x-0 z-50 bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-between px-4 py-3 space-x-3 md:hidden"
-      >
-        <button className="flex-1 bg-primary-600 hover:bg-primary-700 text-white rounded-md py-2 font-semibold transition-colors">
-          Get Estimate
-        </button>
-        <button className="flex-1 bg-secondary-600 hover:bg-secondary-700 text-white rounded-md py-2 font-semibold transition-colors">
-          Call Now
-        </button>
-      </motion.div>
+      {show && (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed bottom-0 inset-x-0 z-50 bg-primary text-white flex items-center justify-around px-4 py-3 md:hidden shadow-xl"
+        >
+          <Link
+            href="/estimate"
+            className="bg-white text-primary rounded-full px-5 py-2 font-bold mr-2"
+          >
+            Start Estimate
+          </Link>
+          <a
+            href="tel:1234567890"
+            className="bg-white text-primary rounded-full px-5 py-2 font-bold"
+          >
+            Call Now
+          </a>
+        </motion.div>
+      )}
     </AnimatePresence>
   );
-};
-
-export default StickyMobileCTA;
+}
