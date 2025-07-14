@@ -1,48 +1,101 @@
-import argp
+#!/usr/bin/env python3
+"""
+Run a single Codex/GPT prompt and write the generated code to the target folder.
+Usage:
+  python codex_runner.py \
+      --context codex/REVISION_CONTEXT.md \
+      --prompt  codex/prompts/hero_section.txt \
+      --out     ./src/components/
+"""
 
-
-import openai
+from __future__ import annotations
+import argparse
 import os
-from dotenv import load_dotenv
+import pathlib
+import re
+import sys
+from typing import List, Dict
 
-def run_codex(context_path, prompt_path, output_path):
-    load_dotenv()
+try:
+    from openai import OpenAI
+except ImportError as exc:
+    raise SystemExit("❌  openai‑python is missing. Run `pip install openai>=1.0.0`.") from exc
 
-    openai.api_key = os.getenv("OPENAI_API_KEY")
-    if not openai.api_key:
-        raise ValueError("OPENAI_API_KEY not found in environment variables")
+def _load_file(path: pathlib.Path) -> str:
+    with path.open(encoding="utf‑8") as fh:
+        return fh.read().strip()
 
-    with open(context_path, 'r') as f:
-        context = f.read()
-    with open(prompt_path, 'r') as f:
-        prompt = f.read()
+def _detect_output_filename(prompt_text: str, default_stem: str) -> str:
+    m = re.search(
+        r"Output:\s*(?:.+?\s+for\s+)?[\"']?(?P<file>[^\"']+\.[a-zA-Z0-9]+)[\"']?",
+        prompt_text,
+        flags=re.IGNORECASE,
+    )
+    if m:
+        return pathlib.Path(m.group("file")).name
+    return f"{default_stem}.tsx"
 
-    full_prompt = f"{context}\n\n---\n\n{prompt}"
-    filename = os.path.basename(prompt_path).replace('.txt', '.tsx')
-    out_file = os.path.join(output_path, filename)
+def build_messages(context: str, prompt: str) -> List[Dict[str, str]]:
+    return [
+        {
+            "role": "system",
+            "content": (
+                "You are a senior front‑end engineer who writes clean, modern, "
+                "production‑ready React + TypeScript code."
+            ),
+        },
+        {"role": "system", "content": context},
+        {"role": "user", "content": prompt},
+    ]
 
-    print(f"🧠 Running Codex on prompt: {os.path.basename(prompt_path)}")
+def run_codex(context_path: pathlib.Path, prompt_path: pathlib.Path, out_dir: pathlib.Path,
+              model: str = "gpt-4o-mini", temperature: float = 0.3, max_tokens: int = 2048) -> None:
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        sys.exit("❌  OPENAI_API_KEY is missing in environment variables or GitHub Secrets.")
 
-    response = openai.ChatCompletion.create(
-        model="gpt-4",  # or use "gpt-4-1106-preview" or preferred
-        messages=[
-            {"role": "system", "content": "You are a senior frontend engineer writing clean, modern, production-grade React + Tailwind code."},
-            {"role": "user", "content": full_prompt}
-        ],
-        temperature=0.3
+    client = OpenAI(api_key=api_key)
+
+    context_text = _load_file(context_path)
+    prompt_text = _load_file(prompt_path)
+
+    print(f"🧠  Generating code for prompt: {prompt_path.name}")
+
+    response = client.chat.completions.create(
+        model=model,
+        messages=build_messages(context_text, prompt_text),
+        temperature=temperature,
+        max_tokens=max_tokens,
     )
 
-    output = response['choices'][0]['message']['content']
-    with open(out_file, 'w') as f:
-        f.write(output)
+    generated = response.choices[0].message.content.strip()
+    filename = _detect_output_filename(prompt_text, prompt_path.stem)
+    out_path = out_dir / filename
+    out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    print(f"✅ Output written to {out_file}")
+    with out_path.open("w", encoding="utf‑8") as fh:
+        fh.write(generated + "\n")
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--context", required=True)
-    parser.add_argument("--prompt", required=True)
-    parser.add_argument("--out", required=True)
+    print(f"✅  Wrote output → {out_path.relative_to(pathlib.Path.cwd())}")
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Run a single Codex prompt.")
+    parser.add_argument("--context", required=True, help="Markdown context file.")
+    parser.add_argument("--prompt", required=True, help="Prompt .txt file.")
+    parser.add_argument("--out", required=True, help="Destination directory.")
+    parser.add_argument("--model", default=os.getenv("OPENAI_MODEL", "gpt-4o-mini"))
+    parser.add_argument("--temperature", type=float, default=0.3)
+    parser.add_argument("--max-tokens", type=int, default=2048)
     args = parser.parse_args()
 
-    run_codex(args.context, args.prompt, args.out)
+    run_codex(
+        pathlib.Path(args.context),
+        pathlib.Path(args.prompt),
+        pathlib.Path(args.out),
+        model=args.model,
+        temperature=args.temperature,
+        max_tokens=args.max_tokens,
+    )
+
+if __name__ == "__main__":
+    main()
