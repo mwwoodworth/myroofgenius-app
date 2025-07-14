@@ -1,60 +1,64 @@
-"use client";
-/** Lightweight starfield using basic div elements. */
-import { useRef, useState } from "react";
+'use client';
+import { useEffect, useRef } from "react";
 
 export default function Starfield() {
-  const stars = Array.from({ length: 80 });
-  const [sparkles, setSparkles] = useState<{ id: number; x: number; y: number }[]>([]);
-  const idRef = useRef(0);
+  const ref = useRef<HTMLCanvasElement>(null);
 
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const id = idRef.current++;
-    setSparkles((s) => [...s, { id, x: e.clientX - rect.left, y: e.clientY - rect.top }]);
-    setTimeout(() => {
-      setSparkles((s) => s.filter((sp) => sp.id !== id));
-    }, 600);
-  };
+  useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    let stars = Array.from({ length: 120 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 1.1 + 0.2,
+      o: Math.random() * 0.5 + 0.5,
+      d: Math.random() * 0.25 + 0.03
+    }));
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      for (const s of stars) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI, false);
+        ctx.globalAlpha = s.o;
+        ctx.fillStyle = "#fff";
+        ctx.shadowColor = "#79FFE1";
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        s.x += s.d;
+        if (s.x > width) s.x = 0;
+      }
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    const handleResize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div
-      className="fixed inset-0 z-0 overflow-hidden bg-black"
-      onPointerMove={handlePointerMove}
-    >
-      {stars.map((_, i) => (
-        <div
-          key={i}
-          className="absolute w-px h-px rounded-full opacity-80 animate-star-pulse bg-[var(--color-primary)]"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 4}s`,
-            animationDuration: `${3 + Math.random() * 2}s`,
-          }}
-        />
-      ))}
-      {sparkles.map((sp) => (
-        <div
-          key={sp.id}
-          className="pointer-events-none absolute w-1 h-1 rounded-full bg-[var(--color-primary)] animate-sparkle"
-          style={{ left: sp.x, top: sp.y }}
-        />
-      ))}
-      <style jsx>{`
-        @keyframes sparkle {
-          from {
-            opacity: 1;
-            transform: scale(1);
-          }
-          to {
-            opacity: 0;
-            transform: scale(3);
-          }
-        }
-        .animate-sparkle {
-          animation: sparkle 0.6s ease-out forwards;
-        }
-      `}</style>
-    </div>
+    <canvas
+      ref={ref}
+      className="fixed inset-0 z-0 pointer-events-none w-full h-full"
+      style={{ background: "#001A33" }}
+      aria-hidden="true"
+    />
   );
 }
