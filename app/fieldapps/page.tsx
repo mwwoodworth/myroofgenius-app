@@ -1,4 +1,3 @@
-import FieldAppsClient from "./FieldAppsClient";
 import { buildMeta } from "../../lib/metadata";
 
 export const dynamic = "force-dynamic";
@@ -10,7 +9,8 @@ export const generateMetadata = () =>
       "Offline-ready mobile apps for inspections, proposals and project punchlists.",
   });
 
-export default function FieldApps() {
+export default async function FieldApps() {
+  const { default: FieldAppsClient } = await import("./FieldAppsClient");
   return (
     <>
       <script

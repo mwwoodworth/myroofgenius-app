@@ -1,4 +1,3 @@
-import SettingsClient from './SettingsClient'
 import { buildMeta } from '../../../lib/metadata'
 
 export const generateMetadata = () =>
@@ -7,7 +6,8 @@ export const generateMetadata = () =>
     description: 'Toggle feature flags and configuration options.',
   })
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const { default: SettingsClient } = await import('./SettingsClient')
   return <SettingsClient />
 }
 

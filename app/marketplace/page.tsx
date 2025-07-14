@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import MarketplaceClient from "../../components/marketplace/MarketplaceClient";
 import { buildMeta } from "../../lib/metadata";
 
 export const dynamic = "force-dynamic";
@@ -13,6 +12,7 @@ export const generateMetadata = () =>
   });
 
 export default async function MarketplacePage() {
+  const { default: MarketplaceClient } = await import("../../components/marketplace/MarketplaceClient");
   const supabase = createServerComponentClient({ cookies });
   const { data } = await supabase
     .from("products")

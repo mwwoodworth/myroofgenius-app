@@ -1,4 +1,3 @@
-import DemoClient from "./DemoClient";
 import { buildMeta } from "../../lib/metadata";
 
 export const generateMetadata = () =>
@@ -8,7 +7,8 @@ export const generateMetadata = () =>
       "Watch demos of our estimation and compliance tools in action.",
   });
 
-export default function DemoPage() {
+export default async function DemoPage() {
+  const { default: DemoClient } = await import("./DemoClient");
   return (
     <>
       <script

@@ -23,7 +23,6 @@ export default function RemoteModelViewer({ src, iosSrc, alt, ar = true, classNa
     <model-viewer
       src={src}
       ios-src={iosSrc}
-      alt={alt}
       ar={ar}
       ar-modes="webxr scene-viewer quick-look"
       camera-controls

@@ -1,4 +1,3 @@
-import CashFlowClient from './CashFlowClient'
 import { buildMeta } from '@/lib/metadata'
 
 export const generateMetadata = () =>
@@ -7,7 +6,8 @@ export const generateMetadata = () =>
     description: 'Predict payment schedules and spot cash crunches.',
   })
 
-export default function CashFlowPage() {
+export default async function CashFlowPage() {
+  const { default: CashFlowClient } = await import('./CashFlowClient')
   return <CashFlowClient />
 }
 

@@ -1,4 +1,3 @@
-import MaterialCalculatorClient from './MaterialCalculatorClient'
 import { buildMeta } from '@/lib/metadata'
 
 export const generateMetadata = () =>
@@ -7,7 +6,8 @@ export const generateMetadata = () =>
     description: 'Upload measurements and get precise material lists.',
   })
 
-export default function MaterialCalculatorPage() {
+export default async function MaterialCalculatorPage() {
+  const { default: MaterialCalculatorClient } = await import('./MaterialCalculatorClient')
   return <MaterialCalculatorClient />
 }
 

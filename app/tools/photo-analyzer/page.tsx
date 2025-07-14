@@ -1,4 +1,3 @@
-import PhotoAnalyzerClient from './PhotoAnalyzerClient'
 import { buildMeta } from '@/lib/metadata'
 
 export const generateMetadata = () =>
@@ -7,7 +6,8 @@ export const generateMetadata = () =>
     description: 'Upload a roof photo to receive instant AI analysis.',
   })
 
-export default function PhotoAnalyzerPage() {
+export default async function PhotoAnalyzerPage() {
+  const { default: PhotoAnalyzerClient } = await import('./PhotoAnalyzerClient')
   return <PhotoAnalyzerClient />
 }
 

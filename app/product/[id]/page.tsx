@@ -1,8 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
 import { notFound } from "next/navigation";
-import CheckoutButton from "./CheckoutButton";
-import ProductAIInfo from "./ProductAIInfo";
-import ProductQABtn from "./ProductQABtn";
 import Image from "next/image";
 import Link from "next/link";
 import { salesEnabled } from "../../lib/features";
@@ -70,6 +67,9 @@ export default async function ProductPage({
   if (!product) {
     notFound();
   }
+  const { default: CheckoutButton } = await import("./CheckoutButton");
+  const { default: ProductAIInfo } = await import("./ProductAIInfo");
+  const { default: ProductQABtn } = await import("./ProductQABtn");
 
   // Mock data for demonstration - would come from product data
   const features = product.features?.split(",") || [

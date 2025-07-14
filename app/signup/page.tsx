@@ -1,4 +1,3 @@
-import SignupClient from './SignupClient'
 import { buildMeta } from '../../lib/metadata'
 
 export const generateMetadata = () =>
@@ -7,7 +6,8 @@ export const generateMetadata = () =>
     description: 'Create your account to start using AI roofing tools.',
   })
 
-export default function SignupPageWrapper() {
+export default async function SignupPageWrapper() {
+  const { default: SignupClient } = await import('./SignupClient')
   return <SignupClient />
 }
 

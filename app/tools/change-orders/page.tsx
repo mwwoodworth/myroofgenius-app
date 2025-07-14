@@ -1,4 +1,3 @@
-import ChangeOrdersClient from './ChangeOrdersClient'
 import { buildMeta } from '@/lib/metadata'
 
 export const generateMetadata = () =>
@@ -7,7 +6,8 @@ export const generateMetadata = () =>
     description: 'Price project changes fairly while protecting margins.',
   })
 
-export default function ChangeOrdersPage() {
+export default async function ChangeOrdersPage() {
+  const { default: ChangeOrdersClient } = await import('./ChangeOrdersClient')
   return <ChangeOrdersClient />
 }
 
