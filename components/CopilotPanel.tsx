@@ -147,7 +147,14 @@ export default function CopilotPanel({
         const res = await fetch("/api/copilot", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: msg, sessionId }),
+          body: JSON.stringify({ 
+            message: msg, 
+            sessionId,
+            context: {
+              persona: userRole,
+              history: messages.slice(-10), // Last 10 messages for context
+            }
+          }),
         }).catch(() => {
           throw new Error("network");
         });

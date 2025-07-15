@@ -1,7 +1,0 @@
-- Data Retention: How long should Copilot sessions be stored?
-- Performance Targets: What's the maximum acceptable dashboard load time?
-- Error Tracking: Should we implement Sentry in addition to console logs?
-- Backup Strategy: How often should user data be backed up?
-- Rate Limiting: What limits should protect the AI endpoints?
-- Monitoring: Which metrics are most critical to track?
-- Scaling: At what user count do we need to consider caching layers?

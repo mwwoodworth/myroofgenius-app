@@ -3,9 +3,8 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Bot } from "lucide-react";
 import { useCopilotReadable } from "@copilotkit/react-core";
-import { CopilotSidebar, CopilotChat } from "@copilotkit/react-ui";
+import CopilotPanel from "./CopilotPanel";
 import { useAuth } from "../src/context/AuthContext";
-import "@copilotkit/react-ui/styles.css";
 
 export default function ChatWidgetInner() {
   const [open, setOpen] = useState(false);
@@ -25,14 +24,11 @@ export default function ChatWidgetInner() {
         <Bot className="w-5 h-5" />
         <span className="sr-only">RoofGenius AI</span>
       </button>
-      <CopilotSidebar
-        defaultOpen={open}
-        onSetOpen={setOpen}
-        className="copilot-panel"
-        labels={{ title: "RoofGenius AI", initial: "Need help with your roof?" }}
-      >
-        <CopilotChat />
-      </CopilotSidebar>
+      <CopilotPanel 
+        open={open}
+        onClose={() => setOpen(false)}
+        initialPrompt="Need help with your roof? I'm here to assist with estimations, materials, or any roofing questions."
+      />
     </>
   );
 }

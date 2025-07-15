@@ -27,8 +27,9 @@
     "sync:tokens": "node scripts/sync-design-tokens.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.56.0",
     "@copilotkit/react-core": "^1.9.1",
-    "@copilotkit/react-ui": "^1.9.1",
+    "@copilotkit/react-ui": "^0.2.0",
     "@headlessui/react": "^2.2.4",
     "@react-three/drei": "^9.88.0",
     "@react-three/fiber": "^8.15.0",

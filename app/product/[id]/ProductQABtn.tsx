@@ -1,11 +1,11 @@
 'use client'
-import { useState, useRef } from 'react';
-import { CopilotSidebar, CopilotChat } from '@copilotkit/react-ui';
-import '@copilotkit/react-ui/styles.css';
+import { useState } from 'react';
+import CopilotPanel from '../../../components/CopilotPanel';
 
 export default function ProductQABtn({ name, description }: { name: string; description: string }) {
   const [open, setOpen] = useState(false);
-  const promptRef = useRef(`You are a product specialist for ${name}. Use the following description to answer customer questions: ${description}`);
+  const initialPrompt = `Tell me more about ${name}. ${description}`;
+  
   return (
     <>
       <button
@@ -14,14 +14,11 @@ export default function ProductQABtn({ name, description }: { name: string; desc
       >
         AI Copilot Q&A
       </button>
-      <CopilotSidebar
-        defaultOpen={open}
-        onSetOpen={setOpen}
-        labels={{ title: 'Product Q&A', initial: promptRef.current }}
-        className="copilot-panel"
-      >
-        <CopilotChat instructions={promptRef.current} />
-      </CopilotSidebar>
+      <CopilotPanel 
+        open={open} 
+        onClose={() => setOpen(false)}
+        initialPrompt={initialPrompt}
+      />
     </>
   );
 }

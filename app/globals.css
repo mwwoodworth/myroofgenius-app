@@ -4,10 +4,11 @@
 
 @layer base {
   body {
-    @apply font-sans;
-    background: radial-gradient(circle at center, #101020, #000000);
-    color: #e0e0e0;
+    @apply font-sans antialiased;
+    background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #0f0f1e 100%);
+    color: #e2e8f0;
     font-size: clamp(1rem, 2.5vw, 1.125rem);
+    min-height: 100vh;
   }
 
   h1,
@@ -17,6 +18,7 @@
   h5,
   h6 {
     font-family: var(--font-body, Inter, sans-serif);
+    @apply font-bold tracking-tight;
   }
 
   code,
@@ -24,80 +26,148 @@
     font-family: var(--font-mono, "JetBrains Mono", monospace);
   }
 
-  footer,
-  .btn-green,
-  .banner {
-    background-color: var(--color-bg) !important;
-    color: var(--color-text) !important;
-  }
-
   :root {
-    /* Color Palette */
-    --color-primary: #4299e1;
-    --color-success: #48bb78;
-    --color-warning: #ecc94b;
-    --color-danger: #f56565;
-    --color-navy-900: #0a192f;
-    --color-slate-700: #4a5568;
-    --color-cloud-100: #f7fafc;
-    --color-white: #ffffff;
-    --color-bg: var(--color-cloud-100);
-    --color-text: var(--color-slate-700);
-    --header-bg: var(--color-navy-900);
-
-    /* RGB counterparts for Tailwind */
-    --clr-primary-500: 66 153 225;
-    --clr-success-500: 72 187 120;
-    --clr-warning-500: 236 201 75;
-    --clr-danger-500: 245 101 101;
-
-    /* Field-Ready Spacing */
+    /* Modern Color Palette - Perplexity 2025 */
+    --color-primary: #3b82f6;
+    --color-primary-hover: #2563eb;
+    --color-accent: #10b981;
+    --color-accent-hover: #059669;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    
+    /* Background Colors */
+    --color-bg-primary: #0a0a0a;
+    --color-bg-secondary: #111111;
+    --color-bg-tertiary: #1a1a1a;
+    
+    /* Text Colors */
+    --color-text-primary: #f3f4f6;
+    --color-text-secondary: #9ca3af;
+    --color-text-muted: #6b7280;
+    
+    /* Glass Effect Variables */
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-bg-hover: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    --blur-amount: 12px;
+    
+    /* RGB Values for Tailwind */
+    --clr-primary: 59 130 246;
+    --clr-accent: 16 185 129;
+    --clr-success: 16 185 129;
+    --clr-warning: 245 158 11;
+    --clr-danger: 239 68 68;
+    
+    /* Spacing */
     --spacing-touch-target: 48px;
     --spacing-field-padding: 16px;
-
-    /* Protective Shadows */
-    --shadow-success: 0 0 0 3px rgba(72, 187, 120, 0.1);
-    --shadow-warning: 0 0 0 3px rgba(236, 201, 75, 0.1);
-    --shadow-danger: 0 0 0 3px rgba(245, 101, 101, 0.1);
+    
+    /* Animations */
+    --transition-base: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6);
   }
 
-  .dark :root {
-    --color-bg: #0a192f;
-    --color-text: #f7fafc;
-  }
-
-  @supports not (color: oklch(0 0 0)) {
-    :root {
-      --clr-primary-500: 66 153 225;
-      --clr-success-500: 72 187 120;
-      --clr-warning-500: 236 201 75;
-      --clr-danger-500: 245 101 101;
-    }
+  [data-theme="light"] {
+    --color-bg-primary: #ffffff;
+    --color-bg-secondary: #f9fafb;
+    --color-bg-tertiary: #f3f4f6;
+    --color-text-primary: #111827;
+    --color-text-secondary: #4b5563;
+    --color-text-muted: #9ca3af;
+    --glass-bg: rgba(0, 0, 0, 0.03);
+    --glass-bg-hover: rgba(0, 0, 0, 0.05);
+    --glass-border: rgba(0, 0, 0, 0.08);
   }
 
   @media (prefers-contrast: high) {
     :root {
-      --color-success: 21 128 61;
-      --color-warning: 234 88 12;
-      --color-danger: 185 28 28;
+      --color-success: #15803d;
+      --color-warning: #ea580c;
+      --color-danger: #b91c1c;
     }
   }
 }
 
-/* Protection State Classes */
-.protection-active {
-  box-shadow: var(--shadow-success);
-  border-color: rgb(var(--color-success));
-}
+/* Glassmorphism Components */
+@layer components {
+  .glass {
+    @apply relative overflow-hidden;
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-amount));
+    -webkit-backdrop-filter: blur(var(--blur-amount));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: var(--transition-base);
+  }
 
-.protection-warning {
-  box-shadow: var(--shadow-warning);
-  border-color: rgb(var(--color-warning));
-}
+  .glass:hover {
+    background: var(--glass-bg-hover);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+  }
 
-.protection-danger {
-  box-shadow: var(--shadow-danger);
-  border-color: rgb(var(--color-danger));
+  .glass-card {
+    @apply glass rounded-2xl p-6;
+  }
+
+  .glass-button {
+    @apply glass rounded-xl px-6 py-3 font-medium;
+    background: linear-gradient(135deg, var(--glass-bg) 0%, var(--glass-bg-hover) 100%);
+  }
+
+  .glass-button:hover {
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  .glass-input {
+    @apply glass rounded-lg px-4 py-2;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .glass-input:focus {
+    @apply outline-none ring-2 ring-primary/50;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+
+  /* Animated Gradient Background */
+  .animated-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #667eea 100%);
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Protection States with Glass Effect */
+  .protection-active {
+    @apply glass;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    border-color: rgb(16 185 129 / 0.5);
+  }
+
+  .protection-warning {
+    @apply glass;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+    border-color: rgb(245 158 11 / 0.5);
+  }
+
+  .protection-danger {
+    @apply glass;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+    border-color: rgb(239 68 68 / 0.5);
+  }
 }
 
 /* Field-Ready Components */
