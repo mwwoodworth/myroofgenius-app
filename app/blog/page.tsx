@@ -1,210 +1,134 @@
-import { createClient } from "@supabase/supabase-js";
-import Link from "next/link";
-import Image from "next/image";
-import { buildMeta } from "../../lib/metadata";
+import { readdirSync, readFileSync } from 'fs';
+import { join } from 'path';
+import matter from 'gray-matter';
+import Link from 'next/link';
+import { Calendar, Clock, User } from 'lucide-react';
 
-// Add dynamic export to prevent static generation
-export const dynamic = "force-dynamic";
-
-export const generateMetadata = () =>
-  buildMeta({
-    title: "Roofing Insights & Tips | MyRoofGenius Blog",
-    description:
-      "Strategies for estimation, project management and business growth in the roofing industry.",
-  });
-
-async function getBlogPosts() {
-  // Handle missing env vars gracefully
-  if (
-    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  ) {
-    console.warn("Supabase environment variables not configured");
-    return [];
-  }
-
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-  );
-
-  const { data } = await supabase
-    .from("blog_posts")
-    .select("*")
-    .eq("published", true)
-    .order("published_at", { ascending: false });
-
-  return data || [];
+interface BlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  author: string;
+  readTime: string;
+  tags: string[];
+  featured?: boolean;
 }
 
-// Static blog posts for initial content
-const staticPosts = [
-  {
-    id: "1",
-    slug: "hidden-cost-drivers-commercial-roofing",
-    title: "10 Hidden Cost Drivers in Commercial Roofing Projects",
-    excerpt:
-      "Identify budget risks before they compromise your project. Learn about the concealed expenses that can increase project costs by 15-35%.",
-    author: "Mike Woodworth",
-    published_at: "2025-06-15",
-    category: "Cost Management",
-    read_time: "8 min read",
-    image_url:
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=400&fit=crop",
-  },
-  {
-    id: "2",
-    slug: "cash-flow-management-roofing-contractors",
-    title: "Cash Flow Management for Roofing Contractors",
-    excerpt:
-      "Master the art of project cash flow forecasting to maintain healthy margins and avoid costly financing.",
-    author: "Mike Woodworth",
-    published_at: "2025-06-10",
-    category: "Financial Management",
-    read_time: "6 min read",
-    image_url:
-      "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=400&fit=crop",
-  },
-  {
-    id: "3",
-    slug: "colorado-roofing-compliance-guide",
-    title: "Colorado Roofing Compliance: What You Need to Know",
-    excerpt:
-      "Navigate Class 4 impact requirements, snow load calculations, and local building codes with confidence.",
-    author: "Sarah Chen",
-    published_at: "2025-06-05",
-    category: "Compliance",
-    read_time: "10 min read",
-    image_url:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=400&fit=crop",
-  },
-];
+async function getBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const postsDirectory = join(process.cwd(), 'data/posts');
+    const filenames = readdirSync(postsDirectory);
+    
+    const posts = filenames
+      .filter(name => name.endsWith('.md'))
+      .map(name => {
+        const fullPath = join(postsDirectory, name);
+        const fileContents = readFileSync(fullPath, 'utf8');
+        const { data, content } = matter(fileContents);
+        
+        return {
+          slug: name.replace(/\.md$/, ''),
+          title: data.title || 'Untitled',
+          excerpt: data.excerpt || content.slice(0, 200) + '...',
+          date: data.date || new Date().toISOString(),
+          author: data.author || 'MyRoofGenius AI',
+          readTime: data.readTime || '5 min read',
+          tags: data.tags || [],
+          featured: data.featured || false
+        };
+      })
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    
+    return posts;
+  } catch (error) {
+    return [];
+  }
+}
 
-export default async function Blog() {
-  const dbPosts = await getBlogPosts();
-  const posts = dbPosts.length > 0 ? dbPosts : staticPosts;
+export default async function BlogPage() {
+  const posts = await getBlogPosts();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">
-            Industry Insights & Best Practices
-          </h1>
-          <p className="text-xl text-gray-300">
-            Expert guidance on estimation, project management, and growing your
-            roofing business
-          </p>
-        </div>
-      </section>
-
-      {/* Featured Post */}
-      {posts.length > 0 && (
-        <section className="py-12 bg-white">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-8 items-center">
-              <div>
-                <Image
-                  src={posts[0].image_url}
-                  alt={posts[0].title}
-                  width={800}
-                  height={600}
-                  className="rounded-lg shadow-lg w-full"
-                  loading="eager"
-                  priority
-                />
-              </div>
-              <div>
-                <span className="bg-secondary-700/10 text-secondary-700 text-sm px-3 py-1 rounded-full">
-                  Featured Article
-                </span>
-                <h2 className="text-3xl font-bold mt-4 mb-4">
-                  <Link
-                    href={`/blog/${posts[0].slug}`}
-                    className="hover:text-secondary-700"
-                  >
-                    {posts[0].title}
-                  </Link>
-                </h2>
-                <p className="text-gray-600 mb-6 text-lg">{posts[0].excerpt}</p>
-                <div className="flex items-center gap-4 text-sm text-text-secondary">
-                  <span>{posts[0].author}</span>
-                  <span>•</span>
-                  <span>
-                    {new Date(posts[0].published_at).toLocaleDateString()}
-                  </span>
-                  <span>•</span>
-                  <span>{posts[0].read_time}</span>
-                </div>
-              </div>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+      {/* Header */}
+      <div className="bg-black/20 backdrop-blur-sm border-b border-white/10">
+        <div className="container mx-auto px-6 py-12">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+              Roofing <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Intelligence</span>
+            </h1>
+            <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+              Expert insights, AI-powered analysis, and industry trends from the future of roofing
+            </p>
           </div>
-        </section>
-      )}
+        </div>
+      </div>
 
-      {/* Blog Grid */}
-      <section className="py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-8">Recent Articles</h2>
-          <div className="card-grid">
-            {posts.slice(1).map((post) => (
-              <article
-                key={post.id}
-                className="card hover:shadow-lg transition"
+      <div className="container mx-auto px-6 py-12">
+        {posts.length === 0 ? (
+          <div className="text-center py-12">
+            <h2 className="text-2xl font-bold text-white mb-4">No blog posts yet</h2>
+            <p className="text-slate-400">Check back soon for AI-generated roofing insights!</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts.map((post) => (
+              <Link 
+                key={post.slug} 
+                href={`/blog/${post.slug}`}
+                className="group block"
               >
-                <Link href={`/blog/${post.slug}`}>
-                  <Image
-                    src={post.image_url}
-                    alt={post.title}
-                    width={400}
-                    height={192}
-                    className="w-full h-48 object-cover"
-                    loading="lazy"
-                  />
-                </Link>
-                <div className="p-6">
-                  <span className="text-secondary-700 text-sm font-semibold">
-                    {post.category}
-                  </span>
-                  <h3 className="text-xl font-semibold mt-2 mb-3">
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="hover:text-secondary-700"
-                    >
-                      {post.title}
-                    </Link>
-                  </h3>
-                  <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                  <div className="flex items-center gap-4 text-sm text-text-secondary">
-                    <span>{post.author}</span>
-                    <span>•</span>
-                    <span>{post.read_time}</span>
+                <article className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 h-full">
+                  {post.featured && (
+                    <div className="inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-full mb-4">
+                      <span className="text-xs text-yellow-300 font-medium">Featured</span>
+                    </div>
+                  )}
+                  
+                  <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors line-clamp-2">
+                    {post.title}
+                  </h2>
+                  
+                  <p className="text-slate-300 text-sm leading-relaxed mb-4 line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                  
+                  {post.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {post.tags.slice(0, 3).map(tag => (
+                        <span
+                          key={tag}
+                          className="px-2 py-1 bg-white/10 rounded-full text-xs text-slate-300"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  
+                  <div className="flex items-center justify-between pt-4 border-t border-white/10 text-sm text-slate-400">
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-1">
+                        <User className="w-4 h-4" />
+                        <span>{post.author}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        <span>{post.readTime}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Calendar className="w-4 h-4" />
+                      <time>{new Date(post.date).toLocaleDateString()}</time>
+                    </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              </Link>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Newsletter CTA */}
-      <section className="bg-secondary-700 py-12">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Get Weekly Industry Updates
-          </h2>
-          <p className="text-secondary-700/20 mb-6">
-            Join 2,800+ contractors receiving actionable insights every Tuesday
-          </p>
-          <Link
-            href="/#newsletter"
-            className="inline-block bg-white text-secondary-700 px-6 py-3 rounded-lg hover:bg-gray-100 font-semibold"
-          >
-            Subscribe Now
-          </Link>
-        </div>
-      </section>
+        )}
+      </div>
     </div>
   );
 }

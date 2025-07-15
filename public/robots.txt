@@ -1,6 +1,9 @@
+# *
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /dashboard/
 
+# Host
+Host: https://myroofgenius.com
+
+# Sitemaps
 Sitemap: https://myroofgenius.com/sitemap.xml
