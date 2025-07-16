@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { buildMeta } from "../../../lib/metadata";
+import { constructMetadata } from "../../lib/metadata";
 
 // Add dynamic params export to handle dynamic routes
 export async function generateStaticParams() {
@@ -16,12 +16,13 @@ export async function generateMetadata({
 }) {
   const post = await getBlogPost(params.slug);
   const title = post?.title || "Blog Post";
-  const desc = post?.excerpt || "Roofing insights from MyRoofGenius";
+  const desc = post?.excerpt || "Expert roofing insights, AI technology updates, and contractor best practices from MyRoofGenius";
   const img = post?.image_url;
-  return buildMeta({
-    title: `${title} | MyRoofGenius`,
+  return constructMetadata({
+    title: `${title} | MyRoofGenius Blog`,
     description: desc,
     image: img,
+    keywords: ['roofing blog', params.slug.replace(/-/g, ' '), 'contractor insights', 'roofing technology', 'AI in construction', post?.category || 'roofing'],
   });
 }
 
@@ -124,7 +125,7 @@ export default async function BlogPost({
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -215,6 +216,6 @@ export default async function BlogPost({
           </div>
         </div>
       </article>
-    </div>
+    </main>
   );
 }

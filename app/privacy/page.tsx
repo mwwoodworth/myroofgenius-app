@@ -1,4 +1,11 @@
 import { Shield, Lock, Eye } from 'lucide-react';
+import { constructMetadata } from '../lib/metadata';
+
+export const metadata = constructMetadata({
+  title: 'Privacy Policy | MyRoofGenius - Data Protection & AI Transparency',
+  description: 'Learn how MyRoofGenius protects your data with enterprise-grade security. Our privacy policy covers AI data usage, encryption standards, and your data rights.',
+  keywords: ['myroofgenius privacy', 'roofing software privacy policy', 'AI data protection', 'contractor data security', 'GDPR compliance roofing'],
+});
 
 export default function PrivacyPage() {
   return (

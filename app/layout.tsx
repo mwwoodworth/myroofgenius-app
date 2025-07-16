@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 import "./lib/sentry";
 import { maintenanceMode } from "./lib/features";
+import { constructMetadata } from "./lib/metadata";
 
 // If you use TrustSection or Testimonials on every page, import here too
 
@@ -12,17 +13,19 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 const theme = `${inter.variable} ${jetbrains.variable}`;
 
-export const metadata = {
-  title: "MyRoofGenius - Smart Roofing Solutions",
-  description: "AI-powered roofing tools and marketplace",
-};
+export const metadata = constructMetadata();
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const { default: CopilotProvider } = await import("../components/CopilotProvider");
@@ -33,16 +36,26 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const { default: ClientLayout } = await import("../components/layout/ClientLayout");
   const { default: Analytics } = await import("../components/Analytics");
   const { Analytics: VercelAnalytics } = await import("@vercel/analytics/react");
+  const { default: SkipToContent } = await import("../components/SkipToContent");
+  const { default: PWARegistration } = await import("../components/PWARegistration");
+  const { default: PWAInstallPrompt } = await import("../components/PWAInstallPrompt");
+  const { default: AccessibilityPanel } = await import("../components/AccessibilityPanel");
+  const { ToastProvider } = await import("../design-system/components/Toast");
   return (
     <html lang="en" className={theme}>
       <head>
+        {/* Performance optimizations */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        
         {/* SEO, OG, and PWA meta tags */}
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <link rel="manifest" href="/manifest.webmanifest" />
         <meta name="theme-color" content="#0a192f" />
-        <link rel="icon" href="https://via.placeholder.com/192" sizes="192x192" />
-        <link rel="apple-touch-icon" href="https://via.placeholder.com/512" sizes="512x512" />
-        <link rel="icon" href="https://via.placeholder.com/1024" sizes="1024x1024" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-icon" />
         {/* --- JSON-LD and FAQ Structured Data (unchanged from your version) --- */}
         <script
           type="application/ld+json"
@@ -139,29 +152,35 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         />
       </head>
       <body>
-        <CopilotProvider>
-          {maintenanceMode ? (
-            <div className="min-h-screen flex items-center justify-center">
-              <p>Site is under maintenance. Please check back soon.</p>
-            </div>
-          ) : (
-            <>
-              {/* --- GLOBAL, PERSISTENT COMPONENTS --- */}
-              <Starfield />
-              <Header />
-              <main className="relative z-10 min-h-screen pt-20">
-                <PageTransitionWrapper>
-                  <ClientLayout>
-                    {children}
-                  </ClientLayout>
-                </PageTransitionWrapper>
-              </main>
-              <StickyMobileCTA />
-              <Analytics />
-              <VercelAnalytics />
-            </>
-          )}
-        </CopilotProvider>
+        <SkipToContent />
+        <ToastProvider>
+          <CopilotProvider>
+            {maintenanceMode ? (
+              <div className="min-h-screen flex items-center justify-center" role="main">
+                <p>Site is under maintenance. Please check back soon.</p>
+              </div>
+            ) : (
+              <>
+                {/* --- GLOBAL, PERSISTENT COMPONENTS --- */}
+                <Starfield aria-hidden="true" />
+                <Header />
+                <main id="main-content" className="relative z-10 min-h-screen pt-20">
+                  <PageTransitionWrapper>
+                    <ClientLayout>
+                      {children}
+                    </ClientLayout>
+                  </PageTransitionWrapper>
+                </main>
+                <StickyMobileCTA />
+                <PWAInstallPrompt />
+                <AccessibilityPanel />
+                <PWARegistration />
+                <Analytics />
+                <VercelAnalytics />
+              </>
+            )}
+          </CopilotProvider>
+        </ToastProvider>
       </body>
     </html>
   );

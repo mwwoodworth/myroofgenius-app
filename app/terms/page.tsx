@@ -1,4 +1,11 @@
 import { FileText } from 'lucide-react';
+import { constructMetadata } from '../lib/metadata';
+
+export const metadata = constructMetadata({
+  title: 'Terms of Service | MyRoofGenius - AI Roofing Software Terms',
+  description: 'Read the MyRoofGenius terms of service. Understand how to use our AI-powered roofing software, user responsibilities, and platform guidelines.',
+  keywords: ['myroofgenius terms', 'roofing software terms of service', 'AI platform terms', 'contractor software agreement', 'legal terms roofing'],
+});
 
 export default function TermsPage() {
   return (

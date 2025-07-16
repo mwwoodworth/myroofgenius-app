@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { salesEnabled } from "../../lib/features";
+import { constructMetadata } from "../../lib/metadata";
 
 // Add dynamic params export to handle dynamic routes
 export async function generateStaticParams() {
@@ -14,16 +15,31 @@ export const revalidate = 3600;
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const product = await getProduct(params.id);
-  if (!product) return {};
-  const desc = product.description || "Roofing resource from MyRoofGenius";
-  return {
-    title: `${product.name} | MyRoofGenius`,
-    description: desc,
-    openGraph: {
-      title: `${product.name} | MyRoofGenius`,
-      description: desc,
-    },
-  };
+  
+  if (!product) {
+    return constructMetadata({
+      title: "Product Not Found | MyRoofGenius",
+      description: "The requested product could not be found in our marketplace.",
+      noIndex: true,
+    });
+  }
+  
+  const desc = product.description || "Professional roofing tools, calculators, and resources designed for commercial contractors. Instant download, lifetime updates included.";
+  const productKeywords = [
+    'roofing tools',
+    'contractor software',
+    product.category?.toLowerCase() || 'roofing calculator',
+    'commercial roofing',
+    'construction tools',
+    product.name.toLowerCase().replace(/[^\w\s]/g, '').split(' ').filter(word => word.length > 3).join(', ')
+  ].filter(Boolean);
+  
+  return constructMetadata({
+    title: `${product.name} - Professional Roofing Tool | MyRoofGenius`,
+    description: desc.length > 160 ? desc.substring(0, 157) + "..." : desc,
+    keywords: productKeywords,
+    image: product.image_url || undefined,
+  });
 }
 
 async function getProduct(id: string) {
@@ -99,7 +115,7 @@ export default async function ProductPage({
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -384,6 +400,6 @@ export default async function ProductPage({
           </div>
         </section>
       </div>
-    </div>
+    </main>
   );
 }

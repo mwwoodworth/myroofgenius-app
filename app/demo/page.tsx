@@ -1,11 +1,10 @@
-import { buildMeta } from "../../lib/metadata";
+import { constructMetadata } from "../lib/metadata";
 
-export const generateMetadata = () =>
-  buildMeta({
-    title: "Demo | MyRoofGenius",
-    description:
-      "Watch demos of our estimation and compliance tools in action.",
-  });
+export const metadata = constructMetadata({
+  title: "Demo | MyRoofGenius - See AI-Powered Roofing Software in Action",
+  description: "Watch live demos of MyRoofGenius AI roofing software. See how our estimation tools, compliance features, and project management streamline your roofing business.",
+  keywords: ['roofing software demo', 'AI roofing demo', 'contractor tools demonstration', 'roofing estimator demo', 'construction software trial'],
+});
 
 export default async function DemoPage() {
   const { default: DemoClient } = await import("./DemoClient");

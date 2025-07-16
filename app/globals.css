@@ -1,6 +1,12 @@
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import responsive CSS after Tailwind directives */
+@import './responsive.css';
+
+/* ... your global styles ... */
 
 @layer base {
   body {
@@ -41,15 +47,15 @@
     --color-bg-secondary: #111111;
     --color-bg-tertiary: #1a1a1a;
     
-    /* Text Colors */
+    /* Text Colors - WCAG AA compliant */
     --color-text-primary: #f3f4f6;
-    --color-text-secondary: #9ca3af;
-    --color-text-muted: #6b7280;
+    --color-text-secondary: #d1d5db; /* Improved contrast from #9ca3af */
+    --color-text-muted: #9ca3af; /* Improved contrast from #6b7280 */
     
-    /* Glass Effect Variables */
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-bg-hover: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    /* Glass Effect Variables - Improved contrast */
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-bg-hover: rgba(255, 255, 255, 0.12);
+    --glass-border: rgba(255, 255, 255, 0.15);
     --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     --blur-amount: 12px;
     
@@ -81,11 +87,37 @@
     --glass-border: rgba(0, 0, 0, 0.08);
   }
 
+  /* High Contrast Mode */
   @media (prefers-contrast: high) {
     :root {
+      --color-text-primary: #ffffff;
+      --color-text-secondary: #f3f4f6;
+      --color-text-muted: #e5e7eb;
+      --color-success: #22c55e;
+      --color-warning: #fbbf24;
+      --color-danger: #f87171;
+      --glass-bg: rgba(255, 255, 255, 0.12);
+      --glass-bg-hover: rgba(255, 255, 255, 0.18);
+      --glass-border: rgba(255, 255, 255, 0.25);
+    }
+    
+    [data-theme="light"] {
+      --color-text-primary: #000000;
+      --color-text-secondary: #1f2937;
+      --color-text-muted: #374151;
       --color-success: #15803d;
       --color-warning: #ea580c;
       --color-danger: #b91c1c;
+    }
+  }
+  
+  /* Reduced Motion Preferences */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
     }
   }
 }

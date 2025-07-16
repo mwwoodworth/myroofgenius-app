@@ -56,7 +56,7 @@ export default function HomeClient() {
       <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 animate-pulse" />
       
       {/* Hero Section */}
-      <div className="relative z-10">
+      <section className="relative z-10">
         <div className="container mx-auto px-6 py-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -113,18 +113,23 @@ export default function HomeClient() {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-75" />
                 <div className="relative bg-black/20 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
                   <div className="flex items-center gap-3 mb-4">
-                    <Sparkles className="w-6 h-6 text-blue-400" />
-                    <h3 className="text-white font-semibold text-lg">Ask RoofGenius AI</h3>
+                    <Sparkles className="w-6 h-6 text-blue-400" aria-hidden="true" />
+                    <label htmlFor="ai-prompt-input" className="text-white font-semibold text-lg">Ask RoofGenius AI</label>
                   </div>
                   <div className="flex gap-3">
                     <input
                       type="text"
+                      id="ai-prompt-input"
+                      aria-label="AI analysis prompt"
                       placeholder="Describe your roof or upload photos for instant AI analysis..."
                       value={promptInput}
                       onChange={(e) => setPromptInput(e.target.value)}
                       className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-400 transition-colors"
                     />
-                    <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg transition-all flex items-center gap-2">
+                    <button
+                      type="button"
+                      aria-label="Analyze roof with AI"
+                      className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg transition-all flex items-center gap-2">
                       <MessageSquare className="w-5 h-5" />
                       Analyze
                     </button>
@@ -134,10 +139,10 @@ export default function HomeClient() {
             </motion.div>
           </motion.div>
         </div>
-      </div>
+      </section>
 
       {/* Roof Systems Grid */}
-      <div className="relative z-10 container mx-auto px-6 pb-20">
+      <section className="relative z-10 container mx-auto px-6 pb-20">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -192,7 +197,7 @@ export default function HomeClient() {
         </div>
 
         {/* Stats Section */}
-        <motion.div
+        <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5 }}
@@ -210,8 +215,8 @@ export default function HomeClient() {
             <div className="text-4xl font-bold text-purple-400 mb-2">2.3s</div>
             <div className="text-slate-300">Average Response</div>
           </div>
-        </motion.div>
-      </div>
+        </motion.section>
+      </section>
     </div>
   );
 }

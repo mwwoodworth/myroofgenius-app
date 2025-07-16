@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "./Card";
+import { Card } from "./Card";
 import AvatarPlaceholder from "../../components/icons/AvatarPlaceholder";
 import VerifiedBadge from "../../components/icons/VerifiedBadge";
 import Star from "../../components/icons/Star";
@@ -18,7 +18,7 @@ export default function TestimonialCard({
   company,
 }: Props) {
   return (
-    <Card glass className="text-center">
+    <Card variant="glass" className="text-center">
       <AvatarPlaceholder className="mx-auto mb-4" />
       <p className="mb-4">&ldquo;{quote}&rdquo;</p>
       <p className="font-semibold flex items-center justify-center space-x-1">

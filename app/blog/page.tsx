@@ -3,6 +3,13 @@ import { join } from 'path';
 import matter from 'gray-matter';
 import Link from 'next/link';
 import { Calendar, Clock, User } from 'lucide-react';
+import { constructMetadata } from '../lib/metadata';
+
+export const metadata = constructMetadata({
+  title: 'Blog | MyRoofGenius - Roofing Industry Insights & AI Updates',
+  description: 'Discover the latest roofing industry trends, AI technology updates, and expert insights. Learn how artificial intelligence is transforming roofing businesses.',
+  keywords: ['roofing blog', 'AI roofing insights', 'contractor tips', 'roofing industry news', 'construction technology blog'],
+});
 
 interface BlogPost {
   slug: string;
@@ -52,7 +59,7 @@ export default async function BlogPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
       {/* Header */}
-      <div className="bg-black/20 backdrop-blur-sm border-b border-white/10">
+      <header className="bg-black/20 backdrop-blur-sm border-b border-white/10">
         <div className="container mx-auto px-6 py-12">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
@@ -63,9 +70,9 @@ export default async function BlogPage() {
             </p>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="container mx-auto px-6 py-12">
+      <main className="container mx-auto px-6 py-12">
         {posts.length === 0 ? (
           <div className="text-center py-12">
             <h2 className="text-2xl font-bold text-white mb-4">No blog posts yet</h2>
@@ -128,7 +135,7 @@ export default async function BlogPage() {
             ))}
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 }

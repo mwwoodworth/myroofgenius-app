@@ -52,9 +52,9 @@ export default function Modal({ open, onClose, children }: ModalProps) {
             <button
               onClick={onClose}
               aria-label="Close modal"
-              className="absolute top-3 right-3 text-xl leading-none"
+              className="absolute top-3 right-3 text-xl leading-none p-2 hover:bg-white/10 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-white/30"
             >
-              &times;
+              <span aria-hidden="true">&times;</span>
             </button>
             {children}
           </motion.div>
